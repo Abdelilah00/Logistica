@@ -27,7 +27,7 @@ public interface IBaseCrudService<TEntity, TDto, TCreateDto, TUpdateDto> {
 
     List<TDto> findAll(Example<TDto> example, Sort sort);
 
-    Page<TDto> findAll(Pageable pageable);
+    CompletableFuture<List<TDto>> findAll(Pageable pageable);
 
     List<TDto> saveAll(Iterable<TDto> entities);
 

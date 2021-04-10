@@ -5,19 +5,16 @@
 
 package com.alexy.controllers;
 
-import com.configuration.Exception.UserFriendlyException;
 import com.alexy.models.BaseDto;
 import com.alexy.models.IdEntity;
 import com.alexy.services.IBaseCrudService;
+import com.configuration.Exception.UserFriendlyException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.web.bind.annotation.*;
 
-import javax.mail.MessagingException;
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -26,30 +23,31 @@ public abstract class BaseCrudController<TEntity extends IdEntity, TDto extends 
     @Autowired
     protected IBaseCrudService<TEntity, TDto, TCreateDto, TUpdateDto> service;
 
-    @RequestMapping(method = RequestMethod.GET)
-    protected List<TDto> getAll() throws ExecutionException, InterruptedException {
-        return service.findAll().get();
+    /*?page=1&size=200&sort=id,desc&value=9*/
+
+    @GetMapping
+    protected List<TDto> getAll(@PageableDefault(page = 0, size = 20) Pageable pageable) throws ExecutionException, InterruptedException {
+        return service.findAll(pageable).get();
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    protected TDto getById(@PathVariable(value = "id") long id) throws InterruptedException, ExecutionException, IOException {
+    @GetMapping(value = "{id}")
+    protected TDto getById(@PathVariable(value = "id") long id) throws InterruptedException, ExecutionException {
         return service.findById(id).get();
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    protected TDto create(@Valid @RequestBody TCreateDto dto) throws ExecutionException, InterruptedException, UserFriendlyException, IOException, MessagingException {
+    @PostMapping
+    protected TDto create(@Valid @RequestBody TCreateDto dto) throws ExecutionException, InterruptedException, UserFriendlyException {
         return service.create(dto).get();
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "{id}")
     protected TDto update(@PathVariable(value = "id") long id, @Valid @RequestBody TUpdateDto dto) throws UserFriendlyException, ExecutionException, InterruptedException {
         if (id != dto.getId())
             throw new UserFriendlyException("Id and model not equals");
-
         return service.update(dto).get();
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "{id}")
     protected void delete(@PathVariable(value = "id") long id) {
         service.deleteById(id);
     }

@@ -5,11 +5,11 @@
 
 package com.alexy.services;
 
-import com.configuration.Exception.UserFriendlyException;
 import com.alexy.models.BaseDto;
 import com.alexy.models.BaseEntity;
-import com.alexy.repositorys.IBaseJpaRepository;
+import com.alexy.repositories.IBaseJpaRepository;
 import com.alexy.utilis.ModelEntityMapping;
+import com.configuration.Exception.UserFriendlyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -35,7 +35,10 @@ public class BaseCrudServiceImpl<TEntity extends BaseEntity,
     private final Class<TCreateDto> dtoCreateClass;
     private final Class<TUpdateDto> dtoUpdateClass;
 
-    public BaseCrudServiceImpl(Class<TEntity> tEntityClass, Class<TDto> dtoClass, Class<TCreateDto> dtoCreateClass, Class<TUpdateDto> dtoUpdateClass) {
+    public BaseCrudServiceImpl(Class<TEntity> tEntityClass,
+                               Class<TDto> dtoClass,
+                               Class<TCreateDto> dtoCreateClass,
+                               Class<TUpdateDto> dtoUpdateClass) {
         objectMapper.setEntityClass(tEntityClass);
         this.dtoClass = dtoClass;
         this.dtoCreateClass = dtoCreateClass;
@@ -54,8 +57,9 @@ public class BaseCrudServiceImpl<TEntity extends BaseEntity,
     }
 
     @Override
-    public Page<TDto> findAll(Pageable pageable) {
-        return (null);
+    public CompletableFuture<List<TDto>> findAll(Pageable pageable) {
+        var x = repository.findAll(pageable).toList();
+        return CompletableFuture.completedFuture(objectMapper.convertToDtoList(x, dtoClass));
     }
 
     @Override

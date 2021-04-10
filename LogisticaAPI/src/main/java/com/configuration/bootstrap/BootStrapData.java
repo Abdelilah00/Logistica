@@ -8,11 +8,15 @@ package com.configuration.bootstrap;
 
 import com.configuration.TenantContext;
 import com.configuration.security.repositories.IUserRepository;
+import com.logistica.domains.Test;
+import com.logistica.repositories.ITestRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
 
 @Component
 public class BootStrapData implements CommandLineRunner {
@@ -20,7 +24,8 @@ public class BootStrapData implements CommandLineRunner {
 
     @Autowired
     private IUserRepository iUserRepository;
-
+    @Autowired
+    private ITestRepository iTestRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -36,5 +41,13 @@ public class BootStrapData implements CommandLineRunner {
 */
         //////////////////////////////////////////
 
+/*        var tests = new ArrayList<Test>();
+        for (int i = 0; i < 1000; i++) {
+            var test = new Test();
+            test.setValue(String.valueOf(i));
+            tests.add(test);
+        }
+
+        iTestRepository.saveAll(tests);*/
     }
 }

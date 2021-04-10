@@ -3,7 +3,7 @@
 // developed by Abdelilah Dehaoui GitHub : Abdelilah00                         /
 ////////////////////////////////////////////////////////////////////////////////
 
-package com.alexy.repositorys;
+package com.alexy.repositories;
 
 import com.alexy.models.BaseEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
