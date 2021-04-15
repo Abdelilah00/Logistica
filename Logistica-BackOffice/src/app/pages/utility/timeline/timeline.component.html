@@ -1,18 +1,18 @@
 <div class="container-fluid">
-  <app-pagetitle title="Starter Page" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
+  <app-pagetitle [breadcrumbItems]="breadCrumbItems" title="Starter Page"></app-pagetitle>
   <div class="row justify-content-center">
     <div class="col-xl-10">
       <div class="timeline" dir="ltr">
         <div class="timeline-item timeline-left">
           <div class="timeline-block">
             <div class="time-show-btn mt-0">
-              <a href="javascript: void(0);" class="btn btn-danger btn-rounded w-lg">2020</a>
+              <a class="btn btn-danger btn-rounded w-lg" href="javascript: void(0);">2020</a>
             </div>
           </div>
         </div>
 
-        <div class="timeline-item" *ngFor="let data of timelineData"
-          [ngClass]="{'timeline-left': data.align === 'left'}">
+        <div *ngFor="let data of timelineData" [ngClass]="{'timeline-left': data.align === 'left'}"
+             class="timeline-item">
           <div class="timeline-block">
             <div class="timeline-box card">
               <div class="card-body">
@@ -25,15 +25,15 @@
                 <div class="text-muted">
                   <p class="mb-0">{{data.text}}</p>
                 </div>
-                <div class="timeline-album" *ngIf="data.images">
-                  <a href="javascript: void(0);" class="mr-1">
-                    <img :src="{{data.images[0]}}" alt />
+                <div *ngIf="data.images" class="timeline-album">
+                  <a class="mr-1" href="javascript: void(0);">
+                    <img :src="{{data.images[0]}}" alt/>
                   </a>
-                  <a href="javascript: void(0);" class="mr-1">
-                    <img :src="{{data.images[1]}}" alt />
+                  <a class="mr-1" href="javascript: void(0);">
+                    <img :src="{{data.images[1]}}" alt/>
                   </a>
-                  <a href="javascript: void(0);" class="mr-1">
-                    <img :src="{{data.images[2]}}" alt />
+                  <a class="mr-1" href="javascript: void(0);">
+                    <img :src="{{data.images[2]}}" alt/>
                   </a>
                 </div>
               </div>

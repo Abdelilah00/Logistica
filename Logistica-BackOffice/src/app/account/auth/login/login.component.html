@@ -12,7 +12,7 @@
                 <div>
                   <div class="text-center">
                     <div>
-                      <a routerLink="" class="logo"><img src="assets/images/logo-dark.png" height="20" alt="logo"></a>
+                      <a class="logo" routerLink=""><img alt="logo" height="20" src="assets/images/logo-dark.png"></a>
                     </div>
 
                     <h4 class="font-size-18 mt-4">Welcome Back !</h4>
@@ -20,13 +20,13 @@
                   </div>
 
                   <div class="p-2 mt-5">
-                    <form class="form-horizontal" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-                      <ngb-alert type="danger" *ngIf="error" [dismissible]="false">{{ error }}</ngb-alert>
+                    <form (ngSubmit)="onSubmit()" [formGroup]="loginForm" class="form-horizontal">
+                      <ngb-alert *ngIf="error" [dismissible]="false" type="danger">{{ error }}</ngb-alert>
                       <div class="form-group auth-form-group-custom mb-4">
                         <i class="ri-user-2-line auti-custom-input-icon"></i>
                         <label for="email">Email</label>
-                        <input type="email" formControlName="email" class="form-control" id="email" placeholder="Email"
-                          [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+                        <input [ngClass]="{ 'is-invalid': submitted && f.email.errors }" class="form-control" formControlName="email" id="email" placeholder="Email"
+                               type="email">
                         <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
                           <div *ngIf="f.email.errors.required">Email is required</div>
                           <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
@@ -36,15 +36,15 @@
                       <div class="form-group auth-form-group-custom mb-4">
                         <i class="ri-lock-2-line auti-custom-input-icon"></i>
                         <label for="password">Password</label>
-                        <input type="password" formControlName="password" class="form-control" id="password"
-                          [ngClass]="{ 'is-invalid': submitted && f.password.errors }" placeholder="Password" />
+                        <input [ngClass]="{ 'is-invalid': submitted && f.password.errors }" class="form-control" formControlName="password" id="password"
+                               placeholder="Password" type="password"/>
                         <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                           <div *ngIf="f.password.errors.required">Password is required</div>
                         </div>
                       </div>
 
                       <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customControlInline">
+                        <input class="custom-control-input" id="customControlInline" type="checkbox">
                         <label class="custom-control-label" for="customControlInline">Remember me</label>
                       </div>
 
@@ -53,7 +53,7 @@
                       </div>
 
                       <div class="mt-4 text-center">
-                        <a routerLink="/account/reset-password" class="text-muted"><i class="mdi mdi-lock mr-1"></i>
+                        <a class="text-muted" routerLink="/account/reset-password"><i class="mdi mdi-lock mr-1"></i>
                           Forgot
                           your
                           password?</a>
@@ -62,8 +62,8 @@
                   </div>
 
                   <div class="mt-5 text-center">
-                    <p>Don't have an account ? <a routerLink="/account/signup" class="font-weight-medium text-primary">
-                        Register </a> </p>
+                    <p>Don't have an account ? <a class="font-weight-medium text-primary" routerLink="/account/signup">
+                      Register </a></p>
                     <p>© 2020 Nazox. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesdesign</p>
                   </div>
                 </div>

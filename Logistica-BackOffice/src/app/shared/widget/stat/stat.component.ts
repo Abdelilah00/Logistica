@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-stat',
@@ -11,7 +11,8 @@ export class StatComponent implements OnInit {
   @Input() value: string;
   @Input() icon: string;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

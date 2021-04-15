@@ -73,6 +73,19 @@
       "TEXT": "Dashboard",
       "BADGE": "03"
     },
+    "PRODUCTS": {
+      "TEXT": "Products",
+      "LIST": {
+        "PRODUCT": "Products"
+      }
+    },
+    "TRANSACTION": {
+      "TEXT": "Transaction",
+      "LIST": {
+        "INPUT": "Input",
+        "OUTPUT": "Output"
+      }
+    },
     "LAYOUTS": {
       "TEXT": "Layouts",
       "LIST": {

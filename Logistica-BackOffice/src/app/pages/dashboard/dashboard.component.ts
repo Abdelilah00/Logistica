@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { latLng, tileLayer } from 'leaflet';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {latLng, tileLayer} from 'leaflet';
 
-import { ChartType, Stat, Chat, Transaction } from './dashboard.model';
+import {ChartType, Chat, Stat, Transaction} from './dashboard.model';
 
-import { statData, revenueChart, salesAnalytics, sparklineEarning, sparklineMonthly, chatData, transactions } from './data';
+import {chatData, revenueChart, salesAnalytics, sparklineEarning, sparklineMonthly, statData, transactions} from './data';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,48 +21,24 @@ export class DashboardComponent implements OnInit {
   chatData: Chat[];
   transactions: Transaction[];
   statData: Stat[];
-
-  constructor(public formBuilder: FormBuilder) {
-  }
-
   // bread crumb items
   breadCrumbItems: Array<{}>;
-
   revenueChart: ChartType;
   salesAnalytics: ChartType;
   sparklineEarning: ChartType;
   sparklineMonthly: ChartType;
-
   // Form submit
   chatSubmit: boolean;
-
   formData: FormGroup;
-
-
   options = {
     layers: [
-      tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
+      tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: '...'})
     ],
     zoom: 6,
     center: latLng(46.879966, -121.726909)
   };
 
-  ngOnInit(): void {
-    this.breadCrumbItems = [{ label: 'Nazox' }, { label: 'Dashboard', active: true }];
-    this.formData = this.formBuilder.group({
-      message: ['', [Validators.required]],
-    });
-    this._fetchData();
-  }
-
-  private _fetchData() {
-    this.revenueChart = revenueChart;
-    this.salesAnalytics = salesAnalytics;
-    this.sparklineEarning = sparklineEarning;
-    this.sparklineMonthly = sparklineMonthly;
-    this.chatData = chatData;
-    this.transactions = transactions;
-    this.statData = statData;
+  constructor(public formBuilder: FormBuilder) {
   }
 
   /**
@@ -70,6 +46,14 @@ export class DashboardComponent implements OnInit {
    */
   get form() {
     return this.formData.controls;
+  }
+
+  ngOnInit(): void {
+    this.breadCrumbItems = [{label: 'Nazox'}, {label: 'Dashboard', active: true}];
+    this.formData = this.formBuilder.group({
+      message: ['', [Validators.required]],
+    });
+    this._fetchData();
   }
 
   /**
@@ -94,5 +78,15 @@ export class DashboardComponent implements OnInit {
     }
 
     this.chatSubmit = true;
+  }
+
+  private _fetchData() {
+    this.revenueChart = revenueChart;
+    this.salesAnalytics = salesAnalytics;
+    this.sparklineEarning = sparklineEarning;
+    this.sparklineMonthly = sparklineMonthly;
+    this.chatData = chatData;
+    this.transactions = transactions;
+    this.statData = statData;
   }
 }

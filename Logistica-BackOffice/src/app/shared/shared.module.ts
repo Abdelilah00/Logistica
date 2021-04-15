@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { UiModule } from './ui/ui.module';
+import {UiModule} from './ui/ui.module';
 
 @NgModule({
   declarations: [],
@@ -10,4 +10,5 @@ import { UiModule } from './ui/ui.module';
     UiModule
   ]
 })
-export class SharedModule { }
+export class SharedModule {
+}

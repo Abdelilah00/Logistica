@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-faqs',
@@ -9,9 +9,10 @@ export class FaqsComponent implements OnInit {
   // bread crumb items
   breadCrumbItems: Array<{}>;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
-    this.breadCrumbItems = [{ label: 'Utility' }, { label: 'FAQs', active: true }];
+    this.breadCrumbItems = [{label: 'Utility'}, {label: 'FAQs', active: true}];
   }
 }

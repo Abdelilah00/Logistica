@@ -93,19 +93,19 @@
       z-index: 1;
       outline: none !important;
 
-      &:disabled+label {
+      &:disabled + label {
         opacity: 0.65;
       }
     }
 
-    input[type="checkbox"]:focus+label {
+    input[type="checkbox"]:focus + label {
       &::before {
         outline-offset: -2px;
         outline: none;
       }
     }
 
-    input[type="checkbox"]:checked+label {
+    input[type="checkbox"]:checked + label {
       &::after {
         content: "\f00c";
         font-family: 'Font Awesome 5 Free';
@@ -113,14 +113,14 @@
       }
     }
 
-    input[type="checkbox"]:disabled+label {
+    input[type="checkbox"]:disabled + label {
       &::before {
         background-color: $gray-100;
         cursor: not-allowed;
       }
     }
 
-    input[type="checkbox"]:checked+label {
+    input[type="checkbox"]:checked + label {
       &::before {
         background-color: $primary;
         border-color: $primary;
@@ -148,8 +148,7 @@ body[data-layout="horizontal"] {
   @media (min-width: 992px) {
     .fixed-solution {
       .sticky-table-header {
-        top: $header-height + 50px !important;
-        ;
+        top: $header-height + 50px !important;;
       }
     }
   }

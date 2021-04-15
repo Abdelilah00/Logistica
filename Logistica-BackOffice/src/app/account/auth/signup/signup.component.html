@@ -12,7 +12,7 @@
                 <div>
                   <div class="text-center">
                     <div>
-                      <a routerLink="" class="logo"><img src="assets/images/logo-dark.png" height="20" alt="logo"></a>
+                      <a class="logo" routerLink=""><img alt="logo" height="20" src="assets/images/logo-dark.png"></a>
                     </div>
 
                     <h4 class="font-size-18 mt-4">Register account</h4>
@@ -20,17 +20,17 @@
                   </div>
 
                   <div class="p-2 mt-5">
-                    <form class="form-horizontal" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-                      <ngb-alert type="success" *ngIf="successmsg" [dismissible]="false">Registeration successfull.
+                    <form (ngSubmit)="onSubmit()" [formGroup]="signupForm" class="form-horizontal">
+                      <ngb-alert *ngIf="successmsg" [dismissible]="false" type="success">Registeration successfull.
                       </ngb-alert>
-                      <ngb-alert type="danger" *ngIf="error" [dismissible]="false">{{ error }}</ngb-alert>
+                      <ngb-alert *ngIf="error" [dismissible]="false" type="danger">{{ error }}</ngb-alert>
 
                       <div class="form-group auth-form-group-custom mb-4">
                         <i class="ri-user-2-line auti-custom-input-icon"></i>
                         <label for="username">Username</label>
-                        <input type="text" formControlName="username" class="form-control"
-                          [ngClass]="{ 'is-invalid': submitted && f.username.errors }" id="username"
-                          placeholder="Enter username">
+                        <input [ngClass]="{ 'is-invalid': submitted && f.username.errors }" class="form-control" formControlName="username"
+                               id="username" placeholder="Enter username"
+                               type="text">
                         <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
                           <div *ngIf="f.username.errors.required">Userame is required</div>
                         </div>
@@ -38,8 +38,8 @@
                       <div class="form-group auth-form-group-custom mb-4">
                         <i class="ri-mail-line auti-custom-input-icon"></i>
                         <label for="email">Email</label>
-                        <input type="email" formControlName="email" class="form-control"
-                          [ngClass]="{ 'is-invalid': submitted && f.email.errors }" id="email" placeholder="Email">
+                        <input [ngClass]="{ 'is-invalid': submitted && f.email.errors }" class="form-control" formControlName="email"
+                               id="email" placeholder="Email" type="email">
                         <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
                           <div *ngIf="f.email.errors.required">Email is required</div>
                           <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
@@ -48,9 +48,9 @@
                       <div class="form-group auth-form-group-custom mb-4">
                         <i class="ri-lock-2-line auti-custom-input-icon"></i>
                         <label for="password">Password</label>
-                        <input type="password" formControlName="password" class="form-control"
-                          [ngClass]="{ 'is-invalid': submitted && f.password.errors }" id="password"
-                          placeholder="Password">
+                        <input [ngClass]="{ 'is-invalid': submitted && f.password.errors }" class="form-control" formControlName="password"
+                               id="password" placeholder="Password"
+                               type="password">
                         <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                           <div *ngIf="f.password.errors.required">Password is required</div>
                         </div>
@@ -61,15 +61,15 @@
                       </div>
 
                       <div class="mt-4 text-center">
-                        <p class="mb-0">By registering you agree to the Nazox <a href="#" class="text-primary">Terms of
-                            Use</a></p>
+                        <p class="mb-0">By registering you agree to the Nazox <a class="text-primary" href="#">Terms of
+                          Use</a></p>
                       </div>
                     </form>
                   </div>
 
                   <div class="mt-5 text-center">
-                    <p>Already have an account ? <a routerLink="/account/login" class="font-weight-medium text-primary">
-                        Login</a> </p>
+                    <p>Already have an account ? <a class="font-weight-medium text-primary" routerLink="/account/login">
+                      Login</a></p>
                     <p>© 2020 Nazox. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesdesign</p>
                   </div>
                 </div>

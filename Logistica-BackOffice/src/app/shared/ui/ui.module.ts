@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { PagetitleComponent } from './pagetitle/pagetitle.component';
+import {PagetitleComponent} from './pagetitle/pagetitle.component';
 
 @NgModule({
   declarations: [PagetitleComponent],
@@ -10,4 +10,5 @@ import { PagetitleComponent } from './pagetitle/pagetitle.component';
   ],
   exports: [PagetitleComponent]
 })
-export class UiModule { }
+export class UiModule {
+}

@@ -1,18 +1,17 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { NgbNavModule, NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgbAccordionModule, NgbNavModule} from '@ng-bootstrap/ng-bootstrap';
 
-import { UtilityRoutingModule } from './utility-routing.module';
-import { UiModule } from '../../shared/ui/ui.module';
+import {UtilityRoutingModule} from './utility-routing.module';
+import {UiModule} from '../../shared/ui/ui.module';
 
-import { StarterComponent } from './starter/starter.component';
-import { TimelineComponent } from './timeline/timeline.component';
-import { FaqsComponent } from './faqs/faqs.component';
-import { PricingComponent } from './pricing/pricing.component';
+import {StarterComponent} from './starter/starter.component';
+import {TimelineComponent} from './timeline/timeline.component';
+import {FaqsComponent} from './faqs/faqs.component';
 
 @NgModule({
-  declarations: [StarterComponent, TimelineComponent, FaqsComponent, PricingComponent],
+  declarations: [StarterComponent, TimelineComponent, FaqsComponent],
   imports: [
     CommonModule,
     UtilityRoutingModule,
@@ -21,4 +20,5 @@ import { PricingComponent } from './pricing/pricing.component';
     NgbNavModule
   ]
 })
-export class UtilityModule { }
+export class UtilityModule {
+}

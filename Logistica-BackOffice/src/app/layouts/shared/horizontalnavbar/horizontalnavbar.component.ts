@@ -1,9 +1,9 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {NavigationEnd, Router} from '@angular/router';
 
-import { EventService } from '../../../core/services/event.service';
-import { MENU } from './menu';
-import { MenuItem } from './menu.model';
+import {EventService} from '../../../core/services/event.service';
+import {MENU} from './menu';
+import {MenuItem} from './menu.model';
 
 @Component({
   selector: 'app-horizontalnavbar',
@@ -43,7 +43,9 @@ export class HorizontalnavbarComponent implements OnInit, AfterViewInit {
     if (nextEl.id !== 'navmenu') {
     } else if (nextEl && !nextEl.classList.contains('show')) {
       const parentEl = event.target.parentNode;
-      if (parentEl) { parentEl.classList.remove('show'); }
+      if (parentEl) {
+        parentEl.classList.remove('show');
+      }
       nextEl.classList.toggle('show');
     }
     return false;
@@ -69,6 +71,45 @@ export class HorizontalnavbarComponent implements OnInit, AfterViewInit {
   toggleMenubar() {
     const element = document.getElementById('topnav-menu-content');
     element.classList.toggle('show');
+  }
+
+  /**
+   * Topbar light
+   */
+  topbarLight() {
+    document.body.setAttribute('data-topbar', 'light');
+    document.body.removeAttribute('data-layout-size');
+  }
+
+  /**
+   * Set boxed width
+   */
+  boxedWidth() {
+    document.body.setAttribute('data-layout-size', 'boxed');
+    document.body.setAttribute('data-topbar', 'dark');
+  }
+
+  /**
+   * Change the layout onclick
+   * @param layout Change the layout
+   */
+  changeLayout(layout: string) {
+    this.eventService.broadcast('changeLayout', layout);
+  }
+
+  /**
+   * Initialize
+   */
+  initialize(): void {
+    this.menuItems = MENU;
+  }
+
+  /**
+   * Returns true or false if given menu item has child or not
+   * @param item menuItem
+   */
+  hasItems(item: MenuItem) {
+    return item.subItems !== undefined ? item.subItems.length > 0 : false;
   }
 
   /**
@@ -144,45 +185,6 @@ export class HorizontalnavbarComponent implements OnInit, AfterViewInit {
         }
       }
     }
-  }
-
-  /**
-   * Topbar light
-   */
-  topbarLight() {
-    document.body.setAttribute('data-topbar', 'light');
-    document.body.removeAttribute('data-layout-size');
-  }
-
-  /**
-   * Set boxed width
-   */
-  boxedWidth() {
-    document.body.setAttribute('data-layout-size', 'boxed');
-    document.body.setAttribute('data-topbar', 'dark');
-  }
-
-  /**
-   * Change the layout onclick
-   * @param layout Change the layout
-   */
-  changeLayout(layout: string) {
-    this.eventService.broadcast('changeLayout', layout);
-  }
-
-  /**
-   * Initialize
-   */
-  initialize(): void {
-    this.menuItems = MENU;
-  }
-
-  /**
-   * Returns true or false if given menu item has child or not
-   * @param item menuItem
-   */
-  hasItems(item: MenuItem) {
-    return item.subItems !== undefined ? item.subItems.length > 0 : false;
   }
 
 }

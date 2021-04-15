@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-horizontal',
@@ -7,13 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HorizontalComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
     document.body.setAttribute('data-topbar', 'dark');
     document.body.setAttribute('data-layout', 'horizontal');
     document.body.removeAttribute('data-sidebar');
   }
-
-
 }

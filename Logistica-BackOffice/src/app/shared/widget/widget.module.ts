@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
-import { StatComponent } from './stat/stat.component';
+import {StatComponent} from './stat/stat.component';
 
-import { NgbTypeaheadModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgbPaginationModule, NgbTypeaheadModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [StatComponent],
@@ -16,4 +16,5 @@ import { NgbTypeaheadModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootst
   ],
   exports: [StatComponent]
 })
-export class WidgetModule { }
+export class WidgetModule {
+}

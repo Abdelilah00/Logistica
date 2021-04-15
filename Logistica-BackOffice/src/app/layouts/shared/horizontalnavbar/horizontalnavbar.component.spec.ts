@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { HorizontalnavbarComponent } from './horizontalnavbar.component';
+import {HorizontalnavbarComponent} from './horizontalnavbar.component';
 
 describe('HorizontalnavbarComponent', () => {
   let component: HorizontalnavbarComponent;
@@ -8,9 +8,9 @@ describe('HorizontalnavbarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HorizontalnavbarComponent ]
+      declarations: [HorizontalnavbarComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

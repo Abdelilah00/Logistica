@@ -1,6 +1,6 @@
 //
 // _menu.scss
-// 
+//
 
 .metismenu {
   margin: 0;
@@ -59,7 +59,7 @@
   padding: 10px 0 30px 0;
 
   .mm-active {
-    >.has-arrow {
+    > .has-arrow {
       &:after {
         transform: rotate(-180deg);
       }
@@ -166,7 +166,7 @@
     }
   }
 
-  >i {
+  > i {
     color: $sidebar-menu-item-active-color !important;
   }
 }
@@ -241,12 +241,12 @@
         }
       }
 
-      >ul {
-        >li {
+      > ul {
+        > li {
           position: relative;
           white-space: nowrap;
 
-          >a {
+          > a {
             padding: 15px 20px;
             min-height: 55px;
             transition: none;
@@ -269,7 +269,7 @@
           }
 
           &:hover {
-            >a {
+            > a {
               position: relative;
               width: calc(190px + #{$sidebar-collapsed-width});
               color: $primary;
@@ -285,7 +285,7 @@
               }
             }
 
-            >ul {
+            > ul {
               display: block;
               left: $sidebar-collapsed-width;
               position: absolute;
@@ -321,7 +321,7 @@
 
           li {
             &:hover {
-              >ul {
+              > ul {
                 display: block;
                 left: 190px;
                 height: auto !important;
@@ -331,7 +331,7 @@
               }
             }
 
-            >a {
+            > a {
               span.pull-right {
                 position: absolute;
                 right: 20px;
@@ -405,11 +405,11 @@ body[data-sidebar="dark"] {
       // Sidebar Menu
       #sidebar-menu {
 
-        >ul {
-          >li {
+        > ul {
+          > li {
 
             &:hover {
-              >a {
+              > a {
                 background: lighten($sidebar-dark-bg, 2%);
                 color: $sidebar-dark-menu-item-hover-color;
 
@@ -418,7 +418,7 @@ body[data-sidebar="dark"] {
                 }
               }
 
-              >ul {
+              > ul {
                 a {
                   color: $sidebar-dark-menu-sub-item-color;
 
@@ -458,7 +458,7 @@ body[data-sidebar="dark"] {
   .mm-active {
     color: $sidebar-dark-menu-item-active-color !important;
 
-    >i {
+    > i {
       color: $sidebar-dark-menu-item-active-color !important;
     }
 
@@ -555,9 +555,9 @@ body[data-sidebar-size="small"] {
       #sidebar-menu {
         text-align: left;
 
-        >ul {
-          >li {
-            >a {
+        > ul {
+          > li {
+            > a {
               i {
                 display: inline-block;
               }
@@ -595,7 +595,7 @@ body[data-sidebar="colored"] {
   .mm-active {
     color: $white !important;
 
-    >i,
+    > i,
     .active {
       color: $white !important;
     }
@@ -636,9 +636,9 @@ body[data-sidebar="colored"] {
   &.vertical-collpsed {
     .vertical-menu {
       #sidebar-menu {
-        >ul {
-          >li {
-            &:hover>a {
+        > ul {
+          > li {
+            &:hover > a {
               background-color: lighten($primary, 2%);
               color: $white;
 

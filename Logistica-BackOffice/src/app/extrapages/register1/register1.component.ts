@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-register1',
@@ -13,7 +13,9 @@ export class Register1Component implements OnInit {
 
   // set the currenr year
   year: number = new Date().getFullYear();
-  constructor() { }
+
+  constructor() {
+  }
 
   ngOnInit(): void {
     document.body.removeAttribute('data-layout');

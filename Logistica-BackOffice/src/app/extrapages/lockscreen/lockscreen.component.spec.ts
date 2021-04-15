@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { LockscreenComponent } from './lockscreen.component';
+import {LockscreenComponent} from './lockscreen.component';
 
 describe('LockscreenComponent', () => {
   let component: LockscreenComponent;
@@ -8,9 +8,9 @@ describe('LockscreenComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LockscreenComponent ]
+      declarations: [LockscreenComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

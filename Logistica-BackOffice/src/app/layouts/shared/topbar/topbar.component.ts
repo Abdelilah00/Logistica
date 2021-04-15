@@ -1,12 +1,12 @@
-import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
-import { CookieService } from 'ngx-cookie-service';
-import { Router } from '@angular/router';
+import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
+import {DOCUMENT} from '@angular/common';
+import {CookieService} from 'ngx-cookie-service';
+import {Router} from '@angular/router';
 
-import { AuthenticationService } from '../../../core/services/auth.service';
-import { AuthfakeauthenticationService } from '../../../core/services/authfake.service';
-import { LanguageService } from '../../../core/services/language.service';
-import { environment } from '../../../../environments/environment';
+import {AuthenticationService} from '../../../core/services/auth.service';
+import {AuthfakeauthenticationService} from '../../../core/services/authfake.service';
+import {LanguageService} from '../../../core/services/language.service';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-topbar',
@@ -23,18 +23,18 @@ export class TopbarComponent implements OnInit {
   valueset: string;
 
   listLang = [
-    { text: 'English', flag: 'assets/images/flags/us.jpg', lang: 'en' },
-    { text: 'Spanish', flag: 'assets/images/flags/spain.jpg', lang: 'es' },
-    { text: 'German', flag: 'assets/images/flags/germany.jpg', lang: 'de' },
-    { text: 'Italian', flag: 'assets/images/flags/italy.jpg', lang: 'it' },
-    { text: 'Russian', flag: 'assets/images/flags/russia.jpg', lang: 'ru' },
+    {text: 'English', flag: 'assets/images/flags/us.jpg', lang: 'en'},
+    {text: 'Spanish', flag: 'assets/images/flags/spain.jpg', lang: 'es'},
+    {text: 'German', flag: 'assets/images/flags/germany.jpg', lang: 'de'},
+    {text: 'Italian', flag: 'assets/images/flags/italy.jpg', lang: 'it'},
+    {text: 'Russian', flag: 'assets/images/flags/russia.jpg', lang: 'ru'},
   ];
-
-  // tslint:disable-next-line: max-line-length
-  constructor(@Inject(DOCUMENT) private document: any, private router: Router, private authService: AuthenticationService, private authFackservice: AuthfakeauthenticationService, public languageService: LanguageService, public cookiesService: CookieService) { }
-
   @Output() mobileMenuButtonClicked = new EventEmitter();
   @Output() settingsButtonClicked = new EventEmitter();
+
+  // tslint:disable-next-line: max-line-length
+  constructor(@Inject(DOCUMENT) private document: any, private router: Router, private authService: AuthenticationService, private authFackservice: AuthfakeauthenticationService, public languageService: LanguageService, public cookiesService: CookieService) {
+  }
 
   ngOnInit(): void {
     this.element = document.documentElement;
@@ -47,7 +47,9 @@ export class TopbarComponent implements OnInit {
     const val = this.listLang.filter(x => x.lang === this.cookieValue);
     this.countryName = val.map(element => element.text);
     if (val.length === 0) {
-      if (this.flagvalue === undefined) { this.valueset = 'assets/images/flags/us.jpg'; }
+      if (this.flagvalue === undefined) {
+        this.valueset = 'assets/images/flags/us.jpg';
+      }
     } else {
       this.flagvalue = val.map(element => element.flag);
     }

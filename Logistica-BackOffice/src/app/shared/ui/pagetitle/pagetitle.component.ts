@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-pagetitle',
@@ -10,7 +10,8 @@ export class PagetitleComponent implements OnInit {
   @Input() breadcrumbItems;
   @Input() title: string;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

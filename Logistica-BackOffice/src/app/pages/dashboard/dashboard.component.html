@@ -1,11 +1,11 @@
 <div class="container-fluid">
-  <app-pagetitle title="Dashboard" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
+  <app-pagetitle [breadcrumbItems]="breadCrumbItems" title="Dashboard"></app-pagetitle>
 
   <div class="row">
     <div class="col-xl-8">
       <div class="row">
         <div *ngFor="let stat of statData" class="col-md-4">
-          <app-stat [title]="stat.title" [value]="stat.value" [icon]="stat.icon"></app-stat>
+          <app-stat [icon]="stat.icon" [title]="stat.title" [value]="stat.value"></app-stat>
         </div>
       </div>
       <!-- end row -->
@@ -14,16 +14,16 @@
         <div class="card-body">
           <div class="float-right d-none d-md-inline-block">
             <div class="btn-group mb-2">
-              <button type="button" class="btn btn-sm btn-light">Today</button>
-              <button type="button" class="btn btn-sm btn-light active">Weekly</button>
-              <button type="button" class="btn btn-sm btn-light">Monthly</button>
+              <button class="btn btn-sm btn-light" type="button">Today</button>
+              <button class="btn btn-sm btn-light active" type="button">Weekly</button>
+              <button class="btn btn-sm btn-light" type="button">Monthly</button>
             </div>
           </div>
           <h4 class="card-title mb-4">Revenue Analytics</h4>
           <div>
-            <apx-chart dir="ltr" class="apex-charts" [series]="revenueChart.series" [chart]="revenueChart.chart"
-              [legend]="revenueChart.legend" [colors]="revenueChart.colors" [labels]="revenueChart.labels"
-              [stroke]="revenueChart.stroke" [plotOptions]="revenueChart.plotOptions">
+            <apx-chart [chart]="revenueChart.chart" [colors]="revenueChart.colors" [labels]="revenueChart.labels" [legend]="revenueChart.legend"
+                       [plotOptions]="revenueChart.plotOptions" [series]="revenueChart.series" [stroke]="revenueChart.stroke"
+                       class="apex-charts" dir="ltr">
             </apx-chart>
           </div>
         </div>
@@ -79,9 +79,9 @@
           </div>
           <h4 class="card-title mb-4">Sales Analytics</h4>
 
-          <apx-chart dir="ltr" class="apex-charts" [series]="salesAnalytics.series" [chart]="salesAnalytics.chart"
-            [legend]="salesAnalytics.legend" [colors]="salesAnalytics.colors" [labels]="revenueChart.labels"
-            [dataLabels]="salesAnalytics.dataLabels" [plotOptions]="salesAnalytics.plotOptions">
+          <apx-chart [chart]="salesAnalytics.chart" [colors]="salesAnalytics.colors" [dataLabels]="salesAnalytics.dataLabels" [labels]="revenueChart.labels"
+                     [legend]="salesAnalytics.legend" [plotOptions]="salesAnalytics.plotOptions" [series]="salesAnalytics.series"
+                     class="apex-charts" dir="ltr">
           </apx-chart>
           <div class="row">
             <div class="col-4">
@@ -112,19 +112,19 @@
       <div class="card">
         <div class="card-body">
           <div class="dropdown float-right" ngbDropdown>
-            <a href="javascript: void(0);" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown"
-              aria-expanded="false" ngbDropdownToggle>
+            <a aria-expanded="false" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown"
+               href="javascript: void(0);" ngbDropdownToggle>
               <i class="mdi mdi-dots-vertical"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
               <!-- item-->
-              <a href="javascript:void(0);" class="dropdown-item">Sales Report</a>
+              <a class="dropdown-item" href="javascript:void(0);">Sales Report</a>
               <!-- item-->
-              <a href="javascript:void(0);" class="dropdown-item">Export Report</a>
+              <a class="dropdown-item" href="javascript:void(0);">Export Report</a>
               <!-- item-->
-              <a href="javascript:void(0);" class="dropdown-item">Profit</a>
+              <a class="dropdown-item" href="javascript:void(0);">Profit</a>
               <!-- item-->
-              <a href="javascript:void(0);" class="dropdown-item">Action</a>
+              <a class="dropdown-item" href="javascript:void(0);">Action</a>
             </div>
           </div>
 
@@ -134,10 +134,10 @@
               <div class="col-sm-6">
                 <div>
                   <div class="mb-3">
-                    <apx-chart dir="ltr" class="apex-charts" [series]="sparklineEarning.series"
-                      [chart]="sparklineEarning.chart" [colors]="sparklineEarning.colors"
-                      [labels]="sparklineEarning.labels" [dataLabels]="sparklineEarning.dataLabels"
-                      [plotOptions]="sparklineEarning.plotOptions">
+                    <apx-chart [chart]="sparklineEarning.chart" [colors]="sparklineEarning.colors" [dataLabels]="sparklineEarning.dataLabels"
+                               [labels]="sparklineEarning.labels" [plotOptions]="sparklineEarning.plotOptions"
+                               [series]="sparklineEarning.series" class="apex-charts"
+                               dir="ltr">
                     </apx-chart>
                   </div>
 
@@ -149,10 +149,10 @@
               <div class="col-sm-6">
                 <div class="mt-5 mt-sm-0">
                   <div class="mb-3">
-                    <apx-chart dir="ltr" class="apex-charts" [series]="sparklineMonthly.series"
-                      [chart]="sparklineMonthly.chart" [colors]="sparklineMonthly.colors"
-                      [labels]="sparklineMonthly.labels" [dataLabels]="sparklineMonthly.dataLabels"
-                      [plotOptions]="sparklineMonthly.plotOptions">
+                    <apx-chart [chart]="sparklineMonthly.chart" [colors]="sparklineMonthly.colors" [dataLabels]="sparklineMonthly.dataLabels"
+                               [labels]="sparklineMonthly.labels" [plotOptions]="sparklineMonthly.plotOptions"
+                               [series]="sparklineMonthly.series" class="apex-charts"
+                               dir="ltr">
                     </apx-chart>
                   </div>
 
@@ -173,19 +173,19 @@
       <div class="card">
         <div class="card-body">
           <div class="dropdown float-right" ngbDropdown>
-            <a href="javascript: void(0);" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown"
-              aria-expanded="false" ngbDropdownToggle>
+            <a aria-expanded="false" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown"
+               href="javascript: void(0);" ngbDropdownToggle>
               <i class="mdi mdi-dots-vertical"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
               <!-- item-->
-              <a href="javascript:void(0);" class="dropdown-item">Sales Report</a>
+              <a class="dropdown-item" href="javascript:void(0);">Sales Report</a>
               <!-- item-->
-              <a href="javascript:void(0);" class="dropdown-item">Export Report</a>
+              <a class="dropdown-item" href="javascript:void(0);">Export Report</a>
               <!-- item-->
-              <a href="javascript:void(0);" class="dropdown-item">Profit</a>
+              <a class="dropdown-item" href="javascript:void(0);">Profit</a>
               <!-- item-->
-              <a href="javascript:void(0);" class="dropdown-item">Action</a>
+              <a class="dropdown-item" href="javascript:void(0);">Action</a>
             </div>
           </div>
 
@@ -203,68 +203,68 @@
             <div class="table-responsive mt-4">
               <table class="table table-hover mb-0 table-centered table-nowrap">
                 <tbody>
-                  <tr>
-                    <td style="width: 60px;">
-                      <div class="avatar-xs">
-                        <div class="avatar-title rounded-circle bg-light">
-                          <img src="assets/images/companies/img-1.png" alt="" height="20">
-                        </div>
+                <tr>
+                  <td style="width: 60px;">
+                    <div class="avatar-xs">
+                      <div class="avatar-title rounded-circle bg-light">
+                        <img alt="" height="20" src="assets/images/companies/img-1.png">
                       </div>
-                    </td>
+                    </div>
+                  </td>
 
-                    <td>
-                      <h5 class="font-size-14 mb-0">Source 1</h5>
-                    </td>
-                    <td>
-                      <div id="spak-chart1"></div>
-                    </td>
-                    <td>
-                      <p class="text-muted mb-0">$ 2478</p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="avatar-xs">
-                        <div class="avatar-title rounded-circle bg-light">
-                          <img src="assets/images/companies/img-2.png" alt="" height="20">
-                        </div>
+                  <td>
+                    <h5 class="font-size-14 mb-0">Source 1</h5>
+                  </td>
+                  <td>
+                    <div id="spak-chart1"></div>
+                  </td>
+                  <td>
+                    <p class="text-muted mb-0">$ 2478</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="avatar-xs">
+                      <div class="avatar-title rounded-circle bg-light">
+                        <img alt="" height="20" src="assets/images/companies/img-2.png">
                       </div>
-                    </td>
-                    <td>
-                      <h5 class="font-size-14 mb-0">Source 2</h5>
-                    </td>
+                    </div>
+                  </td>
+                  <td>
+                    <h5 class="font-size-14 mb-0">Source 2</h5>
+                  </td>
 
-                    <td>
-                      <div id="spak-chart2"></div>
-                    </td>
-                    <td>
-                      <p class="text-muted mb-0">$ 2625</p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="avatar-xs">
-                        <div class="avatar-title rounded-circle bg-light">
-                          <img src="assets/images/companies/img-3.png" alt="" height="20">
-                        </div>
+                  <td>
+                    <div id="spak-chart2"></div>
+                  </td>
+                  <td>
+                    <p class="text-muted mb-0">$ 2625</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="avatar-xs">
+                      <div class="avatar-title rounded-circle bg-light">
+                        <img alt="" height="20" src="assets/images/companies/img-3.png">
                       </div>
-                    </td>
-                    <td>
-                      <h5 class="font-size-14 mb-0">Source 3</h5>
-                    </td>
-                    <td>
-                      <div id="spak-chart3"></div>
-                    </td>
-                    <td>
-                      <p class="text-muted mb-0">$ 2856</p>
-                    </td>
-                  </tr>
+                    </div>
+                  </td>
+                  <td>
+                    <h5 class="font-size-14 mb-0">Source 3</h5>
+                  </td>
+                  <td>
+                    <div id="spak-chart3"></div>
+                  </td>
+                  <td>
+                    <p class="text-muted mb-0">$ 2856</p>
+                  </td>
+                </tr>
                 </tbody>
               </table>
             </div>
 
             <div class="text-center mt-4">
-              <a href="javascript: void(0);" class="btn btn-primary btn-sm">View more</a>
+              <a class="btn btn-primary btn-sm" href="javascript: void(0);">View more</a>
             </div>
           </div>
         </div>
@@ -274,19 +274,19 @@
       <div class="card">
         <div class="card-body">
           <div class="dropdown float-right" ngbDropdown>
-            <a href="javascript: void(0);" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown"
-              aria-expanded="false" ngbDropdownToggle>
+            <a aria-expanded="false" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown"
+               href="javascript: void(0);" ngbDropdownToggle>
               <i class="mdi mdi-dots-vertical"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
               <!-- item-->
-              <a href="javascript:void(0);" class="dropdown-item">Sales Report</a>
+              <a class="dropdown-item" href="javascript:void(0);">Sales Report</a>
               <!-- item-->
-              <a href="javascript:void(0);" class="dropdown-item">Export Report</a>
+              <a class="dropdown-item" href="javascript:void(0);">Export Report</a>
               <!-- item-->
-              <a href="javascript:void(0);" class="dropdown-item">Profit</a>
+              <a class="dropdown-item" href="javascript:void(0);">Profit</a>
               <!-- item-->
-              <a href="javascript:void(0);" class="dropdown-item">Action</a>
+              <a class="dropdown-item" href="javascript:void(0);">Action</a>
             </div>
           </div>
 
@@ -415,24 +415,24 @@
       <div class="card">
         <div class="card-body">
           <div class="dropdown float-right" ngbDropdown>
-            <a href="javascript: void(0);" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown"
-              aria-expanded="false" ngbDropdownToggle>
+            <a aria-expanded="false" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown"
+               href="javascript: void(0);" ngbDropdownToggle>
               <i class="mdi mdi-dots-vertical"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
               <!-- item-->
-              <a href="javascript:void(0);" class="dropdown-item">Sales Report</a>
+              <a class="dropdown-item" href="javascript:void(0);">Sales Report</a>
               <!-- item-->
-              <a href="javascript:void(0);" class="dropdown-item">Export Report</a>
+              <a class="dropdown-item" href="javascript:void(0);">Export Report</a>
               <!-- item-->
-              <a href="javascript:void(0);" class="dropdown-item">Profit</a>
+              <a class="dropdown-item" href="javascript:void(0);">Profit</a>
               <!-- item-->
-              <a href="javascript:void(0);" class="dropdown-item">Action</a>
+              <a class="dropdown-item" href="javascript:void(0);">Action</a>
             </div>
           </div>
 
           <h4 class="card-title mb-4">Revenue by Locations</h4>
-          <div style="height: 196px;" leaflet [leafletOptions]="options">
+          <div [leafletOptions]="options" leaflet style="height: 196px;">
           </div>
           <div class="row justify-content-center">
             <div class="col-xl-5 col-md-6">
@@ -464,7 +464,7 @@
             </div>
           </div>
           <div class="text-center mt-4">
-            <a href="javascript: void(0);" class="btn btn-primary btn-sm">Learn more</a>
+            <a class="btn btn-primary btn-sm" href="javascript: void(0);">Learn more</a>
           </div>
         </div>
       </div>
@@ -487,15 +487,15 @@
                 <ul class="list-inline user-chat-nav text-right mb-0">
                   <li class="list-inline-item">
                     <div class="dropdown" ngbDropdown>
-                      <button class="btn nav-btn dropdown-toggle" type="button" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
+                      <button aria-expanded="false" aria-haspopup="true" class="btn nav-btn dropdown-toggle"
+                              data-toggle="dropdown" ngbDropdownToggle type="button">
                         <i class="mdi mdi-magnify"></i>
                       </button>
                       <div class="dropdown-menu dropdown-menu-right dropdown-menu-md p-0" ngbDropdownMenu>
                         <form class="p-2">
                           <div class="search-box">
                             <div class="position-relative">
-                              <input type="text" class="form-control rounded bg-light border-0" placeholder="Search...">
+                              <input class="form-control rounded bg-light border-0" placeholder="Search..." type="text">
                               <i class="mdi mdi-magnify search-icon"></i>
                             </div>
                           </div>
@@ -505,8 +505,8 @@
                   </li>
                   <li class="list-inline-item d-none d-sm-inline-block">
                     <div class="dropdown" ngbDropdown>
-                      <button class="btn nav-btn dropdown-toggle" type="button" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
+                      <button aria-expanded="false" aria-haspopup="true" class="btn nav-btn dropdown-toggle"
+                              data-toggle="dropdown" ngbDropdownToggle type="button">
                         <i class="mdi mdi-cog"></i>
                       </button>
                       <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
@@ -520,8 +520,8 @@
 
                   <li class="list-inline-item">
                     <div class="dropdown" ngbDropdown>
-                      <button class="btn nav-btn dropdown-toggle" type="button" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
+                      <button aria-expanded="false" aria-haspopup="true" class="btn nav-btn dropdown-toggle"
+                              data-toggle="dropdown" ngbDropdownToggle type="button">
                         <i class="mdi mdi-dots-horizontal"></i>
                       </button>
                       <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
@@ -540,12 +540,12 @@
           <div class="chat-widget">
             <div class="chat-conversation">
               <perfect-scrollbar style="height: 292px;">
-                <ul class="list-unstyled mb-0 pr-3" *ngFor="let data of chatData"
-                  [ngClass]="{ 'right': data.align === 'right' }">
+                <ul *ngFor="let data of chatData" [ngClass]="{ 'right': data.align === 'right' }"
+                    class="list-unstyled mb-0 pr-3">
                   <li *ngIf="!data.text">
                     <div class="conversation-list">
                       <div class="chat-avatar">
-                        <img src="{{data.image}}" alt="">
+                        <img alt="" src="{{data.image}}">
                       </div>
                       <div class="ctext-wrap">
                         <div class="conversation-name">{{data.name}}</div>
@@ -573,16 +573,16 @@
           <form (ngSubmit)="messageSave()" [formGroup]="formData" class="row">
             <div class="col">
               <div class="position-relative">
-                <input type="text" class="form-control chat-input" placeholder="Enter Message..."
-                  formControlName="message" [ngClass]="{'is-invalid': chatSubmit && form.message.errors}">
+                <input [ngClass]="{'is-invalid': chatSubmit && form.message.errors}" class="form-control chat-input" formControlName="message"
+                       placeholder="Enter Message..." type="text">
                 <div *ngIf="chatSubmit && form.message.errors" class="invalid-feedback">
                   <span *ngIf="form.message.errors.required">This value is required.</span>
                 </div>
               </div>
             </div>
             <div class="col-auto">
-              <button type="submit" class="btn btn-primary chat-send w-md waves-effect waves-light"><span
-                  class="d-none d-sm-inline-block mr-2">Send</span> <i class="mdi mdi-send"></i></button>
+              <button class="btn btn-primary chat-send w-md waves-effect waves-light" type="submit"><span
+                class="d-none d-sm-inline-block mr-2">Send</span> <i class="mdi mdi-send"></i></button>
             </div>
           </form>
         </div>
@@ -592,61 +592,61 @@
       <div class="card">
         <div class="card-body">
           <div class="dropdown float-right" ngbDropdown>
-            <a href="javascript: void(0);" class="dropdown-toggle arrow-none card-drop" ngbDropdownToggle
-              data-toggle="dropdown" aria-expanded="false">
+            <a aria-expanded="false" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown"
+               href="javascript: void(0);" ngbDropdownToggle>
               <i class="mdi mdi-dots-vertical"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
               <!-- item-->
-              <a href="javascript:void(0);" class="dropdown-item">Sales Report</a>
+              <a class="dropdown-item" href="javascript:void(0);">Sales Report</a>
               <!-- item-->
-              <a href="javascript:void(0);" class="dropdown-item">Export Report</a>
+              <a class="dropdown-item" href="javascript:void(0);">Export Report</a>
               <!-- item-->
-              <a href="javascript:void(0);" class="dropdown-item">Profit</a>
+              <a class="dropdown-item" href="javascript:void(0);">Profit</a>
               <!-- item-->
-              <a href="javascript:void(0);" class="dropdown-item">Action</a>
+              <a class="dropdown-item" href="javascript:void(0);">Action</a>
             </div>
           </div>
           <h4 class="card-title mb-4">Latest Transactions</h4>
           <div class="row">
             <div class="col-sm-12 col-md-12">
-              <div id="tickets-table_filter" class="dataTables_filter text-md-right"><label
-                  class="d-inline-flex align-items-center">Search:
-                  <input type="text" name="searchTerm" class="form-control form-control-sm ml-2"
-                    aria-controls="tickets-table" [(ngModel)]="term" /></label></div>
+              <div class="dataTables_filter text-md-right" id="tickets-table_filter"><label
+                class="d-inline-flex align-items-center">Search:
+                <input [(ngModel)]="term" aria-controls="tickets-table" class="form-control form-control-sm ml-2"
+                       name="searchTerm" type="text"/></label></div>
             </div>
           </div>
           <div class="table-responsive">
             <table class="table table-centered">
               <thead class="thead-light">
-                <tr>
-                  <th>Order ID</th>
-                  <th>Date</th>
-                  <th>Billing Name</th>
-                  <th>Total</th>
-                  <th>Payment Status</th>
-                  <th>Action</th>
-                </tr>
+              <tr>
+                <th>Order ID</th>
+                <th>Date</th>
+                <th>Billing Name</th>
+                <th>Total</th>
+                <th>Payment Status</th>
+                <th>Action</th>
+              </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of transactions|filter:term">
-                  <td>{{item.orderid}}</td>
-                  <td>{{item.date}}</td>
-                  <td>{{item.billingname}}</td>
-                  <td>{{item.total}}</td>
-                  <td>
-                    <div class="badge font-size-12" [ngClass]="{'badge-soft-danger': item.paymentstatus === 'Chargeback',
+              <tr *ngFor="let item of transactions|filter:term">
+                <td>{{item.orderid}}</td>
+                <td>{{item.date}}</td>
+                <td>{{item.billingname}}</td>
+                <td>{{item.total}}</td>
+                <td>
+                  <div [ngClass]="{'badge-soft-danger': item.paymentstatus === 'Chargeback',
                       'badge-soft-success':item.paymentstatus === 'Paid',
-                      'badge-soft-warning': item.paymentstatus === 'Unpaid'}">{{item.paymentstatus}}
-                    </div>
-                  </td>
-                  <td>
-                    <a href="javascript:void(0);" class="mr-3 text-primary" ngbTooltip="Edit"><i
-                        class="mdi mdi-pencil font-size-18"></i></a>
-                    <a href="javascript:void(0);" class="text-danger" ngbTooltip="Delete"><i
-                        class="mdi mdi-trash-can font-size-18"></i></a>
-                  </td>
-                </tr>
+                      'badge-soft-warning': item.paymentstatus === 'Unpaid'}" class="badge font-size-12">{{item.paymentstatus}}
+                  </div>
+                </td>
+                <td>
+                  <a class="mr-3 text-primary" href="javascript:void(0);" ngbTooltip="Edit"><i
+                    class="mdi mdi-pencil font-size-18"></i></a>
+                  <a class="text-danger" href="javascript:void(0);" ngbTooltip="Delete"><i
+                    class="mdi mdi-trash-can font-size-18"></i></a>
+                </td>
+              </tr>
               </tbody>
             </table>
           </div>

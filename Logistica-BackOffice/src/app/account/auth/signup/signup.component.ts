@@ -1,11 +1,11 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
 
-import { AuthenticationService } from '../../../core/services/auth.service';
-import { environment } from '../../../../environments/environment';
-import { first } from 'rxjs/operators';
-import { UserProfileService } from '../../../core/services/user.service';
+import {AuthenticationService} from '../../../core/services/auth.service';
+import {environment} from '../../../../environments/environment';
+import {first} from 'rxjs/operators';
+import {UserProfileService} from '../../../core/services/user.service';
 
 @Component({
   selector: 'app-signup',
@@ -24,7 +24,13 @@ export class SignupComponent implements OnInit, AfterViewInit {
 
   // tslint:disable-next-line: max-line-length
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private authenticationService: AuthenticationService,
-              private userService: UserProfileService) { }
+              private userService: UserProfileService) {
+  }
+
+  // convenience getter for easy access to form fields
+  get f() {
+    return this.signupForm.controls;
+  }
 
   ngOnInit() {
     document.body.removeAttribute('data-layout');
@@ -39,9 +45,6 @@ export class SignupComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
   }
-
-  // convenience getter for easy access to form fields
-  get f() { return this.signupForm.controls; }
 
   /**
    * On submit form

@@ -7,25 +7,26 @@
 
           <ng-container *ngFor="let item of menuItems">
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle arrow-none" href="javascript: void(0);" [routerLink]="item.link"
-                id="topnav-components" role="button" (click)="onMenuClick($event)">
-                <i class="{{ item.icon }} mr-2"></i>{{ item.label | translate }} <div *ngIf="item.subItems"
-                  class="arrow-down">
+              <a (click)="onMenuClick($event)" [routerLink]="item.link" class="nav-link dropdown-toggle arrow-none"
+                 href="javascript: void(0);" id="topnav-components" role="button">
+                <i class="{{ item.icon }} mr-2"></i>{{ item.label | translate }}
+                <div *ngIf="item.subItems"
+                     class="arrow-down">
                 </div>
               </a>
-              <div class="dropdown-menu row" aria-labelledby="topnav-dashboard" *ngIf="hasItems(item)" id="navmenu">
-                <ng-template ngFor let-i="index" let-subitem [ngForOf]="item.subItems">
-                  <a class="col dropdown-item side-nav-link-ref" *ngIf="!hasItems(subitem)" [routerLink]="subitem.link"
-                    routerLinkActive="active">{{subitem.label | translate}}</a>
+              <div *ngIf="hasItems(item)" aria-labelledby="topnav-dashboard" class="dropdown-menu row" id="navmenu">
+                <ng-template [ngForOf]="item.subItems" let-i="index" let-subitem ngFor>
+                  <a *ngIf="!hasItems(subitem)" [routerLink]="subitem.link" class="col dropdown-item side-nav-link-ref"
+                     routerLinkActive="active">{{subitem.label | translate}}</a>
 
-                  <div class="dropdown" *ngIf="hasItems(subitem)">
-                    <a class="dropdown-item" (click)="onMenuClick($event)">{{ subitem.label | translate}}
+                  <div *ngIf="hasItems(subitem)" class="dropdown">
+                    <a (click)="onMenuClick($event)" class="dropdown-item">{{ subitem.label | translate}}
                       <div class="arrow-down"></div>
                     </a>
                     <div class="dropdown-menu">
-                      <ng-template ngFor let-subSubitem [ngForOf]="subitem.subItems">
-                        <a class="dropdown-item side-nav-link-ref" [routerLink]="subSubitem.link"
-                          routerLinkActive="active">{{ subSubitem.label | translate}}</a>
+                      <ng-template [ngForOf]="subitem.subItems" let-subSubitem ngFor>
+                        <a [routerLink]="subSubitem.link" class="dropdown-item side-nav-link-ref"
+                           routerLinkActive="active">{{ subSubitem.label | translate}}</a>
                       </ng-template>
                     </div>
                   </div>
@@ -34,18 +35,19 @@
             </li>
           </ng-container>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle arrow-none" href="javascript: void(0);" id="topnav-layout" role="button"
-              (click)="onMenuClick($event)">
-              <i class="ri-layout-3-line mr-2"></i>{{'MENUITEMS.LAYOUTS.TEXT' | translate}} <div class="arrow-down">
+            <a (click)="onMenuClick($event)" class="nav-link dropdown-toggle arrow-none" href="javascript: void(0);" id="topnav-layout"
+               role="button">
+              <i class="ri-layout-3-line mr-2"></i>{{'MENUITEMS.LAYOUTS.TEXT' | translate}}
+              <div class="arrow-down">
               </div>
             </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="topnav-layout">
-              <a href="javascript: void(0);" class="dropdown-item"
-                (click)="changeLayout('vertical')">{{ 'MENUITEMS.LAYOUTS.LIST.VERTICAL' | translate}}</a>
-              <a href="javascript: void(0);" class="dropdown-item"
-                (click)="topbarLight()">{{ 'MENUITEMS.LAYOUTS.LIST.LIGHTTOPBAR' | translate}}</a>
-              <a href="javascript: void(0);" class="dropdown-item"
-                (click)="boxedWidth()">{{ 'MENUITEMS.LAYOUTS.LIST.BOXED' | translate}}</a>
+            <div aria-labelledby="topnav-layout" class="dropdown-menu dropdown-menu-right">
+              <a (click)="changeLayout('vertical')" class="dropdown-item"
+                 href="javascript: void(0);">{{ 'MENUITEMS.LAYOUTS.LIST.VERTICAL' | translate}}</a>
+              <a (click)="topbarLight()" class="dropdown-item"
+                 href="javascript: void(0);">{{ 'MENUITEMS.LAYOUTS.LIST.LIGHTTOPBAR' | translate}}</a>
+              <a (click)="boxedWidth()" class="dropdown-item"
+                 href="javascript: void(0);">{{ 'MENUITEMS.LAYOUTS.LIST.BOXED' | translate}}</a>
             </div>
           </li>
         </ul>

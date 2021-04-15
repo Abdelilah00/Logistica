@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-vertical',
@@ -7,7 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VerticalComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
     document.body.setAttribute('data-sidebar', 'dark');
@@ -16,6 +17,7 @@ export class VerticalComponent implements OnInit {
     document.body.removeAttribute('data-topbar');
     document.body.classList.remove('auth-body-bg');
   }
+
   /**
    * On mobile toggle button clicked
    */

@@ -1,12 +1,12 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import MetisMenu from 'metismenujs/dist/metismenujs';
-import { Router, NavigationEnd } from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
 
-import { EventService } from '../../../core/services/event.service';
+import {EventService} from '../../../core/services/event.service';
 
 
-import { MENU } from './menu';
-import { MenuItem } from './menu.model';
+import {MENU} from './menu';
+import {MenuItem} from './menu.model';
 
 @Component({
   selector: 'app-sidebar',
@@ -90,8 +90,12 @@ export class SidebarComponent implements OnInit, AfterViewInit {
             const childAnchor = parent3El.querySelector('.has-arrow');
             const childDropdown = parent3El.querySelector('.has-dropdown');
 
-            if (childAnchor) { childAnchor.classList.add('mm-active'); }
-            if (childDropdown) { childDropdown.classList.add('mm-active'); }
+            if (childAnchor) {
+              childAnchor.classList.add('mm-active');
+            }
+            if (childDropdown) {
+              childDropdown.classList.add('mm-active');
+            }
 
             const parent4El = parent3El.parentElement;
             if (parent4El && parent4El.id !== 'side-menu') {
@@ -100,7 +104,9 @@ export class SidebarComponent implements OnInit, AfterViewInit {
               if (parent5El && parent5El.id !== 'side-menu') {
                 parent5El.classList.add('mm-active');
                 const childanchor = parent5El.querySelector('.is-parent');
-                if (childanchor && parent5El.id !== 'side-menu') { childanchor.classList.add('mm-active'); }
+                if (childanchor && parent5El.id !== 'side-menu') {
+                  childanchor.classList.add('mm-active');
+                }
               }
             }
           }

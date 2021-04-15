@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { HorizontalComponent } from './horizontal.component';
+import {HorizontalComponent} from './horizontal.component';
 
 describe('HorizontalComponent', () => {
   let component: HorizontalComponent;
@@ -8,9 +8,9 @@ describe('HorizontalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HorizontalComponent ]
+      declarations: [HorizontalComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

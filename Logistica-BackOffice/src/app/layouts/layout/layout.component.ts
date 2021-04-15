@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
-import { EventService } from '../../core/services/event.service';
+import {EventService} from '../../core/services/event.service';
 
-import { LAYOUT_VERTICAL, LAYOUT_HORIZONTAL } from './layouts.model';
+import {LAYOUT_HORIZONTAL, LAYOUT_VERTICAL} from './layouts.model';
 
 @Component({
   selector: 'app-layout',
@@ -14,7 +14,8 @@ export class LayoutComponent implements OnInit {
   // layout related config
   layoutType: string;
 
-  constructor(private eventService: EventService) { }
+  constructor(private eventService: EventService) {
+  }
 
   ngOnInit() {
     // default settings

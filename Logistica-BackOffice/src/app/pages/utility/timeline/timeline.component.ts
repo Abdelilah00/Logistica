@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
-import { timelineData } from './data';
+import {timelineData} from './data';
 
 @Component({
   selector: 'app-timeline',
@@ -13,10 +13,12 @@ export class TimelineComponent implements OnInit {
   breadCrumbItems: Array<{}>;
 
   timelineData;
-  constructor() { }
+
+  constructor() {
+  }
 
   ngOnInit(): void {
-    this.breadCrumbItems = [{ label: 'Utility' }, { label: 'Timeline', active: true }];
+    this.breadCrumbItems = [{label: 'Utility'}, {label: 'Timeline', active: true}];
 
 
     this.timelineData = timelineData;
