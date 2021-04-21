@@ -17,18 +17,6 @@ export const MENU: MenuItem[] = [
     link: '/'
   },
   {
-    id: 3,
-    label: 'MENUITEMS.PRODUCTS.TEXT',
-    icon: 'ri-product-hunt-line',
-    subItems: [
-      {
-        id: 4,
-        label: 'MENUITEMS.PRODUCTS.LIST.PRODUCT',
-        link: '/',
-        parentId: 3
-      }]
-  },
-  {
     id: 5,
     label: 'MENUITEMS.TRANSACTION.TEXT',
     icon: 'ri-file-list-3-line',
@@ -44,6 +32,24 @@ export const MENU: MenuItem[] = [
         link: '/',
         parentId: 5
       }]
+  },
+  {
+    id: 3,
+    label: 'MENUITEMS.PRODUCTS.TEXT',
+    icon: 'ri-product-hunt-line',
+    subItems: [
+      {
+        id: 4,
+        label: 'MENUITEMS.PRODUCTS.LIST.PRODUCT',
+        link: '/',
+        parentId: 3
+      }]
+  },
+  {
+    id: 8,
+    label: 'MENUITEMS.STOCKS.TEXT',
+    icon: 'ri-product-hunt-line',
+    link: '/'
   },
 
   {
@@ -79,6 +85,37 @@ export const MENU: MenuItem[] = [
         label: 'MENUITEMS.AUTHENTICATION.LIST.LOCKSCREEN',
         link: '/pages/lock-screen-1',
         parentId: 18
+      }
+    ]
+  },
+  {
+    id: 23,
+    label: 'MENUITEMS.PARAMS.TEXT',
+    icon: 'ri-account-circle-line',
+    subItems: [
+      {
+        id: 24,
+        label: 'MENUITEMS.PARAMS.LIST.PRODUCT',
+        link: '/',
+        parentId: 23
+      },
+      {
+        id: 25,
+        label: 'MENUITEMS.PARAMS.LIST.PRODUCT',
+        link: '/',
+        parentId: 23
+      },
+      {
+        id: 26,
+        label: 'MENUITEMS.PARAMS.LIST.PRODUCT',
+        link: '/',
+        parentId: 23
+      },
+      {
+        id: 27,
+        label: 'MENUITEMS.PARAMS.LIST.PRODUCT',
+        link: '/',
+        parentId: 23
       }
     ]
   },
