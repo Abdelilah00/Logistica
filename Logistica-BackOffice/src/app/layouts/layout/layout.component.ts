@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 
-import {EventService} from '../../core/services/event.service';
 
 import {LAYOUT_HORIZONTAL, LAYOUT_VERTICAL} from './layouts.model';
 
@@ -14,16 +13,13 @@ export class LayoutComponent implements OnInit {
   // layout related config
   layoutType: string;
 
-  constructor(private eventService: EventService) {
+  constructor() {
   }
 
   ngOnInit() {
     // default settings
     this.layoutType = LAYOUT_VERTICAL;
     // listen to event and change the layout, theme, etc
-    this.eventService.subscribe('changeLayout', (layout) => {
-      this.layoutType = layout;
-    });
   }
 
   /**

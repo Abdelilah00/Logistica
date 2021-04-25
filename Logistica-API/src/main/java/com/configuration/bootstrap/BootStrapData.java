@@ -8,14 +8,17 @@ package com.configuration.bootstrap;
 
 import com.configuration.TenantContext;
 import com.configuration.security.repositories.IUserRepository;
-import com.logistica.domains.Products.Category;
+import com.logistica.domains.Products.Product;
 import com.logistica.repositories.ITestRepository;
 import com.logistica.repositories.Products.ICategoryRepository;
+import com.logistica.repositories.Products.IProductRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.util.Date;
 
 @Component
 public class BootStrapData implements CommandLineRunner {
@@ -27,13 +30,28 @@ public class BootStrapData implements CommandLineRunner {
     private ITestRepository iTestRepository;
     @Autowired
     private ICategoryRepository iCategoryRepository;
+    @Autowired
+    private IProductRepository iProductRepository;
 
     @Override
     public void run(String... args) throws Exception {
 
-        var cat = new Category();
+        /*var cat = new Category();
         cat.setName("category A");
-        iCategoryRepository.save(cat);
+        iCategoryRepository.save(cat)
+        var prod = new Product();
+        prod.setPriceHT(12.5f);
+        prod.getCategory().setId(1);
+        prod.setName("prod A");
+        prod.setStockMax(10);
+        prod.setStockMin(2);
+        prod.setStockSecurity(5);
+        //prod.set(5);
+        prod.setStockSecurity(5);
+        prod.setExpDate(new Date());
+        iProductRepository.save(prod);;*/
+
+
         /*var user1 = new User();
         var admin = new Role();
         admin.setName(RoleName.ROLE_ADMIN);

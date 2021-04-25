@@ -2,7 +2,6 @@ import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/
 import MetisMenu from 'metismenujs/dist/metismenujs';
 import {NavigationEnd, Router} from '@angular/router';
 
-import {EventService} from '../../../core/services/event.service';
 
 
 import {MENU} from './menu';
@@ -21,7 +20,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
 
   @ViewChild('sideMenu') sideMenu: ElementRef;
 
-  constructor(private eventService: EventService, private router: Router) {
+  constructor(private router: Router) {
     router.events.forEach((event) => {
       if (event instanceof NavigationEnd) {
         this._activateMenuDropdown();
@@ -135,7 +134,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
    * @param layout Change the layout
    */
   changeLayout(layout: string) {
-    this.eventService.broadcast('changeLayout', layout);
+    // this.eventService.broadcast('changeLayout', layout);
   }
 
   /**

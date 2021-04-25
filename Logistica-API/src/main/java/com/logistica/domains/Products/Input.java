@@ -6,9 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +21,7 @@ public class Input extends BaseEntity {
     private String ActeurType;
     private String Stage;
 
-    @OneToMany(mappedBy = "input")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "input")
     //todo: get a list of transaction details without need to relational table
     private List<TransactionDetail> transactionDetails = new ArrayList<>();
 }

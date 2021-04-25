@@ -6,9 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -21,7 +19,7 @@ public class TransactionDetail extends BaseEntity {
     private Integer article;
     private Integer qte;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Product product = new Product();
     @ManyToOne
     private Input input;

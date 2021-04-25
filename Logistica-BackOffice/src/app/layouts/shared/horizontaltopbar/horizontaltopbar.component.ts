@@ -2,10 +2,6 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {DOCUMENT} from '@angular/common';
 import {CookieService} from 'ngx-cookie-service';
 import {Router} from '@angular/router';
-
-import {AuthenticationService} from '../../../core/services/auth.service';
-import {AuthfakeauthenticationService} from '../../../core/services/authfake.service';
-import {environment} from '../../../../environments/environment';
 import {LanguageService} from '../../../core/services/language.service';
 
 @Component({
@@ -31,8 +27,7 @@ export class HorizontaltopbarComponent implements OnInit {
     {text: 'Russian', flag: 'assets/images/flags/russia.jpg', lang: 'ru'},
   ];
 
-  constructor(@Inject(DOCUMENT) private document: any, private router: Router, private authService: AuthenticationService,
-              private authFackservice: AuthfakeauthenticationService,
+  constructor(@Inject(DOCUMENT) private document: any, private router: Router,
               public languageService: LanguageService,
               public cookiesService: CookieService) {
   }
@@ -119,11 +114,6 @@ export class HorizontaltopbarComponent implements OnInit {
    * Logout the user
    */
   logout() {
-    if (environment.defaultauth === 'firebase') {
-      this.authService.logout();
-    } else {
-      this.authFackservice.logout();
-    }
     this.router.navigate(['/account/login']);
   }
 

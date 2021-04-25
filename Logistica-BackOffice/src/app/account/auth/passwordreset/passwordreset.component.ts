@@ -2,8 +2,6 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 
-import {AuthenticationService} from '../../../core/services/auth.service';
-import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-passwordreset',
@@ -26,7 +24,7 @@ export class PasswordresetComponent implements OnInit, AfterViewInit {
   year: number = new Date().getFullYear();
 
   // tslint:disable-next-line: max-line-length
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private authenticationService: AuthenticationService) {
+  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router) {
   }
 
   // convenience getter for easy access to form fields
@@ -56,12 +54,6 @@ export class PasswordresetComponent implements OnInit, AfterViewInit {
     // stop here if form is invalid
     if (this.resetForm.invalid) {
       return;
-    }
-    if (environment.defaultauth === 'firebase') {
-      this.authenticationService.resetPassword(this.f.email.value)
-        .catch(error => {
-          this.error = error ? error : '';
-        });
     }
   }
 }

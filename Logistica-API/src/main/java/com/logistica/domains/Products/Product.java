@@ -29,6 +29,7 @@ public class Product extends BaseEntity {
     //One to one
     @OneToOne
     private Category category = new Category();
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
     private List<Defective> defectives = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")

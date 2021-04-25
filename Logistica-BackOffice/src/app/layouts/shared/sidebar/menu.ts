@@ -24,12 +24,12 @@ export const MENU: MenuItem[] = [
       {
         id: 6,
         label: 'MENUITEMS.TRANSACTION.LIST.INPUT',
-        link: '/',
+        link: '/transactions/inputs',
         parentId: 5
       }, {
         id: 7,
         label: 'MENUITEMS.TRANSACTION.LIST.OUTPUT',
-        link: '/',
+        link: '/transactions/outputs',
         parentId: 5
       }]
   },
@@ -65,25 +65,25 @@ export const MENU: MenuItem[] = [
       {
         id: 19,
         label: 'MENUITEMS.AUTHENTICATION.LIST.LOGIN',
-        link: '/pages/login-1',
+        link: '/extrapages/login-1',
         parentId: 18
       },
       {
         id: 20,
         label: 'MENUITEMS.AUTHENTICATION.LIST.REGISTER',
-        link: '/pages/register-1',
+        link: '/extrapages/register-1',
         parentId: 18
       },
       {
         id: 21,
         label: 'MENUITEMS.AUTHENTICATION.LIST.RECOVERPWD',
-        link: '/pages/recoverpwd-1',
+        link: '/extrapages/recoverpwd-1',
         parentId: 18
       },
       {
         id: 22,
         label: 'MENUITEMS.AUTHENTICATION.LIST.LOCKSCREEN',
-        link: '/pages/lock-screen-1',
+        link: '/extrapages/lock-screen-1',
         parentId: 18
       }
     ]
