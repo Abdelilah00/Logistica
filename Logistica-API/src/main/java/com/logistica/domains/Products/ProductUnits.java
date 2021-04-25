@@ -19,5 +19,6 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "productunits")
 public class ProductUnits extends BaseEntity {
-private String Product;
+    @ManyToOne
+    private Product product=new Product();
 }

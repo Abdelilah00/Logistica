@@ -1,15 +1,18 @@
 package com.logistica.domains.Commands;
 
 import com.alexy.models.BaseEntity;
+import com.logistica.domains.Products.QuoteStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -19,8 +22,13 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "quote")
 public class Quote extends BaseEntity {
-private String expDate;
-private String Supplier;
-private String Offer;
-private String QuoteStatus;
+    private Date expDate;
+    private QuoteStatus quoteStatus;
+
+    @OneToOne
+    private Supplier supplier;
+    @OneToOne
+    private Offer offer;
+    @OneToMany(mappedBy = "quote")
+    private List<QuoteDetail> quoteDetail = new ArrayList<>();
 }

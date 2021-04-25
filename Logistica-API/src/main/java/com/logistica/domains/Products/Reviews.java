@@ -5,12 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Getter
@@ -19,6 +17,8 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "reviews")
 public class Reviews extends BaseEntity {
-private String stars;
-private String Product;
+    private String stars;
+
+    @ManyToOne
+    private Product product;
 }

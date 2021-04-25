@@ -5,11 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,5 +19,8 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "characteristic")
 public class Characteristic extends BaseEntity {
-private String name;
+    private String name;
+
+    @OneToMany(mappedBy = "characteristic")
+    private List<ProductCharacteritic> productCharacteritics = new ArrayList<>();
 }

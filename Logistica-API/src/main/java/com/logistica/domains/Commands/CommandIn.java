@@ -1,16 +1,15 @@
 package com.logistica.domains.Commands;
 
 import com.alexy.models.BaseEntity;
+import com.logistica.domains.Organ.Service;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
 @Getter
@@ -19,10 +18,13 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "commandin")
 public class CommandIn extends BaseEntity {
-private String ref;
-private String description;
-private String Client;
-private String Service;
-private String PayementMethod;
-private String CommandDetail;
+    private String ref;
+    private String description;
+    @OneToOne
+    private Client client;
+    @OneToOne
+    private Service service;
+
+    private PaymentMethod payementMethod;
+    //private CommandDetail commandDetail;
 }

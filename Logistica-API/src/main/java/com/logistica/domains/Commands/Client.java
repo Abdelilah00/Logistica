@@ -1,4 +1,4 @@
-package com.logistica.domains.Products;
+package com.logistica.domains.Commands;
 
 import com.alexy.models.BaseEntity;
 import lombok.AllArgsConstructor;
@@ -15,9 +15,14 @@ import javax.persistence.Table;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "stockrespo")
-public class StockRespo extends BaseEntity {
+@Table(name = "client")
+public class Client extends BaseEntity {
     private String name;
-    @OneToOne(mappedBy = "stockRespo")
-    private Stock stock;
+
+    @OneToOne
+    private Contact contact;
+    @OneToOne
+    private Sector sector;
+    @OneToOne
+    private Bank bank;
 }

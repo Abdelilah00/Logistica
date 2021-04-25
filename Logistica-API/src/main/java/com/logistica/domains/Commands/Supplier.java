@@ -5,12 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
 @Getter
@@ -19,10 +17,14 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "supplier")
 public class Supplier extends BaseEntity {
-private String name;
-private String adresse;
-private String nRCommerce;
-private String Contact;
-private String Sector;
-private String Bank;
+    private String name;
+    private String adresse;
+    private String nRCommerce;
+
+    @OneToOne
+    private Contact contact;
+    @OneToOne
+    private Sector sector;
+    @OneToOne
+    private Bank bank;
 }

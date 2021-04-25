@@ -5,11 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,8 +20,16 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "stock")
 public class Stock extends BaseEntity {
-private String adresse;
-private String area;
-private String StockType;
-private String StockRespo;
+    private String adresse;
+    private String area;
+    //@OneToOne
+    //private StockType stockType;
+
+    @OneToOne
+    private  StockRespo stockRespo=new StockRespo();
+    @OneToMany(mappedBy = "stock")
+    private List<StockProduct> stockProducts = new ArrayList<>();
+    @OneToMany(mappedBy = "stock")
+    private List<StockCharacteristic> stockCharacteristics = new ArrayList<>();
+
 }

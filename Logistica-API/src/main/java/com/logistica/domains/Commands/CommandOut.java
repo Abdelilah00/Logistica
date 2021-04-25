@@ -5,12 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
 @Getter
@@ -19,9 +17,12 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "commandout")
 public class CommandOut extends BaseEntity {
-private String Supplier;
-private String CommandDetail;
-private String description;
-private String Needs;
-private String PayementMethod;
+    private String description;
+    @OneToOne
+    private Needs needs;
+    @OneToOne
+    private Supplier supplier;
+
+    //private  CommandDetail commandDetail;
+    //private  PayementMethod payementMethod;
 }

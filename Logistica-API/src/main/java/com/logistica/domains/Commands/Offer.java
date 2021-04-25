@@ -5,11 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -19,9 +20,12 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "offer")
 public class Offer extends BaseEntity {
-private String dateStart;
-private String dateEnd;
-private String Status;
-private String Needs;
-private String OffreDetail;
+    private Date dateStart;
+    private Date dateEnd;
+
+    @OneToMany
+    private List<Needs> needs = new ArrayList<>();
+
+    //private  Status status;
+    //private OffreDetail offreDetail;
 }

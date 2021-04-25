@@ -5,12 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Getter
@@ -19,9 +17,14 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "transactiondetail")
 public class TransactionDetail extends BaseEntity {
-private String qte;
-private String article;
-private String lot;
-private String Product;
-private String Input;
+    private Integer lot;
+    private Integer article;
+    private Integer qte;
+
+    @ManyToOne
+    private Product product = new Product();
+    @ManyToOne
+    private Input input;
+    @ManyToOne
+    private Output output;
 }

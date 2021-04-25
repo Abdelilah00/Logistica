@@ -1,15 +1,17 @@
 package com.logistica.dtos.Products.TransactionDetail;
 
 import com.alexy.models.BaseDto;
+import com.logistica.dtos.Products.Product.ProductCreateDto;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
 public class TransactionDetailCreateDto extends BaseDto {
-private String qte;
-private String article;
-private String lot;
-private String Product;
-private String Input;
+    private Integer qte;
+    private Integer article;
+    private Integer lot;
+    private ProductCreateDto productCreateDto;
 }

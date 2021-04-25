@@ -5,11 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -19,10 +18,35 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "product")
 public class Product extends BaseEntity {
-private String name;
-private String priceHT;
-private String expDate;
-private String tVA;
-private String Category;
-private String Parent;
+    private String name;
+    private Date expDate;
+    private Float priceHT;
+    private Float tVA;
+    private Integer stockMin;
+    private Integer stockMax;
+    private Integer stockSecurity;
+
+    //One to one
+    @OneToOne
+    private Category category = new Category();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+    private List<Defective> defectives = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+    private List<Reviews> reviews = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+    private List<ProductUnits> productUnits = new ArrayList<>();
+
+    //One To Many
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+    private List<TransactionDetail> transactionDetails = new ArrayList<>();
+
+    //Many to many
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+    private List<StockProduct> stockProducts = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+    private List<ProductCharacteritic> productCharacteritics = new ArrayList<>();
+
+    //private Category parent = new Category();
+
 }

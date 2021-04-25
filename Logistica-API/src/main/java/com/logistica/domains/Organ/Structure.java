@@ -20,5 +20,5 @@ import java.util.List;
 @Table(name = "structure")
 public class Structure extends BaseEntity {
 private String name;
-private String order;
+private Integer rang;
 }
