@@ -1,15 +1,12 @@
-import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {BaseModel, IListModel} from '../models/base-model.model';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {map, retry} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
 
-@Injectable({
-  providedIn: 'root'
-})
+
 /**
- * Service de base
+ * parent service
  */
 export abstract class BaseService<TModel extends BaseModel, TCreateModel extends BaseModel> {
   protected baseUrl: string;
@@ -19,12 +16,12 @@ export abstract class BaseService<TModel extends BaseModel, TCreateModel extends
     headers: new HttpHeaders({'Content-Type': 'application/json'}),
   };
 
-  constructor(protected httpClient: HttpClient, protected uri: string) {
+  protected constructor(protected httpClient: HttpClient, protected uri: string) {
     this.baseUrl = `${environment.apiBaseUrl}/${encodeURIComponent(uri)}`;
   }
 
   /**
-   * GetAll Items
+   * GetAll Items List Options
    * @param skipCount (optional)
    * @param maxResultCount (optional)
    */
@@ -35,7 +32,7 @@ export abstract class BaseService<TModel extends BaseModel, TCreateModel extends
   }
 
   /**
-   * GetAll Items in List
+   * GetAll Items Grid
    * @param skipCount (optional)
    * @param maxResultCount (optional)
    */

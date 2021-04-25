@@ -7,8 +7,25 @@
           <div>
             <!--  -->
             <a href="javascript:void(0);" class="btn btn-success mb-2" (click)="openModal(content)">
-              <i class="mdi mdi-plus mr-2"></i> Add Customer
+              <i class="mdi mdi-plus mr-2"></i> Add Input
             </a>
+
+            <kendo-grid [data]="gridData" [height]="410">
+              <kendo-grid-column field="acteur" title="acteur">
+              </kendo-grid-column>
+              <kendo-grid-column field="acteurType" title="acteurType">
+              </kendo-grid-column>
+              <kendo-grid-column field="stage" title="stage">
+              </kendo-grid-column>
+
+              <kendo-grid-command-column title="Options" width="220">
+                <ng-template kendoGridCellTemplate>
+                  <button [primary]="true" kendoGridEditCommand>Edit</button>
+                  <button kendoGridRemoveCommand>Delete</button>
+                </ng-template>
+              </kendo-grid-command-column>
+            </kendo-grid>
+
           </div>
         </div>
       </div>
