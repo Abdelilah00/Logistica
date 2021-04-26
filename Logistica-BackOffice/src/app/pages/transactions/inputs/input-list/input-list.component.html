@@ -10,21 +10,36 @@
               <i class="mdi mdi-plus mr-2"></i> Add Input
             </a>
 
-            <kendo-grid [data]="gridData" [height]="410">
-              <kendo-grid-column field="acteur" title="acteur">
-              </kendo-grid-column>
-              <kendo-grid-column field="acteurType" title="acteurType">
-              </kendo-grid-column>
-              <kendo-grid-column field="stage" title="stage">
-              </kendo-grid-column>
+            <table [dataSource]="dataSource" class="mat-elevation-z8" mat-table matSort>
 
-              <kendo-grid-command-column title="Options" width="220">
-                <ng-template kendoGridCellTemplate>
-                  <button [primary]="true" kendoGridEditCommand>Edit</button>
-                  <button kendoGridRemoveCommand>Delete</button>
-                </ng-template>
-              </kendo-grid-command-column>
-            </kendo-grid>
+              <!-- Position Column -->
+              <ng-container matColumnDef="position">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header> No.</th>
+                <td *matCellDef="let element" mat-cell> {{element.position}} </td>
+              </ng-container>
+
+              <!-- Name Column -->
+              <ng-container matColumnDef="name">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header> Name</th>
+                <td *matCellDef="let element" mat-cell> {{element.name}} </td>
+              </ng-container>
+
+              <!-- Weight Column -->
+              <ng-container matColumnDef="weight">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header> Weight</th>
+                <td *matCellDef="let element" mat-cell> {{element.weight}} </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="symbol">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header> Symbol</th>
+                <td *matCellDef="let element" mat-cell> {{element.symbol}} </td>
+              </ng-container>
+
+              <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+              <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+            </table>
+
 
           </div>
         </div>

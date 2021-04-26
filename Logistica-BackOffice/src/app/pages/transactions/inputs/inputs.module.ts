@@ -7,7 +7,8 @@ import {ArchwizardModule} from 'angular-archwizard';
 import {UiModule} from '../../../shared/ui/ui.module';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {DropzoneModule} from 'ngx-dropzone-wrapper';
-import {BodyModule, GridModule, SharedModule} from '@progress/kendo-angular-grid';
+import {MatTableModule} from '@angular/material/table';
+import {MatSortModule} from '@angular/material/sort';
 
 
 const routes: Routes = [
@@ -26,9 +27,8 @@ const routes: Routes = [
     UiModule,
     NgSelectModule,
     DropzoneModule,
-    GridModule,
-    SharedModule,
-    BodyModule
+    MatTableModule,
+    MatSortModule
   ]
 })
 export class InputsModule {
