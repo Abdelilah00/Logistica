@@ -10,6 +10,7 @@ export class User {
   email: string;
 }
 
+
 export class Input extends BaseModel {
 
   acteur: string;
@@ -21,6 +22,8 @@ export class Input extends BaseModel {
 
 export class TransactionDetail extends BaseModel {
   article: number;
+  inputId: number;
+  outputId: number;
   lot: number;
   qte: number;
   product: Product;

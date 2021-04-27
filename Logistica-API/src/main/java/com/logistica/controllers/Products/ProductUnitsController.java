@@ -9,6 +9,6 @@ import com.logistica.dtos.Products.ProductUnits.ProductUnitsDto;
 import com.logistica.dtos.Products.ProductUnits.ProductUnitsUpdateDto;
 
 @RestController
-@RequestMapping("api/productunitss")
+@RequestMapping("api/productUnits")
 public class ProductUnitsController extends BaseCrudController<ProductUnits, ProductUnitsDto, ProductUnitsCreateDto, ProductUnitsUpdateDto> {
 }

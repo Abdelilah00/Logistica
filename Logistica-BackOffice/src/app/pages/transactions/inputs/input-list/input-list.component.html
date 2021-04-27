@@ -10,37 +10,33 @@
               <i class="mdi mdi-plus mr-2"></i> Add Input
             </a>
 
-            <table [dataSource]="dataSource" class="mat-elevation-z8" mat-table matSort>
+            <kendo-grid (dataStateChange)="onStateChange($event)" [data]="gridData"
+                        [height]="500" [pageSize]="gridState.take" [pageable]="true"
+                        [skip]="gridState.skip"
+                        [sort]="gridState.sort" [sortable]="true">
+              <kendo-grid-column field="acteur" title="Acteur">
+              </kendo-grid-column>
+              <kendo-grid-column field="stage" title="Stage">
+              </kendo-grid-column>
+              <kendo-grid-column field="stage" title="Qte Totale">
+              </kendo-grid-column>
+              <kendo-grid-column field="stage" title="Lot tt">
+              </kendo-grid-column>
+              <kendo-grid-column field="stage" title="Article tt">
+              </kendo-grid-column>
 
-              <!-- Position Column -->
-              <ng-container matColumnDef="position">
-                <th *matHeaderCellDef mat-header-cell mat-sort-header> No.</th>
-                <td *matCellDef="let element" mat-cell> {{element.position}} </td>
-              </ng-container>
+              <kendo-grid-command-column title="Options">
+                <ng-template kendoGridCellTemplate>
+                  <button [primary]="true" kendoGridEditCommand>Edit</button>
+                  <button kendoGridRemoveCommand>Delete</button>
+                </ng-template>
+              </kendo-grid-command-column>
 
-              <!-- Name Column -->
-              <ng-container matColumnDef="name">
-                <th *matHeaderCellDef mat-header-cell mat-sort-header> Name</th>
-                <td *matCellDef="let element" mat-cell> {{element.name}} </td>
-              </ng-container>
+              <div *kendoGridDetailTemplate="let dataItem">
+                <app-transaction-details [inputId]='dataItem.id'></app-transaction-details>
+              </div>
 
-              <!-- Weight Column -->
-              <ng-container matColumnDef="weight">
-                <th *matHeaderCellDef mat-header-cell mat-sort-header> Weight</th>
-                <td *matCellDef="let element" mat-cell> {{element.weight}} </td>
-              </ng-container>
-
-              <!-- Symbol Column -->
-              <ng-container matColumnDef="symbol">
-                <th *matHeaderCellDef mat-header-cell mat-sort-header> Symbol</th>
-                <td *matCellDef="let element" mat-cell> {{element.symbol}} </td>
-              </ng-container>
-
-              <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-              <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
-            </table>
-
-
+            </kendo-grid>
           </div>
         </div>
       </div>
@@ -51,13 +47,14 @@
 <!-- Contacts model  -->
 <ng-template #content role="document" let-modal="close">
   <div class="modal-header">
-    <h5 class="modal-title">Add Contacts</h5>
+    <h5 class="modal-title">Add Input</h5>
     <button type="button" class="close" aria-label="Close" (click)="modal('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body p-3">
     <div class="text-left">
+      <app-transaction-details [inputId]='null'></app-transaction-details>
     </div>
   </div>
 </ng-template>

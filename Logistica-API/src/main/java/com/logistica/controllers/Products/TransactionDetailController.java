@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @RestController
-@RequestMapping("api/transactiondetails")
+@RequestMapping("api/transactionDetails")
 public class TransactionDetailController extends BaseCrudController<TransactionDetail, TransactionDetailDto, TransactionDetailCreateDto, TransactionDetailUpdateDto> {
 
     @GetMapping(path = "/getByInputId/{inputId}")

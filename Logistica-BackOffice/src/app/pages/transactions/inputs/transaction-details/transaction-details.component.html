@@ -1,0 +1,29 @@
+<kendo-grid
+  (add)="addHandler()"
+  (edit)="editHandler($event)"
+  (remove)="removeHandler($event)"
+  [data]="view"
+  [navigable]="true"
+  kendoGridFocusable>
+
+  <ng-template kendoGridToolbarTemplate>
+    <button kendoGridAddCommand>Add new</button>
+  </ng-template>
+
+  <kendo-grid-column field="productName" title="Product Name">
+  </kendo-grid-column>
+  <kendo-grid-column field="lot" title="Lot">
+  </kendo-grid-column>
+  <kendo-grid-column field="article" title="Article">
+  </kendo-grid-column>
+  <kendo-grid-column field="qte" title="Qte">
+  </kendo-grid-column>
+
+
+  <kendo-grid-command-column title="Options" width="220">
+    <ng-template kendoGridCellTemplate>
+      <button [primary]="true" kendoGridEditCommand>Edit</button>
+      <button kendoGridRemoveCommand>Delete</button>
+    </ng-template>
+  </kendo-grid-command-column>
+</kendo-grid>

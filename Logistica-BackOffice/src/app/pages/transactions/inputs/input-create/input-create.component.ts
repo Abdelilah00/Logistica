@@ -5,6 +5,7 @@ import {Component, OnInit} from '@angular/core';
   templateUrl: './input-create.component.html',
   styleUrls: ['./input-create.component.scss']
 })
+
 export class InputCreateComponent implements OnInit {
 
   breadCrumbItems: Array<{}>;

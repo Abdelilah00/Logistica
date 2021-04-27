@@ -9,6 +9,6 @@ import com.logistica.dtos.Products.Category.CategoryDto;
 import com.logistica.dtos.Products.Category.CategoryUpdateDto;
 
 @RestController
-@RequestMapping("api/categorys")
+@RequestMapping("api/categories")
 public class CategoryController extends BaseCrudController<Category, CategoryDto, CategoryCreateDto, CategoryUpdateDto> {
 }

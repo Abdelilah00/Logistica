@@ -9,6 +9,6 @@ import com.logistica.dtos.Products.ProductCharacteritic.ProductCharacteriticDto;
 import com.logistica.dtos.Products.ProductCharacteritic.ProductCharacteriticUpdateDto;
 
 @RestController
-@RequestMapping("api/productcharacteritics")
+@RequestMapping("api/productCharacteritics")
 public class ProductCharacteriticController extends BaseCrudController<ProductCharacteritic, ProductCharacteriticDto, ProductCharacteriticCreateDto, ProductCharacteriticUpdateDto> {
 }

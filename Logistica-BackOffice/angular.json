@@ -28,6 +28,9 @@
               "src/assets"
             ],
             "styles": [
+              {
+                "input": "node_modules/@progress/kendo-theme-default/dist/all.css"
+              },
               "src/assets/scss/bootstrap.scss",
               "src/assets/scss/app.scss",
               "src/styles.scss"
