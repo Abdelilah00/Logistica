@@ -4,10 +4,12 @@ import com.alexy.models.BaseDto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Getter
 @Setter
 public class InputUpdateDto extends BaseDto {
-private String acteur;
-private String ActeurType;
-private String Stage;
+private String supplierName;
+private Date date;
+private String description;
 }

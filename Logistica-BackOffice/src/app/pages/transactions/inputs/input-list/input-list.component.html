@@ -1,12 +1,12 @@
 <div class="container-fluid">
-  <app-pagetitle title="Inputs List" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
+  <app-pagetitle [breadcrumbItems]="breadCrumb.items" [title]='breadCrumb.title'></app-pagetitle>
   <div class="row">
     <div class="col-lg-12">
       <div class="card">
         <div class='card-body'>
           <div>
             <!--  -->
-            <a href="javascript:void(0);" class="btn btn-success mb-2" (click)="openModal(content)">
+            <a [routerLink]="['../create']" class="btn btn-success mb-2">
               <i class="mdi mdi-plus mr-2"></i> Add Input
             </a>
 
@@ -14,15 +14,17 @@
                         [height]="500" [pageSize]="gridState.take" [pageable]="true"
                         [skip]="gridState.skip"
                         [sort]="gridState.sort" [sortable]="true">
-              <kendo-grid-column field="acteur" title="Acteur">
+              <kendo-grid-column field="supplier" title="Supplier Name">
               </kendo-grid-column>
-              <kendo-grid-column field="stage" title="Stage">
+              <kendo-grid-column field="date" title="Date">
               </kendo-grid-column>
-              <kendo-grid-column field="stage" title="Qte Totale">
+              <kendo-grid-column field="description" title="Description">
               </kendo-grid-column>
-              <kendo-grid-column field="stage" title="Lot tt">
+              <kendo-grid-column field="stage" title="N° Qte">
               </kendo-grid-column>
-              <kendo-grid-column field="stage" title="Article tt">
+              <kendo-grid-column field="stage" title="N° Lot">
+              </kendo-grid-column>
+              <kendo-grid-column field="stage" title="N° Articles">
               </kendo-grid-column>
 
               <kendo-grid-command-column title="Options">
@@ -35,7 +37,6 @@
               <div *kendoGridDetailTemplate="let dataItem">
                 <app-transaction-details [inputId]='dataItem.id'></app-transaction-details>
               </div>
-
             </kendo-grid>
           </div>
         </div>
@@ -43,18 +44,3 @@
     </div>
   </div>
 </div>
-
-<!-- Contacts model  -->
-<ng-template #content role="document" let-modal="close">
-  <div class="modal-header">
-    <h5 class="modal-title">Add Input</h5>
-    <button type="button" class="close" aria-label="Close" (click)="modal('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body p-3">
-    <div class="text-left">
-      <app-transaction-details [inputId]='null'></app-transaction-details>
-    </div>
-  </div>
-</ng-template>

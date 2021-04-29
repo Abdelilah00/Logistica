@@ -12,6 +12,8 @@ public class TransactionDetailDto extends BaseDto {
     private String qte;
     private String article;
     private String lot;
+    private Float priceHT;
+    private Float tVA;
     private ProductDto productDto;
     //private InputDto ;
 }

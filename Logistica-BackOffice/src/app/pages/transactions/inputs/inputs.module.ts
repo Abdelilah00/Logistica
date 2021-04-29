@@ -7,9 +7,10 @@ import {ArchwizardModule} from 'angular-archwizard';
 import {UiModule} from '../../../shared/ui/ui.module';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {DropzoneModule} from 'ngx-dropzone-wrapper';
-import {GridModule, SharedModule} from '@progress/kendo-angular-grid';
+import {GridModule} from '@progress/kendo-angular-grid';
 import {TransactionDetailsComponent} from './transaction-details/transaction-details.component';
-
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {TransactionDetailsCreateComponent} from './transaction-details-create/transaction-details-create.component';
 
 const routes: Routes = [
   {path: 'list', component: InputListComponent},
@@ -19,16 +20,17 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [InputListComponent, InputCreateComponent, TransactionDetailsComponent],
+  declarations: [InputListComponent, InputCreateComponent, TransactionDetailsComponent, TransactionDetailsCreateComponent],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
-    ArchwizardModule,
+    GridModule,
     UiModule,
+    ArchwizardModule,
     NgSelectModule,
     DropzoneModule,
-    GridModule,
-    SharedModule,
+    ReactiveFormsModule,
+    FormsModule,
   ]
 })
 export class InputsModule {

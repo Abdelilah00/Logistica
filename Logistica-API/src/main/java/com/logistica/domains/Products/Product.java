@@ -20,8 +20,7 @@ import java.util.List;
 public class Product extends BaseEntity {
     private String name;
     private Date expDate;
-    private Float priceHT;
-    private Float tVA;
+
     private Integer stockMin;
     private Integer stockMax;
     private Integer stockSecurity;

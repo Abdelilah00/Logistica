@@ -1,20 +1,15 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
+import {HttpClient, HttpClientJsonpModule, HttpClientModule} from '@angular/common/http';
 
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-
-import {environment} from '../environments/environment';
 
 import {LayoutsModule} from './layouts/layouts.module';
 import {PagesModule} from './pages/pages.module';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-
-
-
 
 
 export function createTranslateLoader(http: HttpClient): any {
@@ -28,6 +23,7 @@ export function createTranslateLoader(http: HttpClient): any {
   imports: [
     BrowserModule,
     HttpClientModule,
+    HttpClientJsonpModule,
     AppRoutingModule,
     PagesModule,
     LayoutsModule,
@@ -39,8 +35,7 @@ export function createTranslateLoader(http: HttpClient): any {
       }
     }),
   ],
-  providers: [
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {

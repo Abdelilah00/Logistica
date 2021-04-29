@@ -13,17 +13,17 @@ export class User {
 
 export class Input extends BaseModel {
 
-  acteur: string;
-  acteurType: string;
-  stage: string;
+  supplierName: string;
+  date: string;
+  description: string;
   transactionDetails: TransactionDetail[];
 }
 
 
 export class TransactionDetail extends BaseModel {
   article: number;
-  inputId: number;
-  outputId: number;
+  inputId?: number;
+  outputId?: number;
   lot: number;
   qte: number;
   product: Product;
@@ -38,4 +38,9 @@ export class Product extends BaseModel {
   stockMin: number;
   stockSecurity: number;
   tva: number;
+}
+
+export class BreadCrumb {
+  title: string;
+  items: Array<{ label: string; path?: string; active?: boolean; }>;
 }

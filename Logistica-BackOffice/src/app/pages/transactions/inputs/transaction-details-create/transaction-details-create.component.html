@@ -1,0 +1,20 @@
+<kendo-grid #grid (change)='onGridChange()' [data]="specifications">
+  <ng-template kendoGridToolbarTemplate>
+    <button (click)="onAdd()" class="k-button">Add</button>
+
+  </ng-template>
+
+  <kendo-grid-column editor='text' field="productName" title="Product Name"></kendo-grid-column>
+  <kendo-grid-column editor="numeric" field="lot" title="Lot"></kendo-grid-column>
+  <kendo-grid-column editor="numeric" field="article" title="Article"></kendo-grid-column>
+  <kendo-grid-column editor="numeric" field="qte" title="Qte"></kendo-grid-column>
+  <kendo-grid-column editor="numeric" field="tVA" title="TVA"></kendo-grid-column>
+  <kendo-grid-column editor="numeric" field="priceHT" title="Unit Price HT"></kendo-grid-column>
+
+  <kendo-grid-column width='100'>
+    <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">
+      <button (click)="onRemove(rowIndex)" class="k-button">Remove</button>
+    </ng-template>
+  </kendo-grid-column>
+
+</kendo-grid>

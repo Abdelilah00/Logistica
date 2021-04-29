@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -17,9 +18,9 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "input")
 public class Input extends BaseEntity {
-    private String acteur;
-    private String ActeurType;
-    private String Stage;
+    private String supplierName;
+    private Date date;
+    private String description;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "input")
     //todo: get a list of transaction details without need to relational table

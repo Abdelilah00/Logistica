@@ -11,9 +11,7 @@ import java.util.Date;
 public class ProductCreateDto extends BaseDto {
     private String name;
     private Integer CategoryId;
-    private Float priceHT;
     private Date expDate;
-    private Float tVA;
     private Integer stockMin;
     private Integer stockMax;
     private Integer stockSecurity;

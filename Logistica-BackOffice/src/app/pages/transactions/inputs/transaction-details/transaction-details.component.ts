@@ -1,8 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {finalize} from 'rxjs/operators';
 import {TransactionDetail} from '../../../../core/models/auth.models';
 import {TransactionDetailsService} from '../../../../core/services/transaction-details.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -17,9 +18,23 @@ export class TransactionDetailsComponent implements OnInit {
   public editDataItem: TransactionDetail;
   public isNew: boolean;
 
+  submitted: boolean;
+
+  //customersData: TransactionDetail[];
+  validationForm: FormGroup;
 
   constructor(private transactionDetailsService: TransactionDetailsService,
-              private matSnackBar: MatSnackBar) {
+              private matSnackBar: MatSnackBar,
+              public formBuilder: FormBuilder,
+              private modalService: NgbModal) {
+  }
+
+  get form() {
+    return this.validationForm.controls;
+  }
+
+  openModal(content: any) {
+    this.modalService.open(content, {centered: true});
   }
 
   ngOnInit(): void {
@@ -27,6 +42,13 @@ export class TransactionDetailsComponent implements OnInit {
     if (this.inputId !== null) {
       this.transactionDetailsService.getByInputId(this.inputId).subscribe(data => this.view = data);
     }
+    /*    this.validationForm = this.formBuilder.group({
+          qte: '',
+          phone: '',
+          balance: '',
+          email: '',
+          date: ''
+        });*/
   }
 
   public addHandler(): void {
@@ -34,39 +56,5 @@ export class TransactionDetailsComponent implements OnInit {
     tmp.inputId = this.inputId;
     this.editDataItem = tmp;
     this.isNew = true;
-  }
-
-  public editHandler({dataItem}): void {
-    this.editDataItem = dataItem;
-    this.isNew = false;
-  }
-
-  public removeHandler({dataItem}): void {
-    this.transactionDetailsService.delete(dataItem.id)
-      .pipe(
-        finalize(() => {
-          this.loadGridData();
-        })
-      )
-      .subscribe(() => {
-        // Show the success message
-        this.matSnackBar.open('Category Deleted', 'OK', {
-          verticalPosition: 'top',
-          duration: 2000
-        });
-      }, (error) => {
-        this.matSnackBar.open('Category Not Deleted', 'Try', {
-          verticalPosition: 'top',
-          duration: 2000
-        });
-      });
-  }
-
-  public cancelHandler(): void {
-    this.editDataItem = undefined;
-  }
-
-  private loadGridData(): void {
-    this.transactionDetailsService.getByInputId(this.inputId).subscribe(data => this.view = data);
   }
 }

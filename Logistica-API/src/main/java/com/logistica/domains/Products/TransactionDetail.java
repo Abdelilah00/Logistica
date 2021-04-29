@@ -18,6 +18,8 @@ public class TransactionDetail extends BaseEntity {
     private Integer lot;
     private Integer article;
     private Integer qte;
+    private Float priceHT;
+    private Float tVA;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Product product = new Product();

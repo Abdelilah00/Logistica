@@ -21,8 +21,10 @@
           </div>
           <h4 class="card-title mb-4">Revenue Analytics</h4>
           <div>
-            <apx-chart [chart]="revenueChart.chart" [colors]="revenueChart.colors" [labels]="revenueChart.labels" [legend]="revenueChart.legend"
-                       [plotOptions]="revenueChart.plotOptions" [series]="revenueChart.series" [stroke]="revenueChart.stroke"
+            <apx-chart [chart]="revenueChart.chart" [colors]="revenueChart.colors" [labels]="revenueChart.labels"
+                       [legend]="revenueChart.legend"
+                       [plotOptions]="revenueChart.plotOptions" [series]="revenueChart.series"
+                       [stroke]="revenueChart.stroke"
                        class="apex-charts" dir="ltr">
             </apx-chart>
           </div>
@@ -79,8 +81,10 @@
           </div>
           <h4 class="card-title mb-4">Sales Analytics</h4>
 
-          <apx-chart [chart]="salesAnalytics.chart" [colors]="salesAnalytics.colors" [dataLabels]="salesAnalytics.dataLabels" [labels]="revenueChart.labels"
-                     [legend]="salesAnalytics.legend" [plotOptions]="salesAnalytics.plotOptions" [series]="salesAnalytics.series"
+          <apx-chart [chart]="salesAnalytics.chart" [colors]="salesAnalytics.colors"
+                     [dataLabels]="salesAnalytics.dataLabels" [labels]="revenueChart.labels"
+                     [legend]="salesAnalytics.legend" [plotOptions]="salesAnalytics.plotOptions"
+                     [series]="salesAnalytics.series"
                      class="apex-charts" dir="ltr">
           </apx-chart>
           <div class="row">
@@ -134,7 +138,8 @@
               <div class="col-sm-6">
                 <div>
                   <div class="mb-3">
-                    <apx-chart [chart]="sparklineEarning.chart" [colors]="sparklineEarning.colors" [dataLabels]="sparklineEarning.dataLabels"
+                    <apx-chart [chart]="sparklineEarning.chart" [colors]="sparklineEarning.colors"
+                               [dataLabels]="sparklineEarning.dataLabels"
                                [labels]="sparklineEarning.labels" [plotOptions]="sparklineEarning.plotOptions"
                                [series]="sparklineEarning.series" class="apex-charts"
                                dir="ltr">
@@ -149,7 +154,8 @@
               <div class="col-sm-6">
                 <div class="mt-5 mt-sm-0">
                   <div class="mb-3">
-                    <apx-chart [chart]="sparklineMonthly.chart" [colors]="sparklineMonthly.colors" [dataLabels]="sparklineMonthly.dataLabels"
+                    <apx-chart [chart]="sparklineMonthly.chart" [colors]="sparklineMonthly.colors"
+                               [dataLabels]="sparklineMonthly.dataLabels"
                                [labels]="sparklineMonthly.labels" [plotOptions]="sparklineMonthly.plotOptions"
                                [series]="sparklineMonthly.series" class="apex-charts"
                                dir="ltr">
@@ -573,7 +579,8 @@
           <form (ngSubmit)="messageSave()" [formGroup]="formData" class="row">
             <div class="col">
               <div class="position-relative">
-                <input [ngClass]="{'is-invalid': chatSubmit && form.message.errors}" class="form-control chat-input" formControlName="message"
+                <input [ngClass]="{'is-invalid': chatSubmit && form.message.errors}" class="form-control chat-input"
+                       formControlName="message"
                        placeholder="Enter Message..." type="text">
                 <div *ngIf="chatSubmit && form.message.errors" class="invalid-feedback">
                   <span *ngIf="form.message.errors.required">This value is required.</span>
@@ -637,7 +644,8 @@
                 <td>
                   <div [ngClass]="{'badge-soft-danger': item.paymentstatus === 'Chargeback',
                       'badge-soft-success':item.paymentstatus === 'Paid',
-                      'badge-soft-warning': item.paymentstatus === 'Unpaid'}" class="badge font-size-12">{{item.paymentstatus}}
+                      'badge-soft-warning': item.paymentstatus === 'Unpaid'}"
+                       class="badge font-size-12">{{item.paymentstatus}}
                   </div>
                 </td>
                 <td>

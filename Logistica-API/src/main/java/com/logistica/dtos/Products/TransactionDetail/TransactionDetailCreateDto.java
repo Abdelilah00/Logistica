@@ -13,5 +13,7 @@ public class TransactionDetailCreateDto extends BaseDto {
     private Integer qte;
     private Integer article;
     private Integer lot;
+    private Float priceHT;
+    private Float tVA;
     private ProductCreateDto productCreateDto;
 }

@@ -7,13 +7,15 @@ import com.logistica.dtos.Products.TransactionDetail.TransactionDetailDto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.List;
 
 @Getter
 @Setter
 public class InputDto extends BaseDto {
-    private String acteur;
-    private String ActeurType;
-    private String Stage;
+    private String supplierName;
+    private Date date;
+    private String description;
+
     private List<TransactionDetailDto> transactionDetailDtos;
 }

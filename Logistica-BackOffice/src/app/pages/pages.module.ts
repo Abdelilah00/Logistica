@@ -1,53 +1,48 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-
-import {UiModule} from '../shared/ui/ui.module';
-import {WidgetModule} from '../shared/widget/widget.module';
-
-import {PagesRoutingModule} from './pages-routing.module';
-
-import {NgbDropdownModule, NgbNavModule, NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
-import {NgApexchartsModule} from 'ng-apexcharts';
-import {Ng2SearchPipeModule} from 'ng2-search-filter';
-import {FullCalendarModule} from '@fullcalendar/angular';
-import {DndModule} from 'ngx-drag-drop';
 import {PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
-import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 
 import {DashboardComponent} from './dashboard/dashboard.component';
+import {RouterModule, Routes} from '@angular/router';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {Ng2SearchPipeModule} from 'ng2-search-filter';
+import {UiModule} from '../shared/ui/ui.module';
+import {WidgetModule} from '../shared/widget/widget.module';
+import {NgApexchartsModule} from 'ng-apexcharts';
+import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
   wheelSpeed: 0.3
 };
+const routes: Routes = [
+  {path: '', component: DashboardComponent},
+  {path: 'utility', loadChildren: () => import('./utility/utility.module').then(m => m.UtilityModule)},
+  {path: 'transactions', loadChildren: () => import('./transactions/transactions.module').then(m => m.TransactionsModule)},
+];
 
 @NgModule({
   declarations: [DashboardComponent],
   imports: [
     CommonModule,
+    RouterModule.forChild(routes),
     FormsModule,
-    ReactiveFormsModule,
-    PagesRoutingModule,
-    UiModule,
     Ng2SearchPipeModule,
-    NgbNavModule,
-    NgbDropdownModule,
-    NgbTooltipModule,
+    ReactiveFormsModule,
+    UiModule,
+    WidgetModule,
     NgApexchartsModule,
     PerfectScrollbarModule,
-    DndModule,
-    FullCalendarModule,
-    LeafletModule,
-    WidgetModule
+    LeafletModule
   ],
   providers: [
     {
       provide: PERFECT_SCROLLBAR_CONFIG,
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
     }
-  ]
+  ],
+  exports: [RouterModule]
 })
 export class PagesModule {
 }
