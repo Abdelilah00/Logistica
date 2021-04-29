@@ -14,7 +14,6 @@ import {BreadCrumb} from '../../../../core/models/auth.models';
 
 export class InputListComponent implements OnInit {
   breadCrumb: BreadCrumb;
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   gridData;
   public gridState: State = {
     sort: [],

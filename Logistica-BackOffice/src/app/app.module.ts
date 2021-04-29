@@ -10,6 +10,7 @@ import {PagesModule} from './pages/pages.module';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
 export function createTranslateLoader(http: HttpClient): any {
@@ -22,6 +23,7 @@ export function createTranslateLoader(http: HttpClient): any {
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     HttpClientJsonpModule,
     AppRoutingModule,

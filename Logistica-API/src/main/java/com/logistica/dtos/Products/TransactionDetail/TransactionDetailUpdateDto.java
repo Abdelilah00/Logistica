@@ -4,6 +4,8 @@ import com.alexy.models.BaseDto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Getter
 @Setter
 public class TransactionDetailUpdateDto extends BaseDto {
@@ -12,6 +14,8 @@ public class TransactionDetailUpdateDto extends BaseDto {
     private String lot;
     private Float priceHT;
     private Float tVA;
+    private Date expDate;
+
     private String Product;
     private String Input;
 }

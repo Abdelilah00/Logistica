@@ -56,6 +56,7 @@ export abstract class BaseService<TModel extends BaseModel, TCreateModel extends
    * @param input create model of Item
    */
   create(input: TCreateModel): Observable<TModel> {
+    console.log('create');
     return this.httpClient.post<TModel>(this.baseUrl, JSON.stringify(input), this.httpOptions)
       .pipe(retry(1));
   }

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {GridComponent} from '@progress/kendo-angular-grid';
 import {TransactionDetail} from '../../../../core/models/auth.models';
@@ -14,6 +14,7 @@ export class TransactionDetailsCreateComponent implements OnInit {
   productsForm: FormGroup;
   isEditMode = true;
   @ViewChild('grid') grid: GridComponent;
+  @Output() transactionDetailsSave = new EventEmitter<any>();
 
   constructor(private formBuilder: FormBuilder) {
   }
@@ -28,7 +29,6 @@ export class TransactionDetailsCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-
     // initialise products form with empty form array
     this.productsForm = this.formBuilder.group({
       formArray: new FormArray([])
@@ -52,7 +52,15 @@ export class TransactionDetailsCreateComponent implements OnInit {
     this.products.push(new TransactionDetail());
 
     // add new form group to form array
-    const formGroup = this.createFormGroup();
+    let test = new TransactionDetail();
+    test.qte = 10;
+    test.article = 10;
+    test.lot = 10;
+    test.productName = 'test A Prod';
+    test.priceHT = 50;
+    test.tVa = 0.20;
+    test.expDate = new Date();
+    const formGroup = this.createFormGroup(test);
     this.fa.push(formGroup);
 
     // set new row to edit mode in kendo grid
@@ -83,10 +91,9 @@ export class TransactionDetailsCreateComponent implements OnInit {
 
     // copy form data to products array on success
     this.products = this.fa.value;
-
-    console.log(this.products);
     this.closeAllRows();
     this.isEditMode = false;
+    this.transactionDetailsSave.emit(this.productsForm);
   }
 
   onCancel() {
@@ -100,14 +107,15 @@ export class TransactionDetailsCreateComponent implements OnInit {
 
   // helper methods
 
-  public createFormGroup(dataItem: any = {}): FormGroup {
+  public createFormGroup(dataItem: TransactionDetail = new TransactionDetail()): FormGroup {
     return this.formBuilder.group({
       productName: [dataItem.productName, Validators.required],
-      lot: [dataItem.ProductName, Validators.required],
-      article: [dataItem.UnitPrice, Validators.required],
-      qte: [dataItem.UnitsInStock, Validators.required],
-      tVA: [dataItem.UnitsInStock, Validators.required],
-      priceHT: [dataItem.UnitsInStock, Validators.required],
+      lot: [dataItem.lot, Validators.required],
+      article: [dataItem.article, Validators.required],
+      qte: [dataItem.qte, Validators.required],
+      tVA: [dataItem.tVa, Validators.required],
+      expDate: [dataItem.expDate, Validators.required],
+      priceHT: [dataItem.priceHT, Validators.required],
     });
   }
 

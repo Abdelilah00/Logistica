@@ -26,7 +26,11 @@ export class TransactionDetail extends BaseModel {
   outputId?: number;
   lot: number;
   qte: number;
+  expDate: Date;
+  tVa: number;
+  priceHT: number;
   product: Product;
+  productName: string;
 }
 
 export class Product extends BaseModel {

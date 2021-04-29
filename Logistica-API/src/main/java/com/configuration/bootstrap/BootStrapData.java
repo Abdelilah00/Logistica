@@ -8,6 +8,7 @@ package com.configuration.bootstrap;
 
 import com.configuration.TenantContext;
 import com.configuration.security.repositories.IUserRepository;
+import com.logistica.domains.Products.Category;
 import com.logistica.domains.Products.Product;
 import com.logistica.repositories.ITestRepository;
 import com.logistica.repositories.Products.ICategoryRepository;
@@ -38,7 +39,7 @@ public class BootStrapData implements CommandLineRunner {
 
         /*var cat = new Category();
         cat.setName("category A");
-        iCategoryRepository.save(cat)
+        iCategoryRepository.save(cat);
         var prod = new Product();
         prod.setPriceHT(12.5f);
         prod.getCategory().setId(1);
@@ -64,7 +65,7 @@ public class BootStrapData implements CommandLineRunner {
 */
         //////////////////////////////////////////
 
-/*        var tests = new ArrayList<Test>();
+/*      var tests = new ArrayList<Test>();
         for (int i = 0; i < 1000; i++) {
             var test = new Test();
             test.setValue(String.valueOf(i));

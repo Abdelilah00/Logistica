@@ -10,9 +10,8 @@ import java.util.Date;
 @Setter
 public class ProductDto extends BaseDto {
     private String name;
+    private String categoryName;
     private Integer categoryId;
-    private Float priceHT;
-    private Date expDate;
     private Float tVA;
     private Integer stockMin;
     private Integer stockMax;

@@ -10,6 +10,7 @@ import {UiModule} from '../shared/ui/ui.module';
 import {WidgetModule} from '../shared/widget/widget.module';
 import {NgApexchartsModule} from 'ng-apexcharts';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -34,7 +35,7 @@ const routes: Routes = [
     WidgetModule,
     NgApexchartsModule,
     PerfectScrollbarModule,
-    LeafletModule
+    LeafletModule,
   ],
   providers: [
     {

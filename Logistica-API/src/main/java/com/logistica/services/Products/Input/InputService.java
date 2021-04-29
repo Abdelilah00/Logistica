@@ -23,31 +23,33 @@ public class InputService extends BaseCrudServiceImpl<Input, InputDto, InputCrea
     public CompletableFuture<InputDto> create(InputCreateDto inputCreateDto) {
         var input = objectMapper.convertToEntity(inputCreateDto);
 
-        input.setTransactionDetails(inputCreateDto.getTransactionDetailCreateDtos().stream().map(transactionDetailCreateDto -> {
+        input.setTransactionDetails(inputCreateDto.getTransactionDetails().stream().map(transactionDetailCreateDto -> {
             var transaction = new TransactionDetail();
 
-            if (transactionDetailCreateDto.getProductCreateDto().getId() != null)
+            if (transactionDetailCreateDto.getProductId() != null)
                 //use existing product
-                transaction.getProduct().setId(transactionDetailCreateDto.getProductCreateDto().getId());
+                transaction.getProduct().setId(transactionDetailCreateDto.getProductId());
             else {
                 //create new product
-                transaction.getProduct().setName(transactionDetailCreateDto.getProductCreateDto().getName());
-                transaction.getProduct().getCategory().setId(transactionDetailCreateDto.getProductCreateDto().getId());
-                transaction.getProduct().setPriceHT(transactionDetailCreateDto.getProductCreateDto().getPriceHT());
-                transaction.getProduct().setExpDate(transactionDetailCreateDto.getProductCreateDto().getExpDate());
+                transaction.getProduct().setName(transactionDetailCreateDto.getProductName());
+                transaction.getProduct().getCategory().setId(1);
+
                 //set default values from settings(front end)
-                transaction.getProduct().setStockMin(transactionDetailCreateDto.getProductCreateDto().getStockMin());
-                transaction.getProduct().setStockMax(transactionDetailCreateDto.getProductCreateDto().getStockMax());
-                transaction.getProduct().setStockSecurity(transactionDetailCreateDto.getProductCreateDto().getStockSecurity());
+                transaction.getProduct().setStockMin(100);
+                transaction.getProduct().setStockMax(1000);
+                transaction.getProduct().setStockSecurity(350);
             }
 
             transaction.setLot(transactionDetailCreateDto.getLot());
             transaction.setArticle(transactionDetailCreateDto.getArticle());
             transaction.setQte(transactionDetailCreateDto.getQte());
+            transaction.setExpDate(transactionDetailCreateDto.getExpDate());
+            transaction.setPriceHT(transactionDetailCreateDto.getPriceHT());
 
             transaction.setInput(input);
             return transaction;
         }).collect(Collectors.toList()));
+
 
         return CompletableFuture.completedFuture(objectMapper.convertToDto(repository.save(input), InputDto.class));
     }

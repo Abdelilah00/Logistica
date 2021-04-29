@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -20,6 +21,7 @@ public class TransactionDetail extends BaseEntity {
     private Integer qte;
     private Float priceHT;
     private Float tVA;
+    private Date expDate;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Product product = new Product();

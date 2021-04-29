@@ -1,11 +1,10 @@
 package com.logistica.dtos.Products.TransactionDetail;
 
 import com.alexy.models.BaseDto;
-import com.logistica.dtos.Products.Product.ProductCreateDto;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -15,5 +14,8 @@ public class TransactionDetailCreateDto extends BaseDto {
     private Integer lot;
     private Float priceHT;
     private Float tVA;
-    private ProductCreateDto productCreateDto;
+    private Date expDate;
+
+    private String productName;
+    private Long productId;
 }

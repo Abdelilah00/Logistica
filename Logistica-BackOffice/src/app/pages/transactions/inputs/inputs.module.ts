@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {CommonModule, DatePipe} from '@angular/common';
 import {InputListComponent} from './input-list/input-list.component';
 import {InputCreateComponent} from './input-create/input-create.component';
 import {RouterModule, Routes} from '@angular/router';
@@ -11,6 +11,7 @@ import {GridModule} from '@progress/kendo-angular-grid';
 import {TransactionDetailsComponent} from './transaction-details/transaction-details.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TransactionDetailsCreateComponent} from './transaction-details-create/transaction-details-create.component';
+import {ExcelExportModule} from '@progress/kendo-angular-excel-export';
 
 const routes: Routes = [
   {path: 'list', component: InputListComponent},
@@ -31,6 +32,10 @@ const routes: Routes = [
     DropzoneModule,
     ReactiveFormsModule,
     FormsModule,
+    ExcelExportModule,
+  ],
+  providers: [
+    DatePipe
   ]
 })
 export class InputsModule {

@@ -6,14 +6,18 @@ import com.logistica.dtos.Products.Product.ProductDto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Getter
 @Setter
 public class TransactionDetailDto extends BaseDto {
-    private String qte;
-    private String article;
-    private String lot;
+    private Integer qte;
+    private Integer article;
+    private Integer lot;
     private Float priceHT;
     private Float tVA;
-    private ProductDto productDto;
+    private Date expDate;
+
+    private String productName;
     //private InputDto ;
 }

@@ -19,7 +19,6 @@ import java.util.List;
 @Table(name = "product")
 public class Product extends BaseEntity {
     private String name;
-    private Date expDate;
 
     private Integer stockMin;
     private Integer stockMax;
