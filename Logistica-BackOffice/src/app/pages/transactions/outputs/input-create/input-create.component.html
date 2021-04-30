@@ -1,0 +1,107 @@
+<div class="container-fluid">
+  <app-pagetitle [breadcrumbItems]="breadCrumb.items" [title]='breadCrumb.title'></app-pagetitle>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <aw-wizard>
+            <aw-wizard-step stepTitle="Basic Info">
+              <div class="tab-pane" id="basic-info">
+                <h4 class="card-title">Basic Information</h4>
+                <p class="card-title-desc">Fill all information below</p>
+
+                <form [formGroup]="formGroup">
+                  <div class="row">
+
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label for="supplierName">Supplier Name</label>
+                        <input class="form-control" formControlName="supplierName" id="supplierName" type="text">
+                      </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label for="example-datetime-local-input">Date Time</label>
+                        <input class="form-control" formControlName="date" id="example-datetime-local-input"
+                               type="datetime-local">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="control-label" for="payement">Payement</label>
+                        <select class="form-control select2" formControlName="payement" id="payement">
+                          <option value="cheque">Cheque</option>
+                          <option value="cash">Cash</option>
+                          <option value="bank">Banque</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label for="payementRef">Payement Ref</label>
+                        <input class="form-control" formControlName="payementRef" id="payementRef"
+                               type="text">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea class="form-control" formControlName='description' id="description" rows="5"></textarea>
+                  </div>
+                </form>
+
+              </div>
+
+              <div class='text-center k-mt-14'>
+                <button awNextStep class="btn btn-primary" type="button">Next Step</button>
+              </div>
+            </aw-wizard-step>
+
+            <aw-wizard-step awOptionalStep stepTitle="Transaction Details">
+              <div class="tab-pane" id="product-img">
+                <h4 class="card-title">Transaction Details</h4>
+                <p class="card-title-desc">enter your products</p>
+                <app-transaction-details-create
+                  (transactionDetailsSave)='setNewTransactions($event)'></app-transaction-details-create>
+              </div>
+
+              <div class='text-center k-mt-14'>
+                <button awPreviousStep class="btn btn-primary mr-2 waves-effect" type="button">Go to previous step
+                </button>
+                <button awNextStep class="btn btn-primary mr-2 waves-effect" type="button">Go to next step</button>
+              </div>
+            </aw-wizard-step>
+
+
+            <aw-wizard-step stepTitle="Meta Data">
+              <div class="tab-pane" id="metadata">
+                <h4 class="card-title">Validation</h4>
+                <p class="card-title-desc">Verify that all your data are corrects</p>
+
+                <form>
+                  <h1>Validation Phase</h1>
+                </form>
+
+                <div class="text-center k-mt-14">
+                  <button (click)='submit()' class="btn btn-primary mr-2 waves-effect waves-light" type="submit">Save
+                    Changes
+                  </button>
+                  <button class="btn btn-light mr-2 waves-effect" type="reset">Cancel</button>
+                </div>
+              </div>
+
+              <div class="pager wizard twitter-bs-wizard-pager-link text-center k-mt-14">
+                <button awPreviousStep class="btn btn-primary">Previous Step</button>
+              </div>
+            </aw-wizard-step>
+          </aw-wizard>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

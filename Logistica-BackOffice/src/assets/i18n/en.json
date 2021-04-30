@@ -73,7 +73,6 @@
       "TEXT": "Dashboard",
       "BADGE": "03"
     },
-
     "TRANSACTION": {
       "TEXT": "Transaction",
       "LIST": {
@@ -90,13 +89,15 @@
     "STOCKS": {
       "TEXT": "Stocks"
     },
+    "SUPPLIERS": {
+      "TEXT": "Suppliers"
+    },
     "PARAMS": {
       "TEXT": "Parameters",
       "LIST": {
         "PRODUCT": "Product"
       }
     },
-
     "LAYOUTS": {
       "TEXT": "Layouts",
       "LIST": {

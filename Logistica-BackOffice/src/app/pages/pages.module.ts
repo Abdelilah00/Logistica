@@ -10,17 +10,21 @@ import {UiModule} from '../shared/ui/ui.module';
 import {WidgetModule} from '../shared/widget/widget.module';
 import {NgApexchartsModule} from 'ng-apexcharts';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
   wheelSpeed: 0.3
 };
+
 const routes: Routes = [
   {path: '', component: DashboardComponent},
   {path: 'utility', loadChildren: () => import('./utility/utility.module').then(m => m.UtilityModule)},
   {path: 'transactions', loadChildren: () => import('./transactions/transactions.module').then(m => m.TransactionsModule)},
+  {path: 'suppliers', loadChildren: () => import('./suppliers/suppliers.module').then(m => m.SuppliersModule)},
+  {path: 'products', loadChildren: () => import('./products/products.module').then(m => m.ProductsModule)},
+  {path: 'stocks', loadChildren: () => import('./stocks/stocks.module').then(m => m.StocksModule)},
+  {path: 'parameters', loadChildren: () => import('./parameters/parameters.module').then(m => m.ParametersModule)},
 ];
 
 @NgModule({

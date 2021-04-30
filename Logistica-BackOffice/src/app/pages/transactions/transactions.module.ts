@@ -6,6 +6,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 const routes: Routes = [
   {path: 'inputs', loadChildren: () => import('./inputs/inputs.module').then(m => m.InputsModule)},
+  {path: 'outputs', loadChildren: () => import('./outputs/outputs.module').then(m => m.OutputsModule)},
   {path: '**', redirectTo: 'inputs'}
 ];
 
