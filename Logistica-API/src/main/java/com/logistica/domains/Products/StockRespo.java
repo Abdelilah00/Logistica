@@ -7,8 +7,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,6 +20,7 @@ import javax.persistence.Table;
 @Table(name = "stockrespo")
 public class StockRespo extends BaseEntity {
     private String name;
-    @OneToOne(mappedBy = "stockRespo")
-    private Stock stock;
+
+    @OneToMany(mappedBy = "stockRespo")
+    private List<Stock> stock;
 }

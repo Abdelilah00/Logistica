@@ -3,6 +3,9 @@ import {CommonModule} from '@angular/common';
 import {StockListComponent} from './stock-list/stock-list.component';
 import {StockCreateComponent} from './stock-create/stock-create.component';
 import {RouterModule, Routes} from '@angular/router';
+import {UiModule} from '../../shared/ui/ui.module';
+import {GridModule} from '@progress/kendo-angular-grid';
+import {ReactiveFormsModule} from '@angular/forms';
 
 
 const routes: Routes = [
@@ -17,7 +20,10 @@ const routes: Routes = [
   declarations: [StockListComponent, StockCreateComponent],
   imports: [
     RouterModule.forChild(routes),
-    CommonModule
+    CommonModule,
+    UiModule,
+    GridModule,
+    ReactiveFormsModule
   ]
 })
 export class StocksModule {
