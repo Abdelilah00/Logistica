@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
-import {InputService} from '../../../../core/services/input.service';
+import {InputsService} from '../../../../core/services/inputs.service';
 import {State} from '@progress/kendo-data-query';
 import {BreadCrumb} from '../../../../core/models/auth.models';
 
@@ -22,7 +22,7 @@ export class InputListComponent implements OnInit {
 
   constructor(
     public formBuilder: FormBuilder,
-    private service: InputService) {
+    private service: InputsService) {
   }
 
 

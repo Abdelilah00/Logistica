@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -21,10 +22,10 @@ public class Supplier extends BaseEntity {
     private String adresse;
     private String nRCommerce;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Contact contact;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Sector sector;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Bank bank;
 }

@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {BreadCrumb} from '../../../../core/models/auth.models';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {InputService} from '../../../../core/services/input.service';
 import {finalize} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {DatePipe} from '@angular/common';
+import {DatePipe, Location} from '@angular/common';
+import {OutputsService} from '../../../../core/services/outputs.service';
 
 @Component({
   selector: 'app-input-create',
@@ -18,9 +18,9 @@ export class InputCreateComponent implements OnInit {
   selectValue = ['Touchscreen', 'Call Function', 'Notifications', 'Fitness', 'Outdoor'];
   formGroup = this.createFormGroup();
 
-  constructor(private service: InputService,
+  constructor(private service: OutputsService,
               private formBuilder: FormBuilder,
-              /*private location: Location,*/
+              private location: Location,
               private matSnackBar: MatSnackBar,
               private datePipe: DatePipe) {
   }

@@ -12,7 +12,13 @@ export class User {
 
 
 export class Input extends BaseModel {
+  supplierName: string;
+  date: string;
+  description: string;
+  transactionDetails: TransactionDetail[];
+}
 
+export class Output extends BaseModel {
   supplierName: string;
   date: string;
   description: string;
@@ -65,6 +71,17 @@ export class Parameter extends BaseModel {
 }
 
 export class Stock extends BaseModel {
+  name: string;
+  adresse: string;
+  area: number;
+  stockRespo: StockRespo;
+}
+
+class StockRespo extends BaseModel {
+  name: string;
+}
+
+class StockType extends BaseModel {
   name: string;
 }
 

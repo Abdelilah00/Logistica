@@ -8,7 +8,12 @@ package com.configuration.bootstrap;
 
 import com.configuration.TenantContext;
 import com.configuration.security.repositories.IUserRepository;
+import com.logistica.domains.Commands.Bank;
+import com.logistica.domains.Commands.Contact;
+import com.logistica.domains.Commands.Sector;
+import com.logistica.domains.Commands.Supplier;
 import com.logistica.domains.Products.*;
+import com.logistica.repositories.Commands.ISupplierRepository;
 import com.logistica.repositories.ITestRepository;
 import com.logistica.repositories.Products.ICategoryRepository;
 import com.logistica.repositories.Products.IInputRepository;
@@ -39,11 +44,14 @@ public class BootStrapData implements CommandLineRunner {
     private IStockRepository iStockRepository;
     @Autowired
     private IInputRepository iInputRepository;
+    @Autowired
+    private ISupplierRepository iSupplierRepository;
 
     @Override
     public void run(String... args) throws Exception {
 
-        //todo: insert default cat+prod+respo+stockType+stock+input+transaction if DB is null
+        if (iCategoryRepository.findAll().size() > 0)
+            return;
 
         var catA = new Category();
         catA.setName("category A");
@@ -54,7 +62,7 @@ public class BootStrapData implements CommandLineRunner {
         prodA.setStockMin(100);
         prodA.setStockSecurity(300);
         prodA.setCategory(catA);
-        iProductRepository.save(prodA);
+        //iProductRepository.save(prodA);
 
         var catB = new Category();
         catB.setName("category B");
@@ -65,18 +73,7 @@ public class BootStrapData implements CommandLineRunner {
         prodB.setStockMin(50);
         prodB.setStockSecurity(500);
         prodB.setCategory(catB);
-        iProductRepository.save(prodB);
-
-
-        var respo = new StockRespo();
-        respo.setName("Abdelilah");
-        var stock = new Stock();
-        stock.setName("stock 11");
-        stock.setAdresse("db allal elffasi");
-        stock.setArea(1545d);
-        stock.setStockRespo(respo);
-        iStockRepository.save(stock);
-
+        //iProductRepository.save(prodB);
 
         var input = new Input();
         input.setDate(new Date());
@@ -106,5 +103,34 @@ public class BootStrapData implements CommandLineRunner {
 
         iInputRepository.save(input);
 
+
+        var respo = new StockRespo();
+        respo.setName("Abdelilah");
+        var stock = new Stock();
+        stock.setName("stock 11");
+        stock.setAdresse("db allal elffasi");
+        stock.setArea(1545d);
+        stock.setStockRespo(respo);
+        iStockRepository.save(stock);
+
+        var supplier = new Supplier();
+        supplier.setAdresse("db alla elfassi");
+        supplier.setName("jabri ilyass");
+        supplier.setNRCommerce("sdf3256 5065655s4df ");
+        var sector = new Sector();
+        sector.setName("l7aliib");
+        supplier.setSector(sector);
+        var bank = new Bank();
+        bank.setAccountNumber("25154545");
+        bank.setCode("25154545");
+        bank.setName("CIH");
+        bank.setRIB("254545456465465468789");
+        supplier.setBank(bank);
+        var contact = new Contact();
+        contact.setEmail("abdelilah@gmail.com");
+        contact.setPhone("0676958566");
+        contact.setWebSite("360tech.com");
+        supplier.setContact(contact);
+        iSupplierRepository.save(supplier);
     }
 }

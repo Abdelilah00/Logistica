@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormBuilder} from '@angular/forms';
-import {InputService} from '../../../../core/services/input.service';
+import {InputsService} from '../../../../core/services/inputs.service';
 import {State} from '@progress/kendo-data-query';
 import {BreadCrumb} from '../../../../core/models/auth.models';
+import {OutputsService} from '../../../../core/services/outputs.service';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class InputListComponent implements OnInit {
 
   constructor(private modalService: NgbModal,
               public formBuilder: FormBuilder,
-              private inputService: InputService) {
+              private service: OutputsService) {
   }
 
 
@@ -35,7 +36,7 @@ export class InputListComponent implements OnInit {
       ]
     };
     // todo: use simple tables
-    this.inputService.getAll().subscribe(data => this.gridData = data);
+    this.service.getAll().subscribe(data => this.gridData = data);
   }
 
   public onStateChange(state: State): void {

@@ -6,7 +6,7 @@ import {Input} from '../models/auth.models';
 @Injectable({
   providedIn: 'root'
 })
-export class InputService extends BaseService<Input, Input> {
+export class InputsService extends BaseService<Input, Input> {
 
   constructor(httpClient: HttpClient) {
     super(httpClient, 'inputs');

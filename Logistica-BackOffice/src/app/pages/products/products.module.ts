@@ -18,9 +18,12 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [ProductListComponent, ProductCreateComponent, ProductEditComponent],
-  imports: [RouterModule.forChild(routes),
-
-    CommonModule, UiModule, GridModule, ReactiveFormsModule
+  imports: [
+    RouterModule.forChild(routes),
+    CommonModule,
+    UiModule,
+    GridModule,
+    ReactiveFormsModule
   ]
 })
 export class ProductsModule {

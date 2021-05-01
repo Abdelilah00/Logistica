@@ -42,7 +42,9 @@ export class StockCreateComponent implements OnInit {
   createFormGroup(): FormGroup {
     return this.formBuilder.group({
       name: ['test', Validators.required],
-      stockSecurity: [250, Validators.required],
+      adresse: ['test', Validators.required],
+      area: [2500, Validators.required],
+      stockRespo: [1, Validators.required],
     });
   }
 
