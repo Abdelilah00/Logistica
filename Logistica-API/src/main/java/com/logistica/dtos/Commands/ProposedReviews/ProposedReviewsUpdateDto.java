@@ -7,6 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ProposedReviewsUpdateDto extends BaseDto {
-private String productProposedName;
-private String stars;
+    private String productProposedName;
+    private String stars;
 }

@@ -7,5 +7,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ProductUnitsCreateDto extends BaseDto {
-private String Product;
+    private String Product;
 }

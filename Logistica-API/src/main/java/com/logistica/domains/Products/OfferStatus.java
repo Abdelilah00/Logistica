@@ -4,8 +4,8 @@ import lombok.Getter;
 
 @Getter
 public enum OfferStatus {
-Waiting,
-InProcess,
-Canceled,
-Done,
+    Waiting,
+    InProcess,
+    Canceled,
+    Done,
 }

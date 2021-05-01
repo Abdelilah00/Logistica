@@ -7,6 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class StructureUpdateDto extends BaseDto {
-private String name;
-private String order;
+    private String name;
+    private String order;
 }

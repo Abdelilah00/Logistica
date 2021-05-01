@@ -5,7 +5,6 @@ import com.logistica.domains.Products.TransactionDetail;
 import com.logistica.dtos.Products.TransactionDetail.TransactionDetailCreateDto;
 import com.logistica.dtos.Products.TransactionDetail.TransactionDetailDto;
 import com.logistica.dtos.Products.TransactionDetail.TransactionDetailUpdateDto;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;

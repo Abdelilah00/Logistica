@@ -7,8 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BankUpdateDto extends BaseDto {
-private String name;
-private String code;
-private String accountNumber;
-private String rIB;
+    private String name;
+    private String code;
+    private String accountNumber;
+    private String rIB;
 }

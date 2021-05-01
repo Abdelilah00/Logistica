@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ContactUpdateDto extends BaseDto {
-private String phone;
-private String webSite;
-private String email;
+    private String phone;
+    private String webSite;
+    private String email;
 }

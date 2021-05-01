@@ -1,7 +1,6 @@
 package com.logistica.services.Commands.Needs;
 
 import com.alexy.services.BaseCrudServiceImpl;
-import com.alexy.services.IBaseCrudService;
 import com.logistica.domains.Commands.Needs;
 import com.logistica.dtos.Commands.Needs.NeedsCreateDto;
 import com.logistica.dtos.Commands.Needs.NeedsDto;

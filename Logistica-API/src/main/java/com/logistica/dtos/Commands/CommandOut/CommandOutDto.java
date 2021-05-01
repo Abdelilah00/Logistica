@@ -7,9 +7,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CommandOutDto extends BaseDto {
-private String Supplier;
-private String CommandDetail;
-private String description;
-private String Needs;
-private String PayementMethod;
+    private String Supplier;
+    private String CommandDetail;
+    private String description;
+    private String Needs;
+    private String PayementMethod;
 }

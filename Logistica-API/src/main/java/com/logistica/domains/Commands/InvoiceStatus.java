@@ -4,9 +4,9 @@ import lombok.Getter;
 
 @Getter
 public enum InvoiceStatus {
-Publie,
-Partiel,
-Brouillon,
-Paid,
-Retarde,
+    Publie,
+    Partiel,
+    Brouillon,
+    Paid,
+    Retarde,
 }

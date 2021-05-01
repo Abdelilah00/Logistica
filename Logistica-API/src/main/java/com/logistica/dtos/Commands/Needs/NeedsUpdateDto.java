@@ -7,6 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class NeedsUpdateDto extends BaseDto {
-private String qte;
-private String Product;
+    private String qte;
+    private String Product;
 }

@@ -4,6 +4,6 @@ import lombok.Getter;
 
 @Getter
 public enum DistinationType {
-Service,
-Client,
+    Service,
+    Client,
 }

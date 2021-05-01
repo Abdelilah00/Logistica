@@ -5,12 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Getter
@@ -19,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "contact")
 public class Contact extends BaseEntity {
-private String phone;
-private String webSite;
-private String email;
+    private String phone;
+    private String webSite;
+    private String email;
 }

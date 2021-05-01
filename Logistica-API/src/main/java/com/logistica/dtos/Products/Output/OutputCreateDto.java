@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class OutputCreateDto extends BaseDto {
-private String distination;
-private String askBy;
-private String DistinationType;
+    private String distination;
+    private String askBy;
+    private String DistinationType;
 }

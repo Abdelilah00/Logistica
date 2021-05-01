@@ -7,10 +7,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CommandInDto extends BaseDto {
-private String ref;
-private String description;
-private String Client;
-private String Service;
-private String PayementMethod;
-private String CommandDetail;
+    private String ref;
+    private String description;
+    private String Client;
+    private String Service;
+    private String PayementMethod;
+    private String CommandDetail;
 }

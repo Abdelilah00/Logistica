@@ -4,6 +4,6 @@ import lombok.Getter;
 
 @Getter
 public enum Stage {
-Fineshed,
-SemiFinished,
+    Fineshed,
+    SemiFinished,
 }

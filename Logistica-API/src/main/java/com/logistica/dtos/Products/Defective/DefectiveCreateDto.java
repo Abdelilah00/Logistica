@@ -7,6 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class DefectiveCreateDto extends BaseDto {
-private String Product;
-private String qte;
+    private String Product;
+    private String qte;
 }

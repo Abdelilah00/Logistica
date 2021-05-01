@@ -28,12 +28,12 @@ public class BaseCrudServiceImpl<TEntity extends BaseEntity,
         TUpdateDto extends BaseDto>
         implements IBaseCrudService<TEntity, TDto, TCreateDto, TUpdateDto> {
 
-    @Autowired
-    protected IBaseJpaRepository<TEntity> repository;
-    protected ModelEntityMapping<TEntity> objectMapper = new ModelEntityMapping<>();
     private final Class<TDto> dtoClass;
     private final Class<TCreateDto> dtoCreateClass;
     private final Class<TUpdateDto> dtoUpdateClass;
+    @Autowired
+    protected IBaseJpaRepository<TEntity> repository;
+    protected ModelEntityMapping<TEntity> objectMapper = new ModelEntityMapping<>();
 
     public BaseCrudServiceImpl(Class<TEntity> tEntityClass,
                                Class<TDto> dtoClass,

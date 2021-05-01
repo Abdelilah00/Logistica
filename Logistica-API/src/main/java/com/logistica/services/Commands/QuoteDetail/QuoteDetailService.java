@@ -1,7 +1,6 @@
 package com.logistica.services.Commands.QuoteDetail;
 
 import com.alexy.services.BaseCrudServiceImpl;
-import com.alexy.services.IBaseCrudService;
 import com.logistica.domains.Commands.QuoteDetail;
 import com.logistica.dtos.Commands.QuoteDetail.QuoteDetailCreateDto;
 import com.logistica.dtos.Commands.QuoteDetail.QuoteDetailDto;

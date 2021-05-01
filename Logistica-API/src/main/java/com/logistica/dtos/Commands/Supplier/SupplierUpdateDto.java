@@ -7,10 +7,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SupplierUpdateDto extends BaseDto {
-private String name;
-private String adresse;
-private String nRCommerce;
-private String Contact;
-private String Sector;
-private String Bank;
+    private String name;
+    private String adresse;
+    private String nRCommerce;
+    private String Contact;
+    private String Sector;
+    private String Bank;
 }

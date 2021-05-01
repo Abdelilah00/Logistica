@@ -7,9 +7,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class OfferUpdateDto extends BaseDto {
-private String dateStart;
-private String dateEnd;
-private String Status;
-private String Needs;
-private String OffreDetail;
+    private String dateStart;
+    private String dateEnd;
+    private String Status;
+    private String Needs;
+    private String OffreDetail;
 }

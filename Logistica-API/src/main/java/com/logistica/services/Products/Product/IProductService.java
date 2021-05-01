@@ -5,7 +5,6 @@ import com.logistica.domains.Products.Product;
 import com.logistica.dtos.Products.Product.ProductCreateDto;
 import com.logistica.dtos.Products.Product.ProductDto;
 import com.logistica.dtos.Products.Product.ProductUpdateDto;
-import org.springframework.stereotype.Service;
 
 public interface IProductService extends IBaseCrudService<Product, ProductDto, ProductCreateDto, ProductUpdateDto> {
 

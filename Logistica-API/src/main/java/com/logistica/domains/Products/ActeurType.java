@@ -4,6 +4,6 @@ import lombok.Getter;
 
 @Getter
 public enum ActeurType {
-Service,
-Supplier,
+    Service,
+    Supplier,
 }

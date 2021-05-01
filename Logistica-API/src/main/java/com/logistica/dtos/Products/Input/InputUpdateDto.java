@@ -9,7 +9,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class InputUpdateDto extends BaseDto {
-private String supplierName;
-private Date date;
-private String description;
+    private String supplierName;
+    private Date date;
+    private String description;
 }

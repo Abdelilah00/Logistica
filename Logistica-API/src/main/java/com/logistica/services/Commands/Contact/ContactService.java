@@ -1,7 +1,6 @@
 package com.logistica.services.Commands.Contact;
 
 import com.alexy.services.BaseCrudServiceImpl;
-import com.alexy.services.IBaseCrudService;
 import com.logistica.domains.Commands.Contact;
 import com.logistica.dtos.Commands.Contact.ContactCreateDto;
 import com.logistica.dtos.Commands.Contact.ContactDto;

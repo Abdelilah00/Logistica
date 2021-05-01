@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class StockCharacteristicUpdateDto extends BaseDto {
-private String value;
-private String Stock;
-private String Characteristic;
+    private String value;
+    private String Stock;
+    private String Characteristic;
 }

@@ -5,12 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Getter
@@ -19,8 +16,8 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "bank")
 public class Bank extends BaseEntity {
-private String name;
-private String code;
-private String accountNumber;
-private String rIB;
+    private String name;
+    private String code;
+    private String accountNumber;
+    private String rIB;
 }

@@ -1,7 +1,6 @@
 package com.logistica.services.Products.Category;
 
 import com.alexy.services.BaseCrudServiceImpl;
-import com.alexy.services.IBaseCrudService;
 import com.logistica.domains.Products.Category;
 import com.logistica.dtos.Products.Category.CategoryCreateDto;
 import com.logistica.dtos.Products.Category.CategoryDto;

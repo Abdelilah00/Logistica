@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum StockType {
-Entrepot,
-Platform,
-Shop,
+    Entrepot,
+    Platform,
+    Shop,
 }

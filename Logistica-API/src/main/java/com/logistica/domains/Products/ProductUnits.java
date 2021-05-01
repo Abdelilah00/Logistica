@@ -5,12 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Getter
@@ -20,5 +18,5 @@ import java.util.List;
 @Table(name = "productunits")
 public class ProductUnits extends BaseEntity {
     @ManyToOne
-    private Product product=new Product();
+    private Product product = new Product();
 }

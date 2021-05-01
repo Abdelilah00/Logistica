@@ -7,8 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class StockUpdateDto extends BaseDto {
-private String adresse;
-private String area;
-private String StockType;
-private String StockRespo;
+    private String adresse;
+    private String area;
+    private String StockType;
+    private String StockRespo;
 }

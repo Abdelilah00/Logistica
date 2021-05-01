@@ -1,7 +1,6 @@
 package com.logistica.services.Commands.CommandOut;
 
 import com.alexy.services.BaseCrudServiceImpl;
-import com.alexy.services.IBaseCrudService;
 import com.logistica.domains.Commands.CommandOut;
 import com.logistica.dtos.Commands.CommandOut.CommandOutCreateDto;
 import com.logistica.dtos.Commands.CommandOut.CommandOutDto;

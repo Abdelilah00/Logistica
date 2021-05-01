@@ -1,7 +1,6 @@
 package com.logistica.services.Products.StockProduct;
 
 import com.alexy.services.BaseCrudServiceImpl;
-import com.alexy.services.IBaseCrudService;
 import com.logistica.domains.Products.StockProduct;
 import com.logistica.dtos.Products.StockProduct.StockProductCreateDto;
 import com.logistica.dtos.Products.StockProduct.StockProductDto;

@@ -7,6 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ServiceUpdateDto extends BaseDto {
-private String name;
-private String Structure;
+    private String name;
+    private String Structure;
 }

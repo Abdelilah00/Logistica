@@ -1,8 +1,6 @@
 package com.logistica.dtos.Products.TransactionDetail;
 
 import com.alexy.models.BaseDto;
-import com.logistica.dtos.Products.Input.InputDto;
-import com.logistica.dtos.Products.Product.ProductDto;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -7,5 +7,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class StockRespoDto extends BaseDto {
-private String name;
+    private String name;
 }

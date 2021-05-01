@@ -1,7 +1,6 @@
 package com.logistica.services.Commands.ProposedReviews;
 
 import com.alexy.services.BaseCrudServiceImpl;
-import com.alexy.services.IBaseCrudService;
 import com.logistica.domains.Commands.ProposedReviews;
 import com.logistica.dtos.Commands.ProposedReviews.ProposedReviewsCreateDto;
 import com.logistica.dtos.Commands.ProposedReviews.ProposedReviewsDto;

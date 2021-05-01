@@ -1,7 +1,6 @@
 package com.logistica.services.Commands.Sector;
 
 import com.alexy.services.BaseCrudServiceImpl;
-import com.alexy.services.IBaseCrudService;
 import com.logistica.domains.Commands.Sector;
 import com.logistica.dtos.Commands.Sector.SectorCreateDto;
 import com.logistica.dtos.Commands.Sector.SectorDto;

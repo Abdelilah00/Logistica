@@ -7,9 +7,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class QuoteDetailDto extends BaseDto {
-private String qte;
-private String unitPrice;
-private String productName;
-private String productProposedName;
-private String Quote;
+    private String qte;
+    private String unitPrice;
+    private String productName;
+    private String productProposedName;
+    private String Quote;
 }

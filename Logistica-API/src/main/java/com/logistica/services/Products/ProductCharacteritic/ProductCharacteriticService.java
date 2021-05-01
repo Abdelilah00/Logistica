@@ -1,7 +1,6 @@
 package com.logistica.services.Products.ProductCharacteritic;
 
 import com.alexy.services.BaseCrudServiceImpl;
-import com.alexy.services.IBaseCrudService;
 import com.logistica.domains.Products.ProductCharacteritic;
 import com.logistica.dtos.Products.ProductCharacteritic.ProductCharacteriticCreateDto;
 import com.logistica.dtos.Products.ProductCharacteritic.ProductCharacteriticDto;
