@@ -1,1 +1,155 @@
-<p>supplier-create works!</p>
+<div class="container-fluid">
+  <app-pagetitle [breadcrumbItems]="breadCrumb.items" [title]='breadCrumb.title'></app-pagetitle>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+
+          <form (ngSubmit)="submit()" [formGroup]="formGroup" class="needs-validation">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="name">name</label>
+                  <input [ngClass]="{'is-invalid': saving && form.name.errors}" class="form-control"
+                         formControlName="name" id="name"
+                         placeholder="name" type="text">
+                  <div *ngIf="saving && form.name.errors" class="invalid-feedback">
+                    <span *ngIf="form.name.errors.required">Please provide a valid name.</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="adresse">adresse</label>
+                  <input [ngClass]="{'is-invalid': saving && form.adresse.errors}" class="form-control"
+                         formControlName="adresse" id="adresse"
+                         placeholder="adresse" type="text">
+                  <div *ngIf="saving && form.adresse.errors" class="invalid-feedback">
+                    <span *ngIf="form.adresse.errors.required">Please provide a valid adresse.</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="nRCommerce">nRCommerce</label>
+                  <input [ngClass]="{'is-invalid': saving && form.nRCommerce.errors}" class="form-control"
+                         formControlName="nRCommerce" id="nRCommerce"
+                         placeholder="nRCommerce" type="text">
+                  <div *ngIf="saving && form.nRCommerce.errors" class="invalid-feedback">
+                    <span *ngIf="form.nRCommerce.errors.required">Please provide a valid nRCommerce.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="contactPhone">contactPhone</label>
+                  <input [ngClass]="{'is-invalid': saving && form.contactPhone.errors}" class="form-control"
+                         formControlName="contactPhone" id="contactPhone"
+                         placeholder="contactPhone" type="text">
+                  <div *ngIf="saving && form.contactPhone.errors" class="invalid-feedback">
+                    <span *ngIf="form.contactPhone.errors.required">Please provide a valid contactPhone.</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="contactWebSite">contactWebSite</label>
+                  <input [ngClass]="{'is-invalid': saving && form.contactWebSite.errors}" class="form-control"
+                         formControlName="contactWebSite" id="contactWebSite"
+                         placeholder="contactWebSite" type="text">
+                  <div *ngIf="saving && form.contactWebSite.errors" class="invalid-feedback">
+                    <span *ngIf="form.contactWebSite.errors.required">Please provide a valid contactWebSite.</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="contactEmail">contactEmail</label>
+                  <input [ngClass]="{'is-invalid': saving && form.contactEmail.errors}" class="form-control"
+                         formControlName="contactEmail" id="contactEmail"
+                         placeholder="contactEmail" type="text">
+                  <div *ngIf="saving && form.contactEmail.errors" class="invalid-feedback">
+                    <span *ngIf="form.contactEmail.errors.required">Please provide a valid contactEmail.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="sectorName">sectorName</label>
+                  <input [ngClass]="{'is-invalid': saving && form.sectorName.errors}" class="form-control"
+                         formControlName="sectorName" id="sectorName"
+                         placeholder="sectorName" type="text">
+                  <div *ngIf="saving && form.sectorName.errors" class="invalid-feedback">
+                    <span *ngIf="form.sectorName.errors.required">Please provide a valid sectorName.</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="bankName">bankName</label>
+                  <input [ngClass]="{'is-invalid': saving && form.bankName.errors}" class="form-control"
+                         formControlName="adresse" id="bankName"
+                         placeholder="bankName" type="text">
+                  <div *ngIf="saving && form.bankName.errors" class="invalid-feedback">
+                    <span *ngIf="form.bankName.errors.required">Please provide a valid bankName.</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="bankCode">bankCode</label>
+                  <input [ngClass]="{'is-invalid': saving && form.bankCode.errors}" class="form-control"
+                         formControlName="bankCode" id="bankCode"
+                         placeholder="bankCode" type="text">
+                  <div *ngIf="saving && form.bankCode.errors" class="invalid-feedback">
+                    <span *ngIf="form.bankCode.errors.required">Please provide a valid bankCode.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="bankAccountNumber">bankAccountNumber</label>
+                  <input [ngClass]="{'is-invalid': saving && form.bankAccountNumber.errors}" class="form-control"
+                         formControlName="bankAccountNumber" id="bankAccountNumber"
+                         placeholder="bankAccountNumber"
+                         type="text">
+                  <div *ngIf="saving && form.bankAccountNumber.errors" class="invalid-feedback">
+                    <span
+                      *ngIf="form.bankAccountNumber.errors.required">Please provide a valid bankAccountNumber.</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="bankRIB">bankRIB</label>
+                  <input [ngClass]="{'is-invalid': saving && form.bankRIB.errors}" class="form-control"
+                         formControlName="bankRIB" id="bankRIB"
+                         placeholder="bankRIB" type="text">
+                  <div *ngIf="saving && form.bankRIB.errors" class="invalid-feedback">
+                    <span *ngIf="form.bankRIB.errors.required">Please provide a valid bankRIB.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <button class="btn btn-primary" type="submit">Submit</button>
+            <button class="btn btn-danger" type="reset">Cancel</button>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

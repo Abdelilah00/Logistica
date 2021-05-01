@@ -7,8 +7,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -19,6 +22,6 @@ import javax.persistence.Table;
 public class Category extends BaseEntity {
     private String name;
 
-    @OneToOne(mappedBy = "category")
-    private Product product;
+    @OneToMany(mappedBy = "category")
+    private List<Product> products;
 }

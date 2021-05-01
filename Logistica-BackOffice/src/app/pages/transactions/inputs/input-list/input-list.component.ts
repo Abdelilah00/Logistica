@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormBuilder} from '@angular/forms';
 import {InputService} from '../../../../core/services/input.service';
 import {State} from '@progress/kendo-data-query';
@@ -21,9 +20,9 @@ export class InputListComponent implements OnInit {
     take: 10
   };
 
-  constructor(private modalService: NgbModal,
-              public formBuilder: FormBuilder,
-              private inputService: InputService) {
+  constructor(
+    public formBuilder: FormBuilder,
+    private service: InputService) {
   }
 
 
@@ -35,7 +34,7 @@ export class InputListComponent implements OnInit {
       ]
     };
     // todo: use simple tables
-    this.inputService.getAll().subscribe(data => this.gridData = data);
+    this.service.getAll().subscribe(data => this.gridData = data);
   }
 
   public onStateChange(state: State): void {

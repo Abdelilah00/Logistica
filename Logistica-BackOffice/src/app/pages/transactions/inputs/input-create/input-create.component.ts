@@ -20,7 +20,7 @@ export class InputCreateComponent implements OnInit {
 
   constructor(private service: InputService,
               private formBuilder: FormBuilder,
-              /*private location: Location,*/
+              private location: Location,
               private matSnackBar: MatSnackBar,
               private datePipe: DatePipe) {
   }
@@ -34,7 +34,7 @@ export class InputCreateComponent implements OnInit {
       title: 'Add Input',
       items: [
         {label: 'Inputs', path: '../'},
-        {label: 'Add Input', active: true}
+        {label: 'Create', active: true}
       ]
     };
   }

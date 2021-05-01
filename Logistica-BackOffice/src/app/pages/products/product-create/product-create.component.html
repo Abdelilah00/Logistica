@@ -1,1 +1,81 @@
-<p>product-create works!</p>
+<div class="container-fluid">
+  <app-pagetitle [breadcrumbItems]="breadCrumb.items" [title]='breadCrumb.title'></app-pagetitle>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+
+          <form (ngSubmit)="submit()" [formGroup]="formGroup" class="needs-validation">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="name">name</label>
+                  <input [ngClass]="{'is-invalid': saving && form.name.errors}" class="form-control"
+                         formControlName="name" id="name"
+                         placeholder="name" type="text">
+                  <div *ngIf="saving && form.name.errors" class="invalid-feedback">
+                    <span *ngIf="form.name.errors.required">Please provide a valid name.</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="stockSecurity">stockSecurity</label>
+                  <input [ngClass]="{'is-invalid': saving && form.stockSecurity.errors}" class="form-control"
+                         formControlName="stockSecurity" id="stockSecurity"
+                         placeholder="stockSecurity" type="text">
+                  <div *ngIf="saving && form.stockSecurity.errors" class="invalid-feedback">
+                    <span *ngIf="form.stockSecurity.errors.required">Please provide a valid stockSecurity.</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="categoryId">categoryId</label>
+                  <input [ngClass]="{'is-invalid': saving && form.categoryId.errors}" class="form-control"
+                         formControlName="categoryId" id="categoryId"
+                         placeholder="categoryId" type="number">
+                  <div *ngIf="saving && form.categoryId.errors" class="invalid-feedback">
+                    <span *ngIf="form.categoryId.errors.required">Please provide a valid categoryId.</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="stockMin">stockMin</label>
+                  <input [ngClass]="{'is-invalid': saving && form.stockMin.errors}" class="form-control"
+                         formControlName="stockMin" id="stockMin"
+                         placeholder="stockMin" type="number">
+                  <div *ngIf="saving && form.stockMin.errors" class="invalid-feedback">
+                    <span *ngIf="form.stockMin.errors.required">Please provide a valid stockMin.</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="stockMax">stockMax</label>
+                  <input [ngClass]="{'is-invalid': saving && form.stockMax.errors}" class="form-control"
+                         formControlName="stockMax" id="stockMax"
+                         placeholder="stockMax" type="number">
+                  <div *ngIf="saving && form.stockMax.errors" class="invalid-feedback">
+                    <span *ngIf="form.stockMax.errors.required">Please provide a valid stockMax.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button class="btn btn-primary" type="submit">Submit</button>
+            <button class="btn btn-danger" type="reset">Cancel</button>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

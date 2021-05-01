@@ -45,17 +45,13 @@ public class BaseCrudServiceImpl<TEntity extends BaseEntity,
         this.dtoUpdateClass = dtoUpdateClass;
     }
 
-    @Override
-    public CompletableFuture<List<TDto>> findAll() {
-        var x = repository.findAll();
-        return CompletableFuture.completedFuture(objectMapper.convertToDtoList(x, dtoClass));
-    }
 
     @Override
     public TDto getOne(Long aLong) {
         return null;
     }
 
+    //todo: fix waiting to fetch categories
     @Override
     public CompletableFuture<List<TDto>> findAll(Pageable pageable) {
         var x = repository.findAll(pageable).toList();
@@ -81,6 +77,12 @@ public class BaseCrudServiceImpl<TEntity extends BaseEntity,
     @Override
     public void deleteById(Long aLong) {
         repository.deleteById(aLong);
+    }
+
+    @Override
+    public CompletableFuture<List<TDto>> findAll() {
+        var x = repository.findAll();
+        return CompletableFuture.completedFuture(objectMapper.convertToDtoList(x, dtoClass));
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

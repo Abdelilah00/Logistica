@@ -8,7 +8,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -24,10 +23,11 @@ public class Product extends BaseEntity {
     private Integer stockMax;
     private Integer stockSecurity;
 
-    //One to one
-    @OneToOne
+    //Many to One
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Category category = new Category();
 
+    //One to one
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
     private List<Defective> defectives = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
@@ -42,7 +42,6 @@ public class Product extends BaseEntity {
     //Many to many
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
     private List<StockProduct> stockProducts = new ArrayList<>();
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
     private List<ProductCharacteritic> productCharacteritics = new ArrayList<>();
 

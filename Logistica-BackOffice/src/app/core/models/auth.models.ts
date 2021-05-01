@@ -33,15 +33,39 @@ export class TransactionDetail extends BaseModel {
   productName: string;
 }
 
+export class Category extends BaseModel {
+  name: string;
+}
+
 export class Product extends BaseModel {
-  categoryId: number;
+  category: Category;
   expDate: Date;
   name: string;
-  priceHT: number;
   stockMax: number;
   stockMin: number;
   stockSecurity: number;
-  tva: number;
+}
+
+export class Supplier extends BaseModel {
+  name: string;
+  adresse: string;
+  nRCommerce: string;
+  contactPhone: string;
+  contactWebSite: string;
+  contactEmail: string;
+  sectorName: string;
+  bankName: string;
+  bankCode: string;
+  bankAccountNumber: string;
+  bankRIB: string;
+}
+
+export class Parameter extends BaseModel {
+  name: string;
+}
+
+export class Stock extends BaseModel {
+  name: string;
 }
 
 export class BreadCrumb {

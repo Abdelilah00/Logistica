@@ -10,6 +10,7 @@ import {UiModule} from '../shared/ui/ui.module';
 import {WidgetModule} from '../shared/widget/widget.module';
 import {NgApexchartsModule} from 'ng-apexcharts';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
+import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -40,12 +41,14 @@ const routes: Routes = [
     NgApexchartsModule,
     PerfectScrollbarModule,
     LeafletModule,
+    MatSnackBarModule
   ],
   providers: [
     {
       provide: PERFECT_SCROLLBAR_CONFIG,
-      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-    }
+      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
+    },
+    MatSnackBar
   ],
   exports: [RouterModule]
 })

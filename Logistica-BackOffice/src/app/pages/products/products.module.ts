@@ -2,15 +2,17 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ProductListComponent} from './product-list/product-list.component';
 import {RouterModule, Routes} from '@angular/router';
-import {SupplierCreateComponent} from '../suppliers/supplier-create/supplier-create.component';
 import {ProductCreateComponent} from './product-create/product-create.component';
 import {ProductEditComponent} from './product-edit/product-edit.component';
+import {UiModule} from '../../shared/ui/ui.module';
+import {GridModule} from '@progress/kendo-angular-grid';
+import {ReactiveFormsModule} from '@angular/forms';
 
 
 const routes: Routes = [
   {path: 'list', component: ProductListComponent},
   {path: 'edit/:id', component: ProductEditComponent},
-  {path: 'create', component: SupplierCreateComponent},
+  {path: 'create', component: ProductCreateComponent},
   {path: '**', redirectTo: 'list'},
 ];
 
@@ -18,7 +20,7 @@ const routes: Routes = [
   declarations: [ProductListComponent, ProductCreateComponent, ProductEditComponent],
   imports: [RouterModule.forChild(routes),
 
-    CommonModule
+    CommonModule, UiModule, GridModule, ReactiveFormsModule
   ]
 })
 export class ProductsModule {
