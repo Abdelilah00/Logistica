@@ -87,7 +87,11 @@
       }
     },
     "STOCKS": {
-      "TEXT": "Stocks"
+      "TEXT": "Stocks",
+      "LIST": {
+        "STOCK": "Stock",
+        "RESPO": "Responsable"
+      }
     },
     "SUPPLIERS": {
       "TEXT": "Suppliers"

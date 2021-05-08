@@ -3,12 +3,12 @@ import {CommonModule, DatePipe} from '@angular/common';
 import {InputListComponent} from './input-list/input-list.component';
 import {InputCreateComponent} from './input-create/input-create.component';
 import {RouterModule, Routes} from '@angular/router';
-import {ArchwizardModule} from 'angular-archwizard';
+import {TransactionDetailsComponent} from './transaction-details/transaction-details.component';
+import {TransactionDetailsCreateComponent} from './transaction-details-create/transaction-details-create.component';
 import {UiModule} from '../../../shared/ui/ui.module';
 import {GridModule} from '@progress/kendo-angular-grid';
-import {TransactionDetailsComponent} from './transaction-details/transaction-details.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import {TransactionDetailsCreateComponent} from './transaction-details-create/transaction-details-create.component';
+import {ArchwizardModule} from 'angular-archwizard';
 
 const routes: Routes = [
   {path: 'list', component: InputListComponent},
@@ -27,10 +27,10 @@ const routes: Routes = [
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
+    UiModule,
     GridModule,
     ReactiveFormsModule,
-    UiModule,
-    ArchwizardModule,
+    ArchwizardModule
   ],
   providers: [
     DatePipe

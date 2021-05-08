@@ -4,8 +4,7 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {InputsService} from '../../../../core/services/inputs.service';
 import {finalize} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {DatePipe} from '@angular/common';
-import {Location} from '@angular/common';
+import {DatePipe, Location} from '@angular/common';
 
 @Component({
   selector: 'app-input-create',
@@ -24,6 +23,10 @@ export class InputCreateComponent implements OnInit {
               private location: Location,
               private matSnackBar: MatSnackBar,
               private datePipe: DatePipe) {
+  }
+
+  get form() {
+    return this.formGroup.controls;
   }
 
   get formArrayTransactions(): FormArray {
@@ -79,6 +82,4 @@ export class InputCreateComponent implements OnInit {
       this.formArrayTransactions.push(fa.at(i));
     }
   }
-
-
 }

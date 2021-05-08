@@ -21,6 +21,7 @@ public class InputService extends BaseCrudServiceImpl<Input, InputDto, InputCrea
     //todo: create product if not exist
     @Override
     public CompletableFuture<InputDto> create(InputCreateDto inputCreateDto) {
+        //isAuth
         var input = objectMapper.convertToEntity(inputCreateDto);
 
         input.setTransactionDetails(inputCreateDto.getTransactionDetails().stream().map(transactionDetailCreateDto -> {

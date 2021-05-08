@@ -15,9 +15,15 @@
 
                     <div class="col-lg-6">
                       <div class="form-group">
-                        <label for="supplierName">Supplier Name</label>
-                        <input class="form-control" formControlName="supplierName" id="supplierName" type="text">
+                        <label for="supplierName">supplier Name</label>
+                        <input [ngClass]="{'is-invalid': saving && form.supplierName.errors}" class="form-control"
+                               formControlName="supplierName" id="supplierName"
+                               placeholder="supplierName" type="text">
+                        <div *ngIf="saving && form.supplierName.errors" class="invalid-feedback">
+                          <span *ngIf="form.supplierName.errors.required">Please provide a valid name.</span>
+                        </div>
                       </div>
+
                     </div>
 
                     <div class="col-lg-6">
@@ -32,8 +38,8 @@
                   <div class="row">
                     <div class="col-lg-6">
                       <div class="form-group">
-                        <label for="payement" class="control-label">Payement</label>
-                        <select class="form-control select2" id="payement" formControlName="payement">
+                        <label class="control-label" for="payement">Payement</label>
+                        <select class="form-control select2" formControlName="payement" id="payement">
                           <option value="cheque">Cheque</option>
                           <option value="cash">Cash</option>
                           <option value="bank">Banque</option>
@@ -58,7 +64,7 @@
               </div>
 
               <div class='text-center k-mt-14'>
-                <button type="button" awNextStep class="btn btn-primary">Next Step</button>
+                <button awNextStep class="btn btn-primary" type="button">Next Step</button>
               </div>
             </aw-wizard-step>
 
@@ -67,12 +73,14 @@
                 <h4 class="card-title">Transaction Details</h4>
                 <p class="card-title-desc">enter your products</p>
                 <app-transaction-details-create
-                  (transactionDetailsSave)='setNewTransactions($event)'></app-transaction-details-create>
+                  (transactionDetailsSave)='setNewTransactions($event)'>
+                </app-transaction-details-create>
               </div>
 
               <div class='text-center k-mt-14'>
-                <button type="button" awPreviousStep class="btn btn-primary mr-2 waves-effect">Go to previous step</button>
-                <button type="button" awNextStep class="btn btn-primary mr-2 waves-effect">Go to next step</button>
+                <button awPreviousStep class="btn btn-primary mr-2 waves-effect" type="button">Go to previous step
+                </button>
+                <button awNextStep class="btn btn-primary mr-2 waves-effect" type="button">Go to next step</button>
               </div>
             </aw-wizard-step>
 
@@ -82,20 +90,18 @@
                 <h4 class="card-title">Validation</h4>
                 <p class="card-title-desc">Verify that all your data are corrects</p>
 
-                <form>
-                  <h1>Validation Phase</h1>
-                </form>
+                <h1>Validation Phase</h1>
 
                 <div class="text-center k-mt-14">
-                  <button type="submit" class="btn btn-primary mr-2 waves-effect waves-light" (click)='submit()'>Save
+                  <button (click)='submit()' class="btn btn-primary mr-2 waves-effect waves-light" type="submit">Save
                     Changes
                   </button>
-                  <button type="reset" class="btn btn-light mr-2 waves-effect">Cancel</button>
+                  <button class="btn btn-light mr-2 waves-effect" type="reset">Cancel</button>
                 </div>
               </div>
 
               <div class="pager wizard twitter-bs-wizard-pager-link text-center k-mt-14">
-                <button class="btn btn-primary" awPreviousStep>Previous Step</button>
+                <button awPreviousStep class="btn btn-primary">Previous Step</button>
               </div>
             </aw-wizard-step>
           </aw-wizard>

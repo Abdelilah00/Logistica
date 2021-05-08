@@ -8,11 +8,11 @@ import {OutputsService} from '../../../../core/services/outputs.service';
 
 @Component({
   selector: 'app-input-create',
-  templateUrl: './input-create.component.html',
-  styleUrls: ['./input-create.component.scss']
+  templateUrl: './output-create.component.html',
+  styleUrls: ['./output-create.component.scss']
 })
 
-export class InputCreateComponent implements OnInit {
+export class OutputCreateComponent implements OnInit {
   saving = false;
   public breadCrumb: BreadCrumb;
   selectValue = ['Touchscreen', 'Call Function', 'Notifications', 'Fitness', 'Outdoor'];
@@ -31,10 +31,10 @@ export class InputCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.breadCrumb = {
-      title: 'Add Input',
+      title: 'Create Output',
       items: [
-        {label: 'Inputs', path: '../'},
-        {label: 'Add Input', active: true}
+        {label: 'Outputs', path: '../'},
+        {label: 'Create', active: true}
       ]
     };
   }

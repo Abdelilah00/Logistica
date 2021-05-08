@@ -1,29 +1,20 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {StockListComponent} from './stock-list/stock-list.component';
-import {StockCreateComponent} from './stock-create/stock-create.component';
 import {RouterModule, Routes} from '@angular/router';
-import {UiModule} from '../../shared/ui/ui.module';
-import {GridModule} from '@progress/kendo-angular-grid';
-import {ReactiveFormsModule} from '@angular/forms';
 
 
 const routes: Routes = [
-  {path: 'list', component: StockListComponent},
-  {path: 'edit/:id', component: StockCreateComponent},
-  {path: 'create', component: StockCreateComponent},
-  {path: '**', redirectTo: 'list'},
+  {path: 'stock', loadChildren: () => import('./stock/stock.module').then(m => m.StockModule)},
+  {path: 'stock-respo', loadChildren: () => import('./stock-respo/stock-respo.module').then(m => m.StockRespoModule)},
+  {path: '**', redirectTo: 'stock'}
 ];
 
 
 @NgModule({
-  declarations: [StockListComponent, StockCreateComponent],
+  declarations: [],
   imports: [
     RouterModule.forChild(routes),
-    CommonModule,
-    UiModule,
-    GridModule,
-    ReactiveFormsModule
+    CommonModule
   ]
 })
 export class StocksModule {

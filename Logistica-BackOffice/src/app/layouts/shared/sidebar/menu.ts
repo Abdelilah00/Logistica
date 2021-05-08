@@ -40,11 +40,21 @@ export const MENU: MenuItem[] = [
     link: '/products'
   },
   {
-    id: 8,
     label: 'MENUITEMS.STOCKS.TEXT',
     icon: 'ri-product-hunt-line',
-    link: '/stocks'
+    subItems: [
+      {
+        label: 'MENUITEMS.STOCKS.LIST.STOCK',
+        icon: 'ri-product-hunt-line',
+        link: '/stocks/stock'
+      },
+      {
+        label: 'MENUITEMS.STOCKS.LIST.RESPO',
+        icon: 'ri-product-hunt-line',
+        link: '/stocks/stock-respo'
+      }]
   },
+
   {
     id: 9,
     label: 'MENUITEMS.SUPPLIERS.TEXT',

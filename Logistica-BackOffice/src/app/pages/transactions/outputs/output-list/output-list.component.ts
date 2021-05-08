@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormBuilder} from '@angular/forms';
-import {InputsService} from '../../../../core/services/inputs.service';
 import {State} from '@progress/kendo-data-query';
 import {BreadCrumb} from '../../../../core/models/auth.models';
 import {OutputsService} from '../../../../core/services/outputs.service';
@@ -9,11 +8,11 @@ import {OutputsService} from '../../../../core/services/outputs.service';
 
 @Component({
   selector: 'app-input-list',
-  templateUrl: './input-list.component.html',
-  styleUrls: ['./input-list.component.scss']
+  templateUrl: './output-list.component.html',
+  styleUrls: ['./output-list.component.scss']
 })
 
-export class InputListComponent implements OnInit {
+export class OutputListComponent implements OnInit {
   breadCrumb: BreadCrumb;
   gridData;
   public gridState: State = {

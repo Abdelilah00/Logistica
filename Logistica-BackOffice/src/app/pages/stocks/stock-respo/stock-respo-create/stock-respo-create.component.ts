@@ -1,17 +1,17 @@
 import {Component, OnInit} from '@angular/core';
-import {BreadCrumb} from '../../../core/models/auth.models';
+import {BreadCrumb} from '../../../../core/models/auth.models';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ProductsService} from '../../../core/services/products.service';
+import {ProductsService} from '../../../../core/services/products.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Location} from '@angular/common';
 import {finalize} from 'rxjs/operators';
 
 @Component({
   selector: 'app-stock-create',
-  templateUrl: './stock-create.component.html',
-  styleUrls: ['./stock-create.component.scss']
+  templateUrl: './stock-respo-create.component.html',
+  styleUrls: ['./stock-respo-create.component.scss']
 })
-export class StockCreateComponent implements OnInit {
+export class StockRespoCreateComponent implements OnInit {
 
 
   formGroup = this.createFormGroup();
