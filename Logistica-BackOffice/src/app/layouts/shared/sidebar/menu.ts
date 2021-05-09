@@ -54,6 +54,16 @@ export const MENU: MenuItem[] = [
         link: '/stocks/stock-respo'
       }]
   },
+  {
+    label: 'MENUITEMS.TASKS.TEXT',
+    icon: 'ri-product-hunt-line',
+    link: '/tasks'
+  },
+  {
+    label: 'MENUITEMS.AUDITS.TEXT',
+    icon: 'ri-product-hunt-line',
+    link: '/audits'
+  },
 
   {
     id: 9,

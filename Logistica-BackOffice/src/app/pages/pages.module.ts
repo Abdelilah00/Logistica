@@ -25,6 +25,8 @@ const routes: Routes = [
   {path: 'suppliers', loadChildren: () => import('./suppliers/suppliers.module').then(m => m.SuppliersModule)},
   {path: 'products', loadChildren: () => import('./products/products.module').then(m => m.ProductsModule)},
   {path: 'stocks', loadChildren: () => import('./stocks/stocks.module').then(m => m.StocksModule)},
+  {path: 'tasks', loadChildren: () => import('./tasks/tasks.module').then(m => m.TasksModule)},
+  {path: 'audits', loadChildren: () => import('./audits/audits.module').then(m => m.AuditsModule)},
   {path: 'parameters', loadChildren: () => import('./parameters/parameters.module').then(m => m.ParametersModule)},
 ];
 

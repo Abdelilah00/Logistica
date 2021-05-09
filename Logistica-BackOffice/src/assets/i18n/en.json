@@ -96,6 +96,12 @@
     "SUPPLIERS": {
       "TEXT": "Suppliers"
     },
+    "TASKS": {
+      "TEXT": "Tasks"
+    },
+    "AUDITS": {
+      "TEXT": "Audits"
+    },
     "PARAMS": {
       "TEXT": "Parameters",
       "LIST": {
