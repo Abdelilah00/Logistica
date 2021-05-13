@@ -7,6 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class OutputDto extends BaseDto {
+    private String ref;
     private String distination;
     private String askBy;
     private String DistinationType;

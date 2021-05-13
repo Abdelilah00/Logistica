@@ -12,7 +12,8 @@ import java.util.List;
 @Getter
 @Setter
 public class InputCreateDto extends BaseDto {
-    private String supplierName;
+    private String ref;
+    private String actorName;
     private Date date;
     private String description;
 

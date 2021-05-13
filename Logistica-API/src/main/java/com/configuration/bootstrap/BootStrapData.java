@@ -8,17 +8,14 @@ package com.configuration.bootstrap;
 
 import com.configuration.TenantContext;
 import com.configuration.security.repositories.IUserRepository;
+import com.logistica.domains.Commands.Actor;
 import com.logistica.domains.Commands.Bank;
 import com.logistica.domains.Commands.Contact;
 import com.logistica.domains.Commands.Sector;
-import com.logistica.domains.Commands.Supplier;
 import com.logistica.domains.Products.*;
-import com.logistica.repositories.Commands.ISupplierRepository;
+import com.logistica.repositories.Commands.IActorRepository;
 import com.logistica.repositories.ITestRepository;
-import com.logistica.repositories.Products.ICategoryRepository;
-import com.logistica.repositories.Products.IInputRepository;
-import com.logistica.repositories.Products.IProductRepository;
-import com.logistica.repositories.Products.IStockRepository;
+import com.logistica.repositories.Products.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +42,9 @@ public class BootStrapData implements CommandLineRunner {
     @Autowired
     private IInputRepository iInputRepository;
     @Autowired
-    private ISupplierRepository iSupplierRepository;
+    private IOutputRepository iOutputRepository;
+    @Autowired
+    private IActorRepository iActorRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -53,6 +52,7 @@ public class BootStrapData implements CommandLineRunner {
         if (iCategoryRepository.findAll().size() > 0)
             return;
 
+        //create categories
         var catA = new Category();
         catA.setName("category A");
         var prodA = new Product();
@@ -62,7 +62,6 @@ public class BootStrapData implements CommandLineRunner {
         prodA.setStockMin(100);
         prodA.setStockSecurity(300);
         prodA.setCategory(catA);
-        //iProductRepository.save(prodA);
 
         var catB = new Category();
         catB.setName("category B");
@@ -73,9 +72,10 @@ public class BootStrapData implements CommandLineRunner {
         prodB.setStockMin(50);
         prodB.setStockSecurity(500);
         prodB.setCategory(catB);
-        //iProductRepository.save(prodB);
 
+        //create input
         var input = new Input();
+        input.setRef("Ref2145");
         input.setDate(new Date());
         input.setDescription("input u wanna details its just for test");
         input.setSupplierName("Supplier A");
@@ -100,20 +100,38 @@ public class BootStrapData implements CommandLineRunner {
         trans2.setQte(100);
         transactionDetails.add(trans2);
         input.setTransactionDetails(transactionDetails);
-
         iInputRepository.save(input);
 
+        //create output
+        var output = new Output();
+        output.setRef("Ref2145");
+        output.setDate(new Date());
+        output.setDescription("input u wanna details its just for test");
+        output.setAskBy("Supplier A");
+        output.setDistination("Service IT");
 
-        var respo = new StockRespo();
-        respo.setName("Abdelilah");
+        var transactionDetails2 = new ArrayList<TransactionDetail>();
+        var trans21 = new TransactionDetail();
+        trans21.getProduct().setId(1);
+        trans21.setPriceHT(20f);
+        trans21.setTVA(0.25f);
+        trans21.setQte(50);
+        transactionDetails2.add(trans21);
+        output.setTransactionDetails(transactionDetails2);
+        iOutputRepository.save(output);
+
+        //create stock
+        var resp = new Actor();
+        resp.setName("Abdelilah");
         var stock = new Stock();
         stock.setName("stock 11");
         stock.setAdresse("db allal elffasi");
         stock.setArea(1545d);
-        stock.setStockRespo(respo);
+        stock.setResponsible(resp);
         iStockRepository.save(stock);
 
-        var supplier = new Supplier();
+        //create supplier
+        var supplier = new Actor();
         supplier.setAdresse("db alla elfassi");
         supplier.setName("jabri ilyass");
         supplier.setNRCommerce("sdf3256 5065655s4df ");
@@ -131,6 +149,6 @@ public class BootStrapData implements CommandLineRunner {
         contact.setPhone("0676958566");
         contact.setWebSite("360tech.com");
         supplier.setContact(contact);
-        iSupplierRepository.save(supplier);
+        iActorRepository.save(supplier);
     }
 }

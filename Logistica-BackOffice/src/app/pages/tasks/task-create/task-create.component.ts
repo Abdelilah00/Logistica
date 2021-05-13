@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {BreadCrumb} from '../../../core/models/auth.models';
+import {BreadCrumb} from '../../../core/models/all.models';
 import {finalize} from 'rxjs/operators';
-import {SuppliersService} from '../../../core/services/suppliers.service';
+import {ActorService} from '../../../core/services/actor.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Location} from '@angular/common';
 
@@ -17,7 +17,7 @@ export class TaskCreateComponent implements OnInit {
   public breadCrumb: BreadCrumb;
 
   constructor(private formBuilder: FormBuilder,
-              private service: SuppliersService,
+              private service: ActorService,
               private matSnackBar: MatSnackBar,
               private location: Location,
   ) {

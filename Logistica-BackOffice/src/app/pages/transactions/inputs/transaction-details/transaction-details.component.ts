@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {TransactionDetail} from '../../../../core/models/auth.models';
+import {TransactionDetail} from '../../../../core/models/all.models';
 import {TransactionDetailsService} from '../../../../core/services/transaction-details.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {FormBuilder, FormGroup} from '@angular/forms';

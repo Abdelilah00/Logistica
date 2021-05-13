@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {BreadCrumb} from '../../../core/models/auth.models';
+import {BreadCrumb} from '../../../core/models/all.models';
 import {State} from '@progress/kendo-data-query';
 import {FormBuilder} from '@angular/forms';
 import {ProductsService} from '../../../core/services/products.service';

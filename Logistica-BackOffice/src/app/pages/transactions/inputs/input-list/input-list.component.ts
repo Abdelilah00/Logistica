@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 import {InputsService} from '../../../../core/services/inputs.service';
 import {State} from '@progress/kendo-data-query';
-import {BreadCrumb} from '../../../../core/models/auth.models';
+import {BreadCrumb} from '../../../../core/models/all.models';
 
 
 @Component({

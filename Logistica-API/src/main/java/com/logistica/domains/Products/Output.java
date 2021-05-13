@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -19,8 +20,12 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "output")
 public class Output extends BaseEntity {
-    private String distination;
+    private String ref;
+    private Date date;
+    private String description;
+
     private String askBy;
+    private String distination;
     private String DistinationType;
 
     @OneToMany(mappedBy = "output")

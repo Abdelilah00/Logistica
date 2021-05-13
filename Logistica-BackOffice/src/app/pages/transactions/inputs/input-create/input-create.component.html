@@ -12,7 +12,21 @@
 
                 <form [formGroup]="formGroup">
                   <div class="row">
+                    <div class="col-lg-12">
+                      <div class="form-group">
+                        <label for="ref">input Reference</label>
+                        <input [ngClass]="{'is-invalid': saving && form.inputRef.errors}" class="form-control"
+                               formControlName="ref" id="ref"
+                               placeholder="ref" type="text">
+                        <div *ngIf="saving && form.ref.errors" class="invalid-feedback">
+                          <span *ngIf="form.ref.errors.required">Please provide a valid ref.</span>
+                        </div>
+                      </div>
+                    </div>
 
+
+                  </div>
+                  <div class="row">
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label for="supplierName">supplier Name</label>
@@ -23,7 +37,6 @@
                           <span *ngIf="form.supplierName.errors.required">Please provide a valid name.</span>
                         </div>
                       </div>
-
                     </div>
 
                     <div class="col-lg-6">

@@ -21,7 +21,7 @@ public class CommandIn extends BaseEntity {
     private String ref;
     private String description;
     @OneToOne
-    private Client client;
+    private Actor actor;
     @OneToOne
     private Service service;
 

@@ -22,7 +22,7 @@ const routes: Routes = [
   {path: '', component: DashboardComponent},
   {path: 'utility', loadChildren: () => import('./utility/utility.module').then(m => m.UtilityModule)},
   {path: 'transactions', loadChildren: () => import('./transactions/transactions.module').then(m => m.TransactionsModule)},
-  {path: 'suppliers', loadChildren: () => import('./suppliers/suppliers.module').then(m => m.SuppliersModule)},
+  {path: 'persons', loadChildren: () => import('./persons/persons.module').then(m => m.PersonsModule)},
   {path: 'products', loadChildren: () => import('./products/products.module').then(m => m.ProductsModule)},
   {path: 'stocks', loadChildren: () => import('./stocks/stocks.module').then(m => m.StocksModule)},
   {path: 'tasks', loadChildren: () => import('./tasks/tasks.module').then(m => m.TasksModule)},

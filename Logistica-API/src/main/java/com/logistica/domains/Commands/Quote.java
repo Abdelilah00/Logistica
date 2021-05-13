@@ -26,7 +26,8 @@ public class Quote extends BaseEntity {
     private QuoteStatus quoteStatus;
 
     @OneToOne
-    private Supplier supplier;
+    private Actor actor;
+
     @OneToOne
     private Offer offer;
     @OneToMany(mappedBy = "quote")

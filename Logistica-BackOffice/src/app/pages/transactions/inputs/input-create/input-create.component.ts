@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {BreadCrumb} from '../../../../core/models/auth.models';
+import {BreadCrumb} from '../../../../core/models/all.models';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {InputsService} from '../../../../core/services/inputs.service';
 import {finalize} from 'rxjs/operators';
@@ -50,6 +50,7 @@ export class InputCreateComponent implements OnInit {
       description: ['test', Validators.required],
       payement: ['bank', Validators.required],
       payementRef: ['test', Validators.required],
+      ref: ['IR', Validators.required],
       transactionDetails: this.formBuilder.array([]),
     });
   }

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {BreadCrumb} from '../../../../core/models/auth.models';
+import {BreadCrumb} from '../../../../core/models/all.models';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ProductsService} from '../../../../core/services/products.service';
 import {MatSnackBar} from '@angular/material/snack-bar';

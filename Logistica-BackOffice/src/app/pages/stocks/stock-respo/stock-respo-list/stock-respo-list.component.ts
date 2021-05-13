@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {BreadCrumb} from '../../../../core/models/auth.models';
+import {BreadCrumb} from '../../../../core/models/all.models';
 import {State} from '@progress/kendo-data-query';
 import {FormBuilder} from '@angular/forms';
-import {StocksService} from '../../../../core/services/stocks.service';
+import {ActorService} from '../../../../core/services/actor.service';
 
 @Component({
   selector: 'app-stock-list',
@@ -21,7 +21,7 @@ export class StockRespoListComponent implements OnInit {
 
   constructor(
     public formBuilder: FormBuilder,
-    private service: StocksService) {
+    private service: ActorService) {
   }
 
   ngOnInit(): void {

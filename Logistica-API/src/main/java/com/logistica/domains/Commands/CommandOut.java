@@ -21,7 +21,7 @@ public class CommandOut extends BaseEntity {
     @OneToOne
     private Needs needs;
     @OneToOne
-    private Supplier supplier;
+    private Actor actor;
 
     //private  CommandDetail commandDetail;
     //private  PayementMethod payementMethod;

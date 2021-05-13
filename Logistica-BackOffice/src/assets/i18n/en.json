@@ -93,8 +93,13 @@
         "RESPO": "Responsable"
       }
     },
-    "SUPPLIERS": {
-      "TEXT": "Suppliers"
+    "PERSONS": {
+      "TEXT": "Persons",
+      "LIST": {
+        "CLIENTS": "Clients",
+        "SUPPLIERS": "Suppliers",
+        "RESPONSIBLE": "Responsible"
+      }
     },
     "TASKS": {
       "TEXT": "Tasks"

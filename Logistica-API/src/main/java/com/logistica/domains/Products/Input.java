@@ -18,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "input")
 public class Input extends BaseEntity {
+    private String ref;
     private String supplierName;
     private Date date;
     private String description;

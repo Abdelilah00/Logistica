@@ -17,24 +17,39 @@ export const MENU: MenuItem[] = [
     link: '/'
   },
   {
-    id: 5,
+    label: 'MENUITEMS.PERSONS.TEXT',
+    icon: 'ri-product-hunt-line',
+    subItems: [
+      {
+        label: 'MENUITEMS.PERSONS.LIST.CLIENTS',
+        icon: 'ri-product-hunt-line',
+        link: '/persons/clients'
+      },
+      {
+        label: 'MENUITEMS.PERSONS.LIST.SUPPLIERS',
+        icon: 'ri-product-hunt-line',
+        link: '/persons/suppliers'
+      },
+      {
+        label: 'MENUITEMS.PERSONS.LIST.RESPONSIBLE',
+        icon: 'ri-product-hunt-line',
+        link: '/persons/responsible'
+      }
+    ]
+  },
+  {
     label: 'MENUITEMS.TRANSACTION.TEXT',
     icon: 'ri-file-list-3-line',
     subItems: [
       {
-        id: 6,
         label: 'MENUITEMS.TRANSACTION.LIST.INPUT',
         link: '/transactions/inputs',
-        parentId: 5
       }, {
-        id: 7,
         label: 'MENUITEMS.TRANSACTION.LIST.OUTPUT',
         link: '/transactions/outputs',
-        parentId: 5
       }]
   },
   {
-    id: 3,
     label: 'MENUITEMS.PRODUCTS.TEXT',
     icon: 'ri-product-hunt-line',
     link: '/products'
@@ -64,18 +79,11 @@ export const MENU: MenuItem[] = [
     icon: 'ri-product-hunt-line',
     link: '/audits'
   },
-
   {
-    id: 9,
-    label: 'MENUITEMS.SUPPLIERS.TEXT',
-    icon: 'ri-product-hunt-line',
-    link: '/suppliers'
-  },
-  {
-    id: 17,
     label: 'MENUITEMS.PAGES.TEXT',
     isTitle: true
   },
+
   {
     id: 18,
     label: 'MENUITEMS.AUTHENTICATION.TEXT',

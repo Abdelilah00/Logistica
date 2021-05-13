@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {GridComponent} from '@progress/kendo-angular-grid';
-import {TransactionDetail} from '../../../../core/models/auth.models';
+import {TransactionDetail} from '../../../../core/models/all.models';
 
 @Component({
   selector: 'app-transaction-details-create',

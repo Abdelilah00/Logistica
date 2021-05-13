@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {BreadCrumb} from '../../../core/models/auth.models';
+import {BreadCrumb} from '../../../core/models/all.models';
 import {State} from '@progress/kendo-data-query';
 import {FormBuilder} from '@angular/forms';
-import {SuppliersService} from '../../../core/services/suppliers.service';
+import {ActorService} from '../../../core/services/actor.service';
 
 @Component({
   selector: 'app-supplier-list',
@@ -20,7 +20,7 @@ export class TaskListComponent implements OnInit {
 
   constructor(
     public formBuilder: FormBuilder,
-    private service: SuppliersService) {
+    private service: ActorService) {
   }
 
   ngOnInit(): void {

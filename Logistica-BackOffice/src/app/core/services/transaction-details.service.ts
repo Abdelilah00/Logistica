@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BaseService} from './base-service.service';
-import {TransactionDetail} from '../models/auth.models';
+import {TransactionDetail} from '../models/all.models';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {retry} from 'rxjs/operators';

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormBuilder} from '@angular/forms';
 import {State} from '@progress/kendo-data-query';
-import {BreadCrumb} from '../../../../core/models/auth.models';
+import {BreadCrumb} from '../../../../core/models/all.models';
 import {OutputsService} from '../../../../core/services/outputs.service';
 
 

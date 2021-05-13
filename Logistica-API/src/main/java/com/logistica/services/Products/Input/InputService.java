@@ -51,7 +51,6 @@ public class InputService extends BaseCrudServiceImpl<Input, InputDto, InputCrea
             return transaction;
         }).collect(Collectors.toList()));
 
-
         return CompletableFuture.completedFuture(objectMapper.convertToDto(repository.save(input), InputDto.class));
     }
 

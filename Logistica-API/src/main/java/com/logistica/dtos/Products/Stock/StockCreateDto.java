@@ -11,5 +11,5 @@ public class StockCreateDto extends BaseDto {
     private String adresse;
     private String area;
     private Long stockTypeId;
-    private Long stockRespoId;
+    private Long responsibleId;
 }

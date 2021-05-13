@@ -1,6 +1,7 @@
 package com.logistica.domains.Products;
 
 import com.alexy.models.BaseEntity;
+import com.logistica.domains.Commands.Actor;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +25,7 @@ public class Stock extends BaseEntity {
     //private StockType stockType;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private StockRespo stockRespo = new StockRespo();
+    private Actor responsible = new Actor();
 
     @OneToMany(mappedBy = "stock")
     private List<StockProduct> stockProducts = new ArrayList<>();
