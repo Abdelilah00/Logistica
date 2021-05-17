@@ -31,7 +31,7 @@ export class ResponsibleListComponent implements OnInit {
       ]
     };
     // todo: use simple tables
-    this.service.getAll().subscribe(data => this.gridData = data);
+    this.service.getResponsible().subscribe(data => this.gridData = data);
   }
 
   public onStateChange(state: State): void {

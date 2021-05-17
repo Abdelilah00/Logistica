@@ -2,12 +2,10 @@ import {MenuItem} from './menu.model';
 
 export const MENU: MenuItem[] = [
   {
-    id: 1,
     label: 'MENUITEMS.MENU.TEXT',
     isTitle: true
   },
   {
-    id: 2,
     label: 'MENUITEMS.DASHBOARDS.TEXT',
     icon: 'ri-dashboard-line',
     badge: {
@@ -49,11 +47,7 @@ export const MENU: MenuItem[] = [
         link: '/transactions/outputs',
       }]
   },
-  {
-    label: 'MENUITEMS.PRODUCTS.TEXT',
-    icon: 'ri-product-hunt-line',
-    link: '/products'
-  },
+
   {
     label: 'MENUITEMS.STOCKS.TEXT',
     icon: 'ri-product-hunt-line',
@@ -62,11 +56,10 @@ export const MENU: MenuItem[] = [
         label: 'MENUITEMS.STOCKS.LIST.STOCK',
         icon: 'ri-product-hunt-line',
         link: '/stocks/stock'
-      },
-      {
-        label: 'MENUITEMS.STOCKS.LIST.RESPO',
+      }, {
+        label: 'MENUITEMS.STOCKS.LIST.PRODUCT',
         icon: 'ri-product-hunt-line',
-        link: '/stocks/stock-respo'
+        link: '/stocks/product'
       }]
   },
   {

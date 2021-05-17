@@ -8,10 +8,7 @@ package com.configuration.bootstrap;
 
 import com.configuration.TenantContext;
 import com.configuration.security.repositories.IUserRepository;
-import com.logistica.domains.Commands.Actor;
-import com.logistica.domains.Commands.Bank;
-import com.logistica.domains.Commands.Contact;
-import com.logistica.domains.Commands.Sector;
+import com.logistica.domains.Commands.*;
 import com.logistica.domains.Products.*;
 import com.logistica.repositories.Commands.IActorRepository;
 import com.logistica.repositories.ITestRepository;
@@ -120,35 +117,65 @@ public class BootStrapData implements CommandLineRunner {
         output.setTransactionDetails(transactionDetails2);
         iOutputRepository.save(output);
 
-        //create stock
-        var resp = new Actor();
-        resp.setName("Abdelilah");
+        //create stock/stock-respo
+        var actor1 = new Actor();
+        actor1.setName("responsible name");
+        var responsible = new ActorType();
+        responsible.setName("Responsible");
+        actor1.getActorIsType().setActorType(responsible);
         var stock = new Stock();
         stock.setName("stock 11");
         stock.setAdresse("db allal elffasi");
         stock.setArea(1545d);
-        stock.setResponsible(resp);
+        stock.setResponsible(actor1);
         iStockRepository.save(stock);
 
         //create supplier
-        var supplier = new Actor();
-        supplier.setAdresse("db alla elfassi");
-        supplier.setName("jabri ilyass");
-        supplier.setNRCommerce("sdf3256 5065655s4df ");
+        var actor2 = new Actor();
+        actor2.setAdresse("db alla elfassi");
+        actor2.setName("supplier name");
+        actor2.setNRCommerce("sdf3256 5065655s4df ");
         var sector = new Sector();
         sector.setName("l7aliib");
-        supplier.setSector(sector);
+        actor2.setSector(sector);
         var bank = new Bank();
         bank.setAccountNumber("25154545");
         bank.setCode("25154545");
         bank.setName("CIH");
         bank.setRIB("254545456465465468789");
-        supplier.setBank(bank);
+        actor2.setBank(bank);
         var contact = new Contact();
         contact.setEmail("abdelilah@gmail.com");
         contact.setPhone("0676958566");
         contact.setWebSite("360tech.com");
-        supplier.setContact(contact);
-        iActorRepository.save(supplier);
+        actor2.setContact(contact);
+        var supplier = new ActorType();
+        supplier.setName("Supplier");
+        actor2.getActorIsType().setActorType(supplier);
+        iActorRepository.save(actor2);
+
+        //create client
+        var actor3 = new Actor();
+        actor3.setAdresse("db alla elfassi");
+        actor3.setName("client name");
+        actor3.setNRCommerce("sdf3256 5065655s4df ");
+        var sector2 = new Sector();
+        sector.setName("jabir");
+        actor3.setSector(sector2);
+        var bank2 = new Bank();
+        bank.setAccountNumber("25154545");
+        bank.setCode("25154545");
+        bank.setName("CIH");
+        bank.setRIB("254545456465465468789");
+        actor3.setBank(bank2);
+        var contact2 = new Contact();
+        contact.setEmail("abdelilah@gmail.com");
+        contact.setPhone("0676958566");
+        contact.setWebSite("360tech.com");
+        actor3.setContact(contact2);
+        var client = new ActorType();
+        client.setName("Client");
+        actor3.getActorIsType().setActorType(client);
+        iActorRepository.save(actor3);
     }
 }

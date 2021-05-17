@@ -5,7 +5,7 @@ import {RouterModule, Routes} from '@angular/router';
 
 const routes: Routes = [
   {path: 'stock', loadChildren: () => import('./stock/stock.module').then(m => m.StockModule)},
-  {path: 'stock-respo', loadChildren: () => import('./stock-respo/stock-respo.module').then(m => m.StockRespoModule)},
+  {path: 'product', loadChildren: () => import('./product/product.module').then(m => m.ProductModule)},
   {path: '**', redirectTo: 'stock'}
 ];
 

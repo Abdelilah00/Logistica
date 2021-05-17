@@ -23,19 +23,20 @@
                         </div>
                       </div>
                     </div>
-
-
                   </div>
+
                   <div class="row">
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label for="supplierName">supplier Name</label>
-                        <input [ngClass]="{'is-invalid': saving && form.supplierName.errors}" class="form-control"
-                               formControlName="supplierName" id="supplierName"
-                               placeholder="supplierName" type="text">
+                        <select class="form-control select2" formControlName="supplierName" id="supplierName">
+                          <option value="cheque">Cheque</option>
+                        </select>
+
                         <div *ngIf="saving && form.supplierName.errors" class="invalid-feedback">
                           <span *ngIf="form.supplierName.errors.required">Please provide a valid name.</span>
                         </div>
+
                       </div>
                     </div>
 

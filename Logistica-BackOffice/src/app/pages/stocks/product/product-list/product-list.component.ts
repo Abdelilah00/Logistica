@@ -2,14 +2,14 @@ import {Component, OnInit} from '@angular/core';
 import {BreadCrumb} from '../../../../core/models/all.models';
 import {State} from '@progress/kendo-data-query';
 import {FormBuilder} from '@angular/forms';
-import {ActorService} from '../../../../core/services/actor.service';
+import {ProductsService} from '../../../../core/services/products.service';
 
 @Component({
-  selector: 'app-stock-list',
-  templateUrl: './stock-respo-list.component.html',
-  styleUrls: ['./stock-respo-list.component.scss']
+  selector: 'app-product-list',
+  templateUrl: './product-list.component.html',
+  styleUrls: ['./product-list.component.scss']
 })
-export class StockRespoListComponent implements OnInit {
+export class ProductListComponent implements OnInit {
 
   breadCrumb: BreadCrumb;
   gridData;
@@ -21,14 +21,14 @@ export class StockRespoListComponent implements OnInit {
 
   constructor(
     public formBuilder: FormBuilder,
-    private service: ActorService) {
+    private service: ProductsService) {
   }
 
   ngOnInit(): void {
     this.breadCrumb = {
-      title: 'Stocks',
+      title: 'Products',
       items: [
-        {label: 'Stocks', active: true}
+        {label: 'Products', active: true}
       ]
     };
     // todo: use simple tables

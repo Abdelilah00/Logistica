@@ -11,6 +11,6 @@ public class StockDto extends BaseDto {
     private String name;
     private String adresse;
     private String area;
-    private StockRespoDto stockType;
-    private StockRespoDto stockRespo;
+    private String responsibleName;
+    private String type;
 }

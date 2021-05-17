@@ -80,17 +80,11 @@
         "OUTPUT": "Output"
       }
     },
-    "PRODUCTS": {
-      "TEXT": "Products",
-      "LIST": {
-        "PRODUCT": "Products"
-      }
-    },
     "STOCKS": {
       "TEXT": "Stocks",
       "LIST": {
         "STOCK": "Stock",
-        "RESPO": "Responsable"
+        "PRODUCT": "Products"
       }
     },
     "PERSONS": {

@@ -31,7 +31,7 @@ export class ClientListComponent implements OnInit {
       ]
     };
     // todo: use simple tables
-    this.service.getAll().subscribe(data => this.gridData = data);
+    this.service.getClients().subscribe(data => this.gridData = data);
   }
 
   public onStateChange(state: State): void {

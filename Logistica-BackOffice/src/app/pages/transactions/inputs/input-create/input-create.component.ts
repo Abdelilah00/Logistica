@@ -5,6 +5,7 @@ import {InputsService} from '../../../../core/services/inputs.service';
 import {finalize} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {DatePipe, Location} from '@angular/common';
+import {ActorService} from '../../../../core/services/actor.service';
 
 @Component({
   selector: 'app-input-create',
@@ -15,10 +16,13 @@ import {DatePipe, Location} from '@angular/common';
 export class InputCreateComponent implements OnInit {
   saving = false;
   public breadCrumb: BreadCrumb;
-  selectValue = ['Touchscreen', 'Call Function', 'Notifications', 'Fitness', 'Outdoor'];
   formGroup = this.createFormGroup();
+  public suppliersList;
+  public filteredVariables;
+
 
   constructor(private service: InputsService,
+              private actorService: ActorService,
               private formBuilder: FormBuilder,
               private location: Location,
               private matSnackBar: MatSnackBar,
@@ -41,11 +45,16 @@ export class InputCreateComponent implements OnInit {
         {label: 'Create', active: true}
       ]
     };
+    this.actorService.getSuppliers().subscribe(data => {
+      this.suppliersList = data;
+      this.filteredVariables = this.suppliersList.slice();
+
+    });
   }
 
   createFormGroup(): FormGroup {
     return this.formBuilder.group({
-      supplierName: ['test', Validators.required],
+      supplierName: ['', Validators.required],
       date: [this.datePipe.transform(Date.now(), 'yyyy-MM-ddThh:mm:ss'), Validators.required],
       description: ['test', Validators.required],
       payement: ['bank', Validators.required],

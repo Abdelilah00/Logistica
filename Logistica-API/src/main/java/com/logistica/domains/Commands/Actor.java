@@ -23,7 +23,8 @@ public class Actor extends BaseEntity {
     private String nRCommerce;
 
     @OneToOne(cascade = CascadeType.ALL)
-    private Role role;
+    private ActorIsType actorIsType = new ActorIsType();
+
     @OneToOne(cascade = CascadeType.ALL)
     private Contact contact;
     @OneToOne(cascade = CascadeType.ALL)

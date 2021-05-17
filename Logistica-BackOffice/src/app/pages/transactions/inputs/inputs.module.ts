@@ -9,6 +9,10 @@ import {UiModule} from '../../../shared/ui/ui.module';
 import {GridModule} from '@progress/kendo-angular-grid';
 import {ReactiveFormsModule} from '@angular/forms';
 import {ArchwizardModule} from 'angular-archwizard';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatSelectModule} from '@angular/material/select';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectFilterModule} from 'mat-select-filter';
 
 const routes: Routes = [
   {path: 'list', component: InputListComponent},
@@ -30,7 +34,11 @@ const routes: Routes = [
     UiModule,
     GridModule,
     ReactiveFormsModule,
-    ArchwizardModule
+    ArchwizardModule,
+    MatAutocompleteModule,
+    MatSelectModule,
+    MatInputModule,
+    MatSelectFilterModule
   ],
   providers: [
     DatePipe
