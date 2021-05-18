@@ -18,4 +18,10 @@ export class TransactionDetailsService extends BaseService<TransactionDetail, Tr
     return this.httpClient.get<Array<TransactionDetail>>(`${this.baseUrl}/getByInputId/${encodeURIComponent(String(id))}`)
       .pipe(retry(1));
   }
+
+  getByOutputId(id: number): Observable<Array<TransactionDetail>> {
+    this.loading = true;
+    return this.httpClient.get<Array<TransactionDetail>>(`${this.baseUrl}/getByOutputId/${encodeURIComponent(String(id))}`)
+      .pipe(retry(1));
+  }
 }

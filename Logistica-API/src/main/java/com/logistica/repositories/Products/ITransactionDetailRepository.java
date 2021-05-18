@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface ITransactionDetailRepository extends IBaseJpaRepository<TransactionDetail> {
     List<TransactionDetail> getByInputId(Long id);
+
+    List<TransactionDetail> getByOutputId(Long id);
 }

@@ -41,7 +41,7 @@ export class OutputCreateComponent implements OnInit {
 
   createFormGroup(): FormGroup {
     return this.formBuilder.group({
-      supplierName: ['test', Validators.required],
+      actorId: ['test', Validators.required],
       date: [this.datePipe.transform(Date.now(), 'yyyy-MM-ddThh:mm:ss'), Validators.required],
       description: ['test', Validators.required],
       payement: ['bank', Validators.required],

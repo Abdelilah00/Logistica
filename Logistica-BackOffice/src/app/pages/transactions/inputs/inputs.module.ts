@@ -13,6 +13,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectFilterModule} from 'mat-select-filter';
+import {DropDownListModule} from '@progress/kendo-angular-dropdowns';
+import {PopupModule} from '@progress/kendo-angular-popup';
 
 const routes: Routes = [
   {path: 'list', component: InputListComponent},
@@ -38,7 +40,9 @@ const routes: Routes = [
     MatAutocompleteModule,
     MatSelectModule,
     MatInputModule,
-    MatSelectFilterModule
+    MatSelectFilterModule,
+    DropDownListModule,
+    PopupModule
   ],
   providers: [
     DatePipe

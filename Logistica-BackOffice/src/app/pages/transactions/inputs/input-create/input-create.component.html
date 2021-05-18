@@ -28,13 +28,12 @@
                   <div class="row">
                     <div class="col-lg-6">
                       <div class="form-group">
-                        <label for="supplierName">supplier Name</label>
-                        <select class="form-control select2" formControlName="supplierName" id="supplierName">
-                          <option value="cheque">Cheque</option>
+                        <label for="actorId">supplier Name</label>
+                        <select class="form-control select2" formControlName="actorId" id="actorId">
+                          <option *ngFor='let supplier of suppliersList' value="{{supplier.id}}">{{supplier.name}}</option>
                         </select>
-
-                        <div *ngIf="saving && form.supplierName.errors" class="invalid-feedback">
-                          <span *ngIf="form.supplierName.errors.required">Please provide a valid name.</span>
+                        <div *ngIf="saving && form.actorId.errors" class="invalid-feedback">
+                          <span *ngIf="form.actorId.errors.required">Please provide a valid name.</span>
                         </div>
 
                       </div>

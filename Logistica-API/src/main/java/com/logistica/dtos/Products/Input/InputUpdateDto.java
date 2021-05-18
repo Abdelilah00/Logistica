@@ -9,7 +9,5 @@ import java.util.Date;
 @Getter
 @Setter
 public class InputUpdateDto extends BaseDto {
-    private String actorName;
-    private Date date;
-    private String description;
+
 }

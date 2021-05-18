@@ -23,4 +23,9 @@ public class TransactionDetailService extends BaseCrudServiceImpl<TransactionDet
         return CompletableFuture.completedFuture(objectMapper.convertToDtoList(tmp, TransactionDetailDto.class));
     }
 
+    public CompletableFuture<List<TransactionDetailDto>> getByOutputId(Long id) {
+        var tmp = ((ITransactionDetailRepository) repository).getByOutputId(id);
+        return CompletableFuture.completedFuture(objectMapper.convertToDtoList(tmp, TransactionDetailDto.class));
+    }
+
 }

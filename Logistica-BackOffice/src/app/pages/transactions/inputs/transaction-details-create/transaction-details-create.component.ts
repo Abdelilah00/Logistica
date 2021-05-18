@@ -1,7 +1,8 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {GridComponent} from '@progress/kendo-angular-grid';
-import {TransactionDetail} from '../../../../core/models/all.models';
+import {Product, TransactionDetail} from '../../../../core/models/all.models';
+import {ProductsService} from '../../../../core/services/products.service';
 
 @Component({
   selector: 'app-transaction-details-create',
@@ -11,17 +12,19 @@ import {TransactionDetail} from '../../../../core/models/all.models';
 export class TransactionDetailsCreateComponent implements OnInit {
   products = Array<TransactionDetail>();
   originalProducts = [];
-  productsForm: FormGroup;
+  transactions: FormGroup;
   isEditMode = true;
+  productList: Product[];
+
   @ViewChild('grid') grid: GridComponent;
   @Output() transactionDetailsSave = new EventEmitter<any>();
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private productsService: ProductsService) {
   }
 
   // convenience getters for easy access to form fields
   get f() {
-    return this.productsForm.controls;
+    return this.transactions.controls;
   }
 
   get fa() {
@@ -30,9 +33,8 @@ export class TransactionDetailsCreateComponent implements OnInit {
 
   ngOnInit() {
     // initialise products form with empty form array
-    this.productsForm = this.formBuilder.group({
-      formArray: new FormArray([])
-    });
+    this.transactions = this.formBuilder.group({formArray: new FormArray([])});
+    this.productsService.getAll().subscribe(data => this.productList = data);
   }
 
   onEdit() {
@@ -52,11 +54,11 @@ export class TransactionDetailsCreateComponent implements OnInit {
     this.products.push(new TransactionDetail());
 
     // add new form group to form array
-    let test = new TransactionDetail();
+    const test = new TransactionDetail();
     test.qte = 10;
     test.article = 10;
     test.lot = 10;
-    test.productName = 'test A Prod';
+    test.productId = 0;
     test.priceHT = 50;
     test.tVa = 0.20;
     test.expDate = new Date();
@@ -81,10 +83,10 @@ export class TransactionDetailsCreateComponent implements OnInit {
 
   onSave() {
     // mark all fields as touched to highlight any invalid fields
-    this.productsForm.markAllAsTouched();
+    this.transactions.markAllAsTouched();
 
     // stop here if form is invalid
-    if (this.productsForm.invalid) {
+    if (this.transactions.invalid) {
       alert('FORM INVALID :(');
       return;
     }
@@ -93,9 +95,14 @@ export class TransactionDetailsCreateComponent implements OnInit {
     this.products = this.fa.value;
     this.closeAllRows();
     this.isEditMode = false;
-    this.transactionDetailsSave.emit(this.productsForm);
+    this.transactionDetailsSave.emit(this.transactions);
   }
 
+
+  public getProduct(id: number): Product {
+    return this.productList.find((x) => x.id === id);
+  }
+  // helper methods
   onCancel() {
     this.closeAllRows();
 
@@ -104,12 +111,9 @@ export class TransactionDetailsCreateComponent implements OnInit {
 
     this.isEditMode = false;
   }
-
-  // helper methods
-
   public createFormGroup(dataItem: TransactionDetail = new TransactionDetail()): FormGroup {
     return this.formBuilder.group({
-      productName: [dataItem.productName, Validators.required],
+      productId: [dataItem.productId, Validators.required],
       lot: [dataItem.lot, Validators.required],
       article: [dataItem.article, Validators.required],
       qte: [dataItem.qte, Validators.required],

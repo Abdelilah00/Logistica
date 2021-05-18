@@ -70,52 +70,6 @@ public class BootStrapData implements CommandLineRunner {
         prodB.setStockSecurity(500);
         prodB.setCategory(catB);
 
-        //create input
-        var input = new Input();
-        input.setRef("Ref2145");
-        input.setDate(new Date());
-        input.setDescription("input u wanna details its just for test");
-        input.setSupplierName("Supplier A");
-
-        var transactionDetails = new ArrayList<TransactionDetail>();
-        var trans1 = new TransactionDetail();
-        trans1.setExpDate(new Date());
-        trans1.setProduct(prodA);
-        trans1.setPriceHT(20f);
-        trans1.setArticle(5);
-        trans1.setLot(2);
-        trans1.setTVA(0.25f);
-        trans1.setQte(50);
-        transactionDetails.add(trans1);
-        var trans2 = new TransactionDetail();
-        trans2.setExpDate(new Date());
-        trans2.setProduct(prodB);
-        trans2.setPriceHT(36f);
-        trans2.setArticle(5);
-        trans2.setLot(2);
-        trans2.setTVA(0.6f);
-        trans2.setQte(100);
-        transactionDetails.add(trans2);
-        input.setTransactionDetails(transactionDetails);
-        iInputRepository.save(input);
-
-        //create output
-        var output = new Output();
-        output.setRef("Ref2145");
-        output.setDate(new Date());
-        output.setDescription("input u wanna details its just for test");
-        output.setAskBy("Supplier A");
-        output.setDistination("Service IT");
-
-        var transactionDetails2 = new ArrayList<TransactionDetail>();
-        var trans21 = new TransactionDetail();
-        trans21.getProduct().setId(1);
-        trans21.setPriceHT(20f);
-        trans21.setTVA(0.25f);
-        trans21.setQte(50);
-        transactionDetails2.add(trans21);
-        output.setTransactionDetails(transactionDetails2);
-        iOutputRepository.save(output);
 
         //create stock/stock-respo
         var actor1 = new Actor();
@@ -152,7 +106,7 @@ public class BootStrapData implements CommandLineRunner {
         var supplier = new ActorType();
         supplier.setName("Supplier");
         actor2.getActorIsType().setActorType(supplier);
-        iActorRepository.save(actor2);
+        //iActorRepository.save(actor2);
 
         //create client
         var actor3 = new Actor();
@@ -176,6 +130,57 @@ public class BootStrapData implements CommandLineRunner {
         var client = new ActorType();
         client.setName("Client");
         actor3.getActorIsType().setActorType(client);
-        iActorRepository.save(actor3);
+        //iActorRepository.save(actor3);
+
+
+        //create input
+        var input = new Input();
+        input.setRef("Ref2145");
+        input.setDate(new Date());
+        input.setDescription("input u wanna details its just for test");
+        input.setActor(actor2);
+
+        var transactionDetails = new ArrayList<TransactionDetail>();
+        var trans11 = new TransactionDetail();
+        trans11.setExpDate(new Date());
+        trans11.setProduct(prodA);
+        trans11.setPriceHT(20f);
+        trans11.setArticle(5);
+        trans11.setLot(2);
+        trans11.setTVA(0.25f);
+        trans11.setQte(50);
+        trans11.setInput(input);
+        transactionDetails.add(trans11);
+        var trans12 = new TransactionDetail();
+        trans12.setExpDate(new Date());
+        trans12.setProduct(prodB);
+        trans12.setPriceHT(36f);
+        trans12.setArticle(5);
+        trans12.setLot(2);
+        trans12.setTVA(0.6f);
+        trans12.setQte(100);
+        trans12.setInput(input);
+        transactionDetails.add(trans12);
+        input.setTransactionDetails(transactionDetails);
+        iInputRepository.save(input);
+
+        //create output
+        var output = new Output();
+        output.setRef("Ref2145");
+        output.setDate(new Date());
+        output.setDescription("output u wanna details its just for test");
+        output.setAskBy("part of Supplier A");
+        output.setActor(actor3);
+
+        var transactionDetails2 = new ArrayList<TransactionDetail>();
+        var trans21 = new TransactionDetail();
+        //trans21.setProduct(prodB);
+        trans21.setPriceHT(20f);
+        trans21.setTVA(0.25f);
+        trans21.setQte(50);
+        trans21.setOutput(output);
+        transactionDetails2.add(trans21);
+        output.setTransactionDetails(transactionDetails2);
+        iOutputRepository.save(output);
     }
 }

@@ -14,11 +14,14 @@
                         [height]="500" [pageSize]="gridState.take" [pageable]="true"
                         [skip]="gridState.skip"
                         [sort]="gridState.sort" [sortable]="true">
-              <kendo-grid-column field="supplierName" title="Supplier Name">
+              <kendo-grid-column field="actorName" title="Client Name">
               </kendo-grid-column>
               <kendo-grid-column field="ref" title="Reference">
               </kendo-grid-column>
               <kendo-grid-column field="date" title="Date">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                  {{ dataItem.date | date: 'dd/MM/yyyy'}}
+                </ng-template>
               </kendo-grid-column>
               <kendo-grid-column field="description" title="Description">
               </kendo-grid-column>

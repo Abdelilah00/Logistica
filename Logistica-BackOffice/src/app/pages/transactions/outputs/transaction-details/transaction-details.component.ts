@@ -20,7 +20,6 @@ export class TransactionDetailsComponent implements OnInit {
 
   submitted: boolean;
 
-  //customersData: TransactionDetail[];
   validationForm: FormGroup;
 
   constructor(private transactionDetailsService: TransactionDetailsService,
@@ -40,15 +39,9 @@ export class TransactionDetailsComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.inputId);
     if (this.inputId !== null) {
-      this.transactionDetailsService.getByInputId(this.inputId).subscribe(data => this.view = data);
+      this.transactionDetailsService.getByOutputId(this.inputId).subscribe(data => this.view = data);
     }
-    /*    this.validationForm = this.formBuilder.group({
-          qte: '',
-          phone: '',
-          balance: '',
-          email: '',
-          date: ''
-        });*/
+
   }
 
   public addHandler(): void {

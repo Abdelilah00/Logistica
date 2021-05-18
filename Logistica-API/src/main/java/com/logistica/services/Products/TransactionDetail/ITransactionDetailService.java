@@ -11,4 +11,6 @@ import java.util.concurrent.CompletableFuture;
 
 public interface ITransactionDetailService extends IBaseCrudService<TransactionDetail, TransactionDetailDto, TransactionDetailCreateDto, TransactionDetailUpdateDto> {
     CompletableFuture<List<TransactionDetailDto>> getByInputId(Long id);
+
+    CompletableFuture<List<TransactionDetailDto>> getByOutputId(Long id);
 }

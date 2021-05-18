@@ -1,15 +1,15 @@
 package com.logistica.domains.Commands;
 
 import com.alexy.models.BaseEntity;
+import com.logistica.domains.Products.Input;
+import com.logistica.domains.Products.Output;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -31,4 +31,10 @@ public class Actor extends BaseEntity {
     private Sector sector;
     @OneToOne(cascade = CascadeType.ALL)
     private Bank bank;
+
+    @OneToMany(mappedBy = "actor")
+    private List<Input> inputs;
+    @OneToMany(mappedBy = "actor")
+    private List<Output> outputs;
+
 }

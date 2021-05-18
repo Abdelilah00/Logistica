@@ -18,8 +18,6 @@ export class InputCreateComponent implements OnInit {
   public breadCrumb: BreadCrumb;
   formGroup = this.createFormGroup();
   public suppliersList;
-  public filteredVariables;
-
 
   constructor(private service: InputsService,
               private actorService: ActorService,
@@ -47,14 +45,13 @@ export class InputCreateComponent implements OnInit {
     };
     this.actorService.getSuppliers().subscribe(data => {
       this.suppliersList = data;
-      this.filteredVariables = this.suppliersList.slice();
 
     });
   }
 
   createFormGroup(): FormGroup {
     return this.formBuilder.group({
-      supplierName: ['', Validators.required],
+      supplierId: [0, Validators.required],
       date: [this.datePipe.transform(Date.now(), 'yyyy-MM-ddThh:mm:ss'), Validators.required],
       description: ['test', Validators.required],
       payement: ['bank', Validators.required],

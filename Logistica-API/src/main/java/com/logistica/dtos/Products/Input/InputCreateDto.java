@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 public class InputCreateDto extends BaseDto {
     private String ref;
-    private String actorName;
+    private Long actorId;
     private Date date;
     private String description;
 

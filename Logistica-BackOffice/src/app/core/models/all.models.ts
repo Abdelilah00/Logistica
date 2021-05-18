@@ -37,8 +37,8 @@ export class TransactionDetail extends BaseModel {
   expDate: Date;
   tVa: number;
   priceHT: number;
-  product: Product;
   productName: string;
+  productId: number;
 }
 
 export class Category extends BaseModel {

@@ -29,28 +29,21 @@ public class OutputService extends BaseCrudServiceImpl<Output, OutputDto, Output
         output.setTransactionDetails(outputCreateDto.getTransactionDetails().stream().map(transactionDetailCreateDto -> {
             var transaction = new TransactionDetail();
 
-            if (transactionDetailCreateDto.getProductId() != null)
-                //use existing product
-                transaction.getProduct().setId(transactionDetailCreateDto.getProductId());
-            else {
-                //create new product
-                transaction.getProduct().setName(transactionDetailCreateDto.getProductName());
-                transaction.getProduct().getCategory().setId(1);
-
-                //set default values from settings(front end)
-                transaction.getProduct().setStockMin(100);
-                transaction.getProduct().setStockMax(1000);
-                transaction.getProduct().setStockSecurity(350);
-            }
-
+            transaction.getProduct().setId(transactionDetailCreateDto.getProductId());
             transaction.setLot(transactionDetailCreateDto.getLot());
             transaction.setArticle(transactionDetailCreateDto.getArticle());
             transaction.setQte(transactionDetailCreateDto.getQte());
             transaction.setExpDate(transactionDetailCreateDto.getExpDate());
             transaction.setPriceHT(transactionDetailCreateDto.getPriceHT());
 
+            //set default values from settings(front end)
+            transaction.getProduct().setStockMin(100);
+            transaction.getProduct().setStockMax(1000);
+            transaction.getProduct().setStockSecurity(350);
+
             transaction.setOutput(output);
             return transaction;
+
         }).collect(Collectors.toList()));
 
         return CompletableFuture.completedFuture(objectMapper.convertToDto(repository.save(output), InputDto.class));

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -15,7 +16,9 @@ public class OutputCreateDto extends BaseDto {
     private String distination;
     private String askBy;
     private String DistinationType;
-    private String actorName;
+    private Long actorId;
+    private String description;
+    private Date date;
 
     private List<TransactionDetailCreateDto> transactionDetails = new ArrayList<>();
 }

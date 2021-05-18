@@ -16,8 +16,8 @@ import java.util.Date;
 @NoArgsConstructor
 @Table(name = "transactiondetail")
 public class TransactionDetail extends BaseEntity {
-    private Integer lot;
     private Integer article;
+    private Integer lot;
     private Integer qte;
     private Float priceHT;
     private Float tVA;
@@ -25,6 +25,7 @@ public class TransactionDetail extends BaseEntity {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Product product = new Product();
+
     @ManyToOne
     private Input input;
     @ManyToOne

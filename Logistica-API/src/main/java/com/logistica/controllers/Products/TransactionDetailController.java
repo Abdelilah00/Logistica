@@ -18,8 +18,13 @@ import java.util.concurrent.ExecutionException;
 @RequestMapping("api/transactionDetails")
 public class TransactionDetailController extends BaseCrudController<TransactionDetail, TransactionDetailDto, TransactionDetailCreateDto, TransactionDetailUpdateDto> {
 
-    @GetMapping(path = "/getByInputId/{inputId}")
-    protected List<TransactionDetailDto> getByInputId(@PathVariable(value = "inputId") Long id) throws ExecutionException, InterruptedException {
+    @GetMapping(path = "/getByInputId/{id}")
+    protected List<TransactionDetailDto> getByInputId(@PathVariable(value = "id") Long id) throws ExecutionException, InterruptedException {
         return ((ITransactionDetailService) service).getByInputId(id).get();
+    }
+
+    @GetMapping(path = "/getByOutputId/{id}")
+    protected List<TransactionDetailDto> getByOutputId(@PathVariable(value = "id") Long id) throws ExecutionException, InterruptedException {
+        return ((ITransactionDetailService) service).getByOutputId(id).get();
     }
 }
