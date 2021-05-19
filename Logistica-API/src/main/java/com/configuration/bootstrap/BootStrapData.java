@@ -174,7 +174,9 @@ public class BootStrapData implements CommandLineRunner {
 
         var transactionDetails2 = new ArrayList<TransactionDetail>();
         var trans21 = new TransactionDetail();
-        //trans21.setProduct(prodB);
+        var prodC = new Product();
+        prodC.setName("product C");
+        trans21.setProduct(prodC);
         trans21.setPriceHT(20f);
         trans21.setTVA(0.25f);
         trans21.setQte(50);
