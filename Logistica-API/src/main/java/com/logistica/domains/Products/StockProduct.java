@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -18,8 +19,9 @@ import javax.persistence.Table;
 @Table(name = "stockproduct")
 public class StockProduct extends BaseEntity {
     private Integer qte;
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.ALL)
     private Stock stock;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Product product;
 }

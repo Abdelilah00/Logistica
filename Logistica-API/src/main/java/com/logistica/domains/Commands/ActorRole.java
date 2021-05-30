@@ -14,8 +14,8 @@ import javax.persistence.Table;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "actorType")
-public class ActorType extends BaseEntity {
+@Table(name = "actorRole")
+public class ActorRole extends BaseEntity {
     private String name;
 }
 

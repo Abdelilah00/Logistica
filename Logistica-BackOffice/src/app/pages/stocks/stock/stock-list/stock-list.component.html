@@ -33,6 +33,10 @@
                 </ng-template>
               </kendo-grid-command-column>
 
+              <div *kendoGridDetailTemplate="let dataItem">
+                <app-stock-details [inputId]='dataItem.id'></app-stock-details>
+              </div>
+
             </kendo-grid>
           </div>
         </div>

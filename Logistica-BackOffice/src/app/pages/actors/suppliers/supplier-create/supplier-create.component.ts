@@ -50,6 +50,7 @@ export class SupplierCreateComponent implements OnInit {
       bankCode: ['test', Validators.required],
       bankAccountNumber: ['test', Validators.required],
       bankRIB: ['test', Validators.required],
+      actorRoleId: [2, Validators.required],
     });
   }
 

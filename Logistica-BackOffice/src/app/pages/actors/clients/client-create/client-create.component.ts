@@ -8,10 +8,10 @@ import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-supplier-create',
-  templateUrl: './responsible-create.component.html',
-  styleUrls: ['./responsible-create.component.scss']
+  templateUrl: './client-create.component.html',
+  styleUrls: ['./client-create.component.scss']
 })
-export class ResponsibleCreateComponent implements OnInit {
+export class ClientCreateComponent implements OnInit {
   formGroup = this.createFormGroup();
   saving = false;
   public breadCrumb: BreadCrumb;
@@ -29,9 +29,9 @@ export class ResponsibleCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.breadCrumb = {
-      title: 'Add Supplier',
+      title: 'Add Client',
       items: [
-        {label: 'Suppliers', path: '../'},
+        {label: 'Clients', path: '../'},
         {label: 'Create', active: true}
       ]
     };
@@ -50,6 +50,7 @@ export class ResponsibleCreateComponent implements OnInit {
       bankCode: ['test', Validators.required],
       bankAccountNumber: ['test', Validators.required],
       bankRIB: ['test', Validators.required],
+      actorRoleId: [3, Validators.required],
     });
   }
 

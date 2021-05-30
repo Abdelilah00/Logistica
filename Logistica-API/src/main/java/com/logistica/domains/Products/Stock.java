@@ -27,9 +27,8 @@ public class Stock extends BaseEntity {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Actor responsible = new Actor();
 
-    @OneToMany(mappedBy = "stock")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "stock")
     private List<StockProduct> stockProducts = new ArrayList<>();
-    @OneToMany(mappedBy = "stock")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "stock")
     private List<StockCharacteristic> stockCharacteristics = new ArrayList<>();
-
 }

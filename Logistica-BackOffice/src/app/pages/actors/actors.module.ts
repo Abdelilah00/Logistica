@@ -17,5 +17,5 @@ const routes: Routes = [
     CommonModule
   ]
 })
-export class PersonsModule {
+export class ActorsModule {
 }

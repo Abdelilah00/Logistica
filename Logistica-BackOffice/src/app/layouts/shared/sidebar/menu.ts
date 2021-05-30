@@ -15,25 +15,39 @@ export const MENU: MenuItem[] = [
     link: '/'
   },
   {
-    label: 'MENUITEMS.PERSONS.TEXT',
+    label: 'MENUITEMS.ACTORS.TEXT',
     icon: 'ri-product-hunt-line',
     subItems: [
       {
-        label: 'MENUITEMS.PERSONS.LIST.CLIENTS',
+        label: 'MENUITEMS.ACTORS.LIST.CLIENTS',
         icon: 'ri-product-hunt-line',
-        link: '/persons/clients'
+        link: '/actors/clients'
       },
       {
-        label: 'MENUITEMS.PERSONS.LIST.SUPPLIERS',
+        label: 'MENUITEMS.ACTORS.LIST.SUPPLIERS',
         icon: 'ri-product-hunt-line',
-        link: '/persons/suppliers'
+        link: '/actors/suppliers'
       },
       {
-        label: 'MENUITEMS.PERSONS.LIST.RESPONSIBLE',
+        label: 'MENUITEMS.ACTORS.LIST.RESPONSIBLE',
         icon: 'ri-product-hunt-line',
-        link: '/persons/responsible'
+        link: '/actors/responsible'
       }
     ]
+  },
+  {
+    label: 'MENUITEMS.STOCKS.TEXT',
+    icon: 'ri-product-hunt-line',
+    subItems: [
+      {
+        label: 'MENUITEMS.STOCKS.LIST.PRODUCT',
+        icon: 'ri-product-hunt-line',
+        link: '/stocks/product'
+      }, {
+        label: 'MENUITEMS.STOCKS.LIST.STOCK',
+        icon: 'ri-product-hunt-line',
+        link: '/stocks/stock'
+      }]
   },
   {
     label: 'MENUITEMS.TRANSACTION.TEXT',
@@ -48,20 +62,6 @@ export const MENU: MenuItem[] = [
       }]
   },
 
-  {
-    label: 'MENUITEMS.STOCKS.TEXT',
-    icon: 'ri-product-hunt-line',
-    subItems: [
-      {
-        label: 'MENUITEMS.STOCKS.LIST.STOCK',
-        icon: 'ri-product-hunt-line',
-        link: '/stocks/stock'
-      }, {
-        label: 'MENUITEMS.STOCKS.LIST.PRODUCT',
-        icon: 'ri-product-hunt-line',
-        link: '/stocks/product'
-      }]
-  },
   {
     label: 'MENUITEMS.TASKS.TEXT',
     icon: 'ri-product-hunt-line',

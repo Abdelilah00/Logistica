@@ -8,10 +8,10 @@ import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-supplier-create',
-  templateUrl: './client-create.component.html',
-  styleUrls: ['./client-create.component.scss']
+  templateUrl: './responsible-create.component.html',
+  styleUrls: ['./responsible-create.component.scss']
 })
-export class ClientCreateComponent implements OnInit {
+export class ResponsibleCreateComponent implements OnInit {
   formGroup = this.createFormGroup();
   saving = false;
   public breadCrumb: BreadCrumb;
@@ -50,6 +50,7 @@ export class ClientCreateComponent implements OnInit {
       bankCode: ['test', Validators.required],
       bankAccountNumber: ['test', Validators.required],
       bankRIB: ['test', Validators.required],
+      actorRoleId: [1, Validators.required],
     });
   }
 

@@ -46,5 +46,4 @@ public class Product extends BaseEntity {
     private List<ProductCharacteritic> productCharacteritics = new ArrayList<>();
 
     //private Category parent = new Category();
-
 }

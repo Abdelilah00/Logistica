@@ -16,10 +16,10 @@ import javax.persistence.Table;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "actorIsType")
-public class ActorIsType extends BaseEntity {
+@Table(name = "actorHasRole")
+public class ActorHasRole extends BaseEntity {
     @OneToOne(cascade = CascadeType.ALL)
     private Actor actor;
     @OneToOne(cascade = CascadeType.ALL)
-    private ActorType actorType;
+    private ActorRole actorType;
 }

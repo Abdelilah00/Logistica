@@ -5,7 +5,12 @@ import com.logistica.domains.Products.Product;
 import com.logistica.dtos.Products.Product.ProductCreateDto;
 import com.logistica.dtos.Products.Product.ProductDto;
 import com.logistica.dtos.Products.Product.ProductUpdateDto;
+import com.logistica.dtos.Products.TransactionDetail.TransactionDetailDto;
+
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public interface IProductService extends IBaseCrudService<Product, ProductDto, ProductCreateDto, ProductUpdateDto> {
+    CompletableFuture<List<ProductDto>> getByStockId(Long id);
 
 }

@@ -87,8 +87,8 @@
         "PRODUCT": "Products"
       }
     },
-    "PERSONS": {
-      "TEXT": "Persons",
+    "ACTORS": {
+      "TEXT": "Actors",
       "LIST": {
         "CLIENTS": "Clients",
         "SUPPLIERS": "Suppliers",

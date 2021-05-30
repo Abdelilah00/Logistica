@@ -46,10 +46,10 @@ public class BootStrapData implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        if (iCategoryRepository.findAll().size() > 0)
-            return;
+        /*if (iCategoryRepository.findAll().size() > 0)
+            return;*/
 
-        //create categories
+        //region categories
         var catA = new Category();
         catA.setName("category A");
         var prodA = new Product();
@@ -69,22 +69,28 @@ public class BootStrapData implements CommandLineRunner {
         prodB.setStockMin(50);
         prodB.setStockSecurity(500);
         prodB.setCategory(catB);
+        //endregion
 
-
-        //create stock/stock-respo
+        //region stock/stock-respo
         var actor1 = new Actor();
         actor1.setName("responsible name");
-        var responsible = new ActorType();
+        var responsible = new ActorRole();
         responsible.setName("Responsible");
-        actor1.getActorIsType().setActorType(responsible);
+        actor1.getActorHasRole().setActorType(responsible);
         var stock = new Stock();
         stock.setName("stock 11");
         stock.setAdresse("db allal elffasi");
         stock.setArea(1545d);
         stock.setResponsible(actor1);
+        var sp = new StockProduct();
+        sp.setProduct(prodA);
+        sp.setQte(100);
+        sp.setStock(stock);
+        stock.getStockProducts().add(sp);
         iStockRepository.save(stock);
+        //endregion
 
-        //create supplier
+        //region create supplier
         var actor2 = new Actor();
         actor2.setAdresse("db alla elfassi");
         actor2.setName("supplier name");
@@ -103,12 +109,13 @@ public class BootStrapData implements CommandLineRunner {
         contact.setPhone("0676958566");
         contact.setWebSite("360tech.com");
         actor2.setContact(contact);
-        var supplier = new ActorType();
+        var supplier = new ActorRole();
         supplier.setName("Supplier");
-        actor2.getActorIsType().setActorType(supplier);
+        actor2.getActorHasRole().setActorType(supplier);
         //iActorRepository.save(actor2);
+        //endregion
 
-        //create client
+        //region create client
         var actor3 = new Actor();
         actor3.setAdresse("db alla elfassi");
         actor3.setName("client name");
@@ -127,13 +134,13 @@ public class BootStrapData implements CommandLineRunner {
         contact.setPhone("0676958566");
         contact.setWebSite("360tech.com");
         actor3.setContact(contact2);
-        var client = new ActorType();
+        var client = new ActorRole();
         client.setName("Client");
-        actor3.getActorIsType().setActorType(client);
+        actor3.getActorHasRole().setActorType(client);
         //iActorRepository.save(actor3);
+        //endregion
 
-
-        //create input
+        //region create input
         var input = new Input();
         input.setRef("Ref2145");
         input.setDate(new Date());
@@ -163,8 +170,9 @@ public class BootStrapData implements CommandLineRunner {
         transactionDetails.add(trans12);
         input.setTransactionDetails(transactionDetails);
         iInputRepository.save(input);
+        //endregion
 
-        //create output
+        //<editor-fold desc="create output">
         var output = new Output();
         output.setRef("Ref2145");
         output.setDate(new Date());
@@ -184,5 +192,6 @@ public class BootStrapData implements CommandLineRunner {
         transactionDetails2.add(trans21);
         output.setTransactionDetails(transactionDetails2);
         iOutputRepository.save(output);
+        //</editor-fold>
     }
 }

@@ -13,7 +13,7 @@ public class ActorCreateDto extends BaseDto {
     private String name;
     private String adresse;
     private String nRCommerce;
-    private String actorRole;
+    private Long actorRoleId;
     private ContactCreateDto Contact;
     private SectorCreateDto Sector;
     private BankCreateDto Bank;
