@@ -19,3 +19,4 @@ export class StocksService extends BaseService<Stock, Stock> {
     return this.httpClient.get<Array<Stock>>(`${this.baseUrl}/getByProductId/${encodeURIComponent(String(id))}`).pipe(retry(1));
   }
 }
+

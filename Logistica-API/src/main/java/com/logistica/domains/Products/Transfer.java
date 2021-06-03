@@ -18,6 +18,9 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "transfer")
 public class Transfer extends BaseEntity {
+    private String ref;
+    private String description;
+
     private Date date;
     private Integer delay;
 

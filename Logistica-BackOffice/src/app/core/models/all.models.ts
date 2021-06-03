@@ -19,6 +19,19 @@ export class Input extends BaseModel {
   transactionDetails: TransactionDetail[];
 }
 
+export class Transfer extends BaseModel {
+  ref: string;
+  actorId: number;
+  actorName: string;
+  date: string;
+  description: string;
+  fromStockId: number;
+  fromStockName: string;
+  toStockId: number;
+  toStockName: string;
+  transactionDetails: TransactionDetail[];
+}
+
 
 export class Output extends BaseModel {
   ref: string;

@@ -11,6 +11,8 @@ import java.util.List;
 @Getter
 @Setter
 public class TransferUpdateDto extends BaseDto {
+    private String ref;
+    private String description;
     private Date date;
     private Integer delay;
     private String fromStockId;
