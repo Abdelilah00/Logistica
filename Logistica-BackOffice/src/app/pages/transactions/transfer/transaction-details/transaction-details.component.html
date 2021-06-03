@@ -1,0 +1,25 @@
+<kendo-grid
+  (add)="addHandler()"
+  [data]="view"
+  [navigable]="true"
+  kendoGridFocusable>
+
+<!--  <ng-template kendoGridToolbarTemplate>
+    <a (click)="openModal(content)" class="btn btn-success mb-2" href="javascript:void(0);">
+      <i class="mdi mdi-plus mr-2"></i>Add Transaction
+    </a>
+  </ng-template>-->
+
+  <kendo-grid-column field="productName" title="Product Name">
+  </kendo-grid-column>
+  <kendo-grid-column field="lot" title="Lot">
+  </kendo-grid-column>
+  <kendo-grid-column field="article" title="Article">
+  </kendo-grid-column>
+  <kendo-grid-column field="qte" title="Qte">
+  </kendo-grid-column>
+</kendo-grid>
+
+<!-- Contacts model  -->
+<ng-template #content let-modal="close" role="document">
+</ng-template>

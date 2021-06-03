@@ -1,0 +1,67 @@
+<kendo-grid #grid [data]="products">
+  <ng-template *ngIf="!isEditMode" kendoGridToolbarTemplate>
+    <button (click)="onEdit()" class="k-button k-primary">Edit</button>
+  </ng-template>
+  <ng-template *ngIf="isEditMode" kendoGridToolbarTemplate>
+    <button (click)="onAdd()" class="k-button">Add</button>
+    <button (click)="onSave()" class="k-button">Save</button>
+    <button (click)="onCancel()" class="k-button">Cancel</button>
+  </ng-template>
+
+  <kendo-grid-column field="productName" title="product name" width="150">
+    <ng-template kendoGridCellTemplate let-dataItem>
+      {{ getProduct(dataItem.productId)?.name }}
+    </ng-template>
+    <ng-template
+      kendoGridEditTemplate
+      let-dataItem="dataItem"
+      let-column="column"
+      let-formGroup="formGroup">
+      <kendo-dropdownlist
+        [defaultItem]="{ productId: null, productName: 'Test null item' }"
+        [data]="productList"
+        textField="name"
+        valueField="id"
+        [valuePrimitive]="true"
+        [formControl]="formGroup.get('productId')">
+      </kendo-dropdownlist>
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column field="stockName" title="stock name" width="150">
+    <ng-template kendoGridCellTemplate let-dataItem>
+      {{ getStock(dataItem.stockId)?.name }}
+    </ng-template>
+    <ng-template
+      kendoGridEditTemplate
+      let-dataItem="dataItem"
+      let-column="column"
+      let-formGroup="formGroup">
+      <kendo-dropdownlist
+        [defaultItem]="{ stockId: null, stockName: 'Test null item' }"
+        [data]="stockList"
+        textField="name"
+        valueField="id"
+        [valuePrimitive]="true"
+        [formControl]="formGroup.get('stockId')">
+      </kendo-dropdownlist>
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column editor="numeric" field="lot" title="Lot"></kendo-grid-column>
+  <kendo-grid-column editor="numeric" field="article" title="Article"></kendo-grid-column>
+  <kendo-grid-column editor="numeric" field="qte" title="Qte"></kendo-grid-column>
+  <kendo-grid-column editor="numeric" field="tVA" title="TVA"></kendo-grid-column>
+  <kendo-grid-column editor="numeric" field="priceHT" title="Unit Price HT"></kendo-grid-column>
+  <kendo-grid-column editor="date" field="expDate" title="Exp Date">
+    <ng-template kendoGridCellTemplate let-dataItem>
+      {{ dataItem.expDate | date: 'dd/MM/yyyy'}}
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column *ngIf="isEditMode">
+    <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">
+      <button (click)="onRemove(rowIndex)" class="k-button">Remove</button>
+    </ng-template>
+  </kendo-grid-column>
+</kendo-grid>

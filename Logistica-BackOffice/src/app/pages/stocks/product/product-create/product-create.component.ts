@@ -57,13 +57,13 @@ export class ProductCreateComponent implements OnInit {
         })
       ).subscribe(() => {
       // Show the success message
-      this.matSnackBar.open('Supplier saved', 'OK', {
+      this.matSnackBar.open('Product saved', 'OK', {
         verticalPosition: 'top',
         duration: 2000,
       });
       this.goBack();
     }, (error) => {
-      this.matSnackBar.open('Supplier Not saved', 'Try', {
+      this.matSnackBar.open('Product Not saved', 'Try', {
         verticalPosition: 'top',
         duration: 2000
       });

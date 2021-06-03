@@ -23,7 +23,7 @@ public class Input extends BaseEntity {
     private Date date;
     private String description;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Actor actor;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "input")
     //todo: get a list of transaction details without need to relational table

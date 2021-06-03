@@ -18,8 +18,8 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Table(name = "actorHasRole")
 public class ActorHasRole extends BaseEntity {
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private Actor actor;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private ActorRole actorType;
 }

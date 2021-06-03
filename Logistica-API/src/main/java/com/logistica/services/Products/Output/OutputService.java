@@ -1,12 +1,15 @@
 package com.logistica.services.Products.Output;
 
 import com.alexy.services.BaseCrudServiceImpl;
+import com.configuration.Exception.UserFriendlyException;
 import com.logistica.domains.Products.Output;
 import com.logistica.domains.Products.TransactionDetail;
-import com.logistica.dtos.Products.Input.InputDto;
 import com.logistica.dtos.Products.Output.OutputCreateDto;
 import com.logistica.dtos.Products.Output.OutputDto;
 import com.logistica.dtos.Products.Output.OutputUpdateDto;
+import com.logistica.repositories.Products.IStockProductRepository;
+import com.logistica.repositories.Products.IStockRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
@@ -19,33 +22,41 @@ public class OutputService extends BaseCrudServiceImpl<Output, OutputDto, Output
         super(Output.class, OutputDto.class, OutputCreateDto.class, OutputUpdateDto.class);
     }
 
-    //todo: create product if not exist
-    @Override
-    public CompletableFuture<OutputDto> create(OutputCreateDto outputCreateDto) {
+    @Autowired
+    private IStockProductRepository iStockProductRepository;
+    @Autowired
+    private IStockRepository iStockRepository;
 
-        // isAuth
+    @Override
+    public CompletableFuture<OutputDto> create(OutputCreateDto outputCreateDto) throws UserFriendlyException {
         var output = objectMapper.convertToEntity(outputCreateDto);
 
-        output.setTransactionDetails(outputCreateDto.getTransactionDetails().stream().map(transactionDetailCreateDto -> {
-            var transaction = new TransactionDetail();
+        output.setTransactionDetails(outputCreateDto.getTransactionDetails()
+                .stream().map(transactionDetailCreateDto -> {
+                    var transaction = new TransactionDetail();
 
-            transaction.getProduct().setId(transactionDetailCreateDto.getProductId());
-            transaction.setLot(transactionDetailCreateDto.getLot());
-            transaction.setArticle(transactionDetailCreateDto.getArticle());
-            transaction.setQte(transactionDetailCreateDto.getQte());
-            transaction.setExpDate(transactionDetailCreateDto.getExpDate());
-            transaction.setPriceHT(transactionDetailCreateDto.getPriceHT());
+                    //create new product
+                    transaction.getProduct().setId(transactionDetailCreateDto.getProductId());
+                    transaction.setLot(transactionDetailCreateDto.getLot());
+                    transaction.setArticle(transactionDetailCreateDto.getArticle());
+                    transaction.setPriceHT(transactionDetailCreateDto.getPriceHT());
 
-            //set default values from settings(front end)
-            transaction.getProduct().setStockMin(100);
-            transaction.getProduct().setStockMax(1000);
-            transaction.getProduct().setStockSecurity(350);
+                    transaction.setQte(transactionDetailCreateDto.getQte());
 
-            transaction.setOutput(output);
-            return transaction;
+                    //insert qte to stockproduct principale - increment if prod exist in stock else create new one
+                    var defaultStockProd = iStockProductRepository.findByProductIdAndStockId(transactionDetailCreateDto.getProductId(), transactionDetailCreateDto.getStockId());
 
-        }).collect(Collectors.toList()));
+                    if (defaultStockProd.getQte() > transactionDetailCreateDto.getQte()) {
+                        defaultStockProd.setQte(defaultStockProd.getQte() - transactionDetailCreateDto.getQte());
+                    } //else throw new UserFriendlyException("the qte not available in this stock try to split your needs on many stocks");
 
-        return CompletableFuture.completedFuture(objectMapper.convertToDto(repository.save(output), InputDto.class));
+
+                    iStockProductRepository.save(defaultStockProd);
+
+                    transaction.setOutput(output);
+                    return transaction;
+                }).collect(Collectors.toList()));
+
+        return CompletableFuture.completedFuture(objectMapper.convertToDto(repository.save(output), OutputDto.class));
     }
 }

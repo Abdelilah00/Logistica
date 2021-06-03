@@ -25,9 +25,9 @@ export class ClientListComponent implements OnInit {
 
   ngOnInit(): void {
     this.breadCrumb = {
-      title: 'Suppliers',
+      title: 'Clients',
       items: [
-        {label: 'Suppliers', active: true}
+        {label: 'Clients', active: true}
       ]
     };
     // todo: use simple tables

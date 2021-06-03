@@ -3,6 +3,7 @@ package com.logistica.domains.Commands;
 import com.alexy.models.BaseEntity;
 import com.logistica.domains.Products.Input;
 import com.logistica.domains.Products.Output;
+import com.logistica.domains.Products.Transfer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,5 +37,6 @@ public class Actor extends BaseEntity {
     private List<Input> inputs;
     @OneToMany(mappedBy = "actor")
     private List<Output> outputs;
-
+    @OneToMany(mappedBy = "actor")
+    private List<Transfer> transfers;
 }

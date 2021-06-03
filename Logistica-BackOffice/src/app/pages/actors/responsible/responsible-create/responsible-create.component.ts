@@ -29,9 +29,9 @@ export class ResponsibleCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.breadCrumb = {
-      title: 'Add Supplier',
+      title: 'Add Responsible',
       items: [
-        {label: 'Suppliers', path: '../'},
+        {label: 'Responsible', path: '../'},
         {label: 'Create', active: true}
       ]
     };

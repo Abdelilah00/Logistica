@@ -7,21 +7,24 @@
           <div>
             <!--  -->
             <a [routerLink]="['../create']" class="btn btn-success mb-2">
-              <i class="mdi mdi-plus mr-2"></i> Add Input
+              <i class="mdi mdi-plus mr-2"></i> Add Product
             </a>
 
             <kendo-grid (dataStateChange)="onStateChange($event)" [data]="gridData"
                         [height]="500" [pageSize]="gridState.take" [pageable]="true"
                         [skip]="gridState.skip"
-                        [sort]="gridState.sort" [sortable]="true">
+                        [sort]="gridState.sort"
+                        [sortable]="true">
 
-              <kendo-grid-column field="name" title="Supplier Name">
+              <kendo-grid-column field="name" title="Product Name">
               </kendo-grid-column>
-              <kendo-grid-column field="stockMin" title="Stock Min ">
+              <kendo-grid-column field="stockMin" title="Stock Min">
               </kendo-grid-column>
-              <kendo-grid-column field="stockMax" title="stockMax">
+              <kendo-grid-column field="stockMax" title="stock Max">
               </kendo-grid-column>
-              <kendo-grid-column field="stockSecurity" title="stockSecurity">
+              <kendo-grid-column field="stockSecurity" title="stock Security">
+              </kendo-grid-column>
+              <kendo-grid-column field="qteInStocks" title="qteInStocks">
               </kendo-grid-column>
               <kendo-grid-column field="category.name" title="category">
               </kendo-grid-column>
@@ -32,6 +35,10 @@
                   <button kendoGridRemoveCommand>Delete</button>
                 </ng-template>
               </kendo-grid-command-column>
+
+              <div *kendoGridDetailTemplate="let dataItem">
+                <app-product-details [inputId]='dataItem.id'></app-product-details>
+              </div>
 
             </kendo-grid>
           </div>

@@ -55,11 +55,15 @@ export const MENU: MenuItem[] = [
     subItems: [
       {
         label: 'MENUITEMS.TRANSACTION.LIST.INPUT',
-        link: '/transactions/inputs',
+        link: '/transactions/input',
       }, {
         label: 'MENUITEMS.TRANSACTION.LIST.OUTPUT',
-        link: '/transactions/outputs',
-      }]
+        link: '/transactions/output',
+      }, {
+        label: 'MENUITEMS.TRANSACTION.LIST.TRANSFER',
+        link: '/transactions/transfer',
+      }
+      ]
   },
 
   {

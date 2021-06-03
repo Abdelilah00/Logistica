@@ -10,21 +10,6 @@
         "TITLE": "Your order is placed",
         "TEXT": "If several languages coalesce the grammar",
         "TIME": "3 min ago"
-      },
-      "SECOND": {
-        "TITLE": "James Lemire",
-        "TEXT": "It will seem like simplified English.",
-        "TIME": "1 hours ago"
-      },
-      "THIRD": {
-        "TITLE": "Your item is shipped",
-        "TEXT": "If several languages coalesce the grammar",
-        "TIME": "3 min ago"
-      },
-      "FOUR": {
-        "TITLE": "Salena Layfield",
-        "TEXT": "As a skeptical Cambridge friend of mine occidental.",
-        "TIME": "1 hours ago"
       }
     },
     "SETTINGS": "Settings",
@@ -77,14 +62,15 @@
       "TEXT": "Transaction",
       "LIST": {
         "INPUT": "Input",
-        "OUTPUT": "Output"
+        "OUTPUT": "Output",
+        "TRANSFER": "Transfer"
       }
     },
     "STOCKS": {
       "TEXT": "Stocks",
       "LIST": {
         "STOCK": "Stock",
-        "PRODUCT": "Products"
+        "PRODUCT": "Product"
       }
     },
     "ACTORS": {

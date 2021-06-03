@@ -4,8 +4,9 @@ import {RouterModule, Routes} from '@angular/router';
 
 
 const routes: Routes = [
-  {path: 'inputs', loadChildren: () => import('./inputs/inputs.module').then(m => m.InputsModule)},
-  {path: 'outputs', loadChildren: () => import('./outputs/outputs.module').then(m => m.OutputsModule)},
+  {path: 'input', loadChildren: () => import('./input/input.module').then(m => m.InputModule)},
+  {path: 'output', loadChildren: () => import('./output/output.module').then(m => m.OutputModule)},
+  {path: 'transfer', loadChildren: () => import('./transfer/transfer.module').then(m => m.TransferModule)},
   {path: '**', redirectTo: 'inputs'}
 ];
 

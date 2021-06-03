@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 public class StockProductDto extends BaseDto {
     private String qte;
-    private String Product;
-    private String Stock;
+    private String productName;
+    private String stockName;
 }

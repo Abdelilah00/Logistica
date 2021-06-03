@@ -20,8 +20,9 @@ import javax.persistence.Table;
 public class StockProduct extends BaseEntity {
     private Integer qte;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Stock stock;
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Product product;
+
+    @ManyToOne
+    private Stock stock = new Stock();
+    @ManyToOne
+    private Product product = new Product();
 }

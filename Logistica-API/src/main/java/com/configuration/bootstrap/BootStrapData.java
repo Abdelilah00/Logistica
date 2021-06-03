@@ -11,6 +11,7 @@ import com.configuration.security.repositories.IUserRepository;
 import com.logistica.domains.Commands.*;
 import com.logistica.domains.Products.*;
 import com.logistica.repositories.Commands.IActorRepository;
+import com.logistica.repositories.Commands.IActorRoleRepository;
 import com.logistica.repositories.ITestRepository;
 import com.logistica.repositories.Products.*;
 import org.slf4j.Logger;
@@ -30,10 +31,7 @@ public class BootStrapData implements CommandLineRunner {
     private IUserRepository iUserRepository;
     @Autowired
     private ITestRepository iTestRepository;
-    @Autowired
-    private ICategoryRepository iCategoryRepository;
-    @Autowired
-    private IProductRepository iProductRepository;
+
     @Autowired
     private IStockRepository iStockRepository;
     @Autowired
@@ -42,52 +40,111 @@ public class BootStrapData implements CommandLineRunner {
     private IOutputRepository iOutputRepository;
     @Autowired
     private IActorRepository iActorRepository;
+    @Autowired
+    private IProductRepository iProductRepository;
+    @Autowired
+    private ICategoryRepository iCategoryRepository;
+    @Autowired
+    private IActorRoleRepository iActorRoleRepository;
 
     @Override
     public void run(String... args) throws Exception {
 
-        /*if (iCategoryRepository.findAll().size() > 0)
-            return;*/
+        if (iInputRepository.findAll().size() > 0)
+            return;
 
-        //region categories
+
+        //region categories & products
         var catA = new Category();
         catA.setName("category A");
+        iCategoryRepository.save(catA);
+        var catB = new Category();
+        catB.setName("category B");
+        iCategoryRepository.save(catB);
+
         var prodA = new Product();
-        prodA.getCategory().setId(1);
         prodA.setName("product A");
         prodA.setStockMax(1000);
         prodA.setStockMin(100);
         prodA.setStockSecurity(300);
         prodA.setCategory(catA);
-
-        var catB = new Category();
-        catB.setName("category B");
+        iProductRepository.save(prodA);
         var prodB = new Product();
-        prodB.getCategory().setId(1);
         prodB.setName("product B");
         prodB.setStockMax(1500);
         prodB.setStockMin(50);
         prodB.setStockSecurity(500);
         prodB.setCategory(catB);
+        iProductRepository.save(prodB);
+        var prodC = new Product();
+        prodC.setName("product C");
+        prodC.setStockMax(1000);
+        prodC.setStockMin(100);
+        prodC.setStockSecurity(300);
+        prodC.setCategory(catA);
+        iProductRepository.save(prodC);
         //endregion
 
-        //region stock/stock-respo
-        var actor1 = new Actor();
-        actor1.setName("responsible name");
+        //region actors roles
         var responsible = new ActorRole();
         responsible.setName("Responsible");
+        iActorRoleRepository.save(responsible);
+        var supplier = new ActorRole();
+        supplier.setName("Supplier");
+        iActorRoleRepository.save(supplier);
+        var client = new ActorRole();
+        client.setName("Client");
+        iActorRoleRepository.save(client);
+        //endregion
+
+        //region actor
+        var actor1 = new Actor();
+        actor1.setName("responsible name");
         actor1.getActorHasRole().setActorType(responsible);
+        iActorRepository.save(actor1);
+        //endregion
+
+        //region stocks && stockProduct
         var stock = new Stock();
-        stock.setName("stock 11");
+        stock.setName("stock principal");
         stock.setAdresse("db allal elffasi");
         stock.setArea(1545d);
+        stock.setDef(Boolean.TRUE);
         stock.setResponsible(actor1);
         var sp = new StockProduct();
         sp.setProduct(prodA);
         sp.setQte(100);
         sp.setStock(stock);
+        var sp2 = new StockProduct();
+        sp2.setProduct(prodB);
+        sp2.setQte(100);
+        sp2.setStock(stock);
+        var sp3 = new StockProduct();
+        sp3.setProduct(prodC);
+        sp3.setQte(100);
+        sp3.setStock(stock);
         stock.getStockProducts().add(sp);
+        stock.getStockProducts().add(sp2);
+        stock.getStockProducts().add(sp3);
         iStockRepository.save(stock);
+
+        var stock2 = new Stock();
+        stock2.setName("stock secondaire");
+        stock2.setAdresse("db jakarta");
+        stock2.setArea(655d);
+        //stock2.setDef(Boolean.FALSE);
+        stock2.setResponsible(actor1);
+        var sp21 = new StockProduct();
+        sp21.setProduct(prodA);
+        sp21.setQte(50);
+        sp21.setStock(stock2);
+        var sp22 = new StockProduct();
+        sp22.setProduct(prodB);
+        sp22.setQte(50);
+        sp22.setStock(stock2);
+        stock2.getStockProducts().add(sp21);
+        stock2.getStockProducts().add(sp22);
+        iStockRepository.save(stock2);
         //endregion
 
         //region create supplier
@@ -109,10 +166,8 @@ public class BootStrapData implements CommandLineRunner {
         contact.setPhone("0676958566");
         contact.setWebSite("360tech.com");
         actor2.setContact(contact);
-        var supplier = new ActorRole();
-        supplier.setName("Supplier");
         actor2.getActorHasRole().setActorType(supplier);
-        //iActorRepository.save(actor2);
+        iActorRepository.save(actor2);
         //endregion
 
         //region create client
@@ -134,10 +189,8 @@ public class BootStrapData implements CommandLineRunner {
         contact.setPhone("0676958566");
         contact.setWebSite("360tech.com");
         actor3.setContact(contact2);
-        var client = new ActorRole();
-        client.setName("Client");
         actor3.getActorHasRole().setActorType(client);
-        //iActorRepository.save(actor3);
+        iActorRepository.save(actor3);
         //endregion
 
         //region create input
@@ -172,7 +225,7 @@ public class BootStrapData implements CommandLineRunner {
         iInputRepository.save(input);
         //endregion
 
-        //<editor-fold desc="create output">
+        //region create output
         var output = new Output();
         output.setRef("Ref2145");
         output.setDate(new Date());
@@ -182,8 +235,6 @@ public class BootStrapData implements CommandLineRunner {
 
         var transactionDetails2 = new ArrayList<TransactionDetail>();
         var trans21 = new TransactionDetail();
-        var prodC = new Product();
-        prodC.setName("product C");
         trans21.setProduct(prodC);
         trans21.setPriceHT(20f);
         trans21.setTVA(0.25f);
@@ -192,6 +243,6 @@ public class BootStrapData implements CommandLineRunner {
         transactionDetails2.add(trans21);
         output.setTransactionDetails(transactionDetails2);
         iOutputRepository.save(output);
-        //</editor-fold>
+        //endregion
     }
 }

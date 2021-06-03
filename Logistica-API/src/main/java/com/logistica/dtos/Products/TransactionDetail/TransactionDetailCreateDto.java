@@ -9,13 +9,15 @@ import java.util.Date;
 @Getter
 @Setter
 public class TransactionDetailCreateDto extends BaseDto {
-    private Integer qte;
     private Integer article;
     private Integer lot;
     private Float priceHT;
     private Float tVA;
     private Date expDate;
+    private Integer qte;
 
     private String productName;
     private Long productId;
+
+    private Long stockId;
 }

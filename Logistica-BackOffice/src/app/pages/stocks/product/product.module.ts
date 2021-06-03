@@ -7,6 +7,7 @@ import {ProductEditComponent} from './product-edit/product-edit.component';
 import {UiModule} from '../../../shared/ui/ui.module';
 import {GridModule} from '@progress/kendo-angular-grid';
 import {ReactiveFormsModule} from '@angular/forms';
+import {ProductDetailsComponent} from './product-details/product-details.component';
 
 
 const routes: Routes = [
@@ -17,13 +18,13 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [ProductListComponent, ProductCreateComponent, ProductEditComponent],
+  declarations: [ProductListComponent, ProductCreateComponent, ProductEditComponent, ProductDetailsComponent],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
     UiModule,
     GridModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ]
 })
 export class ProductModule {

@@ -19,6 +19,7 @@ export class Input extends BaseModel {
   transactionDetails: TransactionDetail[];
 }
 
+
 export class Output extends BaseModel {
   ref: string;
   supplierName: string;
@@ -39,6 +40,7 @@ export class TransactionDetail extends BaseModel {
   priceHT: number;
   productName: string;
   productId: number;
+  stockId: number;
 }
 
 export class Category extends BaseModel {
@@ -52,9 +54,23 @@ export class Product extends BaseModel {
   stockMax: number;
   stockMin: number;
   stockSecurity: number;
+
+  qteInStocks: number;
+  qteByStock: number;
 }
 
-export class Supplier extends BaseModel {
+export class Stock extends BaseModel {
+  name: string;
+  adresse: string;
+  area: number;
+  responsibleName: string;
+  responsibleId: number;
+
+  qteByProduct: number;
+  qteOfProducts: number;
+}
+
+export class Actor extends BaseModel {
   name: string;
   adresse: string;
   nRCommerce: string;
@@ -70,14 +86,6 @@ export class Supplier extends BaseModel {
 
 export class Parameter extends BaseModel {
   name: string;
-}
-
-export class Stock extends BaseModel {
-  name: string;
-  adresse: string;
-  area: number;
-  responsibleName: string;
-  responsibleId: number;
 }
 
 

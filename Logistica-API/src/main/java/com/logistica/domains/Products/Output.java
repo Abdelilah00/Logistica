@@ -26,7 +26,7 @@ public class Output extends BaseEntity {
     private String askBy;
     private String DistinationType;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Actor actor;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "output")

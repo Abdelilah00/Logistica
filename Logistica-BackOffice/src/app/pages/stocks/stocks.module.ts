@@ -4,9 +4,9 @@ import {RouterModule, Routes} from '@angular/router';
 
 
 const routes: Routes = [
-  {path: 'stock', loadChildren: () => import('./stock/stock.module').then(m => m.StockModule)},
   {path: 'product', loadChildren: () => import('./product/product.module').then(m => m.ProductModule)},
-  {path: '**', redirectTo: 'stock'}
+  {path: 'stock', loadChildren: () => import('./stock/stock.module').then(m => m.StockModule)},
+  {path: '**', redirectTo: 'product'}
 ];
 
 

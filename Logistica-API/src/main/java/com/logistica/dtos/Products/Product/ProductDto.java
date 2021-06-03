@@ -14,4 +14,7 @@ public class ProductDto extends BaseDto {
     private Integer stockMin;
     private Integer stockMax;
     private Integer stockSecurity;
+
+    private Integer qteByStock;
+    private Integer qteInStocks;
 }

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -23,8 +24,9 @@ public class Product extends BaseEntity {
     private Integer stockMax;
     private Integer stockSecurity;
 
+
     //Many to One
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Category category = new Category();
 
     //One to one
@@ -46,4 +48,6 @@ public class Product extends BaseEntity {
     private List<ProductCharacteritic> productCharacteritics = new ArrayList<>();
 
     //private Category parent = new Category();
+    @Formula("(select IFNULL(SUM(sp.qte), 0) from product p inner join stockproduct sp on p.id = sp.product_id where p.id = id)")
+    private Integer qteInStocks;
 }
