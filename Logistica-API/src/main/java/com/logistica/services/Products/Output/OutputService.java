@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
 
 @Service
 public class OutputService extends BaseCrudServiceImpl<Output, OutputDto, OutputCreateDto, OutputUpdateDto> implements IOutputService {
@@ -31,31 +30,30 @@ public class OutputService extends BaseCrudServiceImpl<Output, OutputDto, Output
     public CompletableFuture<OutputDto> create(OutputCreateDto outputCreateDto) throws UserFriendlyException {
         var output = objectMapper.convertToEntity(outputCreateDto);
 
-        output.setTransactionDetails(outputCreateDto.getTransactionDetails()
-                .stream().map(transactionDetailCreateDto -> {
-                    var transaction = new TransactionDetail();
+        for (int i = 0; i < outputCreateDto.getTransactionDetails().size(); i++) {
+            var transactionDto = outputCreateDto.getTransactionDetails().get(i);
+            var transaction = new TransactionDetail();
+            ///map attributes from dto to entity
+            transaction.getProduct().setId(transactionDto.getProductId());
+            transaction.setLot(transactionDto.getLot());
+            transaction.setArticle(transactionDto.getArticle());
+            transaction.setPriceHT(transactionDto.getPriceHT());
+            transaction.setQte(transactionDto.getQte());
 
-                    //create new product
-                    transaction.getProduct().setId(transactionDetailCreateDto.getProductId());
-                    transaction.setLot(transactionDetailCreateDto.getLot());
-                    transaction.setArticle(transactionDetailCreateDto.getArticle());
-                    transaction.setPriceHT(transactionDetailCreateDto.getPriceHT());
+            //insert qte to stockproduct principale - increment if prod exist in stock else create new one
+            var defaultStockProd = iStockProductRepository.findByProductIdAndStockId(transactionDto.getProductId(), transactionDto.getStockId());
 
-                    transaction.setQte(transactionDetailCreateDto.getQte());
+            if (defaultStockProd == null)
+                throw new UserFriendlyException("product does't exist in this stock");
+            if (defaultStockProd.getQte() > transactionDto.getQte()) {
+                defaultStockProd.setQte(defaultStockProd.getQte() - transactionDto.getQte());
+            } else
+                throw new UserFriendlyException("the qte not available in this stock try to split your needs on many stocks");
+            iStockProductRepository.save(defaultStockProd);
 
-                    //insert qte to stockproduct principale - increment if prod exist in stock else create new one
-                    var defaultStockProd = iStockProductRepository.findByProductIdAndStockId(transactionDetailCreateDto.getProductId(), transactionDetailCreateDto.getStockId());
-
-                    if (defaultStockProd.getQte() > transactionDetailCreateDto.getQte()) {
-                        defaultStockProd.setQte(defaultStockProd.getQte() - transactionDetailCreateDto.getQte());
-                    } //else throw new UserFriendlyException("the qte not available in this stock try to split your needs on many stocks");
-
-
-                    iStockProductRepository.save(defaultStockProd);
-
-                    transaction.setOutput(output);
-                    return transaction;
-                }).collect(Collectors.toList()));
+            transaction.setOutput(output);
+            output.getTransactionDetails().add(transaction);
+        }
 
         return CompletableFuture.completedFuture(objectMapper.convertToDto(repository.save(output), OutputDto.class));
     }

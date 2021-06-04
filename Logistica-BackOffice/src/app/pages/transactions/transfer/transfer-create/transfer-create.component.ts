@@ -84,7 +84,8 @@ export class TransferCreateComponent implements OnInit {
   }
 
   setNewTransactions(transactions: FormGroup): void {
-    let fa = transactions.controls.formArray as FormArray;
+    const fa = transactions.controls.formArray as FormArray;
+    this.formArrayTransactions.clear();
     for (let i = 0; i < fa.length; i++) {
       this.formArrayTransactions.push(fa.at(i));
     }

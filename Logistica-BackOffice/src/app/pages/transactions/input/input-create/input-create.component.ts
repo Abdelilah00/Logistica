@@ -73,7 +73,7 @@ export class InputCreateComponent implements OnInit {
         verticalPosition: 'top',
         duration: 2000
       });
-      // this.goBack();
+      this.goBack();
     }, (error) => {
       this.matSnackBar.open('Input Not saved', 'Try', {
         verticalPosition: 'top',
@@ -84,8 +84,14 @@ export class InputCreateComponent implements OnInit {
 
   setNewTransactions(transactions: FormGroup): void {
     const fa = transactions.controls.formArray as FormArray;
+    this.formArrayTransactions.clear();
     for (let i = 0; i < fa.length; i++) {
       this.formArrayTransactions.push(fa.at(i));
     }
   }
+
+  goBack(): void {
+    this.location.back();
+  }
+
 }

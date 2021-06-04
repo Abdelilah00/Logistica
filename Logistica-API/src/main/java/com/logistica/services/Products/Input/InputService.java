@@ -36,40 +36,39 @@ public class InputService extends BaseCrudServiceImpl<Input, InputDto, InputCrea
 
         //var objectMapperTransactionDetail = new ModelEntityMapping<TransactionDetail>();
 
-        input.setTransactionDetails(inputCreateDto.getTransactionDetails().stream().map(transactionDetailCreateDto -> {
+        for (int i = 0; i < inputCreateDto.getTransactionDetails().size(); i++) {
+            var transactionDto = inputCreateDto.getTransactionDetails().get(i);
+
             var transaction = new TransactionDetail();
 
             //create new product
-            transaction.getProduct().setId(transactionDetailCreateDto.getProductId());
-            transaction.setLot(transactionDetailCreateDto.getLot());
-            transaction.setArticle(transactionDetailCreateDto.getArticle());
-            transaction.setExpDate(transactionDetailCreateDto.getExpDate());
-            transaction.setPriceHT(transactionDetailCreateDto.getPriceHT());
+            transaction.getProduct().setId(transactionDto.getProductId());
+            transaction.setLot(transactionDto.getLot());
+            transaction.setArticle(transactionDto.getArticle());
+            transaction.setExpDate(transactionDto.getExpDate());
+            transaction.setPriceHT(transactionDto.getPriceHT());
 
             //set default values from settings(front end)
             transaction.getProduct().setStockMin(100);
             transaction.getProduct().setStockMax(1000);
             transaction.getProduct().setStockSecurity(350);
-            transaction.setQte(transactionDetailCreateDto.getQte());
+            transaction.setQte(transactionDto.getQte());
 
             //insert qte to stockproduct principale - increment if prod exist in stock else create new one
-            var defaultStockProd = iStockProductRepository.findByProductIdAndStockDefIsTrue(transactionDetailCreateDto.getProductId());
+            var defaultStockProd = iStockProductRepository.findByProductIdAndStockDefIsTrue(transactionDto.getProductId());
             if (defaultStockProd == null) {
                 //insert new
                 defaultStockProd = new StockProduct();
-                defaultStockProd.getProduct().setId(transactionDetailCreateDto.getProductId());
+                defaultStockProd.getProduct().setId(transactionDto.getProductId());
                 defaultStockProd.getStock().setId(iStockRepository.getStockByDefIsTrue().getId());
-                defaultStockProd.setQte(transactionDetailCreateDto.getQte());
+                defaultStockProd.setQte(transactionDto.getQte());
             } else {
                 //update old
-                defaultStockProd.setQte(defaultStockProd.getQte() + transactionDetailCreateDto.getQte());
+                defaultStockProd.setQte(defaultStockProd.getQte() + transactionDto.getQte());
             }
-
             iStockProductRepository.save(defaultStockProd);
-
             transaction.setInput(input);
-            return transaction;
-        }).collect(Collectors.toList()));
+        }
 
         return CompletableFuture.completedFuture(objectMapper.convertToDto(repository.save(input), InputDto.class));
     }

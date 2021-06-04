@@ -18,3 +18,21 @@ purple-green.css*/
 .cdk-overlay-container {
   z-index: 9999 !important;
 }
+
+.red-snackbar {
+  background-color: #f83255 !important;
+  text-transform: capitalize;
+  text-align: center;
+  font-family: "28 Days Later", serif;
+  font-weight: bold;
+  color: #ffffff !important;
+}
+
+.green-snackbar {
+  background-color: #38ff0d !important;
+  text-transform: capitalize;
+  text-align: center;
+  font-family: "28 Days Later", serif;
+  font-weight: bold;
+  color: #000000 !important;
+}
