@@ -8,5 +8,6 @@ import lombok.Setter;
 @Setter
 public class TransferDetailsDto extends BaseDto {
     private Long productId;
+    private String productName;
     private Integer qte;
 }

@@ -1,7 +1,7 @@
 package com.logistica.domains.Commands;
 
 import com.alexy.models.BaseEntity;
-import com.logistica.domains.Organ.Service;
+import com.logistica.domains.Organ.StructureUnit;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +23,7 @@ public class CommandIn extends BaseEntity {
     @OneToOne
     private Actor actor;
     @OneToOne
-    private Service service;
+    private StructureUnit service;
 
     private PaymentMethod payementMethod;
     //private CommandDetail commandDetail;

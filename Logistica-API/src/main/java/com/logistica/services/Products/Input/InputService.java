@@ -57,7 +57,7 @@ public class InputService extends BaseCrudServiceImpl<Input, InputDto, InputCrea
             var defaultStockProd = iStockProductRepository.findByProductIdAndStockDefIsTrue(transactionDto.getProductId());
             if (defaultStockProd == null) {
                 //insert new
-                //todo do sooooooooooome thing in case we had same prod in same stock
+                //todo sum of group by prod-stock
                 defaultStockProd = new StockProduct();
                 defaultStockProd.getProduct().setId(transactionDto.getProductId());
                 defaultStockProd.getStock().setId(transactionDto.getStockId());

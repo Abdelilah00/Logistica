@@ -20,12 +20,13 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
 const routes: Routes = [
   {path: '', component: DashboardComponent},
-  {path: 'utility', loadChildren: () => import('./utility/utility.module').then(m => m.UtilityModule)},
-  {path: 'transactions', loadChildren: () => import('./transactions/transactions.module').then(m => m.TransactionsModule)},
   {path: 'actors', loadChildren: () => import('./actors/actors.module').then(m => m.ActorsModule)},
+  {path: 'organization', loadChildren: () => import('./organization/organization.module').then(m => m.OrganizationModule)},
   {path: 'stocks', loadChildren: () => import('./stocks/stocks.module').then(m => m.StocksModule)},
+  {path: 'transactions', loadChildren: () => import('./transactions/transactions.module').then(m => m.TransactionsModule)},
   {path: 'tasks', loadChildren: () => import('./tasks/tasks.module').then(m => m.TasksModule)},
   {path: 'audits', loadChildren: () => import('./audits/audits.module').then(m => m.AuditsModule)},
+  {path: 'utility', loadChildren: () => import('./utility/utility.module').then(m => m.UtilityModule)},
   {path: 'parameters', loadChildren: () => import('./parameters/parameters.module').then(m => m.ParametersModule)},
 ];
 

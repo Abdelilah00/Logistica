@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/commandins")
+@RequestMapping("api/commandIns")
 public class CommandInController extends BaseCrudController<CommandIn, CommandInDto, CommandInCreateDto, CommandInUpdateDto> {
 }

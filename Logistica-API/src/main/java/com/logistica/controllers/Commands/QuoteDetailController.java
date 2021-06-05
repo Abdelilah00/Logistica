@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/quotedetails")
+@RequestMapping("api/quoteDetails")
 public class QuoteDetailController extends BaseCrudController<QuoteDetail, QuoteDetailDto, QuoteDetailCreateDto, QuoteDetailUpdateDto> {
 }

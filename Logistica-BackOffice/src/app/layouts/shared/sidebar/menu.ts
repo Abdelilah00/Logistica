@@ -35,6 +35,23 @@ export const MENU: MenuItem[] = [
       }
     ]
   },
+
+  {
+    label: 'MENUITEMS.ORGANIZATION.TEXT',
+    icon: 'ri-product-hunt-line',
+    subItems: [
+      {
+        label: 'MENUITEMS.ORGANIZATION.LIST.STRUCTURES',
+        icon: 'ri-product-hunt-line',
+        link: '/organization/structures'
+      },
+      {
+        label: 'MENUITEMS.ORGANIZATION.LIST.UNITES',
+        icon: 'ri-product-hunt-line',
+        link: '/organization/unites'
+      }
+    ]
+  },
   {
     label: 'MENUITEMS.STOCKS.TEXT',
     icon: 'ri-product-hunt-line',

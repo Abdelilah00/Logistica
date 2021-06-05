@@ -31,5 +31,6 @@ export class ActorService extends BaseService<Actor, Actor> {
     return this.httpClient.get<Array<Actor>>(this.baseUrl + '/getResponsible')
       .pipe(retry(1));
   }
-
 }
+
+

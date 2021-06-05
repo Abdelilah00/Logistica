@@ -12,10 +12,10 @@
 
                 <form [formGroup]="formGroup">
                   <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lg-6">
                       <div class="form-group">
                         <label for="ref">input Reference</label>
-                        <input [ngClass]="{'is-invalid': saving && form.inputRef.errors}" class="form-control"
+                        <input [ngClass]="{'is-invalid': saving && form.ref.errors}" class="form-control"
                                formControlName="ref" id="ref"
                                placeholder="ref" type="text">
                         <div *ngIf="saving && form.ref.errors" class="invalid-feedback">
@@ -23,6 +23,8 @@
                         </div>
                       </div>
                     </div>
+
+
                   </div>
 
                   <div class="row">
@@ -30,40 +32,75 @@
                       <div class="form-group">
                         <label for="actorId">actor Name</label>
                         <select class="form-control select2" formControlName="actorId" id="actorId">
-                          <option *ngFor='let actor of actorList' value="{{actor.id}}">{{actor.name}}</option>
+                          <option *ngFor='let actor of respoList' value="{{actor.id}}">{{actor.name}}</option>
                         </select>
                         <div *ngIf="saving && form.actorId.errors" class="invalid-feedback">
                           <span *ngIf="form.actorId.errors.required">Please provide a valid name.</span>
                         </div>
-
                       </div>
                     </div>
-
                     <div class="col-lg-6">
                       <div class="form-group">
-                        <label for="example-datetime-local-input">Date Time</label>
-                        <input class="form-control" formControlName="date" id="example-datetime-local-input"
-                               type="datetime-local">
+                        <label for="delay">Delay</label>
+                        <input [ngClass]="{'is-invalid': saving && form.delay.errors}" class="form-control"
+                               formControlName="ref" id="delay"
+                               placeholder="delay" type="text">
+                        <div *ngIf="saving && form.delay.errors" class="invalid-feedback">
+                          <span *ngIf="form.delay.errors.required">Please provide a valid delay.</span>
+                        </div>
                       </div>
                     </div>
                   </div>
 
-                  <div class="row">
+
+                  <div class="row" id='stockTransfer'>
                     <div class="col-lg-6">
                       <div class="form-group">
-                        <label class="control-label" for="payement">Payement</label>
-                        <select class="form-control select2" formControlName="payement" id="payement">
-                          <option value="cheque">Cheque</option>
-                          <option value="cash">Cash</option>
-                          <option value="bank">Banque</option>
+                        <label for="fromStructureUnitId">From StructureUnit</label>
+                        <select class="form-control select2" formControlName="fromStructureUnitId" id="fromStructureUnitId">
+                          <option *ngFor='let service of serviceList' value="{{service.id}}">{{service.name}}</option>
                         </select>
+                        <div *ngIf="saving && form.fromStructureUnitId.errors" class="invalid-feedback">
+                          <span *ngIf="form.fromStructureUnitId.errors.required">Please provide a valid fromStructureUnitId.</span>
+                        </div>
                       </div>
                     </div>
+
                     <div class="col-lg-6">
                       <div class="form-group">
-                        <label for="payementRef">Payement Ref</label>
-                        <input class="form-control" formControlName="payementRef" id="payementRef"
-                               type="text">
+                        <label for="toStructureUnitId">To Service</label>
+                        <select class="form-control select2" formControlName="toStructureUnitId" id="toStructureUnitId">
+                          <option *ngFor='let service of serviceList' value="{{service.id}}">{{service.name}}</option>
+                        </select>
+                        <div *ngIf="saving && form.toStructureUnitId.errors" class="invalid-feedback">
+                          <span *ngIf="form.toStructureUnitId.errors.required">Please provide a valid toStructureUnitId.</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row" id='serviceTransfer'>
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label for="fromStockId">From Stock</label>
+                        <select class="form-control select2" formControlName="fromStockId" id="fromStockId">
+                          <option *ngFor='let stock of stockList' value="{{stock.id}}">{{stock.name}}</option>
+                        </select>
+                        <div *ngIf="saving && form.fromStockId.errors" class="invalid-feedback">
+                          <span *ngIf="form.fromStockId.errors.required">Please provide a valid fromStockId.</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label for="toStockId">To Stock</label>
+                        <select class="form-control select2" formControlName="toStockId" id="toStockId">
+                          <option *ngFor='let stock of stockList' value="{{stock.id}}">{{stock.name}}</option>
+                        </select>
+                        <div *ngIf="saving && form.toStockId.errors" class="invalid-feedback">
+                          <span *ngIf="form.toStockId.errors.required">Please provide a valid toStockId.</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -73,7 +110,6 @@
                     <textarea class="form-control" formControlName='description' id="description" rows="5"></textarea>
                   </div>
                 </form>
-
               </div>
 
               <div class='text-center k-mt-14'>

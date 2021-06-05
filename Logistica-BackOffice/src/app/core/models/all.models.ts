@@ -32,6 +32,12 @@ export class Transfer extends BaseModel {
   transactionDetails: TransactionDetail[];
 }
 
+export class TransferDetails extends BaseModel {
+  productId: number;
+  productName: string;
+  qte: number;
+}
+
 
 export class Output extends BaseModel {
   ref: string;
@@ -95,6 +101,10 @@ export class Actor extends BaseModel {
   bankCode: string;
   bankAccountNumber: string;
   bankRIB: string;
+}
+
+export class Service extends BaseModel {
+  name: string;
 }
 
 export class Parameter extends BaseModel {

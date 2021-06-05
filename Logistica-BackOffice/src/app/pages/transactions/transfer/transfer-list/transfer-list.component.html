@@ -7,7 +7,7 @@
           <div>
             <!--  -->
             <a [routerLink]="['../create']" class="btn btn-success mb-2">
-              <i class="mdi mdi-plus mr-2"></i> Add Input
+              <i class="mdi mdi-plus mr-2"></i> Add Transfer
             </a>
 
             <kendo-grid (dataStateChange)="onStateChange($event)" [data]="gridData"
@@ -27,15 +27,17 @@
               </kendo-grid-column>
               <kendo-grid-column field="stage" title="N° Qte">
               </kendo-grid-column>
-              <kendo-grid-column field="stage" title="N° Lot">
+              <kendo-grid-column field="fromName" title="from">
               </kendo-grid-column>
-              <kendo-grid-column field="stage" title="N° Articles">
+              <kendo-grid-column field="toName" title="to">
+              </kendo-grid-column>
+              <kendo-grid-column field="actorName" title="Actor">
               </kendo-grid-column>
 
               <kendo-grid-command-column title="Options">
                 <ng-template kendoGridCellTemplate>
                   <button>Export</button>
-                  <button >Report</button>
+                  <button>Report</button>
                 </ng-template>
               </kendo-grid-command-column>
 

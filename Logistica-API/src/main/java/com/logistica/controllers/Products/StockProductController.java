@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/stockproducts")
+@RequestMapping("api/stockProducts")
 public class StockProductController extends BaseCrudController<StockProduct, StockProductDto, StockProductCreateDto, StockProductUpdateDto> {
 }

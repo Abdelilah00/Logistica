@@ -27,17 +27,10 @@
       </kendo-dropdownlist>
     </ng-template>
   </kendo-grid-column>
+  <kendo-grid-column editor="numeric" field="qte" title="Qte"></kendo-grid-column>
 
   <kendo-grid-column editor="numeric" field="lot" title="Lot"></kendo-grid-column>
   <kendo-grid-column editor="numeric" field="article" title="Article"></kendo-grid-column>
-  <kendo-grid-column editor="numeric" field="qte" title="Qte"></kendo-grid-column>
-  <kendo-grid-column editor="numeric" field="tVA" title="TVA"></kendo-grid-column>
-  <kendo-grid-column editor="numeric" field="priceHT" title="Unit Price HT"></kendo-grid-column>
-  <kendo-grid-column editor="date" field="expDate" title="Exp Date">
-    <ng-template kendoGridCellTemplate let-dataItem>
-      {{ dataItem.expDate | date: 'dd/MM/yyyy'}}
-    </ng-template>
-  </kendo-grid-column>
 
   <kendo-grid-column *ngIf="isEditMode">
     <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">

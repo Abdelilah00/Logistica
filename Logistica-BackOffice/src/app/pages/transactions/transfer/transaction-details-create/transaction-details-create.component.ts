@@ -55,13 +55,11 @@ export class TransactionDetailsCreateComponent implements OnInit {
 
     // add new form group to form array
     const test = new TransactionDetail();
+    test.productId = 0;
     test.qte = 10;
     test.article = 10;
     test.lot = 10;
-    test.productId = 0;
-    test.priceHT = 50;
-    test.tVa = 0.20;
-    test.expDate = new Date();
+
     const formGroup = this.createFormGroup(test);
     this.fa.push(formGroup);
 
@@ -114,12 +112,9 @@ export class TransactionDetailsCreateComponent implements OnInit {
   public createFormGroup(dataItem: TransactionDetail = new TransactionDetail()): FormGroup {
     return this.formBuilder.group({
       productId: [dataItem.productId, Validators.required],
-      lot: [dataItem.lot, Validators.required],
-      article: [dataItem.article, Validators.required],
       qte: [dataItem.qte, Validators.required],
-      tVA: [dataItem.tVa, Validators.required],
-      expDate: [dataItem.expDate, Validators.required],
-      priceHT: [dataItem.priceHT, Validators.required],
+      lot: [dataItem.lot, Validators.required],
+      article: [dataItem.article, Validators.required]
     });
   }
 

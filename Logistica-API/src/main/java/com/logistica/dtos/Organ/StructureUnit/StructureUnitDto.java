@@ -1,4 +1,4 @@
-package com.logistica.dtos.Organ.Service;
+package com.logistica.dtos.Organ.StructureUnit;
 
 import com.alexy.models.BaseDto;
 import lombok.Getter;
@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ServiceUpdateDto extends BaseDto {
+public class StructureUnitDto extends BaseDto {
     private String name;
     private String Structure;
 }

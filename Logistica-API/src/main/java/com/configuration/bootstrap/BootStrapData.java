@@ -9,10 +9,14 @@ package com.configuration.bootstrap;
 import com.configuration.TenantContext;
 import com.configuration.security.repositories.IUserRepository;
 import com.logistica.domains.Commands.*;
+import com.logistica.domains.Organ.Structure;
+import com.logistica.domains.Organ.StructureUnit;
 import com.logistica.domains.Products.*;
 import com.logistica.repositories.Commands.IActorRepository;
 import com.logistica.repositories.Commands.IActorRoleRepository;
 import com.logistica.repositories.ITestRepository;
+import com.logistica.repositories.Organ.IStructureRepository;
+import com.logistica.repositories.Organ.IStructureUnitRepository;
 import com.logistica.repositories.Products.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,6 +50,10 @@ public class BootStrapData implements CommandLineRunner {
     private ICategoryRepository iCategoryRepository;
     @Autowired
     private IActorRoleRepository iActorRoleRepository;
+    @Autowired
+    private IStructureRepository iStructureRepository;
+    @Autowired
+    private IStructureUnitRepository iStructureUnitRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -53,6 +61,32 @@ public class BootStrapData implements CommandLineRunner {
         if (iInputRepository.findAll().size() > 0)
             return;
 
+        //region organisation
+        var act = new Actor();
+        act.setName("jamal din lbarhouch");
+        iActorRepository.save(act);
+        var structureDepartament = new Structure();
+        var structureBlock = new Structure();
+        var structureService = new Structure();
+        structureDepartament.setName("Departament");
+        structureDepartament.setRang(1);
+        structureBlock.setName("Block");
+        structureBlock.setRang(2);
+        structureService.setName("Service");
+        structureService.setRang(3);
+        var structures = new ArrayList<Structure>();
+        structures.add(structureDepartament);
+        structures.add(structureBlock);
+        structures.add(structureService);
+        iStructureRepository.saveAll(structures);
+
+        var serviceEnf = new StructureUnit();
+        serviceEnf.setName("service enfant");
+        serviceEnf.setActor(act);
+        serviceEnf.setStructure(structureService);
+        serviceEnf.setActor(act);
+        iStructureUnitRepository.save(serviceEnf);
+        //endregion
 
         //region categories & products
         var catA = new Category();

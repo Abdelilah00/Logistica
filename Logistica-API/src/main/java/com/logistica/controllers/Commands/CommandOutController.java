@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/commandouts")
+@RequestMapping("api/commandOuts")
 public class CommandOutController extends BaseCrudController<CommandOut, CommandOutDto, CommandOutCreateDto, CommandOutUpdateDto> {
 }

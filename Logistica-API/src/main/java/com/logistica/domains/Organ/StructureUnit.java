@@ -1,6 +1,7 @@
 package com.logistica.domains.Organ;
 
 import com.alexy.models.BaseEntity;
+import com.logistica.domains.Commands.Actor;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,8 +17,10 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "service")
-public class Service extends BaseEntity {
+public class StructureUnit extends BaseEntity {
     private String name;
+    @OneToOne
+    private Actor actor;
     @OneToOne
     private Structure structure;
 }

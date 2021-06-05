@@ -42,6 +42,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           });
         }
       } else {
+        // TODO: get only friendly Exception from API
         console.log(error.error.message);
         this.matSnackBar.open(error.error.message, 'Ok', {
           verticalPosition: 'top',

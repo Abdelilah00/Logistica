@@ -58,12 +58,19 @@
       "TEXT": "Dashboard",
       "BADGE": "03"
     },
-    "TRANSACTION": {
-      "TEXT": "Transaction",
+    "ORGANIZATION": {
+      "TEXT": "Organization",
       "LIST": {
-        "INPUT": "Input",
-        "OUTPUT": "Output",
-        "TRANSFER": "Transfer"
+        "STRUCTURE": "Structure",
+        "UNITIES": "Structure Unites"
+      }
+    },
+    "ACTORS": {
+      "TEXT": "Actors",
+      "LIST": {
+        "CLIENTS": "Clients",
+        "SUPPLIERS": "Suppliers",
+        "RESPONSIBLE": "Responsible"
       }
     },
     "STOCKS": {
@@ -73,12 +80,12 @@
         "PRODUCT": "Product"
       }
     },
-    "ACTORS": {
-      "TEXT": "Actors",
+    "TRANSACTION": {
+      "TEXT": "Transaction",
       "LIST": {
-        "CLIENTS": "Clients",
-        "SUPPLIERS": "Suppliers",
-        "RESPONSIBLE": "Responsible"
+        "INPUT": "Input",
+        "OUTPUT": "Output",
+        "TRANSFER": "Transfer"
       }
     },
     "TASKS": {

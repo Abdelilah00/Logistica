@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/proposedreviewss")
+@RequestMapping("api/proposedReviewss")
 public class ProposedReviewsController extends BaseCrudController<ProposedReviews, ProposedReviewsDto, ProposedReviewsCreateDto, ProposedReviewsUpdateDto> {
 }

@@ -1,11 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {BreadCrumb} from '../../../../core/models/all.models';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {InputsService} from '../../../../core/services/inputs.service';
 import {finalize} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {DatePipe, Location} from '@angular/common';
 import {ActorService} from '../../../../core/services/actor.service';
+import {StocksService} from '../../../../core/services/stocks.service';
+import {StructureUnitsService} from '../../../../core/services/structure-units.service';
+import {TransfersService} from '../../../../core/services/transfers.service';
 
 @Component({
   selector: 'app-transfer-create',
@@ -17,10 +19,14 @@ export class TransferCreateComponent implements OnInit {
   saving = false;
   public breadCrumb: BreadCrumb;
   formGroup = this.createFormGroup();
-  public actorList;
+  public respoList;
+  public stockList;
+  public serviceList;
 
-  constructor(private service: InputsService,
+  constructor(private service: TransfersService,
               private actorService: ActorService,
+              private stocksService: StocksService,
+              private servicesService: StructureUnitsService,
               private formBuilder: FormBuilder,
               private location: Location,
               private matSnackBar: MatSnackBar,
@@ -32,7 +38,7 @@ export class TransferCreateComponent implements OnInit {
   }
 
   get formArrayTransactions(): FormArray {
-    return this.formGroup.controls.transactionDetails as FormArray;
+    return this.formGroup.controls.transferDetails as FormArray;
   }
 
   ngOnInit(): void {
@@ -43,21 +49,30 @@ export class TransferCreateComponent implements OnInit {
         {label: 'Create', active: true}
       ]
     };
-    this.actorService.getSuppliers().subscribe(data => {
-      this.actorList = data;
+    this.actorService.getResponsible().subscribe(data => {
+      this.respoList = data;
+    });
 
+    this.stocksService.getAll().subscribe(data => {
+      this.stockList = data;
+    });
+
+    this.servicesService.getAll().subscribe(data => {
+      this.serviceList = data;
     });
   }
 
   createFormGroup(): FormGroup {
     return this.formBuilder.group({
-      supplierId: [0, Validators.required],
-      date: [this.datePipe.transform(Date.now(), 'yyyy-MM-ddThh:mm:ss'), Validators.required],
-      description: ['test', Validators.required],
-      payement: ['bank', Validators.required],
-      payementRef: ['test', Validators.required],
-      ref: ['IR', Validators.required],
-      transactionDetails: this.formBuilder.array([]),
+      ref: ['Trans00001', Validators.required],
+      description: ['desc test', Validators.required],
+      delay: [10, Validators.required],
+      actorId: [1, Validators.required],
+      fromStructureUnitId: [1, Validators.required],
+      toStructureUnitId: [1, Validators.required],
+      toStockId: [1, Validators.required],
+      fromStockId: [1, Validators.required],
+      transferDetails: this.formBuilder.array([])
     });
   }
 
@@ -70,24 +85,25 @@ export class TransferCreateComponent implements OnInit {
         })
       ).subscribe(() => {
       // Show the success message
-      this.matSnackBar.open('Input saved', 'OK', {
+      this.matSnackBar.open('Transfer saved', 'Ok', {
         verticalPosition: 'top',
-        duration: 2000
+        duration: 3000,
+        panelClass: ['green-snackbar']
       });
-      // this.goBack();
-    }, (error) => {
-      this.matSnackBar.open('Input Not saved', 'Try', {
-        verticalPosition: 'top',
-        duration: 2000
-      });
+      this.goBack();
     });
   }
 
   setNewTransactions(transactions: FormGroup): void {
     const fa = transactions.controls.formArray as FormArray;
     this.formArrayTransactions.clear();
+
     for (let i = 0; i < fa.length; i++) {
       this.formArrayTransactions.push(fa.at(i));
     }
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 }
