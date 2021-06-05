@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
 
 @Service
 public class InputService extends BaseCrudServiceImpl<Input, InputDto, InputCreateDto, InputUpdateDto> implements IInputService {
@@ -58,14 +57,16 @@ public class InputService extends BaseCrudServiceImpl<Input, InputDto, InputCrea
             var defaultStockProd = iStockProductRepository.findByProductIdAndStockDefIsTrue(transactionDto.getProductId());
             if (defaultStockProd == null) {
                 //insert new
+                //todo do sooooooooooome thing in case we had same prod in same stock
                 defaultStockProd = new StockProduct();
                 defaultStockProd.getProduct().setId(transactionDto.getProductId());
-                defaultStockProd.getStock().setId(iStockRepository.getStockByDefIsTrue().getId());
+                defaultStockProd.getStock().setId(transactionDto.getStockId());
                 defaultStockProd.setQte(transactionDto.getQte());
             } else {
                 //update old
                 defaultStockProd.setQte(defaultStockProd.getQte() + transactionDto.getQte());
             }
+
             iStockProductRepository.save(defaultStockProd);
             transaction.setInput(input);
         }

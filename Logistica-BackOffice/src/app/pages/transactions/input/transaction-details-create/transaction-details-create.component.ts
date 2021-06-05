@@ -1,8 +1,9 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {GridComponent} from '@progress/kendo-angular-grid';
-import {Product, TransactionDetail} from '../../../../core/models/all.models';
+import {Product, Stock, TransactionDetail} from '../../../../core/models/all.models';
 import {ProductsService} from '../../../../core/services/products.service';
+import {StocksService} from '../../../../core/services/stocks.service';
 
 @Component({
   selector: 'app-transaction-details-create',
@@ -15,11 +16,14 @@ export class TransactionDetailsCreateComponent implements OnInit {
   transactions: FormGroup;
   isEditMode = true;
   productList: Product[];
+  stockList: Stock[];
 
   @ViewChild('grid') grid: GridComponent;
   @Output() transactionDetailsSave = new EventEmitter<any>();
 
-  constructor(private formBuilder: FormBuilder, private productsService: ProductsService) {
+  constructor(private formBuilder: FormBuilder,
+              private productsService: ProductsService,
+              private stocksService: StocksService) {
   }
 
   // convenience getters for easy access to form fields
@@ -31,10 +35,15 @@ export class TransactionDetailsCreateComponent implements OnInit {
     return this.f.formArray as FormArray;
   }
 
+  public getStock(id: number): Stock {
+    return this.stockList.find(x => x.id === id);
+  }
+
   ngOnInit() {
     // initialise products form with empty form array
     this.transactions = this.formBuilder.group({formArray: new FormArray([])});
     this.productsService.getAll().subscribe(data => this.productList = data);
+    this.stocksService.getAll().subscribe(data => this.stockList = data);
   }
 
   onEdit() {
@@ -102,6 +111,7 @@ export class TransactionDetailsCreateComponent implements OnInit {
   public getProduct(id: number): Product {
     return this.productList.find((x) => x.id === id);
   }
+
   // helper methods
   onCancel() {
     this.closeAllRows();
@@ -111,9 +121,11 @@ export class TransactionDetailsCreateComponent implements OnInit {
 
     this.isEditMode = false;
   }
+
   public createFormGroup(dataItem: TransactionDetail = new TransactionDetail()): FormGroup {
     return this.formBuilder.group({
       productId: [dataItem.productId, Validators.required],
+      stockId: [dataItem.stockId, Validators.required],
       lot: [dataItem.lot, Validators.required],
       article: [dataItem.article, Validators.required],
       qte: [dataItem.qte, Validators.required],

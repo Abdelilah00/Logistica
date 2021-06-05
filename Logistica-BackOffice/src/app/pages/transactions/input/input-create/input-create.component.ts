@@ -69,16 +69,12 @@ export class InputCreateComponent implements OnInit {
         })
       ).subscribe(() => {
       // Show the success message
-      this.matSnackBar.open('Input saved', 'OK', {
+      this.matSnackBar.open('Input saved', 'Ok', {
         verticalPosition: 'top',
-        duration: 2000
+        duration: 3000,
+        panelClass: ['green-snackbar']
       });
       this.goBack();
-    }, (error) => {
-      this.matSnackBar.open('Input Not saved', 'Try', {
-        verticalPosition: 'top',
-        duration: 2000
-      });
     });
   }
 

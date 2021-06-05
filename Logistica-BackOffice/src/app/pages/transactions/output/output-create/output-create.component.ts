@@ -21,9 +21,9 @@ export class OutputCreateComponent implements OnInit {
 
   constructor(private service: OutputsService,
               private formBuilder: FormBuilder,
-              private location: Location,
               private matSnackBar: MatSnackBar,
               private datePipe: DatePipe,
+              private location: Location,
               private actorService: ActorService,
   ) {
   }
@@ -70,16 +70,12 @@ export class OutputCreateComponent implements OnInit {
         })
       ).subscribe(() => {
       // Show the success message
-      this.matSnackBar.open('Output saved', 'OK', {
+      this.matSnackBar.open('Output saved', 'Ok', {
         verticalPosition: 'top',
-        duration: 2000
+        duration: 3000,
+        panelClass: ['green-snackbar']
       });
       this.goBack();
-    }, (error) => {
-      this.matSnackBar.open('Output Not saved', 'Try', {
-        verticalPosition: 'top',
-        duration: 2000
-      });
     });
   }
 

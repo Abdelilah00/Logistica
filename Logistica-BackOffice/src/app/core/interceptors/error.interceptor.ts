@@ -3,10 +3,12 @@ import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/com
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {Location} from '@angular/common';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-  constructor(private matSnackBar: MatSnackBar) {
+  constructor(private matSnackBar: MatSnackBar,
+              private location: Location) {
 
   }
 
@@ -39,12 +41,6 @@ export class ErrorInterceptor implements HttpInterceptor {
             panelClass: ['red-snackbar']
           });
         }
-      } else if (error.status === 200) {
-        this.matSnackBar.open(error.error.message, 'Ok', {
-          verticalPosition: 'top',
-          duration: 3000,
-          panelClass: ['green-snackbar']
-        });
       } else {
         console.log(error.error.message);
         this.matSnackBar.open(error.error.message, 'Ok', {
