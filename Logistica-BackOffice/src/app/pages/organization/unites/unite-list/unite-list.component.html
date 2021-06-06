@@ -7,7 +7,7 @@
           <div>
             <!--  -->
             <a [routerLink]="['../create']" class="btn btn-success mb-2">
-              <i class="mdi mdi-plus mr-2"></i> Add Product
+              <i class="mdi mdi-plus mr-2"></i> Add Unite
             </a>
 
             <kendo-grid (dataStateChange)="onStateChange($event)" [data]="gridData"
@@ -16,9 +16,9 @@
                         [sort]="gridState.sort"
                         [sortable]="true">
 
-              <kendo-grid-column field="name" title="Product Name">
+              <kendo-grid-column field="name" title="Unite Name">
               </kendo-grid-column>
-              <kendo-grid-column field="structureName" title="Stock Min">
+              <kendo-grid-column field="structureName" title="Type">
               </kendo-grid-column>
 
               <kendo-grid-command-column title="Options">

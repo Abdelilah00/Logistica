@@ -16,7 +16,9 @@ public class TransferDto extends BaseDto {
     private String description;
     private Date date;
     private Integer delay;
-    private String fromName;
-    private String toName;
+    private String fromStockName;
+    private String toStockName;
+    private String fromStructureUnitName;
+    private String toStructureUnitName;
     private String actorName;
 }

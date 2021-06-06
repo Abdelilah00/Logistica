@@ -4,10 +4,10 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {finalize} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {DatePipe, Location} from '@angular/common';
-import {ActorService} from '../../../../core/services/actor.service';
-import {StocksService} from '../../../../core/services/stocks.service';
-import {StructureUnitsService} from '../../../../core/services/structure-units.service';
-import {TransfersService} from '../../../../core/services/transfers.service';
+import {ActorService} from '../../../../core/services/Commands/actor.service';
+import {StocksService} from '../../../../core/services/Products/stocks.service';
+import {StructureUnitsService} from '../../../../core/services/Organzation/structure-units.service';
+import {TransfersService} from '../../../../core/services/Products/transfers.service';
 
 @Component({
   selector: 'app-transfer-create',

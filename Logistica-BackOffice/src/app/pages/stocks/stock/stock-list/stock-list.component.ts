@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {BreadCrumb} from '../../../../core/models/all.models';
 import {State} from '@progress/kendo-data-query';
 import {FormBuilder} from '@angular/forms';
-import {StocksService} from '../../../../core/services/stocks.service';
+import {StocksService} from '../../../../core/services/Products/stocks.service';
 
 @Component({
   selector: 'app-stock-list',

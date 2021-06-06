@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {BreadCrumb} from '../../../../core/models/all.models';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {InputsService} from '../../../../core/services/inputs.service';
+import {InputsService} from '../../../../core/services/Products/inputs.service';
 import {finalize} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {DatePipe, Location} from '@angular/common';
-import {ActorService} from '../../../../core/services/actor.service';
+import {ActorService} from '../../../../core/services/Commands/actor.service';
 
 @Component({
   selector: 'app-input-create',

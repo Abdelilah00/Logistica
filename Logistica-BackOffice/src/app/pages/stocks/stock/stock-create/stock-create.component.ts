@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {BreadCrumb} from '../../../../core/models/all.models';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ProductsService} from '../../../../core/services/products.service';
+import {ProductsService} from '../../../../core/services/Products/products.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Location} from '@angular/common';
 import {finalize} from 'rxjs/operators';

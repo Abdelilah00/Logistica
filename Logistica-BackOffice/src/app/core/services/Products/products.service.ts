@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {BaseService} from './base-service.service';
-import {Product} from '../models/all.models';
+import {BaseService} from '../base-service.service';
+import {Product} from '../../models/all.models';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {IListModel} from '../models/base-model.model';
+import {IListModel} from '../../models/base-model.model';
 import {retry} from 'rxjs/operators';
 
 @Injectable({

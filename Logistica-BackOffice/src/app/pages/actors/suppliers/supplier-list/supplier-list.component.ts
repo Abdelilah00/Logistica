@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {BreadCrumb} from '../../../../core/models/all.models';
 import {State} from '@progress/kendo-data-query';
 import {FormBuilder} from '@angular/forms';
-import {ActorService} from '../../../../core/services/actor.service';
+import {ActorService} from '../../../../core/services/Commands/actor.service';
 
 @Component({
   selector: 'app-supplier-list',

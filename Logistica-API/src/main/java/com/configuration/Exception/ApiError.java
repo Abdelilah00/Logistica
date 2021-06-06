@@ -25,4 +25,5 @@ public class ApiError {
     private LocalDateTime timestamp = LocalDateTime.now();
     private String message;
     private List<String> debugMessage;
+    //private String level;
 }

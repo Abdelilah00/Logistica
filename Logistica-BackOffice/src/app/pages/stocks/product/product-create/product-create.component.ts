@@ -4,7 +4,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Location} from '@angular/common';
 import {finalize} from 'rxjs/operators';
-import {ProductsService} from '../../../../core/services/products.service';
+import {ProductsService} from '../../../../core/services/Products/products.service';
 
 @Component({
   selector: 'app-product-create',

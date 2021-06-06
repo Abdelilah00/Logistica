@@ -3,7 +3,7 @@ import {TransactionDetail, TransferDetails} from '../../../../core/models/all.mo
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {TransferDetailsService} from '../../../../core/services/transfer-details.service';
+import {TransferDetailsService} from '../../../../core/services/Products/transfer-details.service';
 
 
 @Component({

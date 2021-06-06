@@ -1,5 +1,5 @@
-import {BaseService} from './base-service.service';
-import {Transfer} from '../models/all.models';
+import {BaseService} from '../base-service.service';
+import {Transfer} from '../../models/all.models';
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 

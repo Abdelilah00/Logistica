@@ -64,7 +64,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(UserFriendlyException.class)
     protected ResponseEntity<Object> handleUserFriendly(UserFriendlyException ex) {
         ApiError apiError = new ApiError();
-        apiError.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+        apiError.setStatus(HttpStatus.PRECONDITION_REQUIRED);
         apiError.setMessage(ex.getMessage());
         return buildResponseEntity(apiError);
     }

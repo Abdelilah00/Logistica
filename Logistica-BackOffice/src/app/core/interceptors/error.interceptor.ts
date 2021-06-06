@@ -16,15 +16,11 @@ export class ErrorInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(catchError(error => {
       console.log(error);
-
       let errorMessage = '';
       if (error instanceof ErrorEvent) {
         // Get client-side error
         errorMessage = error.message;
-      }
-
-      // Get server-side error
-      else if (error.status === 0) {
+      } else if (error.status === 0) {
         errorMessage = 'The server is not available';
       } else if (error.status === 403) {
         if (error.error.message === 'Access Denied') {
@@ -41,14 +37,15 @@ export class ErrorInterceptor implements HttpInterceptor {
             panelClass: ['red-snackbar']
           });
         }
-      } else {
-        // TODO: get only friendly Exception from API
+      } else if (error.status === 428) {
         console.log(error.error.message);
         this.matSnackBar.open(error.error.message, 'Ok', {
           verticalPosition: 'top',
-          duration: 3000,
+          duration: 5000,
           panelClass: ['red-snackbar']
         });
+      } else {
+        console.log(error.error.message);
       }
       return throwError(errorMessage);
     }));

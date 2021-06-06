@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TransactionDetail} from '../../../../core/models/all.models';
-import {TransactionDetailsService} from '../../../../core/services/transaction-details.service';
+import {TransactionDetailsService} from '../../../../core/services/Products/transaction-details.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';

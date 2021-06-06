@@ -5,18 +5,17 @@
 
 package com.configuration.Exception;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-
-import javax.validation.constraints.NotNull;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
-@RequiredArgsConstructor
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserFriendlyException extends Exception {
     private static final long serialVersionUID = 1L;
+    private String message;
 
-    @NotNull
-    private final String message;
-    private final HttpStatus httpStatus = null;
 }

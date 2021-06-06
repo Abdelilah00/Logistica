@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {BreadCrumb} from '../../../../core/models/all.models';
 import {State} from '@progress/kendo-data-query';
 import {FormBuilder} from '@angular/forms';
-import {StructureUnitsService} from '../../../../core/services/structure-units.service';
+import {StructureUnitsService} from '../../../../core/services/Organzation/structure-units.service';
 
 @Component({
   selector: 'app-unite-list',

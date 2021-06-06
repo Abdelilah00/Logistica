@@ -8,5 +8,5 @@ import lombok.Setter;
 @Setter
 public class StructureDto extends BaseDto {
     private String name;
-    private String order;
+    private String rang;
 }

@@ -4,8 +4,8 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {finalize} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {DatePipe, Location} from '@angular/common';
-import {OutputsService} from '../../../../core/services/outputs.service';
-import {ActorService} from '../../../../core/services/actor.service';
+import {OutputsService} from '../../../../core/services/Products/outputs.service';
+import {ActorService} from '../../../../core/services/Commands/actor.service';
 
 @Component({
   selector: 'app-input-create',
