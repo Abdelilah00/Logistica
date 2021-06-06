@@ -41,7 +41,7 @@ export const MENU: MenuItem[] = [
     icon: 'ri-product-hunt-line',
     subItems: [
       {
-        label: 'MENUITEMS.ORGANIZATION.LIST.STRUCTURES',
+        label: 'MENUITEMS.ORGANIZATION.LIST.STRUCTURE',
         icon: 'ri-product-hunt-line',
         link: '/organization/structures'
       },
