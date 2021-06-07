@@ -1,7 +1,9 @@
 package com.logistica.dtos.Products.Output;
 
 import com.alexy.models.BaseDto;
-import com.logistica.dtos.Products.TransactionDetail.TransactionDetailCreateDto;
+import com.logistica.dtos.Products.TransactionDetail.InputDetailCreateDto;
+import com.logistica.dtos.Products.TransactionDetail.OutputDetailCreateDto;
+import com.logistica.dtos.Products.TransactionDetail.OutputDetailDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,5 +24,5 @@ public class OutputCreateDto extends BaseDto {
     private Date date;
 
     @NotEmpty
-    private List<TransactionDetailCreateDto> transactionDetails = new ArrayList<>();
+    private List<OutputDetailCreateDto> outputDetails = new ArrayList<>();
 }

@@ -1,13 +1,10 @@
 package com.logistica.services.Products.TransferDetails;
 
 import com.alexy.services.BaseCrudServiceImpl;
-import com.alexy.services.IBaseCrudService;
 import com.logistica.domains.Products.TransferDetails;
-import com.logistica.dtos.Products.TransactionDetail.TransactionDetailDto;
 import com.logistica.dtos.Products.TransferDetails.TransferDetailsCreateDto;
 import com.logistica.dtos.Products.TransferDetails.TransferDetailsDto;
 import com.logistica.dtos.Products.TransferDetails.TransferDetailsUpdateDto;
-import com.logistica.repositories.Products.ITransactionDetailRepository;
 import com.logistica.repositories.Products.ITransferDetailsRepository;
 import org.springframework.stereotype.Service;
 

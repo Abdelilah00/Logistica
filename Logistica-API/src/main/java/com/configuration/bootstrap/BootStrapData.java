@@ -234,28 +234,24 @@ public class BootStrapData implements CommandLineRunner {
         input.setDescription("input u wanna details its just for test");
         input.setActor(actor2);
 
-        var transactionDetails = new ArrayList<TransactionDetail>();
-        var trans11 = new TransactionDetail();
+        var transactionDetails = new ArrayList<InputDetails>();
+        var trans11 = new InputDetails();
         trans11.setExpDate(new Date());
         trans11.setProduct(prodA);
-        trans11.setPriceHT(20f);
         trans11.setArticle(5);
         trans11.setLot(2);
-        trans11.setTVA(0.25f);
         trans11.setQte(50);
         trans11.setInput(input);
         transactionDetails.add(trans11);
-        var trans12 = new TransactionDetail();
+        var trans12 = new InputDetails();
         trans12.setExpDate(new Date());
         trans12.setProduct(prodB);
-        trans12.setPriceHT(36f);
         trans12.setArticle(5);
         trans12.setLot(2);
-        trans12.setTVA(0.6f);
         trans12.setQte(100);
         trans12.setInput(input);
         transactionDetails.add(trans12);
-        input.setTransactionDetails(transactionDetails);
+        input.setInputDetails(transactionDetails);
         iInputRepository.save(input);
         //endregion
 
@@ -267,15 +263,15 @@ public class BootStrapData implements CommandLineRunner {
         output.setAskBy("part of Supplier A");
         output.setActor(actor3);
 
-        var transactionDetails2 = new ArrayList<TransactionDetail>();
-        var trans21 = new TransactionDetail();
+        var transactionDetails2 = new ArrayList<OutputDetails>();
+        var trans21 = new OutputDetails();
         trans21.setProduct(prodC);
         trans21.setPriceHT(20f);
         trans21.setTVA(0.25f);
         trans21.setQte(50);
         trans21.setOutput(output);
         transactionDetails2.add(trans21);
-        output.setTransactionDetails(transactionDetails2);
+        output.setOutputDetails(transactionDetails2);
         iOutputRepository.save(output);
         //endregion
     }

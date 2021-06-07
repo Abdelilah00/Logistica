@@ -8,12 +8,11 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class TransactionDetailUpdateDto extends BaseDto {
+public class InputDetailUpdateDto extends BaseDto {
     private String qte;
     private String article;
     private String lot;
     private Float priceHT;
-    private Float tVA;
     private Date expDate;
 
     private String Product;

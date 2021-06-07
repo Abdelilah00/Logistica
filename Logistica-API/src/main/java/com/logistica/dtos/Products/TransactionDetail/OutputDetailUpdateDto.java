@@ -8,16 +8,14 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class TransactionDetailCreateDto extends BaseDto {
-    private Integer article;
-    private Integer lot;
+public class OutputDetailUpdateDto extends BaseDto {
+    private String qte;
+    private String article;
+    private String lot;
     private Float priceHT;
     private Float tVA;
     private Date expDate;
-    private Integer qte;
 
-    private String productName;
-    private Long productId;
-
-    private Long stockId;
+    private String Product;
+    private String Input;
 }

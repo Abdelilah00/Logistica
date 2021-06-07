@@ -3,8 +3,7 @@ package com.logistica.services.Products.Output;
 import com.alexy.services.BaseCrudServiceImpl;
 import com.configuration.Exception.UserFriendlyException;
 import com.logistica.domains.Products.Output;
-import com.logistica.domains.Products.StockProduct;
-import com.logistica.domains.Products.TransactionDetail;
+import com.logistica.domains.Products.OutputDetails;
 import com.logistica.dtos.Products.Output.OutputCreateDto;
 import com.logistica.dtos.Products.Output.OutputDto;
 import com.logistica.dtos.Products.Output.OutputUpdateDto;
@@ -17,8 +16,6 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @Service
@@ -45,15 +42,15 @@ public class OutputService extends BaseCrudServiceImpl<Output, OutputDto, Output
         session.setFlushMode(FlushMode.COMMIT);
 
 
-        for (int i = 0; i < outputCreateDto.getTransactionDetails().size(); i++) {
-            var transactionDto = outputCreateDto.getTransactionDetails().get(i);
-            var transaction = new TransactionDetail();
+        for (int i = 0; i < outputCreateDto.getOutputDetails().size(); i++) {
+            var transactionDto = outputCreateDto.getOutputDetails().get(i);
+            var outputDetails = new OutputDetails();
             ///map attributes from dto to entity
-            transaction.getProduct().setId(transactionDto.getProductId());
-            transaction.setLot(transactionDto.getLot());
-            transaction.setArticle(transactionDto.getArticle());
-            transaction.setPriceHT(transactionDto.getPriceHT());
-            transaction.setQte(transactionDto.getQte());
+            outputDetails.getProduct().setId(transactionDto.getProductId());
+            outputDetails.setLot(transactionDto.getLot());
+            outputDetails.setArticle(transactionDto.getArticle());
+            outputDetails.setPriceHT(transactionDto.getPriceHT());
+            outputDetails.setQte(transactionDto.getQte());
 
             //insert qte to stockproduct principale - increment if prod exist in stock else create new one
             var stockProd = iStockProductRepository.findByProductIdAndStockId(transactionDto.getProductId(), transactionDto.getStockId());
@@ -66,8 +63,8 @@ public class OutputService extends BaseCrudServiceImpl<Output, OutputDto, Output
                 session.clear();
                 throw new UserFriendlyException("the qte not available in this stock try to split your needs on many stocks");
             }
-            transaction.setOutput(output);
-            output.getTransactionDetails().add(transaction);
+            outputDetails.setOutput(output);
+            output.getOutputDetails().add(outputDetails);
         }
 
         return CompletableFuture.completedFuture(objectMapper.convertToDto(repository.save(output), OutputDto.class));

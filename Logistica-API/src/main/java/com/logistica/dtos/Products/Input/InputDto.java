@@ -1,7 +1,7 @@
 package com.logistica.dtos.Products.Input;
 
 import com.alexy.models.BaseDto;
-import com.logistica.dtos.Products.TransactionDetail.TransactionDetailDto;
+import com.logistica.dtos.Products.TransactionDetail.InputDetailDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,5 +16,5 @@ public class InputDto extends BaseDto {
     private Date date;
     private String description;
 
-    private List<TransactionDetailDto> transactionDetailDtos;
+    private List<InputDetailDto> inputDetailDtos;
 }

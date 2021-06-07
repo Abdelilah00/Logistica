@@ -2,11 +2,9 @@ package com.logistica.controllers.Products;
 
 import com.alexy.controllers.BaseCrudController;
 import com.logistica.domains.Products.TransferDetails;
-import com.logistica.dtos.Products.TransactionDetail.TransactionDetailDto;
 import com.logistica.dtos.Products.TransferDetails.TransferDetailsCreateDto;
 import com.logistica.dtos.Products.TransferDetails.TransferDetailsDto;
 import com.logistica.dtos.Products.TransferDetails.TransferDetailsUpdateDto;
-import com.logistica.services.Products.TransactionDetail.ITransactionDetailService;
 import com.logistica.services.Products.TransferDetails.ITransferDetailsService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

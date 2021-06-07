@@ -16,7 +16,18 @@ export class Input extends BaseModel {
   supplierName: string;
   date: string;
   description: string;
-  transactionDetails: TransactionDetail[];
+  transactionDetails: InputDetail[];
+}
+
+export class InputDetail extends BaseModel {
+  article: number;
+  inputId?: number;
+  lot: number;
+  qte: number;
+  expDate: Date;
+  productName: string;
+  productId: number;
+  stockId: number;
 }
 
 export class Transfer extends BaseModel {
@@ -29,7 +40,7 @@ export class Transfer extends BaseModel {
   fromStockName: string;
   toStockId: number;
   toStockName: string;
-  transactionDetails: TransactionDetail[];
+  transactionDetails: InputDetail[];
 }
 
 export class TransferDetails extends BaseModel {
@@ -44,13 +55,11 @@ export class Output extends BaseModel {
   supplierName: string;
   date: string;
   description: string;
-  transactionDetails: TransactionDetail[];
+  transactionDetails: OutputDetail[];
 }
 
-
-export class TransactionDetail extends BaseModel {
+export class OutputDetail extends BaseModel {
   article: number;
-  inputId?: number;
   outputId?: number;
   lot: number;
   qte: number;

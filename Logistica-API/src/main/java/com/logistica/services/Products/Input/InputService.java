@@ -2,8 +2,8 @@ package com.logistica.services.Products.Input;
 
 import com.alexy.services.BaseCrudServiceImpl;
 import com.logistica.domains.Products.Input;
+import com.logistica.domains.Products.InputDetails;
 import com.logistica.domains.Products.StockProduct;
-import com.logistica.domains.Products.TransactionDetail;
 import com.logistica.dtos.Products.Input.InputCreateDto;
 import com.logistica.dtos.Products.Input.InputDto;
 import com.logistica.dtos.Products.Input.InputUpdateDto;
@@ -40,20 +40,19 @@ public class InputService extends BaseCrudServiceImpl<Input, InputDto, InputCrea
         for (int i = 0; i < inputCreateDto.getTransactionDetails().size(); i++) {
             var transactionDto = inputCreateDto.getTransactionDetails().get(i);
 
-            var transaction = new TransactionDetail();
+            var inputDetails = new InputDetails();
 
             //create new product
-            transaction.getProduct().setId(transactionDto.getProductId());
-            transaction.setLot(transactionDto.getLot());
-            transaction.setArticle(transactionDto.getArticle());
-            transaction.setExpDate(transactionDto.getExpDate());
-            transaction.setPriceHT(transactionDto.getPriceHT());
+            inputDetails.getProduct().setId(transactionDto.getProductId());
+            inputDetails.setLot(transactionDto.getLot());
+            inputDetails.setArticle(transactionDto.getArticle());
+            inputDetails.setExpDate(transactionDto.getExpDate());
 
             //set default values from settings(front end)
-            transaction.getProduct().setStockMin(100);
-            transaction.getProduct().setStockMax(1000);
-            transaction.getProduct().setStockSecurity(350);
-            transaction.setQte(transactionDto.getQte());
+            inputDetails.getProduct().setStockMin(100);
+            inputDetails.getProduct().setStockMax(1000);
+            inputDetails.getProduct().setStockSecurity(350);
+            inputDetails.setQte(transactionDto.getQte());
 
             //insert qte to stockproduct principale - increment if prod exist in stock else create new one
             var stockProd = iStockProductRepository.findByProductIdAndStockId(transactionDto.getProductId(), transactionDto.getStockId());
@@ -70,8 +69,8 @@ public class InputService extends BaseCrudServiceImpl<Input, InputDto, InputCrea
             }
 
             stockProducts.add(stockProd);
-            transaction.setInput(input);
-            input.getTransactionDetails().add(transaction);
+            inputDetails.setInput(input);
+            input.getInputDetails().add(inputDetails);
         }
 
         iStockProductRepository.saveAll(stockProducts);

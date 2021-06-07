@@ -30,6 +30,5 @@ public class Output extends BaseEntity {
     private Actor actor;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "output")
-    //todo: get a list of transaction details without need to relational table
-    private List<TransactionDetail> transactionDetails = new ArrayList<>();
+    private List<OutputDetails> outputDetails = new ArrayList<>();
 }

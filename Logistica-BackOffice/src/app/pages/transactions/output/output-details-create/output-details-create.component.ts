@@ -1,25 +1,29 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {GridComponent} from '@progress/kendo-angular-grid';
-import {Product, TransactionDetail} from '../../../../core/models/all.models';
+import {Product, Stock, InputDetail} from '../../../../core/models/all.models';
 import {ProductsService} from '../../../../core/services/Products/products.service';
+import {StocksService} from '../../../../core/services/Products/stocks.service';
 
 @Component({
-  selector: 'app-transaction-details-create',
-  templateUrl: './transaction-details-create.component.html',
-  styleUrls: ['./transaction-details-create.component.scss']
+  selector: 'app-output-details-create',
+  templateUrl: './output-details-create.component.html',
+  styleUrls: ['./output-details-create.component.scss']
 })
-export class TransactionDetailsCreateComponent implements OnInit {
-  products = Array<TransactionDetail>();
+export class OutputDetailsCreateComponent implements OnInit {
+  products = Array<InputDetail>();
   originalProducts = [];
   transactions: FormGroup;
   isEditMode = true;
   productList: Product[];
+  stockList: Stock[];
 
   @ViewChild('grid') grid: GridComponent;
   @Output() transactionDetailsSave = new EventEmitter<any>();
 
-  constructor(private formBuilder: FormBuilder, private productsService: ProductsService) {
+  constructor(private formBuilder: FormBuilder,
+              private productsService: ProductsService,
+              private stocksService: StocksService) {
   }
 
   // convenience getters for easy access to form fields
@@ -35,6 +39,7 @@ export class TransactionDetailsCreateComponent implements OnInit {
     // initialise products form with empty form array
     this.transactions = this.formBuilder.group({formArray: new FormArray([])});
     this.productsService.getAll().subscribe(data => this.productList = data);
+    this.stocksService.getAll().subscribe(data => this.stockList = data);
   }
 
   onEdit() {
@@ -49,17 +54,37 @@ export class TransactionDetailsCreateComponent implements OnInit {
     this.isEditMode = true;
   }
 
+  public getProduct(id: number): Product {
+    return this.productList.find(x => x.id === id);
+  }
+
+  public getStock(id: number): Stock {
+    return this.stockList.find(x => x.id === id);
+  }
+
+  public createFormGroup(dataItem: InputDetail = new InputDetail()): FormGroup {
+    return this.formBuilder.group({
+      productId: [dataItem.productId, Validators.required],
+      stockId: [dataItem.stockId, Validators.required],
+      lot: [dataItem.lot, Validators.required],
+      article: [dataItem.article, Validators.required],
+      qte: [dataItem.qte, Validators.required],
+      expDate: [dataItem.expDate, Validators.required],
+    });
+  }
+
   onAdd() {
     // add item to products array
-    this.products.push(new TransactionDetail());
+    this.products.push(new InputDetail());
 
     // add new form group to form array
-    const test = new TransactionDetail();
-    test.productId = 0;
+    // todo get default value from category
+    const test = new InputDetail();
     test.qte = 10;
     test.article = 10;
     test.lot = 10;
-
+    test.productId = 0;
+    test.expDate = new Date();
     const formGroup = this.createFormGroup(test);
     this.fa.push(formGroup);
 
@@ -96,10 +121,6 @@ export class TransactionDetailsCreateComponent implements OnInit {
     this.transactionDetailsSave.emit(this.transactions);
   }
 
-
-  public getProduct(id: number): Product {
-    return this.productList.find((x) => x.id === id);
-  }
   // helper methods
   onCancel() {
     this.closeAllRows();
@@ -109,14 +130,7 @@ export class TransactionDetailsCreateComponent implements OnInit {
 
     this.isEditMode = false;
   }
-  public createFormGroup(dataItem: TransactionDetail = new TransactionDetail()): FormGroup {
-    return this.formBuilder.group({
-      productId: [dataItem.productId, Validators.required],
-      qte: [dataItem.qte, Validators.required],
-      lot: [dataItem.lot, Validators.required],
-      article: [dataItem.article, Validators.required]
-    });
-  }
+
 
   private editAllRows() {
     // set all rows to edit mode to display form fields

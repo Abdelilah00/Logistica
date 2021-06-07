@@ -1,17 +1,17 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {GridComponent} from '@progress/kendo-angular-grid';
-import {Product, Stock, TransactionDetail} from '../../../../core/models/all.models';
+import {InputDetail, Product, Stock} from '../../../../core/models/all.models';
 import {ProductsService} from '../../../../core/services/Products/products.service';
 import {StocksService} from '../../../../core/services/Products/stocks.service';
 
 @Component({
-  selector: 'app-transaction-details-create',
-  templateUrl: './transaction-details-create.component.html',
-  styleUrls: ['./transaction-details-create.component.scss']
+  selector: 'app-input-details-create',
+  templateUrl: './input-details-create.component.html',
+  styleUrls: ['./input-details-create.component.scss']
 })
-export class TransactionDetailsCreateComponent implements OnInit {
-  products = Array<TransactionDetail>();
+export class InputDetailsCreateComponent implements OnInit {
+  products = Array<InputDetail>();
   originalProducts = [];
   transactions: FormGroup;
   isEditMode = true;
@@ -35,6 +35,10 @@ export class TransactionDetailsCreateComponent implements OnInit {
     return this.f.formArray as FormArray;
   }
 
+  public getStock(id: number): Stock {
+    return this.stockList.find(x => x.id === id);
+  }
+
   ngOnInit() {
     // initialise products form with empty form array
     this.transactions = this.formBuilder.group({formArray: new FormArray([])});
@@ -54,40 +58,16 @@ export class TransactionDetailsCreateComponent implements OnInit {
     this.isEditMode = true;
   }
 
-  public getProduct(id: number): Product {
-    return this.productList.find(x => x.id === id);
-  }
-
-  public getStock(id: number): Stock {
-    return this.stockList.find(x => x.id === id);
-  }
-
-  public createFormGroup(dataItem: TransactionDetail = new TransactionDetail()): FormGroup {
-    return this.formBuilder.group({
-      productId: [dataItem.productId, Validators.required],
-      stockId: [dataItem.stockId, Validators.required],
-      lot: [dataItem.lot, Validators.required],
-      article: [dataItem.article, Validators.required],
-      qte: [dataItem.qte, Validators.required],
-      tVA: [dataItem.tVa, Validators.required],
-      expDate: [dataItem.expDate, Validators.required],
-      priceHT: [dataItem.priceHT, Validators.required],
-    });
-  }
-
   onAdd() {
     // add item to products array
-    this.products.push(new TransactionDetail());
+    this.products.push(new InputDetail());
 
     // add new form group to form array
-    // todo get default value from category
-    const test = new TransactionDetail();
+    const test = new InputDetail();
     test.qte = 10;
     test.article = 10;
     test.lot = 10;
     test.productId = 0;
-    test.priceHT = 50;
-    test.tVa = 0.20;
     test.expDate = new Date();
     const formGroup = this.createFormGroup(test);
     this.fa.push(formGroup);
@@ -125,6 +105,11 @@ export class TransactionDetailsCreateComponent implements OnInit {
     this.transactionDetailsSave.emit(this.transactions);
   }
 
+
+  public getProduct(id: number): Product {
+    return this.productList.find((x) => x.id === id);
+  }
+
   // helper methods
   onCancel() {
     this.closeAllRows();
@@ -135,6 +120,16 @@ export class TransactionDetailsCreateComponent implements OnInit {
     this.isEditMode = false;
   }
 
+  public createFormGroup(dataItem: InputDetail = new InputDetail()): FormGroup {
+    return this.formBuilder.group({
+      productId: [dataItem.productId, Validators.required],
+      stockId: [dataItem.stockId, Validators.required],
+      lot: [dataItem.lot, Validators.required],
+      article: [dataItem.article, Validators.required],
+      qte: [dataItem.qte, Validators.required],
+      expDate: [dataItem.expDate, Validators.required],
+    });
+  }
 
   private editAllRows() {
     // set all rows to edit mode to display form fields

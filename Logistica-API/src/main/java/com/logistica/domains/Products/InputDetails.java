@@ -17,13 +17,11 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "transactiondetail")
-public class TransactionDetail extends BaseEntity {
+@Table(name = "inputdetails")
+public class InputDetails extends BaseEntity {
     private Integer article;
     private Integer lot;
     private Integer qte;
-    private Float priceHT;
-    private Float tVA;
     private Date expDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -31,6 +29,4 @@ public class TransactionDetail extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Input input;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Output output;
 }

@@ -27,5 +27,6 @@ public class Input extends BaseEntity {
     private Actor actor;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "input")
     //todo: get a list of transaction details without need to relational table
-    private List<TransactionDetail> transactionDetails = new ArrayList<>();
+    private List<InputDetails> inputDetails = new ArrayList<>();
 }
+

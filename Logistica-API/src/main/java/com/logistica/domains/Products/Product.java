@@ -24,6 +24,8 @@ public class Product extends BaseEntity {
     private Integer stockMax;
     private Integer stockSecurity;
 
+    private Float priceHT;
+    private Float tVA;
 
     //Many to One
     @ManyToOne(fetch = FetchType.LAZY)
@@ -38,8 +40,12 @@ public class Product extends BaseEntity {
     private List<ProductUnits> productUnits = new ArrayList<>();
 
     //One To Many
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
-    private List<TransactionDetail> transactionDetails = new ArrayList<>();
+/*
+    @OneToMany(mappedBy = "product")
+    private List<InputDetails> inputDetails = new ArrayList<>();
+    @OneToMany(mappedBy = "product")
+    private List<OutputDetails> outputDetails = new ArrayList<>();
+*/
 
     //Many to many
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")

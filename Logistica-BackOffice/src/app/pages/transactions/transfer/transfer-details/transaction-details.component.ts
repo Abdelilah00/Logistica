@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {TransactionDetail} from '../../../../core/models/all.models';
-import {TransactionDetailsService} from '../../../../core/services/Products/transaction-details.service';
+import {InputDetail, TransferDetails} from '../../../../core/models/all.models';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {TransferDetailsService} from '../../../../core/services/Products/transfer-details.service';
 
 
 @Component({
@@ -13,17 +13,16 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 })
 
 export class TransactionDetailsComponent implements OnInit {
-  view: TransactionDetail[];
+  view: TransferDetails[];
   @Input() inputId: number | null;
-  public editDataItem: TransactionDetail;
+  public editDataItem: InputDetail;
   public isNew: boolean;
 
   submitted: boolean;
 
-  //customersData: TransactionDetail[];
   validationForm: FormGroup;
 
-  constructor(private transactionDetailsService: TransactionDetailsService,
+  constructor(private transferDetailsService: TransferDetailsService,
               private matSnackBar: MatSnackBar,
               public formBuilder: FormBuilder,
               private modalService: NgbModal) {
@@ -40,19 +39,13 @@ export class TransactionDetailsComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.inputId);
     if (this.inputId !== null) {
-      this.transactionDetailsService.getByInputId(this.inputId).subscribe(data => this.view = data);
+      this.transferDetailsService.getByTransferId(this.inputId).subscribe(data => this.view = data);
     }
-    /*    this.validationForm = this.formBuilder.group({
-          qte: '',
-          phone: '',
-          balance: '',
-          email: '',
-          date: ''
-        });*/
+
   }
 
   public addHandler(): void {
-    const tmp = new TransactionDetail();
+    const tmp = new InputDetail();
     tmp.inputId = this.inputId;
     this.editDataItem = tmp;
     this.isNew = true;
