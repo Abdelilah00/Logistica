@@ -30,8 +30,7 @@
                       <div class="form-group">
                         <label for="actorId">actor Name</label>
                         <select class="form-control select2" formControlName="actorId" id="actorId">
-                          <option *ngFor='let actor of suppliersList'
-                                  [value]="actor.id">{{actor.name}}</option>
+                          <option *ngFor='let actor of suppliersList' [value]="actor.id">{{actor.name}}</option>
                         </select>
                         <div *ngIf="saving && form.actorId.errors" class="invalid-feedback">
                           <span *ngIf="form.actorId.errors.required">Please provide a valid name.</span>

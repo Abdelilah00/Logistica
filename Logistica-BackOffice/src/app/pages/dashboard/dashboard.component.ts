@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {latLng, tileLayer} from 'leaflet';
 
 import {ChartType, Chat, Stat, Transaction} from './dashboard.model';
 
 import {chatData, revenueChart, salesAnalytics, sparklineEarning, sparklineMonthly, statData, transactions} from './data';
+import {DashboardService} from '../../core/services/dashboard.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,7 +17,10 @@ import {chatData, revenueChart, salesAnalytics, sparklineEarning, sparklineMonth
  * Dashboard Component
  */
 export class DashboardComponent implements OnInit {
-
+  inputCount: number;
+  outputCount: number;
+  transferCount: number;
+  /////////////////////
   term: any;
   chatData: Chat[];
   transactions: Transaction[];
@@ -38,47 +42,18 @@ export class DashboardComponent implements OnInit {
     center: latLng(46.879966, -121.726909)
   };
 
-  constructor(public formBuilder: FormBuilder) {
-  }
-
-  /**
-   * Returns form
-   */
-  get form() {
-    return this.formData.controls;
+  constructor(public formBuilder: FormBuilder, private dashboardService: DashboardService) {
   }
 
   ngOnInit(): void {
-    this.breadCrumbItems = [{label: 'Nazox'}, {label: 'Dashboard', active: true}];
-    this.formData = this.formBuilder.group({
-      message: ['', [Validators.required]],
-    });
+    this.breadCrumbItems = [{label: 'Logistica'}, {label: 'Dashboard', active: true}];
+    this.dashboardService.getTotaleInput().subscribe(data => this.inputCount = data);
+    this.dashboardService.getTotaleOutput().subscribe(data => this.outputCount = data);
+    this.dashboardService.getTotaleTransfer().subscribe(data => this.transferCount = data);
     this._fetchData();
+    this.dashboardService.getMonthlyChiffreAffaire().subscribe(data => this.revenueChart.series[0].data = data);
   }
 
-  /**
-   * Save the message in chat
-   */
-  messageSave() {
-    const message = this.formData.get('message').value;
-    const currentDate = new Date();
-    if (this.formData.valid && message) {
-      // Message Push in Chat
-      this.chatData.push({
-        align: 'right',
-        name: 'Ricky Clark',
-        message,
-        time: currentDate.getHours() + ':' + currentDate.getMinutes()
-      });
-
-      // Set Form Data Reset
-      this.formData = this.formBuilder.group({
-        message: null
-      });
-    }
-
-    this.chatSubmit = true;
-  }
 
   private _fetchData() {
     this.revenueChart = revenueChart;

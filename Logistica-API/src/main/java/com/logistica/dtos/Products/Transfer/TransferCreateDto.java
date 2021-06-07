@@ -1,13 +1,10 @@
 package com.logistica.dtos.Products.Transfer;
 
 import com.alexy.models.BaseDto;
-import com.logistica.domains.Organ.StructureUnit;
-import com.logistica.domains.Products.Stock;
 import com.logistica.dtos.Products.TransferDetails.TransferDetailsDto;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.OneToOne;
 import java.util.Date;
 import java.util.List;
 

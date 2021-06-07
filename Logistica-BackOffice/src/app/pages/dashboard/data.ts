@@ -2,13 +2,13 @@ import {ChartType} from './dashboard.model';
 
 const revenueChart: ChartType = {
   series: [{
-    name: '2020',
+    name: 'periodic',
     type: 'column',
-    data: [23, 42, 35, 27, 43, 22, 17, 31, 22, 22, 12, 16]
+    data: []
   }, {
-    name: '2019',
+    name: 'cumule',
     type: 'line',
-    data: [23, 32, 27, 38, 27, 32, 27, 38, 22, 31, 21, 16]
+    data: []
   }],
   chart: {
     height: 280,
@@ -28,7 +28,7 @@ const revenueChart: ChartType = {
     },
   },
   dataLabels: {
-    enabled: false,
+    enabled: true,
   },
   legend: {
     show: false,

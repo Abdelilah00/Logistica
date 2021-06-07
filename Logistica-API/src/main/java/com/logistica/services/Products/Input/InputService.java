@@ -12,6 +12,8 @@ import com.logistica.repositories.Products.IStockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @Service
@@ -25,7 +27,7 @@ public class InputService extends BaseCrudServiceImpl<Input, InputDto, InputCrea
     private IStockProductRepository iStockProductRepository;
     @Autowired
     private IStockRepository iStockRepository;
-
+    private final List<StockProduct> stockProducts = new ArrayList<>();
 
     //todo: create product if not exist
     @Override
@@ -54,24 +56,25 @@ public class InputService extends BaseCrudServiceImpl<Input, InputDto, InputCrea
             transaction.setQte(transactionDto.getQte());
 
             //insert qte to stockproduct principale - increment if prod exist in stock else create new one
-            var defaultStockProd = iStockProductRepository.findByProductIdAndStockDefIsTrue(transactionDto.getProductId());
-            if (defaultStockProd == null) {
+            var stockProd = iStockProductRepository.findByProductIdAndStockId(transactionDto.getProductId(), transactionDto.getStockId());
+            if (stockProd == null) {
                 //insert new
                 //todo sum of group by prod-stock
-                defaultStockProd = new StockProduct();
-                defaultStockProd.getProduct().setId(transactionDto.getProductId());
-                defaultStockProd.getStock().setId(transactionDto.getStockId());
-                defaultStockProd.setQte(transactionDto.getQte());
+                stockProd = new StockProduct();
+                stockProd.getProduct().setId(transactionDto.getProductId());
+                stockProd.getStock().setId(transactionDto.getStockId());
+                stockProd.setQte(transactionDto.getQte());
             } else {
                 //update old
-                defaultStockProd.setQte(defaultStockProd.getQte() + transactionDto.getQte());
+                stockProd.setQte(stockProd.getQte() + transactionDto.getQte());
             }
 
-            iStockProductRepository.save(defaultStockProd);
+            stockProducts.add(stockProd);
             transaction.setInput(input);
+            input.getTransactionDetails().add(transaction);
         }
 
+        iStockProductRepository.saveAll(stockProducts);
         return CompletableFuture.completedFuture(objectMapper.convertToDto(repository.save(input), InputDto.class));
     }
-
 }

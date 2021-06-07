@@ -27,3 +27,4 @@ public interface IActorRepository extends IBaseJpaRepository<Actor> {
             "where at.name='Responsible'")
     List<Actor> getResponsible();
 }
+

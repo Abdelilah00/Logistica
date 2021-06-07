@@ -5,7 +5,7 @@ import {FormBuilder} from '@angular/forms';
 import {StocksService} from '../../../../core/services/Products/stocks.service';
 
 @Component({
-  selector: 'app-stock-list',
+  selector: 'app-Category-list',
   templateUrl: './stock-list.component.html',
   styleUrls: ['./stock-list.component.scss']
 })

@@ -10,11 +10,11 @@
               <i class="mdi mdi-plus mr-2"></i> Add Product
             </a>
 
-            <kendo-grid (dataStateChange)="onStateChange($event)" [data]="gridData"
-                        [height]="500" [pageSize]="gridState.take" [pageable]="true"
-                        [skip]="gridState.skip"
-                        [sort]="gridState.sort"
-                        [sortable]="true">
+            <kendo-grid (dataStateChange)="dataStateChange($event)"
+                        [data]="gridData"
+                        [height]="500" [pageable]="true" [sortable]="true"
+                        [pageSize]="gridState.take" [skip]="gridState.skip" [sort]="gridState.sort"
+                        [rowClass]="rowCallback">
 
               <kendo-grid-column field="name" title="Product Name">
               </kendo-grid-column>

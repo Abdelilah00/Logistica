@@ -8,7 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface IStockProductRepository extends IBaseJpaRepository<StockProduct> {
     Boolean existsByProductIdAndStockDefIsTrue(Long productId);
 
-    StockProduct findByProductIdAndStockDefIsTrue(Long productId);
-
     StockProduct findByProductIdAndStockId(Long productId, Long stockId);
 }

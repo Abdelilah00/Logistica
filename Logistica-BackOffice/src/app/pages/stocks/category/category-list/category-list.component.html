@@ -1,0 +1,48 @@
+<div class="container-fluid">
+  <app-pagetitle [breadcrumbItems]="breadCrumb.items" [title]='breadCrumb.title'></app-pagetitle>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class='card-body'>
+          <div>
+            <!--  -->
+            <a [routerLink]="['../create']" class="btn btn-success mb-2">
+              <i class="mdi mdi-plus mr-2"></i> Add Input
+            </a>
+
+            <kendo-grid (dataStateChange)="onStateChange($event)" [data]="gridData"
+                        [height]="500" [pageSize]="gridState.take" [pageable]="true"
+                        [skip]="gridState.skip"
+                        [sort]="gridState.sort" [sortable]="true">
+
+              <kendo-grid-column field="name" title="name">
+              </kendo-grid-column>
+              <kendo-grid-column field="adresse" title="Stock Min">
+              </kendo-grid-column>
+              <kendo-grid-column field="area" title="Area">
+              </kendo-grid-column>
+              <kendo-grid-column field="responsibleName" title="Respo name">
+              </kendo-grid-column>
+              <kendo-grid-column field="stockType.name" title="Stock type">
+              </kendo-grid-column>
+              <kendo-grid-column field="qteOfProducts" title="qteOfProducts">
+              </kendo-grid-column>
+
+              <kendo-grid-command-column title="Options">
+                <ng-template kendoGridCellTemplate>
+                  <button [primary]="true" kendoGridEditCommand>Edit</button>
+                  <button kendoGridRemoveCommand>Delete</button>
+                </ng-template>
+              </kendo-grid-command-column>
+
+              <div *kendoGridDetailTemplate="let dataItem">
+                <app-stock-details [inputId]='dataItem.id'></app-stock-details>
+              </div>
+
+            </kendo-grid>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

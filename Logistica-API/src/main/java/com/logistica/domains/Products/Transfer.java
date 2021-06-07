@@ -2,7 +2,7 @@ package com.logistica.domains.Products;
 
 import com.alexy.models.BaseEntity;
 import com.logistica.domains.Commands.Actor;
-import com.logistica.domains.Organ.StructureUnit;
+import com.logistica.domains.Organization.StructureUnit;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

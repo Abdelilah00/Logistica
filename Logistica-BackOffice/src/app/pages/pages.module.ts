@@ -11,6 +11,7 @@ import {NgApexchartsModule} from 'ng-apexcharts';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {NgbDropdownModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -32,19 +33,20 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [DashboardComponent],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    Ng2SearchPipeModule,
-    UiModule,
-    WidgetModule,
-    NgApexchartsModule,
-    PerfectScrollbarModule,
-    LeafletModule,
-    MatSnackBarModule,
-    FormsModule,
-    ReactiveFormsModule
-  ],
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        Ng2SearchPipeModule,
+        UiModule,
+        WidgetModule,
+        NgApexchartsModule,
+        PerfectScrollbarModule,
+        LeafletModule,
+        MatSnackBarModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NgbDropdownModule
+    ],
   providers: [
     {
       provide: PERFECT_SCROLLBAR_CONFIG,

@@ -71,7 +71,7 @@ export class TransferCreateComponent implements OnInit {
       fromStructureUnitId: [1, Validators.required],
       toStructureUnitId: [1, Validators.required],
       toStockId: [1, Validators.required],
-      fromStockId: [1, Validators.required],
+      fromStockId: [2, Validators.required],
       transferDetails: this.formBuilder.array([])
     });
   }
