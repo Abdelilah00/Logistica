@@ -9,11 +9,13 @@ import lombok.Setter;
 @Setter
 public class ProductDto extends BaseDto {
     private String name;
-    private CategoryDto category;
+    private String categoryName;
 
     private Integer stockMin;
     private Integer stockMax;
     private Integer stockSecurity;
+    private Float priceHT;
+    private Float tVA;
 
     private Integer qteByStock;
     private Integer qteInStocks;

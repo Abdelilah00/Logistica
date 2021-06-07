@@ -57,10 +57,10 @@ public class DashboardService implements IDashboardService {
 
     @Override
     public CompletableFuture<List<RevenueDto>> getMonthlyChiffreAffaire() {
-        //todo fix this session problem maybe
+        //todo sum of p.price*ps.qte
         Session session = entityManager.unwrap(Session.class);
         List<RevenueDto> list = session.createQuery(
-                "select month(i.createdAt) as time, sum(td.qte * td.priceHT) as revenue from Input i join i.transactionDetails td group by time"
+                "select month(i.createdAt) as time, sum(td.qte * td.priceHT) as revenue from Input i join i.inputDetails td group by time"
         ).list();
         return CompletableFuture.completedFuture(list);
     }

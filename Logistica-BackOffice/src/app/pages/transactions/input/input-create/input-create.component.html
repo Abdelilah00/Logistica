@@ -35,7 +35,6 @@
                         <div *ngIf="saving && form.actorId.errors" class="invalid-feedback">
                           <span *ngIf="form.actorId.errors.required">Please provide a valid name.</span>
                         </div>
-
                       </div>
                     </div>
 
@@ -85,9 +84,9 @@
               <div class="tab-pane" id="product-img">
                 <h4 class="card-title">Transaction Details</h4>
                 <p class="card-title-desc">enter your products</p>
-                <app-transaction-details-create
+                <app-input-details-create
                   (transactionDetailsSave)='setNewTransactions($event)'>
-                </app-transaction-details-create>
+                </app-input-details-create>
               </div>
 
               <div class='text-center k-mt-14'>

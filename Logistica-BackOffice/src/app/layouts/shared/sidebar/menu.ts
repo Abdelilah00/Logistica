@@ -64,6 +64,10 @@ export const MENU: MenuItem[] = [
         label: 'MENUITEMS.STOCKS.LIST.STOCK',
         icon: 'ri-product-hunt-line',
         link: '/stocks/stock'
+      }, {
+        label: 'MENUITEMS.STOCKS.LIST.CATEGORY',
+        icon: 'ri-product-hunt-line',
+        link: '/stocks/category'
       }]
   },
   {

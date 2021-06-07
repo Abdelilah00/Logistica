@@ -31,9 +31,9 @@ export class CategoryCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.breadCrumb = {
-      title: 'Create Stock',
+      title: 'Create Category',
       items: [
-        {label: 'Stocks', path: '../'},
+        {label: 'Categories', path: '../'},
         {label: 'Create', active: true}
       ]
     };
@@ -41,10 +41,9 @@ export class CategoryCreateComponent implements OnInit {
 
   createFormGroup(): FormGroup {
     return this.formBuilder.group({
-      name: ['test', Validators.required],
-      adresse: ['test', Validators.required],
-      area: [2500, Validators.required],
-      stockRespo: [1, Validators.required],
+      name: ['category Test', Validators.required],
+      parentId: [null, Validators.required],
+
     });
   }
 
@@ -57,16 +56,12 @@ export class CategoryCreateComponent implements OnInit {
         })
       ).subscribe(() => {
       // Show the success message
-      this.matSnackBar.open('Stock saved', 'OK', {
+      this.matSnackBar.open('Category saved', 'Ok', {
         verticalPosition: 'top',
-        duration: 2000,
+        duration: 3000,
+        panelClass: ['green-snackbar']
       });
       this.goBack();
-    }, (error) => {
-      this.matSnackBar.open('Stock Not saved', 'Try', {
-        verticalPosition: 'top',
-        duration: 2000
-      });
     });
   }
 

@@ -77,7 +77,8 @@
       "TEXT": "Stocks",
       "LIST": {
         "STOCK": "Stock",
-        "PRODUCT": "Product"
+        "PRODUCT": "Product",
+        "CATEGORY": "Category"
       }
     },
     "TRANSACTION": {

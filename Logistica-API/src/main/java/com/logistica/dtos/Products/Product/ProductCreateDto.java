@@ -13,5 +13,8 @@ public class ProductCreateDto extends BaseDto {
     private Integer stockMin;
     private Integer stockMax;
     private Integer stockSecurity;
+
+    private Float priceHT;
+    private Float tVA;
     //private String Parent;
 }

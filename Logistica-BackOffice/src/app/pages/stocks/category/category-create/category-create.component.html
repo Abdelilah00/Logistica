@@ -20,42 +20,17 @@
               </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="adresse">adresse</label>
-                  <input [ngClass]="{'is-invalid': saving && form.adresse.errors}" class="form-control"
-                         formControlName="adresse" id="adresse"
-                         placeholder="stockRespo" type="text">
-                  <div *ngIf="saving && form.adresse.errors" class="invalid-feedback">
-                    <span *ngIf="form.adresse.errors.required">Please provide a valid adresse.</span>
+                  <label for="parentId">parentId</label>
+                  <input [ngClass]="{'is-invalid': saving && form.parentId.errors}" class="form-control"
+                         formControlName="parentId" id="parentId"
+                         placeholder="parent" type="text">
+                  <div *ngIf="saving && form.parentId.errors" class="invalid-feedback">
+                    <span *ngIf="form.parentId.errors.required">Please provide a valid parentId.</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="area">area</label>
-                  <input [ngClass]="{'is-invalid': saving && form.area.errors}" class="form-control"
-                         formControlName="area" id="area"
-                         placeholder="area" type="number">
-                  <div *ngIf="saving && form.area.errors" class="invalid-feedback">
-                    <span *ngIf="form.area.errors.required">Please provide a valid area.</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="stockRespo">stockRespo</label>
-                  <input [ngClass]="{'is-invalid': saving && form.stockSecurity.errors}" class="form-control"
-                         formControlName="stockRespo" id="stockRespo"
-                         placeholder="stockRespo" type="number">
-                  <div *ngIf="saving && form.stockRespo.errors" class="invalid-feedback">
-                    <span *ngIf="form.stockRespo.errors.required">Please provide a valid stockRespo.</span>
-                  </div>
-                </div>
-              </div>
-            </div>
 
             <button class="btn btn-primary" type="submit">Submit</button>
             <button class="btn btn-danger" type="reset">Cancel</button>

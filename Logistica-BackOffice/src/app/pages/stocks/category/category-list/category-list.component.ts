@@ -3,6 +3,7 @@ import {BreadCrumb} from '../../../../core/models/all.models';
 import {State} from '@progress/kendo-data-query';
 import {FormBuilder} from '@angular/forms';
 import {StocksService} from '../../../../core/services/Products/stocks.service';
+import {CategoryService} from '../../../../core/services/Products/category.service';
 
 @Component({
   selector: 'app-category-list',
@@ -21,14 +22,14 @@ export class CategoryListComponent implements OnInit {
 
   constructor(
     public formBuilder: FormBuilder,
-    private service: StocksService) {
+    private service: CategoryService) {
   }
 
   ngOnInit(): void {
     this.breadCrumb = {
-      title: 'Stocks',
+      title: 'Categories',
       items: [
-        {label: 'Stocks', active: true}
+        {label: 'Categories', active: true}
       ]
     };
     // todo: use simple tables

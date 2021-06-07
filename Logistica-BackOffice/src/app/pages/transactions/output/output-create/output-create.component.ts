@@ -8,7 +8,7 @@ import {OutputsService} from '../../../../core/services/Products/outputs.service
 import {ActorService} from '../../../../core/services/Commands/actor.service';
 
 @Component({
-  selector: 'app-input-create',
+  selector: 'app-output-create',
   templateUrl: './output-create.component.html',
   styleUrls: ['./output-create.component.scss']
 })

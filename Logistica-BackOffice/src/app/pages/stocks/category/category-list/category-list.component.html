@@ -7,7 +7,7 @@
           <div>
             <!--  -->
             <a [routerLink]="['../create']" class="btn btn-success mb-2">
-              <i class="mdi mdi-plus mr-2"></i> Add Input
+              <i class="mdi mdi-plus mr-2"></i> Add Category
             </a>
 
             <kendo-grid (dataStateChange)="onStateChange($event)" [data]="gridData"
@@ -17,16 +17,7 @@
 
               <kendo-grid-column field="name" title="name">
               </kendo-grid-column>
-              <kendo-grid-column field="adresse" title="Stock Min">
-              </kendo-grid-column>
-              <kendo-grid-column field="area" title="Area">
-              </kendo-grid-column>
-              <kendo-grid-column field="responsibleName" title="Respo name">
-              </kendo-grid-column>
-              <kendo-grid-column field="stockType.name" title="Stock type">
-              </kendo-grid-column>
-              <kendo-grid-column field="qteOfProducts" title="qteOfProducts">
-              </kendo-grid-column>
+
 
               <kendo-grid-command-column title="Options">
                 <ng-template kendoGridCellTemplate>
@@ -36,7 +27,7 @@
               </kendo-grid-command-column>
 
               <div *kendoGridDetailTemplate="let dataItem">
-                <app-stock-details [inputId]='dataItem.id'></app-stock-details>
+                <app-category-details [inputId]='dataItem.id'></app-category-details>
               </div>
 
             </kendo-grid>

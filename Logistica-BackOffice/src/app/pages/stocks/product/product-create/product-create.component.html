@@ -20,27 +20,51 @@
               </div>
               <div class="col-md-6">
                 <div class="form-group">
+                  <label for="categoryId">Category</label>
+                  <select class="form-control select2" formControlName="categoryId" id="categoryId">
+                    <option *ngFor='let category of categoryList' [value]="category.id">{{category.name}}</option>
+                  </select>
+                  <div *ngIf="saving && form.categoryId.errors" class="invalid-feedback">
+                    <span *ngIf="form.categoryId.errors.required">Please provide a valid name.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="priceHT">priceHT</label>
+                  <input [ngClass]="{'is-invalid': saving && form.priceHT.errors}" class="form-control"
+                         formControlName="priceHT" id="priceHT"
+                         placeholder="priceHT" type="text">
+                  <div *ngIf="saving && form.priceHT.errors" class="invalid-feedback">
+                    <span *ngIf="form.priceHT.errors.required">Please provide a valid priceHT.</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="tVA">tVA</label>
+                  <input [ngClass]="{'is-invalid': saving && form.tVA.errors}" class="form-control"
+                         formControlName="tVA" id="tVA"
+                         placeholder="tVA" type="text">
+                  <div *ngIf="saving && form.tVA.errors" class="invalid-feedback">
+                    <span *ngIf="form.tVA.errors.required">Please provide a valid tVA.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
                   <label for="stockSecurity">stockSecurity</label>
                   <input [ngClass]="{'is-invalid': saving && form.stockSecurity.errors}" class="form-control"
                          formControlName="stockSecurity" id="stockSecurity"
                          placeholder="stockSecurity" type="text">
                   <div *ngIf="saving && form.stockSecurity.errors" class="invalid-feedback">
                     <span *ngIf="form.stockSecurity.errors.required">Please provide a valid stockSecurity.</span>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
-            <div class="row">
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label for="categoryId">categoryId</label>
-                  <input [ngClass]="{'is-invalid': saving && form.categoryId.errors}" class="form-control"
-                         formControlName="categoryId" id="categoryId"
-                         placeholder="categoryId" type="number">
-                  <div *ngIf="saving && form.categoryId.errors" class="invalid-feedback">
-                    <span *ngIf="form.categoryId.errors.required">Please provide a valid categoryId.</span>
                   </div>
                 </div>
               </div>

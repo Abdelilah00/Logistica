@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {BreadCrumb} from '../../../../core/models/all.models';
+import {BreadCrumb, Category} from '../../../../core/models/all.models';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Location} from '@angular/common';
 import {finalize} from 'rxjs/operators';
 import {ProductsService} from '../../../../core/services/Products/products.service';
+import {CategoryService} from '../../../../core/services/Products/category.service';
 
 @Component({
   selector: 'app-product-create',
@@ -16,11 +17,13 @@ export class ProductCreateComponent implements OnInit {
   formGroup = this.createFormGroup();
   saving = false;
   public breadCrumb: BreadCrumb;
+  categoryList: Category[];
 
   constructor(private formBuilder: FormBuilder,
               private service: ProductsService,
               private matSnackBar: MatSnackBar,
               private location: Location,
+              private categoryService: CategoryService
   ) {
   }
 
@@ -36,6 +39,7 @@ export class ProductCreateComponent implements OnInit {
         {label: 'Create', active: true}
       ]
     };
+    this.categoryService.getAll().subscribe(data => this.categoryList = data);
   }
 
   createFormGroup(): FormGroup {
@@ -44,6 +48,8 @@ export class ProductCreateComponent implements OnInit {
       stockMin: [100, Validators.required],
       stockMax: [1000, Validators.required],
       stockSecurity: [250, Validators.required],
+      priceHT: [100.5, Validators.required],
+      tVA: [20, Validators.required],
       categoryId: [1, Validators.required],
     });
   }
@@ -57,16 +63,12 @@ export class ProductCreateComponent implements OnInit {
         })
       ).subscribe(() => {
       // Show the success message
-      this.matSnackBar.open('Product saved', 'OK', {
+      this.matSnackBar.open('Product saved', 'Ok', {
         verticalPosition: 'top',
-        duration: 2000,
+        duration: 3000,
+        panelClass: ['green-snackbar']
       });
       this.goBack();
-    }, (error) => {
-      this.matSnackBar.open('Product Not saved', 'Try', {
-        verticalPosition: 'top',
-        duration: 2000
-      });
     });
   }
 
