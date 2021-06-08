@@ -29,7 +29,7 @@ export class OutputCreateComponent implements OnInit {
   }
 
   get formArrayTransactions(): FormArray {
-    return this.formGroup.controls.transactionDetails as FormArray;
+    return this.formGroup.controls.outputDetails as FormArray;
   }
 
   get form() {
@@ -57,7 +57,7 @@ export class OutputCreateComponent implements OnInit {
       payement: ['bank', Validators.required],
       payementRef: ['test', Validators.required],
       ref: ['OR', Validators.required],
-      transactionDetails: this.formBuilder.array([]),
+      outputDetails: this.formBuilder.array([]),
     });
   }
 

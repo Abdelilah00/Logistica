@@ -37,22 +37,22 @@ public class InputService extends BaseCrudServiceImpl<Input, InputDto, InputCrea
 
         //var objectMapperTransactionDetail = new ModelEntityMapping<TransactionDetail>();
 
-        for (int i = 0; i < inputCreateDto.getTransactionDetails().size(); i++) {
-            var transactionDto = inputCreateDto.getTransactionDetails().get(i);
+        for (int i = 0; i < inputCreateDto.getInputDetails().size(); i++) {
+            var transactionDto = inputCreateDto.getInputDetails().get(i);
 
-            var inputDetails = new InputDetails();
+            //var inputDetails = new InputDetails();
 
             //create new product
-            inputDetails.getProduct().setId(transactionDto.getProductId());
-            inputDetails.setLot(transactionDto.getLot());
-            inputDetails.setArticle(transactionDto.getArticle());
-            inputDetails.setExpDate(transactionDto.getExpDate());
+            //inputDetails.getProduct().setId(transactionDto.getProductId());
+            //inputDetails.setLot(transactionDto.getLot());
+            //inputDetails.setArticle(transactionDto.getArticle());
+            //inputDetails.setExpDate(transactionDto.getExpDate());
 
             //set default values from settings(front end)
-            inputDetails.getProduct().setStockMin(100);
-            inputDetails.getProduct().setStockMax(1000);
-            inputDetails.getProduct().setStockSecurity(350);
-            inputDetails.setQte(transactionDto.getQte());
+            //inputDetails.getProduct().setStockMin(100);
+            //inputDetails.getProduct().setStockMax(1000);
+            //inputDetails.getProduct().setStockSecurity(350);
+            //inputDetails.setQte(transactionDto.getQte());
 
             //insert qte to stockproduct principale - increment if prod exist in stock else create new one
             var stockProd = iStockProductRepository.findByProductIdAndStockId(transactionDto.getProductId(), transactionDto.getStockId());
@@ -69,8 +69,7 @@ public class InputService extends BaseCrudServiceImpl<Input, InputDto, InputCrea
             }
 
             stockProducts.add(stockProd);
-            inputDetails.setInput(input);
-            input.getInputDetails().add(inputDetails);
+            input.getInputDetails().get(i).setInput(input);
         }
 
         iStockProductRepository.saveAll(stockProducts);

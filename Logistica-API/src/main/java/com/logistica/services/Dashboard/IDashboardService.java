@@ -1,6 +1,6 @@
 package com.logistica.services.Dashboard;
 
-import com.logistica.dtos.SeriesDto;
+import com.logistica.dtos.SeriesListDto;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -18,5 +18,5 @@ public interface IDashboardService {
 
     CompletableFuture<Long> getTotaleSales();
 
-    CompletableFuture<List<SeriesDto>> getMonthlyChiffreAffaire();
+    CompletableFuture<List<SeriesListDto>> getMonthlyChiffreAffaire();
 }

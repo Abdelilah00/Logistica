@@ -20,5 +20,5 @@ public class InputCreateDto extends BaseDto {
     private Date date;
     private String description;
     @NotEmpty
-    private List<InputDetailCreateDto> transactionDetails = new ArrayList<>();
+    private List<InputDetailCreateDto> inputDetails = new ArrayList<>();
 }

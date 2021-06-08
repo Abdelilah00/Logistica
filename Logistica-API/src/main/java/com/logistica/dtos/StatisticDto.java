@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class SeriesDto {
-    private Long time;
-    private Double value;
+public class StatisticDto {
+    private Long value;
+    private Double growth;
 }

@@ -40,12 +40,12 @@ public class Product extends BaseEntity {
     private List<ProductUnits> productUnits = new ArrayList<>();
 
     //One To Many
-/*
+
     @OneToMany(mappedBy = "product")
     private List<InputDetails> inputDetails = new ArrayList<>();
     @OneToMany(mappedBy = "product")
     private List<OutputDetails> outputDetails = new ArrayList<>();
-*/
+
 
     //Many to many
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "product", fetch = FetchType.LAZY)

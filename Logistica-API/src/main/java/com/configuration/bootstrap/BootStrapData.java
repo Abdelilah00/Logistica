@@ -6,18 +6,25 @@
 package com.configuration.bootstrap;
 
 
+import com.configuration.Exception.UserFriendlyException;
 import com.configuration.TenantContext;
 import com.configuration.security.repositories.IUserRepository;
 import com.logistica.domains.Commands.*;
 import com.logistica.domains.Organization.Structure;
 import com.logistica.domains.Organization.StructureUnit;
 import com.logistica.domains.Products.*;
+import com.logistica.dtos.Products.Input.InputCreateDto;
+import com.logistica.dtos.Products.Output.OutputCreateDto;
+import com.logistica.dtos.Products.TransactionDetail.InputDetailCreateDto;
+import com.logistica.dtos.Products.TransactionDetail.OutputDetailCreateDto;
 import com.logistica.repositories.Commands.IActorRepository;
 import com.logistica.repositories.Commands.IActorRoleRepository;
 import com.logistica.repositories.ITestRepository;
 import com.logistica.repositories.Organization.IStructureRepository;
 import com.logistica.repositories.Organization.IStructureUnitRepository;
 import com.logistica.repositories.Products.*;
+import com.logistica.services.Products.Input.IInputService;
+import com.logistica.services.Products.Output.IOutputService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +33,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 @Component
 public class BootStrapData implements CommandLineRunner {
@@ -38,10 +46,7 @@ public class BootStrapData implements CommandLineRunner {
 
     @Autowired
     private IStockRepository iStockRepository;
-    @Autowired
-    private IInputRepository iInputRepository;
-    @Autowired
-    private IOutputRepository iOutputRepository;
+
     @Autowired
     private IActorRepository iActorRepository;
     @Autowired
@@ -54,246 +59,356 @@ public class BootStrapData implements CommandLineRunner {
     private IStructureRepository iStructureRepository;
     @Autowired
     private IStructureUnitRepository iStructureUnitRepository;
+    @Autowired
+    private IInputRepository iInputRepository;
+    @Autowired
+    private IOutputRepository iOutputRepository;
+    @Autowired
+    private IInputService iInputService;
+    @Autowired
+    private IOutputService iOutputService;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
 
-        if (iInputRepository.findAll().size() > 0)
-            return;
+        if (iInputRepository.findAll().size() == 0) {
+            //region organisation
+            var act = new Actor();
+            act.setName("jamal din lbarhouch");
+            iActorRepository.save(act);
+            var structureDepartament = new Structure();
+            var structureBlock = new Structure();
+            var structureService = new Structure();
+            structureDepartament.setName("Departament");
+            structureDepartament.setRang(1);
+            structureBlock.setName("Block");
+            structureBlock.setRang(2);
+            structureService.setName("Service");
+            structureService.setRang(3);
+            var structures = new ArrayList<Structure>();
+            structures.add(structureDepartament);
+            structures.add(structureBlock);
+            structures.add(structureService);
+            iStructureRepository.saveAll(structures);
 
-        //region organisation
-        var act = new Actor();
-        act.setName("jamal din lbarhouch");
-        iActorRepository.save(act);
-        var structureDepartament = new Structure();
-        var structureBlock = new Structure();
-        var structureService = new Structure();
-        structureDepartament.setName("Departament");
-        structureDepartament.setRang(1);
-        structureBlock.setName("Block");
-        structureBlock.setRang(2);
-        structureService.setName("Service");
-        structureService.setRang(3);
-        var structures = new ArrayList<Structure>();
-        structures.add(structureDepartament);
-        structures.add(structureBlock);
-        structures.add(structureService);
-        iStructureRepository.saveAll(structures);
+            var serviceEnf = new StructureUnit();
+            serviceEnf.setName("service enfant");
+            serviceEnf.setActor(act);
+            serviceEnf.setStructure(structureService);
+            serviceEnf.setActor(act);
+            iStructureUnitRepository.save(serviceEnf);
+            //endregion
 
-        var serviceEnf = new StructureUnit();
-        serviceEnf.setName("service enfant");
-        serviceEnf.setActor(act);
-        serviceEnf.setStructure(structureService);
-        serviceEnf.setActor(act);
-        iStructureUnitRepository.save(serviceEnf);
-        //endregion
+            //region categories & products
+            var catA = new Category();
+            catA.setName("category A");
+            catA.setDefaultTva(20.1f);
+            catA.setDefaultStockMin(500L);
+            catA.setDefaultStockSecurity(2500L);
+            catA.setDefaultStockMax(5000L);
+            var catA1 = new Category();
+            catA1.setName("category A1");
+            catA1.setParent(catA);
+            var catA2 = new Category();
+            catA2.setName("category A2");
+            catA2.setParent(catA);
+            catA.getChildren().add(catA1);
+            catA.getChildren().add(catA2);
+            iCategoryRepository.save(catA);
 
-        //region categories & products
-        var catA = new Category();
-        catA.setName("category A");
-        catA.setDefaultTva(20.1f);
-        catA.setDefaultStockMin(500L);
-        catA.setDefaultStockSecurity(2500L);
-        catA.setDefaultStockMax(5000L);
-        var catA1 = new Category();
-        catA1.setName("category A1");
-        catA1.setParent(catA);
-        var catA2 = new Category();
-        catA2.setName("category A2");
-        catA2.setParent(catA);
-        catA.getChildren().add(catA1);
-        catA.getChildren().add(catA2);
-        iCategoryRepository.save(catA);
+            var catB = new Category();
+            catB.setName("category B");
+            var catB1 = new Category();
+            catB1.setName("category B1");
+            catB1.setParent(catB);
+            catB.getChildren().add(catB1);
+            iCategoryRepository.save(catB);
 
-        var catB = new Category();
-        catB.setName("category B");
-        var catB1 = new Category();
-        catB1.setName("category B1");
-        catB1.setParent(catB);
-        catB.getChildren().add(catB1);
-        iCategoryRepository.save(catB);
+            var prodA = new Product();
+            prodA.setName("product A");
+            prodA.setStockMax(1000);
+            prodA.setStockMin(100);
+            prodA.setStockSecurity(300);
+            prodA.setPriceHT(100F);
+            prodA.setTVA(10f);
+            prodA.setCategory(catA);
+            iProductRepository.save(prodA);
+            var prodB = new Product();
+            prodB.setName("product B");
+            prodB.setStockMax(1500);
+            prodB.setStockMin(50);
+            prodB.setStockSecurity(500);
+            prodB.setPriceHT(100F);
+            prodB.setTVA(10f);
+            prodB.setCategory(catB);
+            iProductRepository.save(prodB);
+            var prodC = new Product();
+            prodC.setName("product C");
+            prodC.setStockMax(1000);
+            prodC.setStockMin(100);
+            prodC.setStockSecurity(300);
+            prodC.setPriceHT(100F);
+            prodC.setTVA(10f);
+            prodC.setCategory(catA);
+            iProductRepository.save(prodC);
+            //endregion
 
-        var prodA = new Product();
-        prodA.setName("product A");
-        prodA.setStockMax(1000);
-        prodA.setStockMin(100);
-        prodA.setStockSecurity(300);
-        prodA.setCategory(catA);
-        iProductRepository.save(prodA);
-        var prodB = new Product();
-        prodB.setName("product B");
-        prodB.setStockMax(1500);
-        prodB.setStockMin(50);
-        prodB.setStockSecurity(500);
-        prodB.setCategory(catB);
-        iProductRepository.save(prodB);
-        var prodC = new Product();
-        prodC.setName("product C");
-        prodC.setStockMax(1000);
-        prodC.setStockMin(100);
-        prodC.setStockSecurity(300);
-        prodC.setCategory(catA);
-        iProductRepository.save(prodC);
-        //endregion
+            //region actors roles
+            var responsible = new ActorRole();
+            responsible.setName("Responsible");
+            iActorRoleRepository.save(responsible);
+            var supplier = new ActorRole();
+            supplier.setName("Supplier");
+            iActorRoleRepository.save(supplier);
+            var client = new ActorRole();
+            client.setName("Client");
+            iActorRoleRepository.save(client);
+            //endregion
 
-        //region actors roles
-        var responsible = new ActorRole();
-        responsible.setName("Responsible");
-        iActorRoleRepository.save(responsible);
-        var supplier = new ActorRole();
-        supplier.setName("Supplier");
-        iActorRoleRepository.save(supplier);
-        var client = new ActorRole();
-        client.setName("Client");
-        iActorRoleRepository.save(client);
-        //endregion
+            //region actor
+            var actor1 = new Actor();
+            actor1.setName("responsible name");
+            actor1.getActorHasRole().setActorType(responsible);
+            iActorRepository.save(actor1);
+            //endregion
 
-        //region actor
-        var actor1 = new Actor();
-        actor1.setName("responsible name");
-        actor1.getActorHasRole().setActorType(responsible);
-        iActorRepository.save(actor1);
-        //endregion
+            //region stocks && stockProduct
+            var stock = new Stock();
+            stock.setName("stock principal");
+            stock.setAdresse("db allal elffasi");
+            stock.setArea(1545d);
+            stock.setDef(Boolean.TRUE);
+            stock.setResponsible(actor1);
+            var sp = new StockProduct();
+            sp.setProduct(prodA);
+            sp.setQte(25);
+            sp.setStock(stock);
+            var sp2 = new StockProduct();
+            sp2.setProduct(prodB);
+            sp2.setQte(50);
+            sp2.setStock(stock);
+            var sp3 = new StockProduct();
+            sp3.setProduct(prodC);
+            sp3.setQte(50);
+            sp3.setStock(stock);
+            stock.getStockProducts().add(sp);
+            stock.getStockProducts().add(sp2);
+            stock.getStockProducts().add(sp3);
+            iStockRepository.save(stock);
 
-        //region stocks && stockProduct
-        var stock = new Stock();
-        stock.setName("stock principal");
-        stock.setAdresse("db allal elffasi");
-        stock.setArea(1545d);
-        stock.setDef(Boolean.TRUE);
-        stock.setResponsible(actor1);
-        var sp = new StockProduct();
-        sp.setProduct(prodA);
-        sp.setQte(100);
-        sp.setStock(stock);
-        var sp2 = new StockProduct();
-        sp2.setProduct(prodB);
-        sp2.setQte(100);
-        sp2.setStock(stock);
-        var sp3 = new StockProduct();
-        sp3.setProduct(prodC);
-        sp3.setQte(100);
-        sp3.setStock(stock);
-        stock.getStockProducts().add(sp);
-        stock.getStockProducts().add(sp2);
-        stock.getStockProducts().add(sp3);
-        iStockRepository.save(stock);
+            var stock2 = new Stock();
+            stock2.setName("stock secondaire");
+            stock2.setAdresse("db jakarta");
+            stock2.setArea(655d);
+            //stock2.setDef(Boolean.FALSE);
+            stock2.setResponsible(actor1);
+            var sp21 = new StockProduct();
+            sp21.setProduct(prodA);
+            sp21.setQte(25);
+            sp21.setStock(stock2);
+            var sp22 = new StockProduct();
+            sp22.setProduct(prodB);
+            sp22.setQte(50);
+            sp22.setStock(stock2);
+            stock2.getStockProducts().add(sp21);
+            stock2.getStockProducts().add(sp22);
+            iStockRepository.save(stock2);
+            //endregion
 
-        var stock2 = new Stock();
-        stock2.setName("stock secondaire");
-        stock2.setAdresse("db jakarta");
-        stock2.setArea(655d);
-        //stock2.setDef(Boolean.FALSE);
-        stock2.setResponsible(actor1);
-        var sp21 = new StockProduct();
-        sp21.setProduct(prodA);
-        sp21.setQte(50);
-        sp21.setStock(stock2);
-        var sp22 = new StockProduct();
-        sp22.setProduct(prodB);
-        sp22.setQte(50);
-        sp22.setStock(stock2);
-        stock2.getStockProducts().add(sp21);
-        stock2.getStockProducts().add(sp22);
-        iStockRepository.save(stock2);
-        //endregion
+            //region create supplier
+            var actor2 = new Actor();
+            actor2.setAdresse("db alla elfassi");
+            actor2.setName("supplier name");
+            actor2.setNRCommerce("sdf3256 5065655s4df ");
+            var sector = new Sector();
+            sector.setName("l7aliib");
+            actor2.setSector(sector);
+            var bank = new Bank();
+            bank.setAccountNumber("25154545");
+            bank.setCode("25154545");
+            bank.setName("CIH");
+            bank.setRIB("254545456465465468789");
+            actor2.setBank(bank);
+            var contact = new Contact();
+            contact.setEmail("abdelilah@gmail.com");
+            contact.setPhone("0676958566");
+            contact.setWebSite("360tech.com");
+            actor2.setContact(contact);
+            actor2.getActorHasRole().setActorType(supplier);
+            iActorRepository.save(actor2);
+            //endregion
 
-        //region create supplier
-        var actor2 = new Actor();
-        actor2.setAdresse("db alla elfassi");
-        actor2.setName("supplier name");
-        actor2.setNRCommerce("sdf3256 5065655s4df ");
-        var sector = new Sector();
-        sector.setName("l7aliib");
-        actor2.setSector(sector);
-        var bank = new Bank();
-        bank.setAccountNumber("25154545");
-        bank.setCode("25154545");
-        bank.setName("CIH");
-        bank.setRIB("254545456465465468789");
-        actor2.setBank(bank);
-        var contact = new Contact();
-        contact.setEmail("abdelilah@gmail.com");
-        contact.setPhone("0676958566");
-        contact.setWebSite("360tech.com");
-        actor2.setContact(contact);
-        actor2.getActorHasRole().setActorType(supplier);
-        iActorRepository.save(actor2);
-        //endregion
+            //region create client
+            var actor3 = new Actor();
+            actor3.setAdresse("db alla elfassi");
+            actor3.setName("client name");
+            actor3.setNRCommerce("sdf3256 5065655s4df ");
+            var sector2 = new Sector();
+            sector.setName("jabir");
+            actor3.setSector(sector2);
+            var bank2 = new Bank();
+            bank.setAccountNumber("25154545");
+            bank.setCode("25154545");
+            bank.setName("CIH");
+            bank.setRIB("254545456465465468789");
+            actor3.setBank(bank2);
+            var contact2 = new Contact();
+            contact.setEmail("abdelilah@gmail.com");
+            contact.setPhone("0676958566");
+            contact.setWebSite("360tech.com");
+            actor3.setContact(contact2);
+            actor3.getActorHasRole().setActorType(client);
+            iActorRepository.save(actor3);
+            //endregion
 
-        //region create client
-        var actor3 = new Actor();
-        actor3.setAdresse("db alla elfassi");
-        actor3.setName("client name");
-        actor3.setNRCommerce("sdf3256 5065655s4df ");
-        var sector2 = new Sector();
-        sector.setName("jabir");
-        actor3.setSector(sector2);
-        var bank2 = new Bank();
-        bank.setAccountNumber("25154545");
-        bank.setCode("25154545");
-        bank.setName("CIH");
-        bank.setRIB("254545456465465468789");
-        actor3.setBank(bank2);
-        var contact2 = new Contact();
-        contact.setEmail("abdelilah@gmail.com");
-        contact.setPhone("0676958566");
-        contact.setWebSite("360tech.com");
-        actor3.setContact(contact2);
-        actor3.getActorHasRole().setActorType(client);
-        iActorRepository.save(actor3);
-        //endregion
+            //region create input
+            var input = new Input();
+            input.setRef("Ref2145");
+            input.setDate(new Date());
+            input.setDescription("input u wanna details its just for test");
+            input.setActor(actor2);
 
-        //region create input
-        var input = new Input();
-        input.setRef("Ref2145");
-        input.setDate(new Date());
-        input.setDescription("input u wanna details its just for test");
-        input.setActor(actor2);
+            var transactionDetails = new ArrayList<InputDetails>();
+            var trans11 = new InputDetails();
+            trans11.setExpDate(new Date());
+            trans11.setProduct(prodA);
+            trans11.setArticle(5);
+            trans11.setLot(2);
+            trans11.setQte(50);
+            trans11.setInput(input);
+            transactionDetails.add(trans11);
+            var trans12 = new InputDetails();
+            trans12.setExpDate(new Date());
+            trans12.setProduct(prodB);
+            trans12.setArticle(5);
+            trans12.setLot(2);
+            trans12.setQte(100);
+            trans12.setInput(input);
+            transactionDetails.add(trans12);
+            var trans13 = new InputDetails();
+            trans13.setExpDate(new Date());
+            trans13.setProduct(prodC);
+            trans13.setArticle(5);
+            trans13.setLot(2);
+            trans13.setQte(100);
+            trans13.setInput(input);
+            transactionDetails.add(trans13);
+            input.setInputDetails(transactionDetails);
+            iInputRepository.save(input);
+            //endregion
 
-        var transactionDetails = new ArrayList<InputDetails>();
-        var trans11 = new InputDetails();
-        trans11.setExpDate(new Date());
-        trans11.setProduct(prodA);
-        trans11.setArticle(5);
-        trans11.setLot(2);
-        trans11.setQte(50);
-        trans11.setInput(input);
-        transactionDetails.add(trans11);
-        var trans12 = new InputDetails();
-        trans12.setExpDate(new Date());
-        trans12.setProduct(prodB);
-        trans12.setArticle(5);
-        trans12.setLot(2);
-        trans12.setQte(100);
-        trans12.setInput(input);
-        transactionDetails.add(trans12);
-        input.setInputDetails(transactionDetails);
-        iInputRepository.save(input);
-        //endregion
+            //region create output
+            var output = new Output();
+            output.setRef("Ref2145");
+            output.setDate(new Date());
+            output.setDescription("output u wanna details its just for test");
+            output.setAskBy("part of Supplier A");
+            output.setActor(actor3);
 
-        //region create output
-        var output = new Output();
-        output.setRef("Ref2145");
-        output.setDate(new Date());
-        output.setDescription("output u wanna details its just for test");
-        output.setAskBy("part of Supplier A");
-        output.setActor(actor3);
+            var transactionDetails2 = new ArrayList<OutputDetails>();
+            var trans21 = new OutputDetails();
+            trans21.setProduct(prodC);
+            trans21.setPriceHT(20f);
+            trans21.setTVA(0.25f);
+            trans21.setQte(50);
+            trans21.setOutput(output);
+            transactionDetails2.add(trans21);
+            output.setOutputDetails(transactionDetails2);
+            iOutputRepository.save(output);
+            //endregion
 
-        var transactionDetails2 = new ArrayList<OutputDetails>();
-        var trans21 = new OutputDetails();
-        trans21.setProduct(prodC);
-        trans21.setPriceHT(20f);
-        trans21.setTVA(0.25f);
-        trans21.setQte(50);
-        trans21.setOutput(output);
-        transactionDetails2.add(trans21);
-        output.setOutputDetails(transactionDetails2);
-        iOutputRepository.save(output);
-        //endregion
+        }
+
+ /*       try {
+            statTransData();
+        } catch (UserFriendlyException | InterruptedException e) {
+            e.printStackTrace();
+        }*/
     }
 
-    private void statData() {
+    private void statStockData() {
+        var random = new Random();
+        var categories = new ArrayList<Category>();
+        var products = new ArrayList<Product>();
+
+
+        for (int i = 1; i <= 10; i++) {
+            var catA = new Category();
+            catA.setName("category " + i);
+            catA.setDefaultTva(20.1f);
+            catA.setDefaultStockMin(500L);
+            catA.setDefaultStockSecurity(2500L);
+            catA.setDefaultStockMax(5000L);
+            categories.add(catA);
+        }
+        iCategoryRepository.saveAll(categories);
+
+        for (int i = 1; i <= 50; i++) {
+            var prodA = new Product();
+            prodA.setName("product " + i);
+            prodA.setStockMax(1000);
+            prodA.setStockMin(100);
+            prodA.setStockSecurity(300);
+            prodA.setPriceHT(100F);
+            prodA.setTVA(10f);
+            prodA.getCategory().setId(random.nextInt(9) + 1);
+            products.add(prodA);
+        }
+        iProductRepository.saveAll(products);
+    }
+
+    private void statTransData() throws UserFriendlyException, InterruptedException {
+        var random = new Random();
+
+
+        for (int i = 1; i <= 10; i++) {
+            var input = new InputCreateDto();
+            input.setRef("Ref" + i);
+            input.setDate(new Date());
+            input.setDescription("input u wanna details its just for test");
+            input.setActorId(3L);
+            var InputDetails = new ArrayList<InputDetailCreateDto>();
+            var trans11 = new InputDetailCreateDto();
+            trans11.setExpDate(new Date());
+            trans11.setProductId((long) random.nextInt(49) + 1);
+            trans11.setArticle(5);
+            trans11.setLot(2);
+            trans11.setQte(50);
+            trans11.setStockId(1L);
+            InputDetails.add(trans11);
+            var trans12 = new InputDetailCreateDto();
+            trans12.setExpDate(new Date());
+            trans12.setProductId((long) random.nextInt(49) + 1);
+            trans12.setStockId(1L);
+            trans12.setArticle(5);
+            trans12.setLot(2);
+            trans12.setQte(100);
+            InputDetails.add(trans12);
+            input.setInputDetails(InputDetails);
+            iInputService.create(input);
+            Thread.sleep(2000);
+        }
+
+        for (int i = 1; i <= 5; i++) {
+            var output = new OutputCreateDto();
+            output.setRef("Ref" + i);
+            output.setDate(new Date());
+            output.setDescription("output u wanna details its just for test");
+            output.setAskBy("part of Supplier A");
+            output.setActorId(4L);
+
+            var outputDetails = new ArrayList<OutputDetailCreateDto>();
+            var trans21 = new OutputDetailCreateDto();
+            trans21.setProductId((long) (random.nextInt(49) + 1));
+            trans21.setPriceHT(150f);
+            trans21.setTVA(0.06f);
+            trans21.setQte(50);
+            trans21.setStockId(1L);
+            outputDetails.add(trans21);
+            output.setOutputDetails(outputDetails);
+            iOutputService.create(output);
+            Thread.sleep(2000);
+        }
 
     }
 }

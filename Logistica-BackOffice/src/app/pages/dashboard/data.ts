@@ -2,11 +2,15 @@ import {ChartType} from './dashboard.model';
 
 const revenueChart: ChartType = {
   series: [{
-    name: 'periodic',
+    name: 'chiffre',
     type: 'column',
     data: []
   }, {
-    name: 'cumule',
+    name: 'input',
+    type: 'line',
+    data: []
+  }, {
+    name: 'output',
     type: 'line',
     data: []
   }],

@@ -51,7 +51,11 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getTotaleOutput().subscribe(data => this.outputCount = data);
     this.dashboardService.getTotaleTransfer().subscribe(data => this.transferCount = data);
     this._fetchData();
-    this.dashboardService.getMonthlyChiffreAffaire().subscribe(data => this.revenueChart.series[0].data = data);
+    this.dashboardService.getMonthlyChiffreAffaire().subscribe(data => {
+      this.revenueChart.series[0].data = data[0];
+      this.revenueChart.series[1].data = data[1];
+      this.revenueChart.series[2].data = data[2];
+    });
   }
 
 

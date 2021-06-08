@@ -32,7 +32,7 @@ export class InputCreateComponent implements OnInit {
   }
 
   get formArrayTransactions(): FormArray {
-    return this.formGroup.controls.transactionDetails as FormArray;
+    return this.formGroup.controls.inputDetails as FormArray;
   }
 
   ngOnInit(): void {
@@ -56,7 +56,7 @@ export class InputCreateComponent implements OnInit {
       payement: ['bank', Validators.required],
       payementRef: ['test', Validators.required],
       ref: ['IR', Validators.required],
-      transactionDetails: this.formBuilder.array([]),
+      inputDetails: this.formBuilder.array([]),
     });
   }
 

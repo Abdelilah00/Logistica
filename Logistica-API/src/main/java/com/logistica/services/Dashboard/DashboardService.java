@@ -1,6 +1,6 @@
 package com.logistica.services.Dashboard;
 
-import com.logistica.dtos.SeriesDto;
+import com.logistica.dtos.SeriesListDto;
 import com.logistica.repositories.Products.IInputRepository;
 import com.logistica.repositories.Products.IOutputRepository;
 import com.logistica.repositories.Products.ITransferRepository;
@@ -10,8 +10,9 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
+import java.util.List;
 
 @Service
 public class DashboardService implements IDashboardService {
@@ -56,12 +57,24 @@ public class DashboardService implements IDashboardService {
     }
 
     @Override
-    public CompletableFuture<List<SeriesDto>> getMonthlyChiffreAffaire() {
-        //todo sum of p.price*ps.qte
+    public CompletableFuture<List<SeriesListDto>> getMonthlyChiffreAffaire() {
+        var list = new ArrayList<SeriesListDto>();
         Session session = entityManager.unwrap(Session.class);
-        List<SeriesDto> list = session.createQuery(
-                "select month(i.createdAt) as time, sum(sp.qte * p.priceHT) as value from Input i join StockProduct sp join Product p group by time"
-        ).list();
+        //calculate stock money
+        list.add(new SeriesListDto(session.createQuery(
+                "select MONTH(i.createdAt) as time, sum((id.qte - COALESCE(od.qte,0)) * p.priceHT) as value " +
+                        "from Input i inner join i.inputDetails id inner join id.product p " +
+                        "left join p.outputDetails od group by time").list()));
+        //todo calculate input money
+        list.add(new SeriesListDto(session.createQuery(
+                "select MONTH(i.createdAt) as time, sum((id.qte - COALESCE(od.qte,0)) * p.priceHT) as value " +
+                        "from Input i inner join i.inputDetails id inner join id.product p " +
+                        "left join p.outputDetails od group by time").list()));
+        //todo calculate output money
+        list.add(new SeriesListDto(session.createQuery(
+                "select MONTH(i.createdAt) as time, sum((id.qte - COALESCE(od.qte,0)) * p.priceHT) as value " +
+                        "from Input i inner join i.inputDetails id inner join id.product p " +
+                        "left join p.outputDetails od group by time").list()));
         return CompletableFuture.completedFuture(list);
     }
 }
