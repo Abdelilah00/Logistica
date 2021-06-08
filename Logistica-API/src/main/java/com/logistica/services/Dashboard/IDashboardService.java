@@ -1,8 +1,6 @@
 package com.logistica.services.Dashboard;
 
-import com.logistica.dtos.RevenueDto;
-import org.hibernate.annotations.Formula;
-import org.springframework.data.jpa.repository.Query;
+import com.logistica.dtos.SeriesDto;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -20,5 +18,5 @@ public interface IDashboardService {
 
     CompletableFuture<Long> getTotaleSales();
 
-    CompletableFuture<List<RevenueDto>> getMonthlyChiffreAffaire();
+    CompletableFuture<List<SeriesDto>> getMonthlyChiffreAffaire();
 }

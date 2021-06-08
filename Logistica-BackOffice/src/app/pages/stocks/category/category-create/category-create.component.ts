@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {BreadCrumb} from '../../../../core/models/all.models';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ProductsService} from '../../../../core/services/Products/products.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Location} from '@angular/common';
 import {finalize} from 'rxjs/operators';
+import {ActivatedRoute} from '@angular/router';
+import {CategoryService} from '../../../../core/services/Products/category.service';
 
 @Component({
   selector: 'app-category-create',
@@ -19,9 +20,10 @@ export class CategoryCreateComponent implements OnInit {
   public breadCrumb: BreadCrumb;
 
   constructor(private formBuilder: FormBuilder,
-              private service: ProductsService,
+              private service: CategoryService,
               private matSnackBar: MatSnackBar,
               private location: Location,
+              private route: ActivatedRoute,
   ) {
   }
 
@@ -40,10 +42,14 @@ export class CategoryCreateComponent implements OnInit {
   }
 
   createFormGroup(): FormGroup {
+    const parentId = this.route.snapshot.queryParamMap.get('parentId');
     return this.formBuilder.group({
-      name: ['category Test', Validators.required],
-      parentId: [null, Validators.required],
-
+      name: ['category ', Validators.required],
+      defaultTva: [20.0, Validators.required],
+      defaultStockMin: [200, Validators.required],
+      defaultStockMax: [2500, Validators.required],
+      defaultStockSecurity: [1000, Validators.required],
+      parentId: [parentId, Validators.required],
     });
   }
 
@@ -68,5 +74,4 @@ export class CategoryCreateComponent implements OnInit {
   goBack(): void {
     this.location.back();
   }
-
 }

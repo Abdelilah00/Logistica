@@ -18,14 +18,18 @@ import java.util.List;
 @Table(name = "category")
 public class Category extends BaseEntity {
     private String name;
+    private Float defaultTva;
+    private Long defaultStockMin;
+    private Long defaultStockMax;
+    private Long defaultStockSecurity;
 
     @OneToMany(mappedBy = "category")
-    private List<Product> products;
+    private List<Product> products = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "parentId")
     private Category parent;
 
-    @OneToMany(mappedBy = "parent")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "parent")
     private List<Category> children = new ArrayList<>();
 }

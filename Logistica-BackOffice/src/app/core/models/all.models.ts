@@ -73,6 +73,7 @@ export class OutputDetail extends BaseModel {
 
 export class Category extends BaseModel {
   name: string;
+  defaultTva: number;
 }
 
 export class Product extends BaseModel {

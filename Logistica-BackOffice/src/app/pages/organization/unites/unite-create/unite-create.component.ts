@@ -4,7 +4,9 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Location} from '@angular/common';
 import {finalize} from 'rxjs/operators';
-import {ProductsService} from '../../../../core/services/Products/products.service';
+import {StructuresService} from '../../../../core/services/Organzation/structures.service';
+import {StructureUnitsService} from '../../../../core/services/Organzation/structure-units.service';
+import {Structure} from '../../../../core/models/Organization.model';
 
 @Component({
   selector: 'app-unite-create',
@@ -16,11 +18,13 @@ export class UniteCreateComponent implements OnInit {
   formGroup = this.createFormGroup();
   saving = false;
   public breadCrumb: BreadCrumb;
+  structureList: Structure[];
 
   constructor(private formBuilder: FormBuilder,
-              private service: ProductsService,
+              private service: StructureUnitsService,
               private matSnackBar: MatSnackBar,
               private location: Location,
+              private structuresService: StructuresService
   ) {
   }
 
@@ -30,21 +34,19 @@ export class UniteCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.breadCrumb = {
-      title: 'Add Supplier',
+      title: 'Add Unite',
       items: [
-        {label: 'Suppliers', path: '../'},
+        {label: 'Units', path: '../'},
         {label: 'Create', active: true}
       ]
     };
+    this.structuresService.getAll().subscribe(data => this.structureList = data);
   }
 
   createFormGroup(): FormGroup {
     return this.formBuilder.group({
-      name: ['test', Validators.required],
-      stockMin: [100, Validators.required],
-      stockMax: [1000, Validators.required],
-      stockSecurity: [250, Validators.required],
-      categoryId: [1, Validators.required],
+      name: ['service lb3abé3', Validators.required],
+      structureId: [3, Validators.required],
     });
   }
 
@@ -57,16 +59,12 @@ export class UniteCreateComponent implements OnInit {
         })
       ).subscribe(() => {
       // Show the success message
-      this.matSnackBar.open('Product saved', 'OK', {
+      this.matSnackBar.open('Unite saved', 'Ok', {
         verticalPosition: 'top',
-        duration: 2000,
+        duration: 3000,
+        panelClass: ['green-snackbar']
       });
       this.goBack();
-    }, (error) => {
-      this.matSnackBar.open('Product Not saved', 'Try', {
-        verticalPosition: 'top',
-        duration: 2000
-      });
     });
   }
 

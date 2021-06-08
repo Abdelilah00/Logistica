@@ -7,6 +7,7 @@ import {UiModule} from '../../../shared/ui/ui.module';
 import {GridModule} from '@progress/kendo-angular-grid';
 import {ReactiveFormsModule} from '@angular/forms';
 import {CategoryDetailsComponent} from './category-details/category-details.component';
+import {MatIconModule} from '@angular/material/icon';
 
 
 const routes: Routes = [
@@ -23,7 +24,8 @@ const routes: Routes = [
     CommonModule,
     UiModule,
     GridModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatIconModule
   ]
 })
 export class CategoryModule {

@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RevenueDto {
+public class SeriesDto {
     private Long time;
-    private Double revenue;
+    private Double value;
 }

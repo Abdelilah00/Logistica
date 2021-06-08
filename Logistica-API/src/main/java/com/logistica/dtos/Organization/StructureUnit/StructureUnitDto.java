@@ -8,5 +8,5 @@ import lombok.Setter;
 @Setter
 public class StructureUnitDto extends BaseDto {
     private String name;
-    private String Structure;
+    private String structureName;
 }

@@ -8,5 +8,5 @@ import lombok.Setter;
 @Setter
 public class StructureUnitUpdateDto extends BaseDto {
     private String name;
-    private String Structure;
+    private Long structureId;
 }

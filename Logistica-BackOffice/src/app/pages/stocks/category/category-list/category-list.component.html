@@ -17,12 +17,21 @@
 
               <kendo-grid-column field="name" title="name">
               </kendo-grid-column>
-
+              <kendo-grid-column field="defaultTva" title="default TVA">
+              </kendo-grid-column>
+              <kendo-grid-column field="defaultStockMin" title="defaultStockMin">
+              </kendo-grid-column>
+              <kendo-grid-column field="defaultStockMax" title="defaultStockMax">
+              </kendo-grid-column>
+              <kendo-grid-column field="defaultStockSecurity" title="defaultStockSecurity">
+              </kendo-grid-column>
 
               <kendo-grid-command-column title="Options">
-                <ng-template kendoGridCellTemplate>
-                  <button [primary]="true" kendoGridEditCommand>Edit</button>
-                  <button kendoGridRemoveCommand>Delete</button>
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                  <button class='btn btn-dark' kendoGridRemoveCommand [routerLink]="['../create']"
+                          [queryParams]="{ parentId:dataItem.id}">
+                    create sub category
+                  </button>
                 </ng-template>
               </kendo-grid-command-column>
 

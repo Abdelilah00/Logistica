@@ -1,6 +1,6 @@
 package com.logistica.services.Dashboard;
 
-import com.logistica.dtos.RevenueDto;
+import com.logistica.dtos.SeriesDto;
 import com.logistica.repositories.Products.IInputRepository;
 import com.logistica.repositories.Products.IOutputRepository;
 import com.logistica.repositories.Products.ITransferRepository;
@@ -56,11 +56,11 @@ public class DashboardService implements IDashboardService {
     }
 
     @Override
-    public CompletableFuture<List<RevenueDto>> getMonthlyChiffreAffaire() {
+    public CompletableFuture<List<SeriesDto>> getMonthlyChiffreAffaire() {
         //todo sum of p.price*ps.qte
         Session session = entityManager.unwrap(Session.class);
-        List<RevenueDto> list = session.createQuery(
-                "select month(i.createdAt) as time, sum(td.qte * td.priceHT) as revenue from Input i join i.inputDetails td group by time"
+        List<SeriesDto> list = session.createQuery(
+                "select month(i.createdAt) as time, sum(sp.qte * p.priceHT) as value from Input i join StockProduct sp join Product p group by time"
         ).list();
         return CompletableFuture.completedFuture(list);
     }

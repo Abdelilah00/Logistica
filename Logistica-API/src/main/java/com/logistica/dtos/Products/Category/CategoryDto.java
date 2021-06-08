@@ -8,4 +8,8 @@ import lombok.Setter;
 @Setter
 public class CategoryDto extends BaseDto {
     private String name;
+    private Float defaultTva;
+    private Long defaultStockMin;
+    private Long defaultStockMax;
+    private Long defaultStockSecurity;
 }

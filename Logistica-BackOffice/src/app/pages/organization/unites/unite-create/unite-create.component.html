@@ -20,53 +20,18 @@
               </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="stockSecurity">stockSecurity</label>
-                  <input [ngClass]="{'is-invalid': saving && form.stockSecurity.errors}" class="form-control"
-                         formControlName="stockSecurity" id="stockSecurity"
-                         placeholder="stockSecurity" type="text">
-                  <div *ngIf="saving && form.stockSecurity.errors" class="invalid-feedback">
-                    <span *ngIf="form.stockSecurity.errors.required">Please provide a valid stockSecurity.</span>
+                  <label for="structureId">Structure</label>
+                  <select class="form-control select2" formControlName="structureId" id="structureId">
+                    <option *ngFor='let structure of structureList' [value]="structure.id">{{structure.name}}</option>
+                  </select>
+                  <div *ngIf="saving && form.structureId.errors" class="invalid-feedback">
+                    <span *ngIf="form.structureId.errors.required">Please provide a valid structure.</span>
                   </div>
                 </div>
               </div>
 
             </div>
 
-            <div class="row">
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label for="categoryId">categoryId</label>
-                  <input [ngClass]="{'is-invalid': saving && form.categoryId.errors}" class="form-control"
-                         formControlName="categoryId" id="categoryId"
-                         placeholder="categoryId" type="number">
-                  <div *ngIf="saving && form.categoryId.errors" class="invalid-feedback">
-                    <span *ngIf="form.categoryId.errors.required">Please provide a valid categoryId.</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label for="stockMin">stockMin</label>
-                  <input [ngClass]="{'is-invalid': saving && form.stockMin.errors}" class="form-control"
-                         formControlName="stockMin" id="stockMin"
-                         placeholder="stockMin" type="number">
-                  <div *ngIf="saving && form.stockMin.errors" class="invalid-feedback">
-                    <span *ngIf="form.stockMin.errors.required">Please provide a valid stockMin.</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label for="stockMax">stockMax</label>
-                  <input [ngClass]="{'is-invalid': saving && form.stockMax.errors}" class="form-control"
-                         formControlName="stockMax" id="stockMax"
-                         placeholder="stockMax" type="number">
-                  <div *ngIf="saving && form.stockMax.errors" class="invalid-feedback">
-                    <span *ngIf="form.stockMax.errors.required">Please provide a valid stockMax.</span>
-                  </div>
-                </div>
-              </div>
-            </div>
 
             <button class="btn btn-primary" type="submit">Submit</button>
             <button class="btn btn-danger" type="reset">Cancel</button>

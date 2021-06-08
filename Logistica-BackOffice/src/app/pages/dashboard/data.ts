@@ -33,7 +33,7 @@ const revenueChart: ChartType = {
   legend: {
     show: false,
   },
-  colors: ['#5664d2', '#1cbb8c'],
+  colors: ['#5664d2', '#1cbb8c', '#ea1854'],
   labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 };
 
@@ -128,46 +128,6 @@ const sparklineMonthly: ChartType = {
   }
 };
 
-const chatData = [
-  {
-    id: 1,
-    name: 'Frank Vickery',
-    message: 'Hey! I am available',
-    image: 'assets/images/users/avatar-2.jpg',
-    time: '12:09'
-  },
-  {
-    id: 2,
-    align: 'right',
-    name: 'Ricky Clark',
-    message: 'Hi, How are you? What about our next meeting?',
-    time: '10:02'
-  },
-  {
-    text: 'Today'
-  },
-  {
-    id: 3,
-    name: 'Frank Vickery',
-    message: 'Hello!',
-    image: 'assets/images/users/avatar-2.jpg',
-    time: '10:06'
-  },
-  {
-    id: 4,
-    name: 'Frank Vickery',
-    message: '& Next meeting tomorrow 10.00AM',
-    image: 'assets/images/users/avatar-2.jpg',
-    time: '10:06'
-  },
-  {
-    id: 5,
-    align: 'right',
-    name: 'Ricky Clark',
-    message: 'Wow that\'s great',
-    time: '10:07'
-  }
-];
 
 const transactions = [
   {
@@ -230,4 +190,4 @@ const statData = [
   }
 ];
 
-export {revenueChart, salesAnalytics, sparklineEarning, sparklineMonthly, chatData, transactions, statData};
+export {revenueChart, salesAnalytics, sparklineEarning, sparklineMonthly, transactions, statData};

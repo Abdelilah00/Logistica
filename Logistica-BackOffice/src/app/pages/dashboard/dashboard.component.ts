@@ -4,7 +4,7 @@ import {latLng, tileLayer} from 'leaflet';
 
 import {ChartType, Chat, Stat, Transaction} from './dashboard.model';
 
-import {chatData, revenueChart, salesAnalytics, sparklineEarning, sparklineMonthly, statData, transactions} from './data';
+import {revenueChart, salesAnalytics, sparklineEarning, sparklineMonthly, statData, transactions} from './data';
 import {DashboardService} from '../../core/services/dashboard.service';
 
 @Component({
@@ -60,7 +60,6 @@ export class DashboardComponent implements OnInit {
     this.salesAnalytics = salesAnalytics;
     this.sparklineEarning = sparklineEarning;
     this.sparklineMonthly = sparklineMonthly;
-    this.chatData = chatData;
     this.transactions = transactions;
     this.statData = statData;
   }

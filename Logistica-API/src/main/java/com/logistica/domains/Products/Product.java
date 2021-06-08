@@ -32,11 +32,11 @@ public class Product extends BaseEntity {
     private Category category = new Category();
 
     //One to one
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product", fetch = FetchType.LAZY)
     private List<Defective> defectives = new ArrayList<>();
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product", fetch = FetchType.LAZY)
     private List<Reviews> reviews = new ArrayList<>();
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product", fetch = FetchType.LAZY)
     private List<ProductUnits> productUnits = new ArrayList<>();
 
     //One To Many
@@ -48,9 +48,9 @@ public class Product extends BaseEntity {
 */
 
     //Many to many
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product", fetch = FetchType.LAZY)
     private List<StockProduct> stockProducts = new ArrayList<>();
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product", fetch = FetchType.LAZY)
     private List<ProductCharacteritic> productCharacteritics = new ArrayList<>();
 
     //private Category parent = new Category();

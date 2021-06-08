@@ -57,6 +57,10 @@ export const MENU: MenuItem[] = [
     icon: 'ri-product-hunt-line',
     subItems: [
       {
+        label: 'MENUITEMS.STOCKS.LIST.CATEGORY',
+        icon: 'ri-product-hunt-line',
+        link: '/stocks/category'
+      }, {
         label: 'MENUITEMS.STOCKS.LIST.PRODUCT',
         icon: 'ri-product-hunt-line',
         link: '/stocks/product'
@@ -64,10 +68,6 @@ export const MENU: MenuItem[] = [
         label: 'MENUITEMS.STOCKS.LIST.STOCK',
         icon: 'ri-product-hunt-line',
         link: '/stocks/stock'
-      }, {
-        label: 'MENUITEMS.STOCKS.LIST.CATEGORY',
-        icon: 'ri-product-hunt-line',
-        link: '/stocks/category'
       }]
   },
   {
@@ -84,7 +84,7 @@ export const MENU: MenuItem[] = [
         label: 'MENUITEMS.TRANSACTION.LIST.TRANSFER',
         link: '/transactions/transfer',
       }
-      ]
+    ]
   },
 
   {

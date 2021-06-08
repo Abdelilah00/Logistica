@@ -18,19 +18,57 @@
                   </div>
                 </div>
               </div>
+
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="parentId">parentId</label>
-                  <input [ngClass]="{'is-invalid': saving && form.parentId.errors}" class="form-control"
-                         formControlName="parentId" id="parentId"
-                         placeholder="parent" type="text">
-                  <div *ngIf="saving && form.parentId.errors" class="invalid-feedback">
-                    <span *ngIf="form.parentId.errors.required">Please provide a valid parentId.</span>
+                  <label for="defaultTva">defaultTva</label>
+                  <input [ngClass]="{'is-invalid': saving && form.defaultTva.errors}" class="form-control"
+                         formControlName="defaultTva" id="defaultTva"
+                         placeholder="default Tva" type="text">
+                  <div *ngIf="saving && form.defaultTva.errors" class="invalid-feedback">
+                    <span *ngIf="form.defaultTva.errors.required">Please provide a valid defaultTva.</span>
                   </div>
                 </div>
               </div>
             </div>
 
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="defaultStockMin">defaultStockMin</label>
+                  <input [ngClass]="{'is-invalid': saving && form.defaultStockMin.errors}" class="form-control"
+                         formControlName="defaultStockMin" id="defaultStockMin"
+                         placeholder="defaultStockMin" type="text">
+                  <div *ngIf="saving && form.defaultStockMin.errors" class="invalid-feedback">
+                    <span *ngIf="form.defaultStockMin.errors.required">Please provide a valid defaultStockMin.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="defaultStockMax">defaultStockMax</label>
+                  <input [ngClass]="{'is-invalid': saving && form.defaultStockMax.errors}" class="form-control"
+                         formControlName="defaultStockMax" id="defaultStockMax"
+                         placeholder="defaultStockMax" type="text">
+                  <div *ngIf="saving && form.defaultStockMax.errors" class="invalid-feedback">
+                    <span *ngIf="form.defaultStockMax.errors.required">Please provide defaultStockMax valid defaultStockMax.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="defaultStockSecurity">defaultStockSecurity</label>
+                  <input [ngClass]="{'is-invalid': saving && form.defaultTva.errors}" class="form-control"
+                         formControlName="defaultStockSecurity" id="defaultStockSecurity"
+                         placeholder="defaultStockSecurity" type="text">
+                  <div *ngIf="saving && form.defaultStockSecurity.errors" class="invalid-feedback">
+                    <span *ngIf="form.defaultStockSecurity.errors.required">Please provide a valid defaultStockSecurity.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
 
             <button class="btn btn-primary" type="submit">Submit</button>
             <button class="btn btn-danger" type="reset">Cancel</button>

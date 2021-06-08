@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Product} from '../../../../core/models/all.models';
-import {ProductsService} from '../../../../core/services/Products/products.service';
+import {Category} from '../../../../core/models/all.models';
 import {CategoryService} from '../../../../core/services/Products/category.service';
 
 
@@ -11,7 +10,7 @@ import {CategoryService} from '../../../../core/services/Products/category.servi
 })
 
 export class CategoryDetailsComponent implements OnInit {
-  view: Product[];
+  view: Category[];
   @Input() inputId: number | null;
 
   constructor(private service: CategoryService) {
@@ -19,7 +18,7 @@ export class CategoryDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.inputId !== null) {
-      //this.productsService.getBy(this.inputId).subscribe(data => this.view = data);
+      this.service.getByParentId(this.inputId).subscribe(data => this.view = data);
     }
 
   }

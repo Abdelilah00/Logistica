@@ -91,9 +91,26 @@ public class BootStrapData implements CommandLineRunner {
         //region categories & products
         var catA = new Category();
         catA.setName("category A");
+        catA.setDefaultTva(20.1f);
+        catA.setDefaultStockMin(500L);
+        catA.setDefaultStockSecurity(2500L);
+        catA.setDefaultStockMax(5000L);
+        var catA1 = new Category();
+        catA1.setName("category A1");
+        catA1.setParent(catA);
+        var catA2 = new Category();
+        catA2.setName("category A2");
+        catA2.setParent(catA);
+        catA.getChildren().add(catA1);
+        catA.getChildren().add(catA2);
         iCategoryRepository.save(catA);
+
         var catB = new Category();
         catB.setName("category B");
+        var catB1 = new Category();
+        catB1.setName("category B1");
+        catB1.setParent(catB);
+        catB.getChildren().add(catB1);
         iCategoryRepository.save(catB);
 
         var prodA = new Product();
@@ -274,5 +291,9 @@ public class BootStrapData implements CommandLineRunner {
         output.setOutputDetails(transactionDetails2);
         iOutputRepository.save(output);
         //endregion
+    }
+
+    private void statData() {
+
     }
 }

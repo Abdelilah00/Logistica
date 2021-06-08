@@ -26,9 +26,9 @@ export class UniteListComponent implements OnInit {
 
   ngOnInit(): void {
     this.breadCrumb = {
-      title: 'Products',
+      title: 'Units',
       items: [
-        {label: 'Products', active: true}
+        {label: 'Units', active: true}
       ]
     };
     // todo: use simple tables

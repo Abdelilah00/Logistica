@@ -1,6 +1,6 @@
 package com.logistica.controllers.Dashboard;
 
-import com.logistica.dtos.RevenueDto;
+import com.logistica.dtos.SeriesDto;
 import com.logistica.services.Dashboard.IDashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +33,7 @@ public class DashboardController {
 
     //todo chiffre d'affaire mensuelle
     @GetMapping(path = "/getMonthlyChiffreAffaire")
-    protected List<RevenueDto> getMonthlyChiffreAffaire() throws ExecutionException, InterruptedException {
+    protected List<SeriesDto> getMonthlyChiffreAffaire() throws ExecutionException, InterruptedException {
         return iDashboardService.getMonthlyChiffreAffaire().get();
     }
 }
