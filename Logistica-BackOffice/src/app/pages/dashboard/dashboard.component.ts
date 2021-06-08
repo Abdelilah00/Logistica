@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {latLng, tileLayer} from 'leaflet';
 
@@ -6,6 +6,8 @@ import {ChartType, Chat, Stat, Transaction} from './dashboard.model';
 
 import {revenueChart, salesAnalytics, sparklineEarning, sparklineMonthly, statData, transactions} from './data';
 import {DashboardService} from '../../core/services/dashboard.service';
+import {ChartComponent} from 'ng-apexcharts';
+import {Statistic} from '../../core/models/all.models';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,14 +19,11 @@ import {DashboardService} from '../../core/services/dashboard.service';
  * Dashboard Component
  */
 export class DashboardComponent implements OnInit {
-  inputCount: number;
-  outputCount: number;
-  transferCount: number;
-  /////////////////////
   term: any;
   chatData: Chat[];
   transactions: Transaction[];
   statData: Stat[];
+  statistics: Array<Statistic>;
   // bread crumb items
   breadCrumbItems: Array<{}>;
   revenueChart: ChartType;
@@ -41,21 +40,86 @@ export class DashboardComponent implements OnInit {
     zoom: 6,
     center: latLng(46.879966, -121.726909)
   };
+  @ViewChild('chart', {static: false}) chart: ChartComponent;
 
   constructor(public formBuilder: FormBuilder, private dashboardService: DashboardService) {
   }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{label: 'Logistica'}, {label: 'Dashboard', active: true}];
-    this.dashboardService.getTotaleInput().subscribe(data => this.inputCount = data);
-    this.dashboardService.getTotaleOutput().subscribe(data => this.outputCount = data);
-    this.dashboardService.getTotaleTransfer().subscribe(data => this.transferCount = data);
+    this.dashboardService.getStatistics().subscribe(data => this.statistics = data);
     this._fetchData();
-    this.dashboardService.getMonthlyChiffreAffaire().subscribe(data => {
-      this.revenueChart.series[0].data = data[0];
-      this.revenueChart.series[1].data = data[1];
-      this.revenueChart.series[2].data = data[2];
+    this.getMonthly();
+  }
+
+  getHourly(): void {
+    let s1 = [];
+    let s2 = [];
+    let s3 = [];
+    this.dashboardService.getHourlyChiffreAffaire().subscribe(data => {
+      for (let i = 1; i <= 24; i++) {
+        const v = data[0].items.find(x => x[0] === i);
+        s1.push(v === undefined ? null : v[1]);
+
+        const vv = data[1].items.find(x => x[0] === i);
+        s2.push(vv === undefined ? null : vv[1]);
+
+        const vvv = data[2].items.find(x => x[0] === i);
+        s3.push(vvv === undefined ? null : vvv[1]);
+      }
+
+      this.revenueChart.series[0].data = s1;
+      this.revenueChart.series[1].data = s2;
+      this.revenueChart.series[2].data = s3;
     });
+  }
+
+  getDaily(): void {
+    let s1 = [];
+    let s2 = [];
+    let s3 = [];
+    this.dashboardService.getDailyChiffreAffaire().subscribe(data => {
+      for (let i = 1; i <= 31; i++) {
+        const v = data[0].items.find(x => x[0] === i);
+        s1.push(v === undefined ? null : v[1]);
+
+        const vv = data[1].items.find(x => x[0] === i);
+        s2.push(vv === undefined ? null : vv[1]);
+
+        const vvv = data[2].items.find(x => x[0] === i);
+        s3.push(vvv === undefined ? null : vvv[1]);
+      }
+      this.revenueChart.series[0].data = s1;
+      this.revenueChart.series[1].data = s2;
+      this.revenueChart.series[2].data = s3;
+    });
+  }
+
+  getMonthly(): void {
+    let s1 = [];
+    let s2 = [];
+    let s3 = [];
+    this.dashboardService.getMonthlyChiffreAffaire().subscribe(data => {
+      for (let i = 1; i <= 12; i++) {
+        const v = data[0].items.find(x => x[0] === i);
+        s1.push(v === undefined ? null : v[1]);
+
+        const vv = data[1].items.find(x => x[0] === i);
+        s2.push(vv === undefined ? null : vv[1]);
+
+        const vvv = data[2].items.find(x => x[0] === i);
+        s3.push(vvv === undefined ? null : vvv[1]);
+      }
+      this.revenueChart.series[0].data = s1;
+      this.revenueChart.series[1].data = s2;
+      this.revenueChart.series[2].data = s3;
+    });
+  }
+
+  private resetData(): void {
+    this.revenueChart.series[0].data = [];
+    this.revenueChart.series[1].data = [];
+    this.revenueChart.series[2].data = [];
   }
 
 

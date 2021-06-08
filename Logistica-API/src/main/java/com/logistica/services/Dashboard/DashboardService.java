@@ -1,8 +1,10 @@
 package com.logistica.services.Dashboard;
 
 import com.logistica.dtos.SeriesListDto;
+import com.logistica.dtos.StatisticDto;
 import com.logistica.repositories.Products.IInputRepository;
 import com.logistica.repositories.Products.IOutputRepository;
+import com.logistica.repositories.Products.IProductRepository;
 import com.logistica.repositories.Products.ITransferRepository;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +13,8 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
-import java.util.concurrent.CompletableFuture;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class DashboardService implements IDashboardService {
@@ -26,55 +28,77 @@ public class DashboardService implements IDashboardService {
     @Autowired
     private ITransferRepository iTransferRepository;
 
-    @Override
-    public CompletableFuture<Long> getTotaleInput() {
-        return CompletableFuture.completedFuture(iInputRepository.count());
-    }
+    @Autowired
+    private IProductRepository iProductRepository;
 
     @Override
-    public CompletableFuture<Long> getTotaleOutput() {
-        return CompletableFuture.completedFuture(iOutputRepository.count());
+    public CompletableFuture<List<StatisticDto>> getStatistics() {
+        var statistics = new ArrayList<StatisticDto>();
+        statistics.add(new StatisticDto(iInputRepository.count(), 0d));
+        statistics.add(new StatisticDto(iOutputRepository.count(), 0d));
+        statistics.add(new StatisticDto(iTransferRepository.count(), 0d));
+        statistics.add(new StatisticDto(iProductRepository.count(), 0d));
+        return CompletableFuture.completedFuture(statistics);
     }
 
-    @Override
-    public CompletableFuture<Long> getTotaleTransfer() {
-        return CompletableFuture.completedFuture(iTransferRepository.count());
-    }
-
-    @Override
-    public CompletableFuture<Long> getTotaleAvailableStock() {
-        return null;
-    }
-
-    @Override
-    public CompletableFuture<Long> getAvgAvailableStock() {
-        return null;
-    }
-
-    @Override
-    public CompletableFuture<Long> getTotaleSales() {
-        return null;
-    }
 
     @Override
     public CompletableFuture<List<SeriesListDto>> getMonthlyChiffreAffaire() {
         var list = new ArrayList<SeriesListDto>();
         Session session = entityManager.unwrap(Session.class);
         //calculate stock money
-        list.add(new SeriesListDto(session.createQuery(
-                "select MONTH(i.createdAt) as time, sum((id.qte - COALESCE(od.qte,0)) * p.priceHT) as value " +
-                        "from Input i inner join i.inputDetails id inner join id.product p " +
-                        "left join p.outputDetails od group by time").list()));
+        list.add(new SeriesListDto(session.createQuery("select MONTH(i.createdAt) as time, sum((id.qte - COALESCE(od.qte,0)) * p.priceHT) as value " +
+                "from Input i inner join i.inputDetails id inner join id.product p " +
+                "left join p.outputDetails od group by time").list()));
         //todo calculate input money
         list.add(new SeriesListDto(session.createQuery(
-                "select MONTH(i.createdAt) as time, sum((id.qte - COALESCE(od.qte,0)) * p.priceHT) as value " +
+                "select MONTH(i.createdAt) as time, sum(id.qte * p.priceHT) as value " +
                         "from Input i inner join i.inputDetails id inner join id.product p " +
-                        "left join p.outputDetails od group by time").list()));
+                        "group by time").list()));
         //todo calculate output money
         list.add(new SeriesListDto(session.createQuery(
-                "select MONTH(i.createdAt) as time, sum((id.qte - COALESCE(od.qte,0)) * p.priceHT) as value " +
+                "select MONTH(o.createdAt) as time, sum(od.qte * od.priceHT) as value " +
+                        "from Output o inner join o.outputDetails od group by time").list()));
+        return CompletableFuture.completedFuture(list);
+    }
+
+    @Override
+    public CompletableFuture<List<SeriesListDto>> getDailyChiffreAffaire() {
+        var list = new ArrayList<SeriesListDto>();
+        Session session = entityManager.unwrap(Session.class);
+        //calculate stock money
+        list.add(new SeriesListDto(session.createQuery("select DAY(i.createdAt) as time, sum((id.qte - COALESCE(od.qte,0)) * p.priceHT) as value " +
+                "from Input i inner join i.inputDetails id inner join id.product p " +
+                "left join p.outputDetails od group by time").list()));
+        //todo calculate input money
+        list.add(new SeriesListDto(session.createQuery(
+                "select DAY(i.createdAt) as time, sum(id.qte * p.priceHT) as value " +
                         "from Input i inner join i.inputDetails id inner join id.product p " +
-                        "left join p.outputDetails od group by time").list()));
+                        "group by time").list()));
+        //todo calculate output money
+        list.add(new SeriesListDto(session.createQuery(
+                "select DAY(o.createdAt) as time, sum(od.qte * od.priceHT) as value " +
+                        "from Output o inner join o.outputDetails od group by time").list()));
+        return CompletableFuture.completedFuture(list);
+    }
+
+    @Override
+    public CompletableFuture<List<SeriesListDto>> getHourlyChiffreAffaire() {
+        var list = new ArrayList<SeriesListDto>();
+        Session session = entityManager.unwrap(Session.class);
+        //calculate stock money
+        list.add(new SeriesListDto(session.createQuery("select HOUR(i.createdAt) as time, sum((id.qte - COALESCE(od.qte,0)) * p.priceHT) as value " +
+                "from Input i inner join i.inputDetails id inner join id.product p " +
+                "left join p.outputDetails od group by time").list()));
+        //todo calculate input money
+        list.add(new SeriesListDto(session.createQuery(
+                "select HOUR(i.createdAt) as time, sum(id.qte * p.priceHT) as value " +
+                        "from Input i inner join i.inputDetails id inner join id.product p " +
+                        "group by time").list()));
+        //todo calculate output money
+        list.add(new SeriesListDto(session.createQuery(
+                "select HOUR(o.createdAt) as time, sum(od.qte * od.priceHT) as value " +
+                        "from Output o inner join o.outputDetails od group by time").list()));
         return CompletableFuture.completedFuture(list);
     }
 }

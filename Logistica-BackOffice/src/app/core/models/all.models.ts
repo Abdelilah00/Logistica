@@ -64,7 +64,7 @@ export class OutputDetail extends BaseModel {
   lot: number;
   qte: number;
   expDate: Date;
-  tVa: number;
+  tVA: number;
   priceHT: number;
   productName: string;
   productId: number;
@@ -129,4 +129,18 @@ class StockType extends BaseModel {
 export class BreadCrumb {
   title: string;
   items: Array<{ label: string; path?: string; active?: boolean; }>;
+}
+
+export class SeriesList {
+  items: ItemOfSeries[];
+}
+
+class ItemOfSeries {
+  time: number;
+  value: number;
+}
+
+export class Statistic {
+  value: number;
+  growth: number;
 }

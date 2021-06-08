@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {Observable} from 'rxjs';
 import {retry} from 'rxjs/operators';
+import {SeriesList, Statistic} from '../models/all.models';
 
 @Injectable({
   providedIn: 'root'
@@ -16,23 +17,23 @@ export class DashboardService {
     this.baseUrl = `${environment.apiBaseUrl}/dashboard`;
   }
 
-  getTotaleInput(): Observable<number> {
+  getStatistics(): Observable<Array<Statistic>> {
     this.loading = true;
-    return this.httpClient.get<number>(`${this.baseUrl}/getTotaleInput`).pipe(retry(1));
+    return this.httpClient.get<Array<Statistic>>(`${this.baseUrl}/getStatistics`).pipe(retry(1));
   }
 
-  getTotaleOutput(): Observable<number> {
+  getMonthlyChiffreAffaire(): Observable<Array<SeriesList>> {
     this.loading = true;
-    return this.httpClient.get<number>(`${this.baseUrl}/getTotaleOutput`).pipe(retry(1));
+    return this.httpClient.get<Array<SeriesList>>(`${this.baseUrl}/getMonthlyChiffreAffaire`).pipe(retry(1));
   }
 
-  getTotaleTransfer(): Observable<number> {
+  getDailyChiffreAffaire(): Observable<Array<SeriesList>> {
     this.loading = true;
-    return this.httpClient.get<number>(`${this.baseUrl}/getTotaleTransfer`).pipe(retry(1));
+    return this.httpClient.get<Array<SeriesList>>(`${this.baseUrl}/getDailyChiffreAffaire`).pipe(retry(1));
   }
 
-  getMonthlyChiffreAffaire(): Observable<Array<number>> {
+  getHourlyChiffreAffaire(): Observable<Array<SeriesList>> {
     this.loading = true;
-    return this.httpClient.get<Array<number>>(`${this.baseUrl}/getMonthlyChiffreAffaire`).pipe(retry(1));
+    return this.httpClient.get<Array<SeriesList>>(`${this.baseUrl}/getHourlyChiffreAffaire`).pipe(retry(1));
   }
 }

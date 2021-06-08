@@ -4,14 +4,17 @@
   <div class="row">
     <div class="col-xl-8">
       <div class="row">
-        <div class="col-md-4">
-          <app-stat [icon]="'ri-stack-line'" [title]="'Input Count'" [value]="inputCount"></app-stat>
+        <div class="col-md-3">
+          <app-stat [data]="statistics[0]" [icon]="'ri-stack-line'" [title]="'Input Count'"></app-stat>
         </div>
-        <div class="col-md-4">
-          <app-stat [icon]="'ri-stack-line'" [title]="'Output Count'" [value]="outputCount"></app-stat>
+        <div class="col-md-3">
+          <app-stat [data]="statistics[1]" [icon]="'ri-stack-line'" [title]="'Output Count'"></app-stat>
         </div>
-        <div class="col-md-4">
-          <app-stat [icon]="'ri-stack-line'" [title]="'Transfer Count'" [value]="transferCount"></app-stat>
+        <div class="col-md-3">
+          <app-stat [data]="statistics[2]" [icon]="'ri-stack-line'" [title]="'Transfer Count'"></app-stat>
+        </div>
+        <div class="col-md-3">
+          <app-stat [data]="statistics[3]" [icon]="'ri-stack-line'" [title]="'Product Count'"></app-stat>
         </div>
       </div>
       <!-- end row -->
@@ -20,9 +23,14 @@
         <div class="card-body">
           <div class="float-right d-none d-md-inline-block">
             <div class="btn-group mb-2">
-              <button class="btn btn-sm btn-light" type="button">Today</button>
-              <button class="btn btn-sm btn-light" type="button">Weekly</button>
-              <button class="btn btn-sm btn-light active" type="button">Monthly</button>
+              <mat-button-toggle-group appearance="legacy" aria-label="Font Style" name="fontStyle">
+                <mat-button-toggle (click)='getHourly()' class="btn btn-sm btn-light">Hourly
+                </mat-button-toggle>
+                <mat-button-toggle (click)='getDaily()' class="btn btn-sm btn-light">Daily
+                </mat-button-toggle>
+                <mat-button-toggle (click)='getMonthly()' class="btn btn-sm btn-light">Monthly
+                </mat-button-toggle>
+              </mat-button-toggle-group>
             </div>
           </div>
           <h4 class="card-title mb-4">Revenue Analytics</h4>
@@ -34,7 +42,7 @@
                        [plotOptions]="revenueChart.plotOptions"
                        [series]="revenueChart.series"
                        [stroke]="revenueChart.stroke"
-                       class="apex-charts" dir="ltr">
+                       #chart class="apex-charts" dir="ltr">
             </apx-chart>
           </div>
         </div>

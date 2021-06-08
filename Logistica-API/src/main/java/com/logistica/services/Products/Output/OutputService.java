@@ -3,7 +3,6 @@ package com.logistica.services.Products.Output;
 import com.alexy.services.BaseCrudServiceImpl;
 import com.configuration.Exception.UserFriendlyException;
 import com.logistica.domains.Products.Output;
-import com.logistica.domains.Products.OutputDetails;
 import com.logistica.dtos.Products.Output.OutputCreateDto;
 import com.logistica.dtos.Products.Output.OutputDto;
 import com.logistica.dtos.Products.Output.OutputUpdateDto;
@@ -44,13 +43,13 @@ public class OutputService extends BaseCrudServiceImpl<Output, OutputDto, Output
 
         for (int i = 0; i < outputCreateDto.getOutputDetails().size(); i++) {
             var transactionDto = outputCreateDto.getOutputDetails().get(i);
-            var outputDetails = new OutputDetails();
+            //var outputDetails = new OutputDetails();
             ///map attributes from dto to entity
-            outputDetails.getProduct().setId(transactionDto.getProductId());
-            outputDetails.setLot(transactionDto.getLot());
-            outputDetails.setArticle(transactionDto.getArticle());
-            outputDetails.setPriceHT(transactionDto.getPriceHT());
-            outputDetails.setQte(transactionDto.getQte());
+            //outputDetails.getProduct().setId(transactionDto.getProductId());
+            // outputDetails.setLot(transactionDto.getLot());
+            //outputDetails.setArticle(transactionDto.getArticle());
+            //outputDetails.setPriceHT(transactionDto.getPriceHT());
+            //outputDetails.setQte(transactionDto.getQte());
 
             //insert qte to stockproduct principale - increment if prod exist in stock else create new one
             var stockProd = iStockProductRepository.findByProductIdAndStockId(transactionDto.getProductId(), transactionDto.getStockId());
@@ -63,8 +62,9 @@ public class OutputService extends BaseCrudServiceImpl<Output, OutputDto, Output
                 session.clear();
                 throw new UserFriendlyException("the qte not available in this stock try to split your needs on many stocks");
             }
-            outputDetails.setOutput(output);
-            output.getOutputDetails().add(outputDetails);
+
+            //outputDetails.setOutput(output);
+            output.getOutputDetails().get(i).setOutput(output);
         }
 
         return CompletableFuture.completedFuture(objectMapper.convertToDto(repository.save(output), OutputDto.class));

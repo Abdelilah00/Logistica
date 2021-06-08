@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {Statistic} from '../../../core/models/all.models';
 
 @Component({
   selector: 'app-stat',
@@ -8,7 +9,7 @@ import {Component, Input, OnInit} from '@angular/core';
 export class StatComponent implements OnInit {
 
   @Input() title: string;
-  @Input() value: number;
+  @Input() data: Statistic;
   @Input() icon: string;
 
   constructor() {

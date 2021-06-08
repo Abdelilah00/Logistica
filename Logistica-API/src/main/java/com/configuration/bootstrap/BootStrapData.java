@@ -319,7 +319,7 @@ public class BootStrapData implements CommandLineRunner {
 
         }
 
- /*       try {
+      /*try {
             statTransData();
         } catch (UserFriendlyException | InterruptedException e) {
             e.printStackTrace();

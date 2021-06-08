@@ -17,24 +17,24 @@ public class DashboardController {
     @Autowired
     private IDashboardService iDashboardService;
 
-    @GetMapping(path = "/getTotaleInput")
-    protected Long getTotaleInput() throws ExecutionException, InterruptedException {
-        return iDashboardService.getTotaleInput().get();
+    @GetMapping(path = "/getStatistics")
+    protected List<StatisticDto> getStatistics() throws ExecutionException, InterruptedException {
+        return iDashboardService.getStatistics().get();
     }
 
-    @GetMapping(path = "/getTotaleOutput")
-    protected Long getTotaleOutput() throws ExecutionException, InterruptedException {
-        return iDashboardService.getTotaleOutput().get();
-    }
 
-    @GetMapping(path = "/getTotaleTransfer")
-    protected Long getTotaleTransfer() throws ExecutionException, InterruptedException {
-        return iDashboardService.getTotaleTransfer().get();
-    }
-
-    //todo chiffre d'affaire mensuelle
     @GetMapping(path = "/getMonthlyChiffreAffaire")
     protected List<SeriesListDto> getMonthlyChiffreAffaire() throws ExecutionException, InterruptedException {
         return iDashboardService.getMonthlyChiffreAffaire().get();
+    }
+
+    @GetMapping(path = "/getDailyChiffreAffaire")
+    protected List<SeriesListDto> getDailyChiffreAffaire() throws ExecutionException, InterruptedException {
+        return iDashboardService.getDailyChiffreAffaire().get();
+    }
+
+    @GetMapping(path = "/getHourlyChiffreAffaire")
+    protected List<SeriesListDto> getHourlyChiffreAffaire() throws ExecutionException, InterruptedException {
+        return iDashboardService.getHourlyChiffreAffaire().get();
     }
 }

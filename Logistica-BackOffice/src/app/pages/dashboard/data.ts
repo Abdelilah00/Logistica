@@ -38,7 +38,6 @@ const revenueChart: ChartType = {
     show: false,
   },
   colors: ['#5664d2', '#1cbb8c', '#ea1854'],
-  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 };
 
 const salesAnalytics: ChartType = {

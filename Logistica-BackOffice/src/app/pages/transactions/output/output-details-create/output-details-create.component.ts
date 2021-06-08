@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {GridComponent} from '@progress/kendo-angular-grid';
-import {Product, Stock, InputDetail} from '../../../../core/models/all.models';
+import {OutputDetail, Product, Stock} from '../../../../core/models/all.models';
 import {ProductsService} from '../../../../core/services/Products/products.service';
 import {StocksService} from '../../../../core/services/Products/stocks.service';
 
@@ -11,7 +11,7 @@ import {StocksService} from '../../../../core/services/Products/stocks.service';
   styleUrls: ['./output-details-create.component.scss']
 })
 export class OutputDetailsCreateComponent implements OnInit {
-  products = Array<InputDetail>();
+  products = Array<OutputDetail>();
   originalProducts = [];
   transactions: FormGroup;
   isEditMode = true;
@@ -62,28 +62,32 @@ export class OutputDetailsCreateComponent implements OnInit {
     return this.stockList.find(x => x.id === id);
   }
 
-  public createFormGroup(dataItem: InputDetail = new InputDetail()): FormGroup {
+  public createFormGroup(dataItem: OutputDetail = new OutputDetail()): FormGroup {
     return this.formBuilder.group({
       productId: [dataItem.productId, Validators.required],
       stockId: [dataItem.stockId, Validators.required],
+      priceHT: [dataItem.priceHT, Validators.required],
+      tVA: [dataItem.tVA, Validators.required],
+      qte: [dataItem.qte, Validators.required],
       lot: [dataItem.lot, Validators.required],
       article: [dataItem.article, Validators.required],
-      qte: [dataItem.qte, Validators.required],
       expDate: [dataItem.expDate, Validators.required],
     });
   }
 
   onAdd() {
     // add item to products array
-    this.products.push(new InputDetail());
+    this.products.push(new OutputDetail());
 
     // add new form group to form array
     // todo get default value from category
-    const test = new InputDetail();
+    const test = new OutputDetail();
     test.qte = 10;
     test.article = 10;
     test.lot = 10;
     test.productId = 0;
+    test.priceHT = 20;
+    test.tVA = 10;
     test.expDate = new Date();
     const formGroup = this.createFormGroup(test);
     this.fa.push(formGroup);
@@ -154,6 +158,4 @@ export class OutputDetailsCreateComponent implements OnInit {
       this.fa.push(this.createFormGroup(x));
     });
   }
-
-
 }
