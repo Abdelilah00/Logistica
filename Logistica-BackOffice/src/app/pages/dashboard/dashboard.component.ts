@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder} from '@angular/forms';
 import {latLng, tileLayer} from 'leaflet';
 
 import {ChartType, Chat, Stat, Transaction} from './dashboard.model';
@@ -30,8 +30,6 @@ export class DashboardComponent implements OnInit {
   sparklineEarning: ChartType;
   sparklineMonthly: ChartType;
   // Form submit
-  chatSubmit: boolean;
-  formData: FormGroup;
   options = {
     layers: [
       tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: '...'})
