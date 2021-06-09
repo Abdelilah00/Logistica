@@ -33,11 +33,23 @@ public class DashboardService implements IDashboardService {
 
     @Override
     public CompletableFuture<List<StatisticDto>> getStatistics() {
+        Session session = entityManager.unwrap(Session.class);
+
         var statistics = new ArrayList<StatisticDto>();
-        statistics.add(new StatisticDto(iInputRepository.count(), 0d));
-        statistics.add(new StatisticDto(iOutputRepository.count(), 0d));
-        statistics.add(new StatisticDto(iTransferRepository.count(), 0d));
-        statistics.add(new StatisticDto(iProductRepository.count(), 0d));
+        statistics.add(new StatisticDto((double) iInputRepository.count(), 0d));
+        statistics.add(new StatisticDto((double) iOutputRepository.count(), 0d));
+        statistics.add(new StatisticDto((double) iTransferRepository.count(), 0d));
+        statistics.add(new StatisticDto((double) iProductRepository.count(), 0d));
+        //qte available
+        Long tmp = (long) session.createQuery("select sum(id.qte - COALESCE(od.qte,0)) " +
+                "from Input i inner join i.inputDetails id inner join id.product p " +
+                "left join p.outputDetails od").getSingleResult();
+        statistics.add(new StatisticDto(tmp.doubleValue(), 0d));
+        //chiffre in stocks
+        Double tmp2 = (double) session.createQuery("select sum((id.qte - COALESCE(od.qte,0)) * p.priceHT) " +
+                "from Input i inner join i.inputDetails id inner join id.product p " +
+                "left join p.outputDetails od").getSingleResult();
+        statistics.add(new StatisticDto(tmp2, 0d));
         return CompletableFuture.completedFuture(statistics);
     }
 

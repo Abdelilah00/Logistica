@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {latLng, tileLayer} from 'leaflet';
 
@@ -6,7 +6,6 @@ import {ChartType, Chat, Stat, Transaction} from './dashboard.model';
 
 import {revenueChart, salesAnalytics, sparklineEarning, sparklineMonthly, statData, transactions} from './data';
 import {DashboardService} from '../../core/services/dashboard.service';
-import {ChartComponent} from 'ng-apexcharts';
 import {Statistic} from '../../core/models/all.models';
 
 @Component({
@@ -23,7 +22,7 @@ export class DashboardComponent implements OnInit {
   chatData: Chat[];
   transactions: Transaction[];
   statData: Stat[];
-  statistics: Array<Statistic>;
+  statistics = new Array<Statistic>();
   // bread crumb items
   breadCrumbItems: Array<{}>;
   revenueChart: ChartType;
@@ -40,9 +39,9 @@ export class DashboardComponent implements OnInit {
     zoom: 6,
     center: latLng(46.879966, -121.726909)
   };
-  @ViewChild('chart', {static: false}) chart: ChartComponent;
 
-  constructor(public formBuilder: FormBuilder, private dashboardService: DashboardService) {
+  constructor(public formBuilder: FormBuilder,
+              private dashboardService: DashboardService) {
   }
 
   ngOnInit(): void {
