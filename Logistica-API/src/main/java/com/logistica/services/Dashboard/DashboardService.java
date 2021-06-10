@@ -58,18 +58,38 @@ public class DashboardService implements IDashboardService {
     public CompletableFuture<List<SeriesListDto>> getMonthlyChiffreAffaire() {
         var list = new ArrayList<SeriesListDto>();
         Session session = entityManager.unwrap(Session.class);
-        //calculate stock money
+        // calculate stock money
         list.add(new SeriesListDto(session.createQuery("select MONTH(i.createdAt) as time, sum((id.qte - COALESCE(od.qte,0)) * p.priceHT) as value " +
                 "from Input i inner join i.inputDetails id inner join id.product p " +
-                "left join p.outputDetails od group by time").list()));
-        //todo calculate input money
+                "left join p.outputDetails od left join od.output o where MONTH(o.createdAt) = MONTH(i.createdAt) group by time").list()));
+        // calculate input money
         list.add(new SeriesListDto(session.createQuery(
                 "select MONTH(i.createdAt) as time, sum(id.qte * p.priceHT) as value " +
                         "from Input i inner join i.inputDetails id inner join id.product p " +
                         "group by time").list()));
-        //todo calculate output money
+        // calculate output money
         list.add(new SeriesListDto(session.createQuery(
                 "select MONTH(o.createdAt) as time, sum(od.qte * od.priceHT) as value " +
+                        "from Output o inner join o.outputDetails od group by time").list()));
+        return CompletableFuture.completedFuture(list);
+    }
+
+    @Override
+    public CompletableFuture<List<SeriesListDto>> getMonthlyQte() {
+        var list = new ArrayList<SeriesListDto>();
+        Session session = entityManager.unwrap(Session.class);
+        // calculate stock money
+        list.add(new SeriesListDto(session.createQuery("select MONTH(i.createdAt) as time, sum(id.qte - COALESCE(od.qte,0)) as value " +
+                "from Input i inner join i.inputDetails id inner join id.product p " +
+                "left join p.outputDetails od left join od.output o where MONTH(o.createdAt) = MONTH(i.createdAt) group by time").list()));
+        // calculate input money
+        list.add(new SeriesListDto(session.createQuery(
+                "select MONTH(i.createdAt) as time, sum(id.qte) as value " +
+                        "from Input i inner join i.inputDetails id inner join id.product p " +
+                        "group by time").list()));
+        // calculate output money
+        list.add(new SeriesListDto(session.createQuery(
+                "select MONTH(o.createdAt) as time, sum(od.qte) as value " +
                         "from Output o inner join o.outputDetails od group by time").list()));
         return CompletableFuture.completedFuture(list);
     }
@@ -78,16 +98,16 @@ public class DashboardService implements IDashboardService {
     public CompletableFuture<List<SeriesListDto>> getDailyChiffreAffaire() {
         var list = new ArrayList<SeriesListDto>();
         Session session = entityManager.unwrap(Session.class);
-        //calculate stock money
+        // calculate stock money
         list.add(new SeriesListDto(session.createQuery("select DAY(i.createdAt) as time, sum((id.qte - COALESCE(od.qte,0)) * p.priceHT) as value " +
                 "from Input i inner join i.inputDetails id inner join id.product p " +
                 "left join p.outputDetails od group by time").list()));
-        //todo calculate input money
+        // calculate input money
         list.add(new SeriesListDto(session.createQuery(
                 "select DAY(i.createdAt) as time, sum(id.qte * p.priceHT) as value " +
                         "from Input i inner join i.inputDetails id inner join id.product p " +
                         "group by time").list()));
-        //todo calculate output money
+        // calculate output money
         list.add(new SeriesListDto(session.createQuery(
                 "select DAY(o.createdAt) as time, sum(od.qte * od.priceHT) as value " +
                         "from Output o inner join o.outputDetails od group by time").list()));
@@ -98,16 +118,16 @@ public class DashboardService implements IDashboardService {
     public CompletableFuture<List<SeriesListDto>> getHourlyChiffreAffaire() {
         var list = new ArrayList<SeriesListDto>();
         Session session = entityManager.unwrap(Session.class);
-        //calculate stock money
+        // calculate stock money
         list.add(new SeriesListDto(session.createQuery("select HOUR(i.createdAt) as time, sum((id.qte - COALESCE(od.qte,0)) * p.priceHT) as value " +
                 "from Input i inner join i.inputDetails id inner join id.product p " +
                 "left join p.outputDetails od group by time").list()));
-        //todo calculate input money
+        // calculate input money
         list.add(new SeriesListDto(session.createQuery(
                 "select HOUR(i.createdAt) as time, sum(id.qte * p.priceHT) as value " +
                         "from Input i inner join i.inputDetails id inner join id.product p " +
                         "group by time").list()));
-        //todo calculate output money
+        // calculate output money
         list.add(new SeriesListDto(session.createQuery(
                 "select HOUR(o.createdAt) as time, sum(od.qte * od.priceHT) as value " +
                         "from Output o inner join o.outputDetails od group by time").list()));

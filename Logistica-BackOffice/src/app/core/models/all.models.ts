@@ -131,16 +131,4 @@ export class BreadCrumb {
   items: Array<{ label: string; path?: string; active?: boolean; }>;
 }
 
-export class SeriesList {
-  items: ItemOfSeries[];
-}
 
-class ItemOfSeries {
-  time: number;
-  value: number;
-}
-
-export class Statistic {
-  value: number;
-  growth: number;
-}

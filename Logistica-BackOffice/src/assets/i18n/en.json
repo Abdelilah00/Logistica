@@ -56,7 +56,12 @@
     },
     "DASHBOARDS": {
       "TEXT": "Dashboard",
-      "BADGE": "03"
+      "BADGE": "03",
+      "LIST": {
+        "ANALYTICS": "Analytics",
+        "ALERTS": "Alerts",
+        "PREDICTIONS": "Predictions"
+      }
     },
     "ORGANIZATION": {
       "TEXT": "Organization",

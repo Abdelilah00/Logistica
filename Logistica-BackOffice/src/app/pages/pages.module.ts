@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 
-import {DashboardComponent} from './dashboard/dashboard.component';
 import {RouterModule, Routes} from '@angular/router';
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
 import {UiModule} from '../shared/ui/ui.module';
@@ -21,7 +20,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 };
 
 const routes: Routes = [
-  {path: '', component: DashboardComponent},
+  {path: 'dashboards', loadChildren: () => import('./dashboards/dashboards.module').then(m => m.DashboardsModule)},
   {path: 'actors', loadChildren: () => import('./actors/actors.module').then(m => m.ActorsModule)},
   {path: 'organization', loadChildren: () => import('./organization/organization.module').then(m => m.OrganizationModule)},
   {path: 'stocks', loadChildren: () => import('./stocks/stocks.module').then(m => m.StocksModule)},
@@ -30,25 +29,26 @@ const routes: Routes = [
   {path: 'audits', loadChildren: () => import('./audits/audits.module').then(m => m.AuditsModule)},
   {path: 'utility', loadChildren: () => import('./utility/utility.module').then(m => m.UtilityModule)},
   {path: 'parameters', loadChildren: () => import('./parameters/parameters.module').then(m => m.ParametersModule)},
+  {path: '**', loadChildren: () => import('./dashboards/dashboards.module').then(m => m.DashboardsModule)},
 ];
 
 @NgModule({
-  declarations: [DashboardComponent],
-    imports: [
-        CommonModule,
-      RouterModule.forChild(routes),
-      Ng2SearchPipeModule,
-      UiModule,
-      WidgetModule,
-      NgApexchartsModule,
-      PerfectScrollbarModule,
-      LeafletModule,
-      MatSnackBarModule,
-      FormsModule,
-      ReactiveFormsModule,
-      NgbDropdownModule,
-      MatButtonToggleModule
-    ],
+  declarations: [],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    Ng2SearchPipeModule,
+    UiModule,
+    WidgetModule,
+    NgApexchartsModule,
+    PerfectScrollbarModule,
+    LeafletModule,
+    MatSnackBarModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgbDropdownModule,
+    MatButtonToggleModule
+  ],
   providers: [
     {
       provide: PERFECT_SCROLLBAR_CONFIG,

@@ -11,6 +11,7 @@ public interface IDashboardService {
 
 
     CompletableFuture<List<SeriesListDto>> getMonthlyChiffreAffaire();
+    CompletableFuture<List<SeriesListDto>> getMonthlyQte();
 
     CompletableFuture<List<SeriesListDto>> getDailyChiffreAffaire();
 

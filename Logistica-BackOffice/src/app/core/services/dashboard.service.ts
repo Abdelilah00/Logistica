@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {Observable} from 'rxjs';
 import {retry} from 'rxjs/operators';
-import {SeriesList, Statistic} from '../models/all.models';
+import {SeriesList, Statistic} from '../models/dashboard.model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +25,11 @@ export class DashboardService {
   getMonthlyChiffreAffaire(): Observable<Array<SeriesList>> {
     this.loading = true;
     return this.httpClient.get<Array<SeriesList>>(`${this.baseUrl}/getMonthlyChiffreAffaire`).pipe(retry(1));
+  }
+
+  getMonthlyQte(): Observable<Array<SeriesList>> {
+    this.loading = true;
+    return this.httpClient.get<Array<SeriesList>>(`${this.baseUrl}/getMonthlyQte`).pipe(retry(1));
   }
 
   getDailyChiffreAffaire(): Observable<Array<SeriesList>> {

@@ -1,23 +1,17 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder} from '@angular/forms';
+import {ChartType, Chat, Stat, Statistic, Transaction} from '../../../core/models/dashboard.model';
 import {latLng, tileLayer} from 'leaflet';
-
-import {ChartType, Chat, Stat, Transaction} from './dashboard.model';
-
-import {revenueChart, salesAnalytics, sparklineEarning, sparklineMonthly, statData, transactions} from './data';
-import {DashboardService} from '../../core/services/dashboard.service';
-import {Statistic} from '../../core/models/all.models';
+import {FormBuilder} from '@angular/forms';
+import {DashboardService} from '../../../core/services/dashboard.service';
+import {qteChart, revenueChart, salesAnalytics, sparklineEarning, sparklineMonthly, statData, transactions} from '../data';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  selector: 'app-analytics',
+  templateUrl: './analytics.component.html',
+  styleUrls: ['./analytics.component.scss']
 })
 
-/**
- * Dashboard Component
- */
-export class DashboardComponent implements OnInit {
+export class AnalyticsComponent implements OnInit {
   term: any;
   chatData: Chat[];
   transactions: Transaction[];
@@ -26,6 +20,7 @@ export class DashboardComponent implements OnInit {
   // bread crumb items
   breadCrumbItems: Array<{}>;
   revenueChart: ChartType;
+  qteChart: ChartType;
   salesAnalytics: ChartType;
   sparklineEarning: ChartType;
   sparklineMonthly: ChartType;
@@ -47,69 +42,70 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getStatistics().subscribe(data => this.statistics = data);
     this._fetchData();
     this.getMonthly();
+    this.getMonthlyQte();
   }
 
   getHourly(): void {
-    let s1 = [];
-    let s2 = [];
-    let s3 = [];
+    this.resetData();
     this.dashboardService.getHourlyChiffreAffaire().subscribe(data => {
       for (let i = 1; i <= 24; i++) {
         const v = data[0].items.find(x => x[0] === i);
-        s1.push(v === undefined ? null : v[1]);
+        this.revenueChart.series[0].data.push(v === undefined ? null : v[1]);
 
         const vv = data[1].items.find(x => x[0] === i);
-        s2.push(vv === undefined ? null : vv[1]);
+        this.revenueChart.series[1].data.push(vv === undefined ? null : vv[1]);
 
         const vvv = data[2].items.find(x => x[0] === i);
-        s3.push(vvv === undefined ? null : vvv[1]);
+        this.revenueChart.series[2].data.push(vvv === undefined ? null : vvv[1]);
       }
-
-      this.revenueChart.series[0].data = s1;
-      this.revenueChart.series[1].data = s2;
-      this.revenueChart.series[2].data = s3;
     });
   }
 
   getDaily(): void {
-    let s1 = [];
-    let s2 = [];
-    let s3 = [];
+    this.resetData();
     this.dashboardService.getDailyChiffreAffaire().subscribe(data => {
       for (let i = 1; i <= 31; i++) {
         const v = data[0].items.find(x => x[0] === i);
-        s1.push(v === undefined ? null : v[1]);
+        this.revenueChart.series[0].data.push(v === undefined ? null : v[1]);
 
         const vv = data[1].items.find(x => x[0] === i);
-        s2.push(vv === undefined ? null : vv[1]);
+        this.revenueChart.series[1].data.push(vv === undefined ? null : vv[1]);
 
         const vvv = data[2].items.find(x => x[0] === i);
-        s3.push(vvv === undefined ? null : vvv[1]);
+        this.revenueChart.series[2].data.push(vvv === undefined ? null : vvv[1]);
       }
-      this.revenueChart.series[0].data = s1;
-      this.revenueChart.series[1].data = s2;
-      this.revenueChart.series[2].data = s3;
     });
   }
 
   getMonthly(): void {
-    let s1 = [];
-    let s2 = [];
-    let s3 = [];
+    this.resetData();
     this.dashboardService.getMonthlyChiffreAffaire().subscribe(data => {
       for (let i = 1; i <= 12; i++) {
         const v = data[0].items.find(x => x[0] === i);
-        s1.push(v === undefined ? null : v[1]);
+        this.revenueChart.series[0].data.push(v === undefined ? null : v[1]);
 
         const vv = data[1].items.find(x => x[0] === i);
-        s2.push(vv === undefined ? null : vv[1]);
+        this.revenueChart.series[1].data.push(vv === undefined ? null : vv[1]);
 
         const vvv = data[2].items.find(x => x[0] === i);
-        s3.push(vvv === undefined ? null : vvv[1]);
+        this.revenueChart.series[2].data.push(vvv === undefined ? null : vvv[1]);
       }
-      this.revenueChart.series[0].data = s1;
-      this.revenueChart.series[1].data = s2;
-      this.revenueChart.series[2].data = s3;
+    });
+  }
+
+  getMonthlyQte(): void {
+    this.resetData();
+    this.dashboardService.getMonthlyQte().subscribe(data => {
+      for (let i = 1; i <= 12; i++) {
+        const v = data[0].items.find(x => x[0] === i);
+        this.qteChart.series[0].data.push(v === undefined ? null : v[1]);
+
+        const vv = data[1].items.find(x => x[0] === i);
+        this.qteChart.series[1].data.push(vv === undefined ? null : vv[1]);
+
+        const vvv = data[2].items.find(x => x[0] === i);
+        this.qteChart.series[2].data.push(vvv === undefined ? null : vvv[1]);
+      }
     });
   }
 
@@ -122,6 +118,7 @@ export class DashboardComponent implements OnInit {
 
   private _fetchData() {
     this.revenueChart = revenueChart;
+    this.qteChart = qteChart;
     this.salesAnalytics = salesAnalytics;
     this.sparklineEarning = sparklineEarning;
     this.sparklineMonthly = sparklineMonthly;

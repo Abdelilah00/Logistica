@@ -1,6 +1,46 @@
-import {ChartType} from './dashboard.model';
+import {ChartType} from '../../core/models/dashboard.model';
 
 const revenueChart: ChartType = {
+  series: [{
+    name: 'chiffre',
+    type: 'column',
+    data: []
+  }, {
+    name: 'input',
+    type: 'line',
+    data: []
+  }, {
+    name: 'output',
+    type: 'line',
+    data: []
+  }],
+  chart: {
+    height: 280,
+    type: 'line',
+    toolbar: {
+      show: false,
+    }
+  },
+  stroke: {
+    width: [0, 3],
+    curve: 'smooth'
+  },
+  plotOptions: {
+    bar: {
+      horizontal: false,
+      columnWidth: '20%',
+    },
+  },
+  dataLabels: {
+    enabled: true,
+  },
+  legend: {
+    show: false,
+  },
+  colors: ['#5664d2', '#1cbb8c', '#ea1854'],
+};
+
+const qteChart: ChartType = {
   series: [{
     name: 'chiffre',
     type: 'column',
@@ -193,4 +233,4 @@ const statData = [
   }
 ];
 
-export {revenueChart, salesAnalytics, sparklineEarning, sparklineMonthly, transactions, statData};
+export {revenueChart, qteChart, salesAnalytics, sparklineEarning, sparklineMonthly, transactions, statData};

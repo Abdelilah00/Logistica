@@ -6,10 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -25,6 +22,9 @@ public class OutputDetails extends BaseEntity {
     private Date expDate;
     private Float priceHT;
     private Float tVA;
+/*
+    @OneToOne
+    private Stock stock = new Stock();*/
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Product product = new Product();

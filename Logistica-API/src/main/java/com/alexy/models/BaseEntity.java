@@ -11,6 +11,9 @@ import org.hibernate.annotations.*;
 
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.concurrent.ThreadLocalRandom;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -34,8 +37,9 @@ import java.time.LocalDateTime;
 public abstract class BaseEntity extends IdEntity {
     private long tenantId;
 
-    @CreationTimestamp
-    private LocalDateTime createdAt;
+    /*@CreationTimestamp
+    private LocalDateTime createdAt;*/
+    private LocalDateTime createdAt = LocalDateTime.ofInstant((new Date(ThreadLocalRandom.current().nextInt() * 1000L)).toInstant(), ZoneId.systemDefault());
     @UpdateTimestamp
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt = null;

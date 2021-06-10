@@ -12,7 +12,23 @@ export const MENU: MenuItem[] = [
       variant: 'success',
       text: 'MENUITEMS.DASHBOARDS.BADGE',
     },
-    link: '/'
+    subItems: [
+      {
+        label: 'MENUITEMS.DASHBOARDS.LIST.ANALYTICS',
+        icon: 'ri-product-hunt-line',
+        link: '/dashboards/analytics'
+      },
+      {
+        label: 'MENUITEMS.DASHBOARDS.LIST.ALERTS',
+        icon: 'ri-product-hunt-line',
+        link: '/dashboards/alerts'
+      },
+      {
+        label: 'MENUITEMS.DASHBOARDS.LIST.PREDICTIONS',
+        icon: 'ri-product-hunt-line',
+        link: '/dashboards/predictions'
+      }
+    ]
   },
   {
     label: 'MENUITEMS.ACTORS.TEXT',

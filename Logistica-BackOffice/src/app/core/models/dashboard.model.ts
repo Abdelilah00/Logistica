@@ -32,3 +32,17 @@ export interface Transaction {
   total: string;
   paymentstatus: string;
 }
+
+export class SeriesList {
+  items: ItemOfSeries[];
+}
+
+class ItemOfSeries {
+  time: number;
+  value: number;
+}
+
+export class Statistic {
+  value: number;
+  growth: number;
+}

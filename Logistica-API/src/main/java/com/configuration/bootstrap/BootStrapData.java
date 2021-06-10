@@ -6,25 +6,18 @@
 package com.configuration.bootstrap;
 
 
-import com.configuration.Exception.UserFriendlyException;
 import com.configuration.TenantContext;
 import com.configuration.security.repositories.IUserRepository;
 import com.logistica.domains.Commands.*;
 import com.logistica.domains.Organization.Structure;
 import com.logistica.domains.Organization.StructureUnit;
 import com.logistica.domains.Products.*;
-import com.logistica.dtos.Products.Input.InputCreateDto;
-import com.logistica.dtos.Products.Output.OutputCreateDto;
-import com.logistica.dtos.Products.TransactionDetail.InputDetailCreateDto;
-import com.logistica.dtos.Products.TransactionDetail.OutputDetailCreateDto;
 import com.logistica.repositories.Commands.IActorRepository;
 import com.logistica.repositories.Commands.IActorRoleRepository;
 import com.logistica.repositories.ITestRepository;
 import com.logistica.repositories.Organization.IStructureRepository;
 import com.logistica.repositories.Organization.IStructureUnitRepository;
 import com.logistica.repositories.Products.*;
-import com.logistica.services.Products.Input.IInputService;
-import com.logistica.services.Products.Output.IOutputService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +25,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Random;
 
@@ -64,9 +58,8 @@ public class BootStrapData implements CommandLineRunner {
     @Autowired
     private IOutputRepository iOutputRepository;
     @Autowired
-    private IInputService iInputService;
-    @Autowired
-    private IOutputService iOutputService;
+    private IStockProductRepository iStockProductRepository;
+
 
     @Override
     public void run(String... args) {
@@ -261,7 +254,7 @@ public class BootStrapData implements CommandLineRunner {
             iActorRepository.save(actor3);
             //endregion
 
-            //region create input
+            /*            //region create input
             var input = new Input();
             input.setRef("Ref2145");
             input.setDate(new Date());
@@ -315,22 +308,20 @@ public class BootStrapData implements CommandLineRunner {
             transactionDetails2.add(trans21);
             output.setOutputDetails(transactionDetails2);
             iOutputRepository.save(output);
-            //endregion
+            //endregion*/
 
+            statStockData();
         }
 
-      /*try {
-            statTransData();
-        } catch (UserFriendlyException | InterruptedException e) {
-            e.printStackTrace();
-        }*/
     }
 
     private void statStockData() {
         var random = new Random();
         var categories = new ArrayList<Category>();
         var products = new ArrayList<Product>();
-
+        var inputs = new ArrayList<Input>();
+        var outputs = new ArrayList<Output>();
+        var transfers = new ArrayList<Transfer>();
 
         for (int i = 1; i <= 10; i++) {
             var catA = new Category();
@@ -353,62 +344,68 @@ public class BootStrapData implements CommandLineRunner {
             prodA.setTVA(10f);
             prodA.getCategory().setId(random.nextInt(9) + 1);
             products.add(prodA);
+
         }
         iProductRepository.saveAll(products);
-    }
 
-    private void statTransData() throws UserFriendlyException, InterruptedException {
-        var random = new Random();
+        for (int i = 0; i < 500; i++) {
+            Long pId = (long) (random.nextInt(49) + 1);
+            Long sId = (long) (random.nextInt(1) + 1);
+            Integer qte = random.nextInt(100) + 50;
 
-
-        for (int i = 1; i <= 10; i++) {
-            var input = new InputCreateDto();
-            input.setRef("Ref" + i);
+            var input = new Input();
+            input.setRef("Ref2145");
             input.setDate(new Date());
             input.setDescription("input u wanna details its just for test");
-            input.setActorId(3L);
-            var InputDetails = new ArrayList<InputDetailCreateDto>();
-            var trans11 = new InputDetailCreateDto();
-            trans11.setExpDate(new Date());
-            trans11.setProductId((long) random.nextInt(49) + 1);
-            trans11.setArticle(5);
-            trans11.setLot(2);
-            trans11.setQte(50);
-            trans11.setStockId(1L);
-            InputDetails.add(trans11);
-            var trans12 = new InputDetailCreateDto();
-            trans12.setExpDate(new Date());
-            trans12.setProductId((long) random.nextInt(49) + 1);
-            trans12.setStockId(1L);
-            trans12.setArticle(5);
-            trans12.setLot(2);
-            trans12.setQte(100);
-            InputDetails.add(trans12);
-            input.setInputDetails(InputDetails);
-            iInputService.create(input);
-            Thread.sleep(2000);
-        }
+            input.getActor().setId(3L);
+            var trans = new InputDetails();
+            trans.getProduct().setId(pId);
+            trans.setQte(qte);
+            //trans.getStock().setId(sId);
+            trans.setInput(input);
+            input.setInputDetails(Collections.singletonList(trans));
 
-        for (int i = 1; i <= 5; i++) {
-            var output = new OutputCreateDto();
-            output.setRef("Ref" + i);
+            var stockProd = iStockProductRepository.findByProductIdAndStockId(pId, sId);
+            if (stockProd == null) {
+                stockProd = new StockProduct();
+                stockProd.getProduct().setId(pId);
+                stockProd.getStock().setId(sId);
+                stockProd.setQte(qte);
+            } else {
+                stockProd.setQte(stockProd.getQte() + qte);
+            }
+            inputs.add(input);
+            iStockProductRepository.save(stockProd);
+        }
+        iInputRepository.saveAll(inputs);
+
+        for (int i = 0; i < 648; i++) {
+            Long pId = (long) (random.nextInt(49) + 1);
+            Long sId = (long) (random.nextInt(1) + 1);
+            Integer qte = random.nextInt(50) + 50;
+            Float price = (float) (random.nextInt(50) + 100);
+
+            var output = new Output();
+            output.setRef("Ref2145");
             output.setDate(new Date());
-            output.setDescription("output u wanna details its just for test");
-            output.setAskBy("part of Supplier A");
-            output.setActorId(4L);
+            output.setDescription("input u wanna details its just for test");
+            output.getActor().setId(4L);
+            var trans = new OutputDetails();
+            trans.getProduct().setId(pId);
+            trans.setQte(qte);
+            //trans.getStock().setId(sId);
+            trans.setOutput(output);
+            trans.setPriceHT(price);
+            output.setOutputDetails(Collections.singletonList(trans));
 
-            var outputDetails = new ArrayList<OutputDetailCreateDto>();
-            var trans21 = new OutputDetailCreateDto();
-            trans21.setProductId((long) (random.nextInt(49) + 1));
-            trans21.setPriceHT(150f);
-            trans21.setTVA(0.06f);
-            trans21.setQte(50);
-            trans21.setStockId(1L);
-            outputDetails.add(trans21);
-            output.setOutputDetails(outputDetails);
-            iOutputService.create(output);
-            Thread.sleep(2000);
+            var stockProd = iStockProductRepository.findByProductIdAndStockId(pId, sId);
+            if (stockProd.getQte() >= qte) {
+                stockProd.setQte(stockProd.getQte() - qte);
+            }
+            //stockProducts.add(stockProd);
+            outputs.add(output);
         }
-
+        iOutputRepository.saveAll(outputs);
     }
+
 }

@@ -22,10 +22,14 @@ public class DashboardController {
         return iDashboardService.getStatistics().get();
     }
 
-
     @GetMapping(path = "/getMonthlyChiffreAffaire")
     protected List<SeriesListDto> getMonthlyChiffreAffaire() throws ExecutionException, InterruptedException {
         return iDashboardService.getMonthlyChiffreAffaire().get();
+    }
+
+    @GetMapping(path = "/getMonthlyQte")
+    protected List<SeriesListDto> getMonthlyQte() throws ExecutionException, InterruptedException {
+        return iDashboardService.getMonthlyQte().get();
     }
 
     @GetMapping(path = "/getDailyChiffreAffaire")
