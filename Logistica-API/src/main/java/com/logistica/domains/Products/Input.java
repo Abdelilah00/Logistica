@@ -22,6 +22,7 @@ public class Input extends BaseEntity {
     private String ref;
     private Date date;
     private String description;
+    private Boolean retur = Boolean.FALSE;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Actor actor = new Actor();

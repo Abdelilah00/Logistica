@@ -16,4 +16,5 @@ public class OutputDto extends BaseDto {
     private String actorName;
     private String description;
     private Date date;
+    private Boolean intern;
 }

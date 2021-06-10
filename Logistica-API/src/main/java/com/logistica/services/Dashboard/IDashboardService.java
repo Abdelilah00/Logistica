@@ -10,10 +10,13 @@ public interface IDashboardService {
     CompletableFuture<List<StatisticDto>> getStatistics();
 
 
-    CompletableFuture<List<SeriesListDto>> getMonthlyChiffreAffaire();
+    CompletableFuture<List<SeriesListDto>> getMonthlyTurnover();
+
+    CompletableFuture<List<SeriesListDto>> getDailyTurnover();
+
+    CompletableFuture<List<SeriesListDto>> getHourlyTurnover();
+
     CompletableFuture<List<SeriesListDto>> getMonthlyQte();
+    CompletableFuture<List<SeriesListDto>> getMonthlyBenefits();
 
-    CompletableFuture<List<SeriesListDto>> getDailyChiffreAffaire();
-
-    CompletableFuture<List<SeriesListDto>> getHourlyChiffreAffaire();
 }

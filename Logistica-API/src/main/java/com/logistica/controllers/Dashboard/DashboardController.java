@@ -22,23 +22,31 @@ public class DashboardController {
         return iDashboardService.getStatistics().get();
     }
 
-    @GetMapping(path = "/getMonthlyChiffreAffaire")
-    protected List<SeriesListDto> getMonthlyChiffreAffaire() throws ExecutionException, InterruptedException {
-        return iDashboardService.getMonthlyChiffreAffaire().get();
-    }
-
+    //TODO add period params to all series methods
     @GetMapping(path = "/getMonthlyQte")
     protected List<SeriesListDto> getMonthlyQte() throws ExecutionException, InterruptedException {
         return iDashboardService.getMonthlyQte().get();
     }
 
-    @GetMapping(path = "/getDailyChiffreAffaire")
-    protected List<SeriesListDto> getDailyChiffreAffaire() throws ExecutionException, InterruptedException {
-        return iDashboardService.getDailyChiffreAffaire().get();
+    @GetMapping(path = "/getMonthlyBenefits")
+    protected List<SeriesListDto> getMonthlyBenefits() throws ExecutionException, InterruptedException {
+        return iDashboardService.getMonthlyBenefits().get();
     }
 
-    @GetMapping(path = "/getHourlyChiffreAffaire")
-    protected List<SeriesListDto> getHourlyChiffreAffaire() throws ExecutionException, InterruptedException {
-        return iDashboardService.getHourlyChiffreAffaire().get();
+    //region merge to one method with period params &
+    @GetMapping(path = "/getMonthlyTurnover")
+    protected List<SeriesListDto> getMonthlyTurnover() throws ExecutionException, InterruptedException {
+        return iDashboardService.getMonthlyTurnover().get();
     }
+
+    @GetMapping(path = "/getDailyTurnover")
+    protected List<SeriesListDto> getDailyTurnover() throws ExecutionException, InterruptedException {
+        return iDashboardService.getDailyTurnover().get();
+    }
+
+    @GetMapping(path = "/getHourlyTurnover")
+    protected List<SeriesListDto> getHourlyTurnover() throws ExecutionException, InterruptedException {
+        return iDashboardService.getHourlyTurnover().get();
+    }
+    //endregion
 }

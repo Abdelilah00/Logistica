@@ -340,7 +340,7 @@ public class BootStrapData implements CommandLineRunner {
             prodA.setStockMax(1000);
             prodA.setStockMin(100);
             prodA.setStockSecurity(300);
-            prodA.setPriceHT(100F);
+            prodA.setPriceHT(1.5F);
             prodA.setTVA(10f);
             prodA.getCategory().setId(random.nextInt(9) + 1);
             products.add(prodA);
@@ -348,13 +348,13 @@ public class BootStrapData implements CommandLineRunner {
         }
         iProductRepository.saveAll(products);
 
-        for (int i = 0; i < 500; i++) {
+        for (int i = 0; i < 5000; i++) {
             Long pId = (long) (random.nextInt(49) + 1);
             Long sId = (long) (random.nextInt(1) + 1);
             Integer qte = random.nextInt(100) + 50;
 
             var input = new Input();
-            input.setRef("Ref2145");
+            input.setRef("Ref" + i);
             input.setDate(new Date());
             input.setDescription("input u wanna details its just for test");
             input.getActor().setId(3L);
@@ -379,14 +379,14 @@ public class BootStrapData implements CommandLineRunner {
         }
         iInputRepository.saveAll(inputs);
 
-        for (int i = 0; i < 648; i++) {
+        for (int i = 0; i < 7000; i++) {
             Long pId = (long) (random.nextInt(49) + 1);
             Long sId = (long) (random.nextInt(1) + 1);
             Integer qte = random.nextInt(50) + 50;
-            Float price = (float) (random.nextInt(50) + 100);
+            Float price = (float) (random.nextInt(2) + 1.5);
 
             var output = new Output();
-            output.setRef("Ref2145");
+            output.setRef("Ref" + i);
             output.setDate(new Date());
             output.setDescription("input u wanna details its just for test");
             output.getActor().setId(4L);

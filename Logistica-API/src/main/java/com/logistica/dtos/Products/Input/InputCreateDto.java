@@ -19,6 +19,8 @@ public class InputCreateDto extends BaseDto {
     private Long actorId;
     private Date date;
     private String description;
+    private Boolean retur;
+
     @NotEmpty
     private List<InputDetailCreateDto> inputDetails = new ArrayList<>();
 }

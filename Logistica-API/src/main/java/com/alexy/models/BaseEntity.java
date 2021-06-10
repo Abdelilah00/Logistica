@@ -7,7 +7,10 @@ package com.alexy.models;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.ParamDef;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
@@ -39,7 +42,7 @@ public abstract class BaseEntity extends IdEntity {
 
     /*@CreationTimestamp
     private LocalDateTime createdAt;*/
-    private LocalDateTime createdAt = LocalDateTime.ofInstant((new Date(ThreadLocalRandom.current().nextInt() * 1000L)).toInstant(), ZoneId.systemDefault());
+    private LocalDateTime createdAt = LocalDateTime.ofInstant(between().toInstant(), ZoneId.systemDefault());
     @UpdateTimestamp
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt = null;
@@ -47,5 +50,17 @@ public abstract class BaseEntity extends IdEntity {
     private long createdBy;
     private long updatedBy;
     private long deletedBy;
+
+    public static Date between() {
+        LocalDateTime endExclusive = LocalDateTime.now();
+        LocalDateTime startInclusive = endExclusive.minusYears(21);
+
+        long startMillis = startInclusive.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        long endMillis = endExclusive.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        long randomMillisSinceEpoch = ThreadLocalRandom
+                .current()
+                .nextLong(startMillis, endMillis);
+        return new Date(randomMillisSinceEpoch);
+    }
 }
 

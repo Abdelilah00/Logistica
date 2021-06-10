@@ -31,6 +31,20 @@
                         </div>
                       </div>
                     </div>
+                  </div>
+
+                  <div class='row'>
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label for="intern">is a intern</label>
+                        <input [ngClass]="{'is-invalid': saving && form.intern.errors}" class="form-control"
+                               formControlName="intern" id="intern"
+                               placeholder="intern" type="checkbox">
+                        <div *ngIf="saving && form.intern.errors" class="invalid-feedback">
+                          <span *ngIf="form.intern.errors.required">Please provide a valid intern.</span>
+                        </div>
+                      </div>
+                    </div>
 
                     <div class="col-lg-6">
                       <div class="form-group">

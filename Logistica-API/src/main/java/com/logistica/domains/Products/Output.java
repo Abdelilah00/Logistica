@@ -22,6 +22,7 @@ public class Output extends BaseEntity {
     private String ref;
     private Date date;
     private String description;
+    private Boolean intern = Boolean.TRUE;
 
     private String askBy;
     private String DistinationType;

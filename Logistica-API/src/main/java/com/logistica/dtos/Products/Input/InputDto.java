@@ -15,6 +15,7 @@ public class InputDto extends BaseDto {
     private String actorName;
     private Date date;
     private String description;
+    private Boolean retur;
 
     private List<InputDetailDto> inputDetailDtos;
 }

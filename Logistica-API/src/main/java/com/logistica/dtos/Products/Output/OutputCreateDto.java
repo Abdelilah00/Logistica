@@ -22,6 +22,7 @@ public class OutputCreateDto extends BaseDto {
     private Long actorId;
     private String description;
     private Date date;
+    private Boolean intern;
 
     @NotEmpty
     private List<OutputDetailCreateDto> outputDetails = new ArrayList<>();

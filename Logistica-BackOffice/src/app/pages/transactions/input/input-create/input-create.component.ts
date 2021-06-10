@@ -56,6 +56,7 @@ export class InputCreateComponent implements OnInit {
       payement: ['bank', Validators.required],
       payementRef: ['test', Validators.required],
       ref: ['IR', Validators.required],
+      retur: [false, Validators.required],
       inputDetails: this.formBuilder.array([]),
     });
   }
