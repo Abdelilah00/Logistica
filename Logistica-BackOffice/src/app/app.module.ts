@@ -36,10 +36,10 @@ export function createTranslateLoader(http: HttpClient): any {
         useFactory: createTranslateLoader,
         deps: [HttpClient]
       }
-    }),
+    })
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
   ],
   bootstrap: [AppComponent]
 })

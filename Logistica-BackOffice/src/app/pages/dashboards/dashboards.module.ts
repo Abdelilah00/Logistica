@@ -5,13 +5,18 @@ import {AnalyticsComponent} from './analytics/analytics.component';
 import {PredictionsComponent} from './predictions/predictions.component';
 import {AlertsComponent} from './alerts/alerts.component';
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {WidgetModule} from '../../shared/widget/widget.module';
 import {NgApexchartsModule} from 'ng-apexcharts';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {UiModule} from '../../shared/ui/ui.module';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatInputModule} from '@angular/material/input';
+import {MatNativeDateModule} from '@angular/material/core';
+import {NgbDropdownModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 const routes: Routes = [
@@ -36,7 +41,18 @@ const routes: Routes = [
     NgApexchartsModule,
     MatButtonToggleModule,
     UiModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatNativeDateModule,
+    NgbDropdownModule
+  ],
+  providers: [
+    MatDatepickerModule,
+    MatNativeDateModule
   ]
 })
+
 export class DashboardsModule {
 }

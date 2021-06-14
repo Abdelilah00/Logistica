@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ChartType, Chat, Stat, Statistic, Transaction} from '../../../core/models/dashboard.model';
 import {latLng, tileLayer} from 'leaflet';
-import {FormBuilder} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {DashboardService} from '../../../core/services/dashboard.service';
 import {revenueChart, salesAnalytics, sparklineEarning, sparklineMonthly, statData, transactions} from '../data';
 import {ChartComponent} from 'ng-apexcharts';
@@ -14,6 +14,11 @@ import {ChartComponent} from 'ng-apexcharts';
 
 export class AnalyticsComponent implements OnInit {
   @ViewChild('chart') chart: ChartComponent;
+  range = new FormGroup({
+    start: new FormControl(),
+    end: new FormControl()
+  });
+
   ///
   revenueChart: ChartType;
   statistics = new Array<Statistic>();
