@@ -50,11 +50,19 @@ public class DashboardService implements IDashboardService {
                 "from Input i inner join i.inputDetails id inner join id.product p " +
                 "left join p.outputDetails od").getSingleResult();
         statistics.add(new StatisticDto(tmp2, 0d));
+        //Average Order Value (AOV) = total revenue / number of order
+
+
+        //Gross Profit (GP)= Total Cost of Goods Sold – Total Number of sales
+        //Repeat Purchase Rate (RPR) = Purchases from Repeat Customers / Total Purchase
+        //Refund/Return Rate (RR)
+
+
         return CompletableFuture.completedFuture(statistics);
     }
 
     @Override
-    public CompletableFuture<List<SeriesListDto>> getMonthlyTurnover() {
+    public CompletableFuture<List<SeriesListDto>> getPeriodicTurnover() {
         var list = new ArrayList<SeriesListDto>();
         Session session = entityManager.unwrap(Session.class);
         // calculate stock money
@@ -74,47 +82,7 @@ public class DashboardService implements IDashboardService {
     }
 
     @Override
-    public CompletableFuture<List<SeriesListDto>> getDailyTurnover() {
-        var list = new ArrayList<SeriesListDto>();
-        Session session = entityManager.unwrap(Session.class);
-        // calculate stock money
-        list.add(new SeriesListDto(session.createQuery("select DAY(i.createdAt) as time, sum((id.qte - COALESCE(od.qte,0)) * p.priceHT) as value " +
-                "from Input i inner join i.inputDetails id inner join id.product p " +
-                "left join p.outputDetails od group by time").list()));
-        // calculate input money
-        list.add(new SeriesListDto(session.createQuery(
-                "select DAY(i.createdAt) as time, sum(id.qte * p.priceHT) as value " +
-                        "from Input i inner join i.inputDetails id inner join id.product p " +
-                        "group by time").list()));
-        // calculate output money
-        list.add(new SeriesListDto(session.createQuery(
-                "select DAY(o.createdAt) as time, sum(od.qte * od.priceHT) as value " +
-                        "from Output o inner join o.outputDetails od group by time").list()));
-        return CompletableFuture.completedFuture(list);
-    }
-
-    @Override
-    public CompletableFuture<List<SeriesListDto>> getHourlyTurnover() {
-        var list = new ArrayList<SeriesListDto>();
-        Session session = entityManager.unwrap(Session.class);
-        // calculate stock money
-        list.add(new SeriesListDto(session.createQuery("select HOUR(i.createdAt) as time, sum((id.qte - COALESCE(od.qte,0)) * p.priceHT) as value " +
-                "from Input i inner join i.inputDetails id inner join id.product p " +
-                "left join p.outputDetails od group by time").list()));
-        // calculate input money
-        list.add(new SeriesListDto(session.createQuery(
-                "select HOUR(i.createdAt) as time, sum(id.qte * p.priceHT) as value " +
-                        "from Input i inner join i.inputDetails id inner join id.product p " +
-                        "group by time").list()));
-        // calculate output money
-        list.add(new SeriesListDto(session.createQuery(
-                "select HOUR(o.createdAt) as time, sum(od.qte * od.priceHT) as value " +
-                        "from Output o inner join o.outputDetails od group by time").list()));
-        return CompletableFuture.completedFuture(list);
-    }
-
-    @Override
-    public CompletableFuture<List<SeriesListDto>> getMonthlyQte() {
+    public CompletableFuture<List<SeriesListDto>> getPeriodicQte() {
         var list = new ArrayList<SeriesListDto>();
         Session session = entityManager.unwrap(Session.class);
         // calculate stock money
@@ -134,7 +102,7 @@ public class DashboardService implements IDashboardService {
     }
 
     @Override
-    public CompletableFuture<List<SeriesListDto>> getMonthlyBenefits() {
+    public CompletableFuture<List<SeriesListDto>> getPeriodicBenefits() {
         var list = new ArrayList<SeriesListDto>();
         Session session = entityManager.unwrap(Session.class);
         // calculate stock money

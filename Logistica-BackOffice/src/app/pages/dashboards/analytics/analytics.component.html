@@ -14,7 +14,6 @@
           <app-stat [data]="statistics[2]" [icon]="'ri-stack-line'" [title]="'Transfer Count'"></app-stat>
         </div>
       </div>
-
       <div class="row">
         <div class="col-md-4">
           <app-stat [data]="statistics[3]" [icon]="'ri-stack-line'" [title]="'Product Count'"></app-stat>
@@ -33,9 +32,9 @@
           <div class="float-right d-none d-md-inline-block">
             <div class="btn-group mb-2">
               <mat-button-toggle-group appearance="legacy" aria-label="Font Style" name="fontStyle">
-                <mat-button-toggle (click)='getHourly()' class="btn btn-sm btn-light">Hourly
+                <mat-button-toggle class="btn btn-sm btn-light">Hourly
                 </mat-button-toggle>
-                <mat-button-toggle (click)='getDaily()' class="btn btn-sm btn-light">Daily
+                <mat-button-toggle class="btn btn-sm btn-light">Daily
                 </mat-button-toggle>
                 <mat-button-toggle (click)='getMonthly()' class="btn btn-sm btn-light">Monthly
                 </mat-button-toggle>
@@ -44,7 +43,9 @@
           </div>
           <h4 class="card-title mb-4">Revenue Analytics</h4>
           <div>
-            <apx-chart #chart1
+
+
+            <apx-chart #chart
                        [chart]="revenueChart.chart"
                        [colors]="revenueChart.colors"
                        [labels]="revenueChart.labels"
@@ -52,114 +53,6 @@
                        [series]='revenueChart.series'
                        [plotOptions]="revenueChart.plotOptions"
                        [stroke]="revenueChart.stroke" class="apex-charts" dir="ltr">
-            </apx-chart>
-          </div>
-        </div>
-        <div class="card-body border-top text-center">
-          <div class="row">
-            <div class="col-sm-4">
-              <div class="d-inline-flex">
-                <h5 class="mr-2">$12,253</h5>
-                <div class="text-success">
-                  <i class="mdi mdi-menu-up font-size-14"> </i>2.2 %
-                </div>
-              </div>
-              <p class="text-muted text-truncate mb-0">This month</p>
-            </div>
-
-            <div class="col-sm-4">
-              <div class="mt-4 mt-sm-0">
-                <p class="mb-2 text-muted text-truncate"><i class="mdi mdi-circle text-primary font-size-10 mr-1"></i>
-                  This Year :</p>
-                <div class="d-inline-flex">
-                  <h5 class="mb-0 mr-2">$ 34,254</h5>
-                  <div class="text-success">
-                    <i class="mdi mdi-menu-up font-size-14"> </i>2.1 %
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="mt-4 mt-sm-0">
-                <p class="mb-2 text-muted text-truncate"><i class="mdi mdi-circle text-success font-size-10 mr-1"></i>
-                  Previous Year :</p>
-                <div class="d-inline-flex">
-                  <h5 class="mb-0">$ 32,695</h5>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <div class="float-right d-none d-md-inline-block">
-          </div>
-          <h4 class="card-title mb-4">Qtes Analytics</h4>
-          <div>
-            <apx-chart #chart2
-                       [chart]="benefitChart.chart"
-                       [colors]="qteChart.colors"
-                       [labels]="qteChart.labels"
-                       [legend]="qteChart.legend"
-                       [plotOptions]="qteChart.plotOptions"
-                       [series]="qteChart.series"
-                       [stroke]="qteChart.stroke" class="apex-charts" dir="ltr">
-            </apx-chart>
-          </div>
-        </div>
-        <div class="card-body border-top text-center">
-          <div class="row">
-            <div class="col-sm-4">
-              <div class="d-inline-flex">
-                <h5 class="mr-2">$12,253</h5>
-                <div class="text-success">
-                  <i class="mdi mdi-menu-up font-size-14"> </i>2.2 %
-                </div>
-              </div>
-              <p class="text-muted text-truncate mb-0">This month</p>
-            </div>
-
-            <div class="col-sm-4">
-              <div class="mt-4 mt-sm-0">
-                <p class="mb-2 text-muted text-truncate"><i class="mdi mdi-circle text-primary font-size-10 mr-1"></i>
-                  This Year :</p>
-                <div class="d-inline-flex">
-                  <h5 class="mb-0 mr-2">$ 34,254</h5>
-                  <div class="text-success">
-                    <i class="mdi mdi-menu-up font-size-14"> </i>2.1 %
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="mt-4 mt-sm-0">
-                <p class="mb-2 text-muted text-truncate"><i class="mdi mdi-circle text-success font-size-10 mr-1"></i>
-                  Previous Year :</p>
-                <div class="d-inline-flex">
-                  <h5 class="mb-0">$ 32,695</h5>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <div class="float-right d-none d-md-inline-block">
-          </div>
-          <h4 class="card-title mb-4">Benefits Analytics</h4>
-          <div>
-            <apx-chart #chart3
-                       [chart]="benefitChart.chart"
-                       [colors]="benefitChart.colors"
-                       [labels]="benefitChart.labels"
-                       [legend]="benefitChart.legend"
-                       [plotOptions]="benefitChart.plotOptions"
-                       [series]="benefitChart.series"
-                       [stroke]="benefitChart.stroke" class="apex-charts" dir="ltr">
             </apx-chart>
           </div>
         </div>

@@ -9,14 +9,9 @@ import java.util.concurrent.CompletableFuture;
 public interface IDashboardService {
     CompletableFuture<List<StatisticDto>> getStatistics();
 
+    CompletableFuture<List<SeriesListDto>> getPeriodicTurnover();
 
-    CompletableFuture<List<SeriesListDto>> getMonthlyTurnover();
+    CompletableFuture<List<SeriesListDto>> getPeriodicQte();
 
-    CompletableFuture<List<SeriesListDto>> getDailyTurnover();
-
-    CompletableFuture<List<SeriesListDto>> getHourlyTurnover();
-
-    CompletableFuture<List<SeriesListDto>> getMonthlyQte();
-    CompletableFuture<List<SeriesListDto>> getMonthlyBenefits();
-
+    CompletableFuture<List<SeriesListDto>> getPeriodicBenefits();
 }
