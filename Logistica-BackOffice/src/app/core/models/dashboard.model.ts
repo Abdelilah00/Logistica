@@ -43,6 +43,9 @@ class ItemOfSeries {
 }
 
 export class Statistic {
+  kpi: string;
   value: number;
   growth: number;
+  hidden = false;
+  appendToChart = false;
 }

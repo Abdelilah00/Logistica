@@ -50,33 +50,31 @@ export class AnalyticsComponent implements OnInit {
   ngOnInit(): void {
     this.breadCrumbItems = [{label: 'Logistica'}, {label: 'Dashboard', active: true}];
     this.dashboardService.getStatistics().subscribe(data => this.statistics = data);
-    this.getMonthly();
+    this.getChart();
   }
 
-  getMonthly(): void {
+  getChart(): void {
     const s1 = [];
-    const s2 = [];
-    const s3 = [];
-
     this.dashboardService.getMonthlyTurnover().subscribe(data => {
       for (let i = 1; i <= 12; i++) {
         const v = data[0].items.find(x => x[0] === i);
         s1.push(v === undefined ? null : v[1]);
-
-        const vv = data[1].items.find(x => x[0] === i);
-        s2.push(vv === undefined ? null : vv[1]);
-
-        const vvv = data[2].items.find(x => x[0] === i);
-        s3.push(vvv === undefined ? null : vvv[1]);
       }
       this.chart.updateSeries([{
-        data: s1
-      }, {
-        data: s2
-      }, {
-        data: s3
+        data: s1,
+        color: '#d70909',
+        type: 'column',
+        name: 'xxxx'
       }]);
     });
+  }
+
+  hideStat(kpi): void {
+    this.statistics.find(s => s.kpi === kpi).hidden = true;
+  }
+
+  appendStatToChart(kpi): void {
+    this.statistics.find(s => s.kpi === kpi).appendToChart = !this.statistics.find(s => s.kpi === kpi).appendToChart;
   }
 
   private _fetchOptions() {

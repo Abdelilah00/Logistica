@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Statistic} from '../../../core/models/dashboard.model';
 
 @Component({
@@ -8,9 +8,10 @@ import {Statistic} from '../../../core/models/dashboard.model';
 })
 export class StatComponent implements OnInit {
 
-  @Input() title: string;
   @Input() data: Statistic;
-  @Input() icon: string;
+  @Output() appendStatToChart = new EventEmitter<any>();
+  @Output() hideStat = new EventEmitter<any>();
+  @ViewChild('stat', {static: true}) stat: ElementRef<HTMLInputElement>;
 
   constructor() {
   }
@@ -18,4 +19,11 @@ export class StatComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  appendStatToChartClick(kpi): void {
+    this.appendStatToChart.emit(kpi);
+  }
+
+  hideStatClick(kpi): void {
+    this.hideStat.emit(kpi);
+  }
 }

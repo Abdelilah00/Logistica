@@ -25,7 +25,7 @@ public class Output extends BaseEntity {
     private Boolean intern = Boolean.TRUE;
 
     private String askBy;
-    private String DistinationType;
+    private String DestinationType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Actor actor = new Actor();

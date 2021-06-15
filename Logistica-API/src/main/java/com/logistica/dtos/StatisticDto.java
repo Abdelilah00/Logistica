@@ -10,6 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StatisticDto {
+    private String kpi;
     private Double value;
     private Double growth;
 }

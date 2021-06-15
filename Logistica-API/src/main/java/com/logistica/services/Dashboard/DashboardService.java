@@ -36,27 +36,49 @@ public class DashboardService implements IDashboardService {
         Session session = entityManager.unwrap(Session.class);
 
         var statistics = new ArrayList<StatisticDto>();
-        statistics.add(new StatisticDto((double) iInputRepository.count(), 0d));
-        statistics.add(new StatisticDto((double) iOutputRepository.count(), 0d));
-        statistics.add(new StatisticDto((double) iTransferRepository.count(), 0d));
-        statistics.add(new StatisticDto((double) iProductRepository.count(), 0d));
-        //qte available
-        Long tmp = (long) session.createQuery("select sum(id.qte - COALESCE(od.qte,0)) " +
-                "from Input i inner join i.inputDetails id inner join id.product p " +
-                "left join p.outputDetails od").getSingleResult();
-        statistics.add(new StatisticDto(tmp.doubleValue(), 0d));
-        //chiffre in stocks
-        Double tmp2 = (double) session.createQuery("select sum((id.qte - COALESCE(od.qte,0)) * p.priceHT) " +
-                "from Input i inner join i.inputDetails id inner join id.product p " +
-                "left join p.outputDetails od").getSingleResult();
-        statistics.add(new StatisticDto(tmp2, 0d));
-        //Average Order Value (AOV) = total revenue / number of order
+        statistics.add(new StatisticDto("INPUT_STATISTIC", (double) iInputRepository.count(), 0d));
+        statistics.add(new StatisticDto("OUTPUT_STATISTIC", (double) iOutputRepository.count(), 0d));
+        statistics.add(new StatisticDto("TRANSFER_STATISTIC", (double) iTransferRepository.count(), 0d));
+        statistics.add(new StatisticDto("PRODUCT_STATISTIC", (double) iProductRepository.count(), 0d));
 
+        //qte available
+        Long qteAvailable = (long) session.createQuery("select sum(id.qte - COALESCE(od.qte,0)) " +
+                "from Input i inner join i.inputDetails id inner join id.product p " +
+                "left join p.outputDetails od").getSingleResult();
+        statistics.add(new StatisticDto("QTE_A_STATISTIC", qteAvailable.doubleValue(), 0d));
+
+        //chiffre in stocks
+        Double chiffreStock = (double) session.createQuery("select sum((id.qte - COALESCE(od.qte,0)) * p.priceHT) " +
+                "from Input i inner join i.inputDetails id inner join id.product p " +
+                "left join p.outputDetails od").getSingleResult();
+        statistics.add(new StatisticDto("C_S_STATISTIC", chiffreStock, 0d));
+
+        //Average Order Value (AOV) = total revenue / number of order
+        List<Double> tmp = session.createQuery("select SUM((od.priceHT * od.qte) - (p.priceHT * od.qte)) as s" +
+                "  from Input i  inner join i.inputDetails id inner join id.product p inner join p.outputDetails od inner join od.output o" +
+                "  where o.intern = FALSE" +
+                "  group by o.id").getResultList();
+        var aov = tmp.stream().mapToDouble(d -> d).average().orElse(0.0);
+        statistics.add(new StatisticDto("AOV_STATISTIC", aov, 0d));
 
         //Gross Profit (GP)= Total Cost of Goods Sold – Total Number of sales
-        //Repeat Purchase Rate (RPR) = Purchases from Repeat Customers / Total Purchase
-        //Refund/Return Rate (RR)
+        Double gp = (double) session.createQuery("select SUM((od.priceHT * od.qte) - (p.priceHT * od.qte))" +
+                "  from Input i inner join i.inputDetails id inner join id.product p inner join p.outputDetails od inner join od.output o" +
+                " where o.intern = FALSE").getSingleResult();
+        statistics.add(new StatisticDto("GP_STATISTIC", gp, 0d));
 
+        //Repeat Purchase Rate (RPR) = Purchases from Repeat Customers / Total Purchase
+        Double rpr = (double) session.createQuery("select SUM((od.priceHT * od.qte) - (p.priceHT * od.qte))" +
+                "  from Input i inner join i.inputDetails id inner join id.product p inner join p.outputDetails od inner join od.output o" +
+                "  where o.intern = FALSE").getSingleResult();
+        statistics.add(new StatisticDto("RPR_STATISTIC", rpr, 0d));
+
+        //Return Rate (RR)
+        //TODO: assert not null (retour exist)
+        Double rr = (double) session.createQuery("select count(i)/count(o)" +
+                "from Input i inner join i.inputDetails id inner join id.product p inner join p.outputDetails od inner join od.output o " +
+                "where i.retour = FALSE ").getSingleResult();
+        statistics.add(new StatisticDto("RR_STATISTIC", rr, 0d));
 
         return CompletableFuture.completedFuture(statistics);
     }

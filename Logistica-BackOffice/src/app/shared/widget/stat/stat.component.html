@@ -5,12 +5,12 @@
   <div class="card-body">
     <div class="media">
       <div class="media-body overflow-hidden">
-        <p class="text-truncate font-size-14 mb-2">{{title}}</p>
+        <p class="text-truncate font-size-14 mb-2">{{data?.kpi}}</p>
         <h4 class="mb-0">{{data?.value}}</h4>
       </div>
-      <div class="text-primary">
-        <i class="ri-line-chart-fill font-size-24"></i>
-        <i class="ri-chat-delete-line font-size-24"></i>
+      <div class="text-primary" style='cursor: pointer'>
+        <i (click)='appendStatToChartClick(data?.kpi)' class="ri-line-chart-fill font-size-24"> </i>
+        <i (click)='hideStatClick(data?.kpi)' class="ri-eye-off-line font-size-24"></i>
       </div>
     </div>
   </div>

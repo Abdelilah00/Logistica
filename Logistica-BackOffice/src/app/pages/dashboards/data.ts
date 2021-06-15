@@ -1,19 +1,6 @@
 import {ChartType} from '../../core/models/dashboard.model';
 
 const revenueChart: ChartType = {
-  series: [{
-    name: 'chiffre',
-    type: 'column',
-    data: []
-  }, {
-    name: 'input',
-    type: 'line',
-    data: []
-  }, {
-    name: 'output',
-    type: 'line',
-    data: []
-  }],
   chart: {
     height: 280,
     type: 'line',
@@ -36,8 +23,7 @@ const revenueChart: ChartType = {
   },
   legend: {
     show: false,
-  },
-  colors: ['#5664d2', '#1cbb8c', '#ea1854'],
+  }
 };
 
 
