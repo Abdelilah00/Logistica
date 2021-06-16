@@ -22,30 +22,24 @@ export class DashboardService {
     return this.httpClient.get<Array<Statistic>>(`${this.baseUrl}/getStatistics`).pipe(retry(1));
   }
 
-  getMonthlyTurnover(): Observable<Array<SeriesList>> {
+  getMonthly(chartsOf: string[]): Observable<Array<SeriesList>> {
+    let queryString = '?period=month&';
+    chartsOf.map(param => queryString += param + '&');
+    queryString = queryString.slice(0, -1);
+
     this.loading = true;
-    return this.httpClient.get<Array<SeriesList>>(`${this.baseUrl}/getMonthlyTurnover`).pipe(retry(1));
+    return this.httpClient.get<Array<SeriesList>>(`${this.baseUrl}/getChart${queryString}`).pipe(retry(1));
   }
 
 
-  getDailyTurnover(): Observable<Array<SeriesList>> {
+  getDaily(chartsOf: string[]): Observable<Array<SeriesList>> {
     this.loading = true;
-    return this.httpClient.get<Array<SeriesList>>(`${this.baseUrl}/getDailyTurnover`).pipe(retry(1));
+    return this.httpClient.get<Array<SeriesList>>(`${this.baseUrl}/getChart`).pipe(retry(1));
   }
 
-  getHourlyTurnover(): Observable<Array<SeriesList>> {
+  getHourly(chartsOf: string[]): Observable<Array<SeriesList>> {
     this.loading = true;
-    return this.httpClient.get<Array<SeriesList>>(`${this.baseUrl}/getHourlyTurnover`).pipe(retry(1));
-  }
-
-  getMonthlyQte(): Observable<Array<SeriesList>> {
-    this.loading = true;
-    return this.httpClient.get<Array<SeriesList>>(`${this.baseUrl}/getMonthlyQte`).pipe(retry(1));
-  }
-
-  getMonthlyBenefits(): Observable<Array<SeriesList>> {
-    this.loading = true;
-    return this.httpClient.get<Array<SeriesList>>(`${this.baseUrl}/getMonthlyBenefits`).pipe(retry(1));
+    return this.httpClient.get<Array<SeriesList>>(`${this.baseUrl}/getChart`).pipe(retry(1));
   }
 
 }

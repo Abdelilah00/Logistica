@@ -6,9 +6,11 @@ import com.logistica.services.Dashboard.IDashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 @RestController
@@ -22,19 +24,13 @@ public class DashboardController {
         return iDashboardService.getStatistics().get();
     }
 
-    //TODO add period params to all series methods
-    @GetMapping(path = "/getMonthlyQte")
-    protected List<SeriesListDto> getPeriodicMonthlyQte() throws ExecutionException, InterruptedException {
-        return iDashboardService.getPeriodicQte().get();
-    }
-
-    @GetMapping(path = "/getMonthlyBenefits")
-    protected List<SeriesListDto> getPeriodicBenefits() throws ExecutionException, InterruptedException {
-        return iDashboardService.getPeriodicBenefits().get();
-    }
-
-    @GetMapping(path = "/getMonthlyTurnover")
-    protected List<SeriesListDto> getPeriodicTurnover() throws ExecutionException, InterruptedException {
-        return iDashboardService.getPeriodicTurnover().get();
+    @GetMapping(path = "/getChart")
+    protected List<SeriesListDto> getChart(@RequestParam Map<String, String> params) throws ExecutionException, InterruptedException {
+        if (params.get("period").equals("hour"))
+            return iDashboardService.getMonthly(params).get();
+        else if (params.get("period").equals("day"))
+            return iDashboardService.getMonthly(params).get();
+        else
+            return iDashboardService.getMonthly(params).get();
     }
 }

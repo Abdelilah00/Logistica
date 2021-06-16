@@ -321,7 +321,6 @@ public class BootStrapData implements CommandLineRunner {
         var products = new ArrayList<Product>();
         var inputs = new ArrayList<Input>();
         var outputs = new ArrayList<Output>();
-        var transfers = new ArrayList<Transfer>();
 
         for (int i = 1; i <= 10; i++) {
             var catA = new Category();
@@ -334,7 +333,7 @@ public class BootStrapData implements CommandLineRunner {
         }
         iCategoryRepository.saveAll(categories);
 
-        for (int i = 1; i <= 50; i++) {
+        for (int i = 1; i <= 5; i++) {
             var prodA = new Product();
             prodA.setName("product " + i);
             prodA.setStockMax(1000);
@@ -348,8 +347,8 @@ public class BootStrapData implements CommandLineRunner {
         }
         iProductRepository.saveAll(products);
 
-        for (int i = 0; i < 2568; i++) {
-            Long pId = (long) (random.nextInt(49) + 1);
+        for (int i = 0; i < 10; i++) {
+            Long pId = (long) (random.nextInt(4) + 1);
             Long sId = (long) (random.nextInt(1) + 1);
             Integer qte = random.nextInt(100) + 50;
 
@@ -379,8 +378,8 @@ public class BootStrapData implements CommandLineRunner {
         }
         iInputRepository.saveAll(inputs);
 
-        for (int i = 0; i < 3487; i++) {
-            Long pId = (long) (random.nextInt(49) + 1);
+        for (int i = 0; i < 15; i++) {
+            Long pId = (long) (random.nextInt(4) + 1);
             Long sId = (long) (random.nextInt(1) + 1);
             Integer qte = random.nextInt(50) + 50;
             Float price = (float) (random.nextInt(2) + 1.5);

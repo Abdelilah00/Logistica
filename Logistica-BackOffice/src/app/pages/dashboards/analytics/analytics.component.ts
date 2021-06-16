@@ -53,9 +53,11 @@ export class AnalyticsComponent implements OnInit {
     this.getChart();
   }
 
+
   getChart(): void {
     const s1 = [];
-    this.dashboardService.getMonthlyTurnover().subscribe(data => {
+    const params = this.statistics.filter(s => s.appendToChart === true).map(v => v.kpi);
+    this.dashboardService.getMonthly(params).subscribe(data => {
       for (let i = 1; i <= 12; i++) {
         const v = data[0].items.find(x => x[0] === i);
         s1.push(v === undefined ? null : v[1]);
