@@ -27,7 +27,7 @@ public class DashboardController {
 
     //TODO: add start end date
     @GetMapping(path = "/getPeriodicChart")
-    protected List<SeriesListDto> getChart(@RequestParam Map<String, String> params) throws ExecutionException, InterruptedException, UserFriendlyException {
+    protected List<SeriesListDto> getChart(@RequestParam Map<String, String> params) throws ExecutionException, InterruptedException, UserFriendlyException, ClassNotFoundException {
         return iDashboardService.getPeriodicChart(params).get();
     }
 }

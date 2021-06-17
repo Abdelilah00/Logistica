@@ -98,33 +98,104 @@ public class DashboardService implements IDashboardService {
         if (!periods.contains(period))
             throw new UserFriendlyException("period Problem");
 
-        if (params.get("AOV_STATISTIC") != null)
-            list.add(new SeriesListDto("AOV_STATISTIC", session.createQuery("select  " + period + "(i.createdAt) as time, sum((id.qte - COALESCE(od.qte,0)) * p.priceHT) as value " +
+        //simple queries
+        if (params.get("INPUT_COUNT") != null) {
+            List<Object[]> aov = session.createQuery("select " + period + "(i.createdAt) as time, COUNT(*) as value from Input i where i.retour=FALSE group by time").list();
+            List<ItemOfSeries> result = new ArrayList<>();
+            for (var obj : aov) {
+                result.add(new ItemOfSeries(Long.parseLong(obj[0].toString()), Double.parseDouble(obj[1].toString())));
+            }
+            list.add(new SeriesListDto("INPUT_COUNT", result));
+        }
+
+        if (params.get("OUTPUT_COUNT") != null) {
+            List<Object[]> aov = session.createQuery("select " + period + "(o.createdAt) as time,COUNT(*) as value from Output o where o.intern=FALSE group by time").list();
+            List<ItemOfSeries> result = new ArrayList<>();
+            for (var obj : aov) {
+                result.add(new ItemOfSeries(Long.parseLong(obj[0].toString()), Double.parseDouble(obj[1].toString())));
+            }
+            list.add(new SeriesListDto("OUTPUT_COUNT", result));
+        }
+
+        if (params.get("INPUT_CHIFFRE") != null) {
+            List<Object[]> i = session.createQuery("select " + period + "(i.createdAt) as time, sum(id.qte * p.priceHT) as value " +
                     "from Input i inner join i.inputDetails id inner join id.product p " +
-                    "left join p.outputDetails od left join od.output o where  " + period + "(o.createdAt) =  " + period + "(i.createdAt) group by time").list()));
+                    "where i.retour=FALSE group by time").list();
+            List<ItemOfSeries> result = new ArrayList<>();
+            for (var obj : i) {
+                result.add(new ItemOfSeries(Long.parseLong(obj[0].toString()), Double.parseDouble(obj[1].toString())));
+            }
+            list.add(new SeriesListDto("INPUT_CHIFFRE", result));
+        }
 
-        if (params.get("INPUT_CHIFFRE") != null)
-            list.add(new SeriesListDto("INPUT_CHIFFRE", session.createQuery(
-                    "select " + period + "(i.createdAt) as time, sum(id.qte * p.priceHT) as value " +
-                            "from Input i inner join i.inputDetails id inner join id.product p " +
-                            "group by time").list()));
+        if (params.get("OUTPUT_CHIFFRE") != null) {
+            List<Object[]> o = session.createQuery("select  " + period + "(o.createdAt) as time, sum(od.qte * od.priceHT) as value " +
+                    "from Output o inner join o.outputDetails od group by time").list();
+            List<ItemOfSeries> result = new ArrayList<>();
+            for (var obj : o) {
+                result.add(new ItemOfSeries(Long.parseLong(obj[0].toString()), Double.parseDouble(obj[1].toString())));
+            }
+            list.add(new SeriesListDto("OUTPUT_CHIFFRE", result));
+        }
 
-        if (params.get("OUTPUT_CHIFFRE") != null)
-            list.add(new SeriesListDto("OUTPUT_CHIFFRE", session.createQuery(
-                    "select  " + period + "(o.createdAt) as time, sum(od.qte * od.priceHT) as value " +
-                            "from Output o inner join o.outputDetails od group by time").list()));
+        if (params.get("AOV_STATISTIC") != null) {
+            List<Object[]> aov = session.createQuery("select  " + period + "(i.createdAt) as time, sum((id.qte - COALESCE(od.qte,0)) * p.priceHT) as value " +
+                    "from Input i inner join i.inputDetails id inner join id.product p " +
+                    "left join p.outputDetails od left join od.output o where  " + period + "(o.createdAt) =  " + period + "(i.createdAt) group by time").list();
+            List<ItemOfSeries> result = new ArrayList<>();
+            for (var obj : aov) {
+                result.add(new ItemOfSeries(Long.parseLong(obj[0].toString()), Double.parseDouble(obj[1].toString())));
+            }
+            list.add(new SeriesListDto("AOV_STATISTIC", result));
+        }
+
+        if (params.get("GP_STATISTIC") != null) {
+            List<Object[]> aov = session.createQuery("select " + period + "(i.createdAt) as time,SUM((od.priceHT * od.qte) - (p.priceHT * od.qte)) " +
+                    "from Input i inner join i.inputDetails id inner join id.product p inner join p.outputDetails od inner join od.output o " +
+                    "where o.intern = FALSE group by time").list();
+            List<ItemOfSeries> result = new ArrayList<>();
+            for (var obj : aov) {
+                result.add(new ItemOfSeries(Long.parseLong(obj[0].toString()), Double.parseDouble(obj[1].toString())));
+            }
+            list.add(new SeriesListDto("GP_STATISTIC", result));
+        }
+
+        if (params.get("STOCK_CHIFFRE") != null) {
+            List<Object[]> aov = session.createQuery("select " + period + "(i.createdAt) as time,SUM((id.qte - COALESCE(od.qte,0)) * p.priceHT) " +
+                    "from Input i inner join i.inputDetails id inner join id.product p " +
+                    "left join p.outputDetails od where i.retour = FALSE group by time").list();
+            List<ItemOfSeries> result = new ArrayList<>();
+            for (var obj : aov) {
+                result.add(new ItemOfSeries(Long.parseLong(obj[0].toString()), Double.parseDouble(obj[1].toString())));
+            }
+            list.add(new SeriesListDto("STOCK_CHIFFRE", result));
+        }
+
+
+        //complex queries
+        if (params.get("RR_STATISTIC") != null) {
+            List<Object[]> r = session.createQuery("select  " + period + "(i.createdAt) as time,  count(*) from Input i where i.retour = true group by time").list();
+            List<Object[]> o = session.createQuery("select  " + period + "(o.createdAt) as time,  count(*) from Output o where o.intern = false group by time").list();
+            List<ItemOfSeries> rr = new ArrayList<>();
+            for (int i = 0; i < r.size(); i++) {
+                Double tmp = Double.parseDouble(r.get(i)[1].toString()) / Double.parseDouble(o.get(i)[1].toString()) * 100;
+                rr.add(new ItemOfSeries(Long.parseLong(r.get(i)[0].toString()), Double.parseDouble(tmp.toString())));
+            }
+            list.add(new SeriesListDto("RR_STATISTIC", rr));
+        }
 
         if (params.get("RPR_STATISTIC") != null) {
-            List<ItemOfSeries> o = session.createQuery("select  " + period + "(o.createdAt) as time,count(o.id) from Output o where intern=FALSE group by time").getResultList();
-            List<ItemOfSeries> c = session.createQuery("select  " + period + "(o.createdAt) as time,count(distinct o.actor) from Output o where intern=FALSE group by time").getResultList();
+            List<Object[]> o = session.createQuery("select  " + period + "(o.createdAt) as time, count(o.id) as value from Output o where intern=FALSE group by time").list();
+            List<Object[]> c = session.createQuery("select  " + period + "(o.createdAt) as time, count(distinct o.actor) as value from Output o where intern=FALSE group by time").list();
             List<ItemOfSeries> rpr = new ArrayList<>();
             for (int i = 0; i < o.size(); i++) {
-                rpr.add(new ItemOfSeries(o.get(i).getTime(), o.get(i).getValue() / c.get(i).getValue()));
+                Double tmp = Double.parseDouble(o.get(i)[1].toString()) / Double.parseDouble(c.get(i)[1].toString());
+                rpr.add(new ItemOfSeries(Long.parseLong(o.get(i)[0].toString()), tmp));
             }
             list.add(new SeriesListDto("RPR_STATISTIC", rpr));
         }
-
         return CompletableFuture.completedFuture(list);
     }
+
 
 }

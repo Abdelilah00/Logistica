@@ -11,6 +11,6 @@ import java.util.concurrent.CompletableFuture;
 public interface IDashboardService {
     CompletableFuture<List<StatisticDto>> getStatistics();
 
-    CompletableFuture<List<SeriesListDto>> getPeriodicChart(Map<String, String> params) throws UserFriendlyException;
+    CompletableFuture<List<SeriesListDto>> getPeriodicChart(Map<String, String> params) throws UserFriendlyException, ClassNotFoundException;
 
 }

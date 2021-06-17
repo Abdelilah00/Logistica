@@ -69,8 +69,8 @@ export class AnalyticsComponent implements OnInit {
         const s = [];
         const iMax = period === 'HOUR' ? 24 : period === 'DAY' ? 31 : 12;
         for (let i = 1; i <= iMax; i++) {
-          const v = d.items.find(x => x[0] === i);
-          s.push(v === undefined ? 0 : v[1]);
+          const v = d.items.find(x => x.time === i);
+          s.push(v === undefined ? 0 : v.value);
         }
         series.push({
           name: d.kpi,
@@ -79,7 +79,7 @@ export class AnalyticsComponent implements OnInit {
           stack: d.kpi,
         });
       }
-
+      console.log(series);
       const myChart = echarts.init(document.getElementById('chart'));
       myChart.clear();
       myChart.setOption({
@@ -95,7 +95,7 @@ export class AnalyticsComponent implements OnInit {
         legend: {
           show: true,
           right: '10%',
-          top: 2,
+          top: 25,
           itemWidth: 15,
           itemHeight: 10,
           textStyle: {
@@ -120,7 +120,8 @@ export class AnalyticsComponent implements OnInit {
           data: Array.from({length: series[0].data.length}, (v, k) => k + 1)
         },
         yAxis: {
-          type: 'value'
+          type: 'value',
+          scale: true
         },
         series: series
       });
