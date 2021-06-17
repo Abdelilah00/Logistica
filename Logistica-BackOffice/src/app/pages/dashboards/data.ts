@@ -1,11 +1,12 @@
 import {ChartType} from '../../core/models/dashboard.model';
 
 const revenueChart: ChartType = {
+  series: [],
   chart: {
     height: 280,
     type: 'line',
     toolbar: {
-      show: false,
+      show: true,
     }
   },
   stroke: {
@@ -22,8 +23,15 @@ const revenueChart: ChartType = {
     enabled: true,
   },
   legend: {
-    show: false,
-  }
+    show: true,
+  },
+  noData: {
+    text: 'There\'s no data',
+    align: 'center',
+    verticalAlign: 'middle',
+    offsetX: 0,
+    offsetY: 0
+  },
 };
 
 

@@ -122,7 +122,7 @@ public class BootStrapData implements CommandLineRunner {
             prodA.setStockMax(1000);
             prodA.setStockMin(100);
             prodA.setStockSecurity(300);
-            prodA.setPriceHT(100F);
+            prodA.setPriceHT(1.5F);
             prodA.setTVA(10f);
             prodA.setCategory(catA);
             iProductRepository.save(prodA);
@@ -131,7 +131,7 @@ public class BootStrapData implements CommandLineRunner {
             prodB.setStockMax(1500);
             prodB.setStockMin(50);
             prodB.setStockSecurity(500);
-            prodB.setPriceHT(100F);
+            prodB.setPriceHT(1.5F);
             prodB.setTVA(10f);
             prodB.setCategory(catB);
             iProductRepository.save(prodB);
@@ -140,7 +140,7 @@ public class BootStrapData implements CommandLineRunner {
             prodC.setStockMax(1000);
             prodC.setStockMin(100);
             prodC.setStockSecurity(300);
-            prodC.setPriceHT(100F);
+            prodC.setPriceHT(1.5F);
             prodC.setTVA(10f);
             prodC.setCategory(catA);
             iProductRepository.save(prodC);
@@ -379,10 +379,10 @@ public class BootStrapData implements CommandLineRunner {
         iInputRepository.saveAll(inputs);
 
         for (int i = 0; i < 15; i++) {
-            Long pId = (long) (random.nextInt(4) + 1);
-            Long sId = (long) (random.nextInt(1) + 1);
+            Long pId = (random.nextInt(4) + 1L);
+            Long sId = (random.nextInt(1) + 1L);
             Integer qte = random.nextInt(50) + 50;
-            Float price = (float) (random.nextInt(2) + 1.5);
+            Float price = (random.nextInt(2) + 1.5F);
 
             var output = new Output();
             output.setRef("Ref" + i);

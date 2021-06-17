@@ -1,5 +1,7 @@
 package com.logistica.services.Dashboard;
 
+import com.configuration.Exception.UserFriendlyException;
+import com.logistica.dtos.ItemOfSeries;
 import com.logistica.dtos.SeriesListDto;
 import com.logistica.dtos.StatisticDto;
 import com.logistica.repositories.Products.IInputRepository;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -71,9 +74,9 @@ public class DashboardService implements IDashboardService {
         statistics.add(new StatisticDto("GP_STATISTIC", gp, 0D));
 
         //Repeat Purchase Rate (RPR) = Purchases from Repeat Customers / Total Purchase
-        Double rpr = (double) session.createQuery("select SUM((od.priceHT * od.qte) - (p.priceHT * od.qte))" +
-                "  from Input i inner join i.inputDetails id inner join id.product p inner join p.outputDetails od inner join od.output o" +
-                "  where o.intern = FALSE").getSingleResult();
+        Long o = (long) session.createQuery("select count(o.id) from Output o where intern=FALSE").getSingleResult();
+        Long c = (long) session.createQuery("select count(distinct o.actor) from Output o where intern=FALSE").getSingleResult();
+        Double rpr = (double) o / (double) c;
         statistics.add(new StatisticDto("RPR_STATISTIC", rpr, 0D));
 
         //Return Rate (RR)
@@ -87,24 +90,39 @@ public class DashboardService implements IDashboardService {
     }
 
     @Override
-    public CompletableFuture<List<SeriesListDto>> getMonthly(Map<String, String> params) {
-        var list = new ArrayList<SeriesListDto>();
+    public CompletableFuture<List<SeriesListDto>> getPeriodicChart(Map<String, String> params) throws UserFriendlyException {
         Session session = entityManager.unwrap(Session.class);
+        var list = new ArrayList<SeriesListDto>();
+        List<String> periods = Arrays.asList("MONTH", "DAY", "HOUR");
+        String period = params.get("period");
+        if (!periods.contains(period))
+            throw new UserFriendlyException("period Problem");
 
         if (params.get("AOV_STATISTIC") != null)
-            list.add(new SeriesListDto(session.createQuery("select MONTH(i.createdAt) as time, sum((id.qte - COALESCE(od.qte,0)) * p.priceHT) as value " +
+            list.add(new SeriesListDto("AOV_STATISTIC", session.createQuery("select  " + period + "(i.createdAt) as time, sum((id.qte - COALESCE(od.qte,0)) * p.priceHT) as value " +
                     "from Input i inner join i.inputDetails id inner join id.product p " +
-                    "left join p.outputDetails od left join od.output o where MONTH(o.createdAt) = MONTH(i.createdAt) group by time").list()));
+                    "left join p.outputDetails od left join od.output o where  " + period + "(o.createdAt) =  " + period + "(i.createdAt) group by time").list()));
 
-        if (params.get("INPUT_STATISTIC") != null)
-            list.add(new SeriesListDto(session.createQuery(
-                    "select MONTH(i.createdAt) as time, sum(id.qte * p.priceHT) as value " +
+        if (params.get("INPUT_CHIFFRE") != null)
+            list.add(new SeriesListDto("INPUT_CHIFFRE", session.createQuery(
+                    "select " + period + "(i.createdAt) as time, sum(id.qte * p.priceHT) as value " +
                             "from Input i inner join i.inputDetails id inner join id.product p " +
                             "group by time").list()));
-        if (params.get("OUTPUT_STATISTIC") != null)
-            list.add(new SeriesListDto(session.createQuery(
-                    "select MONTH(o.createdAt) as time, sum(od.qte * od.priceHT) as value " +
+
+        if (params.get("OUTPUT_CHIFFRE") != null)
+            list.add(new SeriesListDto("OUTPUT_CHIFFRE", session.createQuery(
+                    "select  " + period + "(o.createdAt) as time, sum(od.qte * od.priceHT) as value " +
                             "from Output o inner join o.outputDetails od group by time").list()));
+
+        if (params.get("RPR_STATISTIC") != null) {
+            List<ItemOfSeries> o = session.createQuery("select  " + period + "(o.createdAt) as time,count(o.id) from Output o where intern=FALSE group by time").getResultList();
+            List<ItemOfSeries> c = session.createQuery("select  " + period + "(o.createdAt) as time,count(distinct o.actor) from Output o where intern=FALSE group by time").getResultList();
+            List<ItemOfSeries> rpr = new ArrayList<>();
+            for (int i = 0; i < o.size(); i++) {
+                rpr.add(new ItemOfSeries(o.get(i).getTime(), o.get(i).getValue() / c.get(i).getValue()));
+            }
+            list.add(new SeriesListDto("RPR_STATISTIC", rpr));
+        }
 
         return CompletableFuture.completedFuture(list);
     }

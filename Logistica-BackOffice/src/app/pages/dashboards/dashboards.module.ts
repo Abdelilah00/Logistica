@@ -17,7 +17,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatInputModule} from '@angular/material/input';
 import {MatNativeDateModule} from '@angular/material/core';
 import {NgbDropdownModule} from '@ng-bootstrap/ng-bootstrap';
-
+import {NgxEchartsModule} from 'ngx-echarts';
 
 const routes: Routes = [
   {path: 'analytics', component: AnalyticsComponent},
@@ -46,7 +46,10 @@ const routes: Routes = [
     MatInputModule,
     ReactiveFormsModule,
     MatNativeDateModule,
-    NgbDropdownModule
+    NgbDropdownModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts'),
+    }),
   ],
   providers: [
     MatDatepickerModule,

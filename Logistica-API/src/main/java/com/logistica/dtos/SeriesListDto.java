@@ -11,5 +11,6 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 public class SeriesListDto {
+    private String kpi;
     private List<ItemOfSeries> items;
 }

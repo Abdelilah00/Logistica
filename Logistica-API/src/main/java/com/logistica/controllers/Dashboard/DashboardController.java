@@ -1,5 +1,6 @@
 package com.logistica.controllers.Dashboard;
 
+import com.configuration.Exception.UserFriendlyException;
 import com.logistica.dtos.SeriesListDto;
 import com.logistica.dtos.StatisticDto;
 import com.logistica.services.Dashboard.IDashboardService;
@@ -24,13 +25,9 @@ public class DashboardController {
         return iDashboardService.getStatistics().get();
     }
 
-    @GetMapping(path = "/getChart")
-    protected List<SeriesListDto> getChart(@RequestParam Map<String, String> params) throws ExecutionException, InterruptedException {
-        if (params.get("period").equals("hour"))
-            return iDashboardService.getMonthly(params).get();
-        else if (params.get("period").equals("day"))
-            return iDashboardService.getMonthly(params).get();
-        else
-            return iDashboardService.getMonthly(params).get();
+    //TODO: add start end date
+    @GetMapping(path = "/getPeriodicChart")
+    protected List<SeriesListDto> getChart(@RequestParam Map<String, String> params) throws ExecutionException, InterruptedException, UserFriendlyException {
+        return iDashboardService.getPeriodicChart(params).get();
     }
 }

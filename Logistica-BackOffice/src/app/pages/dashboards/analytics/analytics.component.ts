@@ -1,10 +1,11 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ChartType, Chat, Stat, Statistic, Transaction} from '../../../core/models/dashboard.model';
 import {latLng, tileLayer} from 'leaflet';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {DashboardService} from '../../../core/services/dashboard.service';
 import {revenueChart, salesAnalytics, sparklineEarning, sparklineMonthly, statData, transactions} from '../data';
-import {ChartComponent} from 'ng-apexcharts';
+import * as echarts from 'echarts';
+import {EChartsOption} from 'echarts';
 
 @Component({
   selector: 'app-analytics',
@@ -13,7 +14,6 @@ import {ChartComponent} from 'ng-apexcharts';
 })
 
 export class AnalyticsComponent implements OnInit {
-  @ViewChild('chart') chart: ChartComponent;
   range = new FormGroup({
     start: new FormControl(),
     end: new FormControl()
@@ -41,6 +41,7 @@ export class AnalyticsComponent implements OnInit {
     zoom: 6,
     center: latLng(46.879966, -121.726909)
   };
+  chartOption: EChartsOption;
 
   constructor(public formBuilder: FormBuilder,
               private dashboardService: DashboardService) {
@@ -49,34 +50,92 @@ export class AnalyticsComponent implements OnInit {
 
   ngOnInit(): void {
     this.breadCrumbItems = [{label: 'Logistica'}, {label: 'Dashboard', active: true}];
-    this.dashboardService.getStatistics().subscribe(data => this.statistics = data);
-    this.getChart();
+    this.dashboardService.getStatistics().subscribe(data => {
+      this.statistics = data;
+      this.statistics.find(s => s.kpi === 'INPUT_CHIFFRE').appendToChart = true;
+      this.statistics.find(s => s.kpi === 'OUTPUT_CHIFFRE').appendToChart = true;
+      this.getChart('MONTH');
+    });
+
   }
 
 
-  getChart(): void {
-    const s1 = [];
+  getChart(period: string): void {
     const params = this.statistics.filter(s => s.appendToChart === true).map(v => v.kpi);
-    this.dashboardService.getMonthly(params).subscribe(data => {
-      for (let i = 1; i <= 12; i++) {
-        const v = data[0].items.find(x => x[0] === i);
-        s1.push(v === undefined ? null : v[1]);
+    params.push('period=' + period);
+    this.dashboardService.getPeriodicChartOf(params).subscribe(data => {
+      const series = [];
+      for (const d of data) {
+        const s = [];
+        const iMax = period === 'HOUR' ? 24 : period === 'DAY' ? 31 : 12;
+        for (let i = 1; i <= iMax; i++) {
+          const v = d.items.find(x => x[0] === i);
+          s.push(v === undefined ? 0 : v[1]);
+        }
+        series.push({
+          name: d.kpi,
+          type: 'line',
+          data: s,
+          stack: d.kpi,
+        });
       }
-      this.chart.updateSeries([{
-        data: s1,
-        color: '#d70909',
-        type: 'column',
-        name: 'xxxx'
-      }]);
+
+      const myChart = echarts.init(document.getElementById('chart'));
+      myChart.clear();
+      myChart.setOption({
+        title: {
+          text: 'Periodic Analytics'
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross'
+          }
+        },
+        legend: {
+          show: true,
+          right: '10%',
+          top: 2,
+          itemWidth: 15,
+          itemHeight: 10,
+          textStyle: {
+            color: '#1a1a1a',
+            fontSize: 12,
+          },
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        toolbox: {
+          feature: {
+            saveAsImage: {}
+          }
+        },
+        xAxis: {
+          type: 'category',
+          boundaryGap: false,
+          data: Array.from({length: series[0].data.length}, (v, k) => k + 1)
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: series
+      });
     });
   }
 
   hideStat(kpi): void {
     this.statistics.find(s => s.kpi === kpi).hidden = true;
+    this.statistics.find(s => s.kpi === kpi).appendToChart = false;
+    this.getChart('MONTH');
   }
 
   appendStatToChart(kpi): void {
     this.statistics.find(s => s.kpi === kpi).appendToChart = !this.statistics.find(s => s.kpi === kpi).appendToChart;
+    this.getChart('MONTH');
   }
 
   private _fetchOptions() {

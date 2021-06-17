@@ -7,6 +7,7 @@ export interface ChartType {
   legend?: any;
   colors?: any;
   labels?: any;
+  noData?: any;
 }
 
 export interface Stat {
@@ -35,6 +36,7 @@ export interface Transaction {
 
 export class SeriesList {
   items: ItemOfSeries[];
+  kpi: string;
 }
 
 class ItemOfSeries {

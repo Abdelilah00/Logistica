@@ -22,24 +22,13 @@ export class DashboardService {
     return this.httpClient.get<Array<Statistic>>(`${this.baseUrl}/getStatistics`).pipe(retry(1));
   }
 
-  getMonthly(chartsOf: string[]): Observable<Array<SeriesList>> {
-    let queryString = '?period=month&';
+  getPeriodicChartOf(chartsOf: string[]): Observable<SeriesList[]> {
+    this.loading = true;
+    let queryString = '?';
     chartsOf.map(param => queryString += param + '&');
     queryString = queryString.slice(0, -1);
-
-    this.loading = true;
-    return this.httpClient.get<Array<SeriesList>>(`${this.baseUrl}/getChart${queryString}`).pipe(retry(1));
+    return this.httpClient.get<SeriesList[]>(`${this.baseUrl}/getPeriodicChart${queryString}`).pipe(retry(1));
   }
 
-
-  getDaily(chartsOf: string[]): Observable<Array<SeriesList>> {
-    this.loading = true;
-    return this.httpClient.get<Array<SeriesList>>(`${this.baseUrl}/getChart`).pipe(retry(1));
-  }
-
-  getHourly(chartsOf: string[]): Observable<Array<SeriesList>> {
-    this.loading = true;
-    return this.httpClient.get<Array<SeriesList>>(`${this.baseUrl}/getChart`).pipe(retry(1));
-  }
 
 }

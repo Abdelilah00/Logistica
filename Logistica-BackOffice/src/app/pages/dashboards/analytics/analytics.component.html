@@ -10,7 +10,6 @@
       </mat-date-range-input>
       <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
       <mat-date-range-picker #picker></mat-date-range-picker>
-
       <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
       <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
     </mat-form-field>
@@ -26,34 +25,29 @@
         </div>
       </div>
       <!-- end row -->
-
       <div class="card">
-        <div class="card-body">
+        <div class='card-header'>
           <div class="float-right d-none d-md-inline-block">
-            <div class="btn-group mb-2">
+            <div class="btn-group p-10">
               <mat-button-toggle-group appearance="legacy" aria-label="Font Style" name="fontStyle">
-                <mat-button-toggle class="btn btn-sm btn-light">Hourly
+                <mat-button-toggle (click)='getChart("HOUR")' class="btn btn-sm btn-light">Hourly
                 </mat-button-toggle>
-                <mat-button-toggle class="btn btn-sm btn-light">Daily
+                <mat-button-toggle (click)='getChart("DAY")' class="btn btn-sm btn-light">Daily
                 </mat-button-toggle>
-                <mat-button-toggle (click)='getChart()' class="btn btn-sm btn-light">Monthly
+                <mat-button-toggle (click)='getChart("MONTH")' class="btn btn-sm btn-light">Monthly
                 </mat-button-toggle>
               </mat-button-toggle-group>
             </div>
           </div>
-          <h4 class="card-title mb-4">Revenue Analytics</h4>
-          <div>
-            <apx-chart #chart
-                       [chart]="revenueChart.chart"
-                       [colors]="revenueChart.colors"
-                       [labels]="revenueChart.labels"
-                       [legend]="revenueChart.legend"
-                       [series]='revenueChart.series'
-                       [plotOptions]="revenueChart.plotOptions"
-                       [stroke]="revenueChart.stroke" class="apex-charts" dir="ltr">
-            </apx-chart>
-          </div>
         </div>
+        <div class="card-body">
+          <h4 class="card-title mb-4">Periodic Analytics</h4>
+          <div>
+            <div [options]="chartOption" class="chart" echarts id='chart'></div>
+          </div>
+
+        </div>
+
         <div class="card-body border-top text-center">
           <div class="row">
             <div class="col-sm-4">
