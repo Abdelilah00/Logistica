@@ -56,7 +56,56 @@ export class AnalyticsComponent implements OnInit {
       this.statistics.find(s => s.kpi === 'OUTPUT_CHIFFRE').appendToChart = true;
       this.getChart('MONTH');
     });
+    this.dashboardService.getTreeMapOfTopProducts([]).subscribe(data => {
+      const myChart = echarts.init(document.getElementById('treeMap0'));
+      myChart.clear();
+      myChart.setOption({
+        title: {
+          top: 5,
+          left: 'center',
+          text: 'Top 10 Products',
+        },
+        legend: {
+          selectedMode: 'single',
+          top: 55,
+          itemGap: 5,
+          borderRadius: 5
+        },
 
+        tooltip: {},
+
+        series: [{
+          type: 'treemap',
+          data: data
+        }]
+      });
+
+    });
+    this.dashboardService.getTreeMapOfTopClient([]).subscribe(data => {
+      const myChart = echarts.init(document.getElementById('treeMap1'));
+      myChart.clear();
+      myChart.setOption({
+        title: {
+          top: 5,
+          left: 'center',
+          text: 'Top 10 Clients',
+        },
+        legend: {
+          selectedMode: 'single',
+          top: 55,
+          itemGap: 5,
+          borderRadius: 5
+        },
+
+        tooltip: {},
+
+        series: [{
+          type: 'treemap',
+          data: data
+        }]
+      });
+
+    });
   }
 
 
@@ -79,7 +128,6 @@ export class AnalyticsComponent implements OnInit {
           stack: d.kpi,
         });
       }
-      console.log(series);
       const myChart = echarts.init(document.getElementById('chart'));
       myChart.clear();
       myChart.setOption({

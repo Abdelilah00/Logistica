@@ -1,9 +1,11 @@
 package com.logistica.services.Dashboard;
 
 import com.configuration.Exception.UserFriendlyException;
+import com.configuration.TenantContext;
 import com.logistica.dtos.ItemOfSeries;
 import com.logistica.dtos.SeriesListDto;
 import com.logistica.dtos.StatisticDto;
+import com.logistica.dtos.TreeMapItemDto;
 import com.logistica.repositories.Products.IInputRepository;
 import com.logistica.repositories.Products.IOutputRepository;
 import com.logistica.repositories.Products.IProductRepository;
@@ -25,6 +27,7 @@ public class DashboardService implements IDashboardService {
 
     @PersistenceContext
     EntityManager entityManager;
+
     @Autowired
     private IInputRepository iInputRepository;
     @Autowired
@@ -36,10 +39,9 @@ public class DashboardService implements IDashboardService {
     private IProductRepository iProductRepository;
 
     @Override
-    //todo params for the hidden stat
+    //todo : params for the hidden stat
     public CompletableFuture<List<StatisticDto>> getStatistics() {
         Session session = entityManager.unwrap(Session.class);
-
         var statistics = new ArrayList<StatisticDto>();
         statistics.add(new StatisticDto("INPUT_COUNT", (double) iInputRepository.count(), 0D));
         statistics.add(new StatisticDto("OUTPUT_COUNT", (double) iOutputRepository.count(), 0D));
@@ -197,5 +199,46 @@ public class DashboardService implements IDashboardService {
         return CompletableFuture.completedFuture(list);
     }
 
+    //get top 10 profitable products
+    public CompletableFuture<List<TreeMapItemDto>> getTreeMapOfTopProducts(int n) {
+        Session session = entityManager.unwrap(Session.class);
+        var list = new ArrayList<TreeMapItemDto>();
+        List<Object[]> query = session.createSQLQuery("select p.name, SUM(od.qte * od.priceHT - od.qte * p.priceHT) as profit " +
+                "from output o" +
+                "         inner join outputdetails od on o.id = od.output_id " +
+                "         inner join product p on od.product_id = p.id " +
+                "         inner join inputdetails id on p.id = id.product_id " +
+                "where o.intern = FALSE " +
+                "and o.tenantId = :tenantId and o.deletedAt is null " +
+                "group by p.id " +
+                "having profit != 0 " +
+                "order by profit desc " +
+                "limit :max").setParameter("max", n).setParameter("tenantId", TenantContext.getCurrentTenant()).list();
+        for (var row : query) {
+            list.add(new TreeMapItemDto(row[0].toString(), ((Number) row[1]).longValue(), null));
+        }
+        return CompletableFuture.completedFuture(list);
+    }
 
+    //get top 10 profitable client
+    public CompletableFuture<List<TreeMapItemDto>> getTreeMapOfTopClient(int n) {
+        Session session = entityManager.unwrap(Session.class);
+        var list = new ArrayList<TreeMapItemDto>();
+        List<Object[]> query = session.createSQLQuery("select a.name, SUM(od.qte * od.priceHT - od.qte * p.priceHT) as profit " +
+                "from output o " +
+                "         inner join outputdetails od on o.id = od.output_id " +
+                "         inner join product p on od.product_id = p.id " +
+                "         inner join inputdetails id on p.id = id.product_id " +
+                "         inner join actor a on o.actor_id = a.id " +
+                "where o.intern = FALSE " +
+                "and a.tenantId = :tenantId and a.deletedAt is null " +
+                "group by o.actor_id " +
+                "having profit != 0 " +
+                "order by profit desc " +
+                "limit :max").setParameter("max", n).setParameter("tenantId", TenantContext.getCurrentTenant()).list();
+        for (var row : query) {
+            list.add(new TreeMapItemDto(row[0].toString(), ((Number) row[1]).longValue(), null));
+        }
+        return CompletableFuture.completedFuture(list);
+    }
 }

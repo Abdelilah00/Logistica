@@ -35,13 +35,19 @@ export interface Transaction {
 }
 
 export class SeriesList {
-  items: ItemOfSeries[];
+  items: SeriesItem[];
   kpi: string;
 }
 
-class ItemOfSeries {
+class SeriesItem {
   time: number;
   value: number;
+}
+
+export class TreeMapItem {
+  time: number;
+  value: number;
+  children: TreeMapItem[];
 }
 
 export class Statistic {

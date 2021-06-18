@@ -17,6 +17,7 @@ export class StatComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.data.value = Number((this.data.value).toFixed(2));
   }
 
   appendStatToChartClick(kpi): void {

@@ -322,7 +322,7 @@ public class BootStrapData implements CommandLineRunner {
         var inputs = new ArrayList<Input>();
         var outputs = new ArrayList<Output>();
 
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 1; i <= 5; i++) {
             var catA = new Category();
             catA.setName("category " + i);
             catA.setDefaultTva(20.1f);
@@ -333,7 +333,7 @@ public class BootStrapData implements CommandLineRunner {
         }
         iCategoryRepository.saveAll(categories);
 
-        for (int i = 1; i <= 5; i++) {
+        for (int i = 1; i <= 17; i++) {
             var prodA = new Product();
             prodA.setName("product " + i);
             prodA.setStockMax(1000);
@@ -341,21 +341,21 @@ public class BootStrapData implements CommandLineRunner {
             prodA.setStockSecurity(300);
             prodA.setPriceHT(1.5F);
             prodA.setTVA(10f);
-            prodA.getCategory().setId(random.nextInt(9) + 1);
+            prodA.getCategory().setId(random.nextInt(4) + 1);
             products.add(prodA);
 
         }
         iProductRepository.saveAll(products);
 
-        for (int i = 0; i < 10; i++) {
-            Long pId = (long) (random.nextInt(4) + 1);
+        for (int i = 0; i < 600; i++) {
+            Long pId = (long) (random.nextInt(19) + 1);
             Long sId = (long) (random.nextInt(1) + 1);
             Integer qte = random.nextInt(100) + 50;
 
             var input = new Input();
             input.setRef("Ref" + i);
             input.setDate(new Date());
-            input.setDescription("input u wanna details its just for test");
+            input.setDescription("input description");
             input.getActor().setId(3L);
             var trans = new InputDetails();
             trans.getProduct().setId(pId);
@@ -378,8 +378,8 @@ public class BootStrapData implements CommandLineRunner {
         }
         iInputRepository.saveAll(inputs);
 
-        for (int i = 0; i < 15; i++) {
-            Long pId = (random.nextInt(4) + 1L);
+        for (int i = 0; i < 800; i++) {
+            Long pId = (random.nextInt(19) + 1L);
             Long sId = (random.nextInt(1) + 1L);
             Integer qte = random.nextInt(50) + 50;
             Float price = (random.nextInt(2) + 1.5F);
