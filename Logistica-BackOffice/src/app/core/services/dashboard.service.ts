@@ -17,31 +17,32 @@ export class DashboardService {
     this.baseUrl = `${environment.apiBaseUrl}/dashboard`;
   }
 
-  getStatistics(): Observable<Array<Statistic>> {
+  getStatistics(params: string[]): Observable<Array<Statistic>> {
     this.loading = true;
     return this.httpClient.get<Array<Statistic>>(`${this.baseUrl}/getStatistics`).pipe(retry(1));
   }
 
   getPeriodicChartOf(params: string[]): Observable<SeriesList[]> {
     this.loading = true;
-    let queryString = '?';
-    params.map(param => queryString += param + '&');
-    queryString = queryString.slice(0, -1);
+    const queryString = this.createQueryURL(params);
     return this.httpClient.get<SeriesList[]>(`${this.baseUrl}/getPeriodicChart${queryString}`).pipe(retry(1));
   }
 
   getTreeMapOfTopProducts(params: string[]): Observable<TreeMapItem[]> {
     this.loading = true;
-    let queryString = '?';
-    params.map(param => queryString += param + '&');
-    queryString = queryString.slice(0, -1);
+    const queryString = this.createQueryURL(params);
     return this.httpClient.get<TreeMapItem[]>(`${this.baseUrl}/getTreeMapOfTopProducts${queryString}`).pipe(retry(1));
   }
+
   getTreeMapOfTopClient(params: string[]): Observable<TreeMapItem[]> {
     this.loading = true;
+    const queryString = this.createQueryURL(params);
+    return this.httpClient.get<TreeMapItem[]>(`${this.baseUrl}/getTreeMapOfTopClient${queryString}`).pipe(retry(1));
+  }
+
+  private createQueryURL(params: string[]): string {
     let queryString = '?';
     params.map(param => queryString += param + '&');
-    queryString = queryString.slice(0, -1);
-    return this.httpClient.get<TreeMapItem[]>(`${this.baseUrl}/getTreeMapOfTopClient${queryString}`).pipe(retry(1));
+    return queryString.slice(0, -1);
   }
 }

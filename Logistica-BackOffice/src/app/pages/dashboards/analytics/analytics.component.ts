@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {ChartType, Chat, Stat, Statistic, Transaction} from '../../../core/models/dashboard.model';
+import {Statistic, Transaction} from '../../../core/models/dashboard.model';
 import {latLng, tileLayer} from 'leaflet';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {DashboardService} from '../../../core/services/dashboard.service';
-import {revenueChart, salesAnalytics, sparklineEarning, sparklineMonthly, statData, transactions} from '../data';
 import * as echarts from 'echarts';
 import {EChartsOption} from 'echarts';
+import {formatDate} from '@angular/common';
 
 @Component({
   selector: 'app-analytics',
@@ -20,19 +20,13 @@ export class AnalyticsComponent implements OnInit {
   });
 
   ///
-  revenueChart: ChartType;
   statistics = new Array<Statistic>();
   ////
 
-  term: any;
-  chatData: Chat[];
   transactions: Transaction[];
-  statData: Stat[];
   // bread crumb items
   breadCrumbItems: Array<{}>;
-  salesAnalytics: ChartType;
-  sparklineEarning: ChartType;
-  sparklineMonthly: ChartType;
+
   // Form submit
   options = {
     layers: [
@@ -45,18 +39,36 @@ export class AnalyticsComponent implements OnInit {
 
   constructor(public formBuilder: FormBuilder,
               private dashboardService: DashboardService) {
-    this._fetchOptions();
   }
+
 
   ngOnInit(): void {
     this.breadCrumbItems = [{label: 'Logistica'}, {label: 'Dashboard', active: true}];
-    this.dashboardService.getStatistics().subscribe(data => {
+    this.getStatistics();
+    this.getChart();
+    this.getTreeMaps();
+  }
+
+  getStatistics(): void {
+    const params = [];
+    // tslint:disable-next-line:forin
+    for (const key in this.range.value) {
+      const date = formatDate(this.range.value[key], 'yyyy-MM-dd', 'en');
+      params.push(key + '=' + date);
+    }
+    this.dashboardService.getStatistics(params).subscribe(data => {
       this.statistics = data;
-      this.statistics.find(s => s.kpi === 'INPUT_CHIFFRE').appendToChart = true;
-      this.statistics.find(s => s.kpi === 'OUTPUT_CHIFFRE').appendToChart = true;
-      this.getChart('MONTH');
     });
-    this.dashboardService.getTreeMapOfTopProducts([]).subscribe(data => {
+  }
+
+  getTreeMaps(): void {
+    const params = [];
+    // tslint:disable-next-line:forin
+    for (const key in this.range.value) {
+      const date = formatDate(this.range.value[key], 'yyyy-MM-dd', 'en');
+      params.push(key + '=' + date);
+    }
+    this.dashboardService.getTreeMapOfTopProducts(params).subscribe(data => {
       const myChart = echarts.init(document.getElementById('treeMap0'));
       myChart.clear();
       myChart.setOption({
@@ -81,7 +93,7 @@ export class AnalyticsComponent implements OnInit {
       });
 
     });
-    this.dashboardService.getTreeMapOfTopClient([]).subscribe(data => {
+    this.dashboardService.getTreeMapOfTopClient(params).subscribe(data => {
       const myChart = echarts.init(document.getElementById('treeMap1'));
       myChart.clear();
       myChart.setOption({
@@ -109,8 +121,15 @@ export class AnalyticsComponent implements OnInit {
   }
 
 
-  getChart(period: string): void {
+  getChart(period: string = 'MONTH'): void {
     const params = this.statistics.filter(s => s.appendToChart === true).map(v => v.kpi);
+    // tslint:disable-next-line:forin
+    for (const key in this.range.value) {
+      const date = formatDate(this.range.value[key], 'yyyy-MM-dd', 'en');
+      params.push(key + '=' + date);
+    }
+
+    console.log(params);
     params.push('period=' + period);
     this.dashboardService.getPeriodicChartOf(params).subscribe(data => {
       const series = [];
@@ -128,6 +147,7 @@ export class AnalyticsComponent implements OnInit {
           stack: d.kpi,
         });
       }
+
       const myChart = echarts.init(document.getElementById('chart'));
       myChart.clear();
       myChart.setOption({
@@ -165,7 +185,7 @@ export class AnalyticsComponent implements OnInit {
         xAxis: {
           type: 'category',
           boundaryGap: false,
-          data: Array.from({length: series[0].data.length}, (v, k) => k + 1)
+          data: Array.from({length: series[0]?.data.length}, (v, k) => k + 1)
         },
         yAxis: {
           type: 'value',
@@ -182,17 +202,14 @@ export class AnalyticsComponent implements OnInit {
     this.getChart('MONTH');
   }
 
+  rangeChange(): void {
+    this.getStatistics();
+    this.getChart();
+    this.getTreeMaps();
+  }
+
   appendStatToChart(kpi): void {
     this.statistics.find(s => s.kpi === kpi).appendToChart = !this.statistics.find(s => s.kpi === kpi).appendToChart;
     this.getChart('MONTH');
-  }
-
-  private _fetchOptions() {
-    this.revenueChart = revenueChart;
-    this.salesAnalytics = salesAnalytics;
-    this.sparklineEarning = sparklineEarning;
-    this.sparklineMonthly = sparklineMonthly;
-    this.transactions = transactions;
-    this.statData = statData;
   }
 }
