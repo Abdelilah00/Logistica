@@ -1,9 +1,7 @@
 package com.logistica.controllers.Dashboard;
 
 import com.configuration.Exception.UserFriendlyException;
-import com.logistica.dtos.SeriesListDto;
-import com.logistica.dtos.StatisticDto;
-import com.logistica.dtos.TreeMapItemDto;
+import com.logistica.dtos.*;
 import com.logistica.services.Dashboard.IDashboardAnalyticsService;
 import com.logistica.services.Dashboard.IDashboardPredictionsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +21,7 @@ public class DashboardPredictionsController {
     private IDashboardPredictionsService iDashboardPredictionsService;
 
     @GetMapping(path = "/getChart")
-    protected List<TreeMapItemDto> getChart(@RequestParam Map<String, String> params) throws UserFriendlyException, ExecutionException, InterruptedException {
+    protected List<ItemOfPredSeries> getChart(@RequestParam Map<String, String> params) throws UserFriendlyException, ExecutionException, InterruptedException {
         return iDashboardPredictionsService.getChart(params).get();
     }
 }

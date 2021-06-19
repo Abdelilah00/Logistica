@@ -30,9 +30,7 @@ export class PredictionsComponent implements OnInit {
     myChart.setOption({
       tooltip: {
         trigger: 'axis',
-        position: function(pt) {
-          return [pt[0], '10%'];
-        }
+        position: (pt) => [pt[0], '10%']
       },
       title: {
         left: 'center',
@@ -73,7 +71,7 @@ export class PredictionsComponent implements OnInit {
         }
       ]
     });
-    this.getChart([]);
+    this.getChart(['filter=products']);
   }
 
   getChart(params: string[]): void {
