@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 @Service
-public class DashboardService implements IDashboardService {
+public class DashboardAnalyticsService implements IDashboardAnalyticsService {
 
     @PersistenceContext
     EntityManager entityManager;
@@ -43,9 +43,6 @@ public class DashboardService implements IDashboardService {
     public CompletableFuture<List<StatisticDto>> getStatistics() {
         Session session = entityManager.unwrap(Session.class);
         var statistics = new ArrayList<StatisticDto>();
-        statistics.add(new StatisticDto("INPUT_COUNT", (double) iInputRepository.count(), 0D));
-        statistics.add(new StatisticDto("OUTPUT_COUNT", (double) iOutputRepository.count(), 0D));
-        statistics.add(new StatisticDto("TRANSFER_COUNT", (double) iTransferRepository.count(), 0D));
 
         statistics.add(new StatisticDto("INPUT_CHIFFRE", (double) session.createQuery(
                 "select sum(id.qte * p.priceHT) as value " +
@@ -53,7 +50,6 @@ public class DashboardService implements IDashboardService {
         statistics.add(new StatisticDto("OUTPUT_CHIFFRE", (double) session.createQuery(
                 "select sum(od.qte * od.priceHT) as value " +
                         "from Output o inner join o.outputDetails od where o.intern=FALSE").getSingleResult(), 0D));
-        statistics.add(new StatisticDto("PRODUCT_COUNT", (double) iProductRepository.count(), 0D));
 
         //chiffre in stocks
         Double chiffreStock = (double) session.createQuery("select sum((id.qte - COALESCE(od.qte,0)) * p.priceHT) " +
@@ -87,6 +83,11 @@ public class DashboardService implements IDashboardService {
         Long output = iOutputRepository.count();
         Double rr = (double) retour / (double) output * 100;
         statistics.add(new StatisticDto("RR_STATISTIC", rr, 0D));
+
+        statistics.add(new StatisticDto("INPUT_COUNT", (double) iInputRepository.count(), 0D));
+        statistics.add(new StatisticDto("OUTPUT_COUNT", (double) iOutputRepository.count(), 0D));
+        statistics.add(new StatisticDto("TRANSFER_COUNT", (double) iTransferRepository.count(), 0D));
+        statistics.add(new StatisticDto("PRODUCT_COUNT", (double) iProductRepository.count(), 0D));
 
         return CompletableFuture.completedFuture(statistics);
     }
@@ -200,45 +201,64 @@ public class DashboardService implements IDashboardService {
     }
 
     //get top 10 profitable products
-    public CompletableFuture<List<TreeMapItemDto>> getTreeMapOfTopProducts(int n) {
+    public CompletableFuture<List<TreeMapItemDto>> getTreeMapOfTop(Map<String, String> params) throws UserFriendlyException {
+        var filters = Arrays.asList("products", "clients", "suppliers");
+        int n = Integer.valueOf(params.get("n"));
+        var filter = params.get("filter");
+        if (!filters.contains(filter)) throw new UserFriendlyException("error in your filter");
+
         Session session = entityManager.unwrap(Session.class);
         var list = new ArrayList<TreeMapItemDto>();
-        List<Object[]> query = session.createSQLQuery("select p.name, SUM(od.qte * od.priceHT - od.qte * p.priceHT) as profit " +
-                "from output o" +
-                "         inner join outputdetails od on o.id = od.output_id " +
-                "         inner join product p on od.product_id = p.id " +
-                "         inner join inputdetails id on p.id = id.product_id " +
-                "where o.intern = FALSE " +
-                "and o.tenantId = :tenantId and o.deletedAt is null " +
-                "group by p.id " +
-                "having profit != 0 " +
-                "order by profit desc " +
-                "limit :max").setParameter("max", n).setParameter("tenantId", TenantContext.getCurrentTenant()).list();
+        List<Object[]> query = new ArrayList<>();
+
+        switch (filter) {
+            case "products":
+                query = session.createSQLQuery("select p.name, SUM(od.qte * od.priceHT - od.qte * p.priceHT) as profit " +
+                        "from output o" +
+                        "         inner join outputdetails od on o.id = od.output_id " +
+                        "         inner join product p on od.product_id = p.id " +
+                        "         inner join inputdetails id on p.id = id.product_id " +
+                        "where o.intern = FALSE " +
+                        "and o.tenantId = :tenantId and o.deletedAt is null " +
+                        "group by p.id " +
+                        "having profit != 0 " +
+                        "order by profit desc " +
+                        "limit :max").setParameter("max", n).setParameter("tenantId", TenantContext.getCurrentTenant()).list();
+                break;
+            case "clients":
+                query = session.createSQLQuery("select a.name, SUM(od.qte * od.priceHT - od.qte * p.priceHT) as profit " +
+                        "from output o " +
+                        "         inner join outputdetails od on o.id = od.output_id " +
+                        "         inner join product p on od.product_id = p.id " +
+                        "         inner join inputdetails id on p.id = id.product_id " +
+                        "         inner join actor a on o.actor_id = a.id " +
+                        "where o.intern = FALSE " +
+                        "and a.tenantId = :tenantId and a.deletedAt is null " +
+                        "group by o.actor_id " +
+                        "having profit != 0 " +
+                        "order by profit desc " +
+                        "limit :max").setParameter("max", n).setParameter("tenantId", TenantContext.getCurrentTenant()).list();
+                break;
+            case "supplier":
+                query = session.createSQLQuery("select a.name, SUM(od.qte * od.priceHT - od.qte * p.priceHT) as profit " +
+                        "from output o " +
+                        "         inner join outputdetails od on o.id = od.output_id " +
+                        "         inner join product p on od.product_id = p.id " +
+                        "         inner join inputdetails id on p.id = id.product_id " +
+                        "         inner join actor a on o.actor_id = a.id " +
+                        "where o.intern = FALSE " +
+                        "and a.tenantId = :tenantId and a.deletedAt is null " +
+                        "group by o.actor_id " +
+                        "having profit != 0 " +
+                        "order by profit desc " +
+                        "limit :max").setParameter("max", n).setParameter("tenantId", TenantContext.getCurrentTenant()).list();
+                break;
+        }
+
         for (var row : query) {
             list.add(new TreeMapItemDto(row[0].toString(), ((Number) row[1]).longValue(), null));
         }
         return CompletableFuture.completedFuture(list);
     }
 
-    //get top 10 profitable client
-    public CompletableFuture<List<TreeMapItemDto>> getTreeMapOfTopClient(int n) {
-        Session session = entityManager.unwrap(Session.class);
-        var list = new ArrayList<TreeMapItemDto>();
-        List<Object[]> query = session.createSQLQuery("select a.name, SUM(od.qte * od.priceHT - od.qte * p.priceHT) as profit " +
-                "from output o " +
-                "         inner join outputdetails od on o.id = od.output_id " +
-                "         inner join product p on od.product_id = p.id " +
-                "         inner join inputdetails id on p.id = id.product_id " +
-                "         inner join actor a on o.actor_id = a.id " +
-                "where o.intern = FALSE " +
-                "and a.tenantId = :tenantId and a.deletedAt is null " +
-                "group by o.actor_id " +
-                "having profit != 0 " +
-                "order by profit desc " +
-                "limit :max").setParameter("max", n).setParameter("tenantId", TenantContext.getCurrentTenant()).list();
-        for (var row : query) {
-            list.add(new TreeMapItemDto(row[0].toString(), ((Number) row[1]).longValue(), null));
-        }
-        return CompletableFuture.completedFuture(list);
-    }
 }

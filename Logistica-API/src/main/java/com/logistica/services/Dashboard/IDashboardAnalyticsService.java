@@ -9,12 +9,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-public interface IDashboardService {
+public interface IDashboardAnalyticsService {
     CompletableFuture<List<StatisticDto>> getStatistics();
 
     CompletableFuture<List<SeriesListDto>> getPeriodicChart(Map<String, String> params) throws UserFriendlyException;
 
-    CompletableFuture<List<TreeMapItemDto>> getTreeMapOfTopProducts(int n);
-
-    CompletableFuture<List<TreeMapItemDto>> getTreeMapOfTopClient(int n);
+    CompletableFuture<List<TreeMapItemDto>> getTreeMapOfTop( Map<String, String> params) throws UserFriendlyException;
 }

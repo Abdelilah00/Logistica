@@ -2,10 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {Statistic, Transaction} from '../../../core/models/dashboard.model';
 import {latLng, tileLayer} from 'leaflet';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {DashboardService} from '../../../core/services/dashboard.service';
 import * as echarts from 'echarts';
 import {EChartsOption} from 'echarts';
 import {formatDate} from '@angular/common';
+import {DashboardAnalyticsService} from '../../../core/services/Dashboards/dashboard-analytics.service';
 
 @Component({
   selector: 'app-analytics',
@@ -38,7 +38,7 @@ export class AnalyticsComponent implements OnInit {
   chartOption: EChartsOption;
 
   constructor(public formBuilder: FormBuilder,
-              private dashboardService: DashboardService) {
+              private dashboardAnalyticsService: DashboardAnalyticsService) {
   }
 
 
@@ -46,7 +46,7 @@ export class AnalyticsComponent implements OnInit {
     this.breadCrumbItems = [{label: 'Logistica'}, {label: 'Dashboard', active: true}];
     this.getStatistics();
     this.getChart();
-    this.getTreeMaps();
+    this.getTreeMaps('products');
   }
 
   getStatistics(): void {
@@ -56,19 +56,22 @@ export class AnalyticsComponent implements OnInit {
       const date = formatDate(this.range.value[key], 'yyyy-MM-dd', 'en');
       params.push(key + '=' + date);
     }
-    this.dashboardService.getStatistics(params).subscribe(data => {
+    this.dashboardAnalyticsService.getStatistics(params).subscribe(data => {
       this.statistics = data;
     });
   }
 
-  getTreeMaps(): void {
+  getTreeMaps(filter: string): void {
     const params = [];
     // tslint:disable-next-line:forin
     for (const key in this.range.value) {
       const date = formatDate(this.range.value[key], 'yyyy-MM-dd', 'en');
       params.push(key + '=' + date);
     }
-    this.dashboardService.getTreeMapOfTopProducts(params).subscribe(data => {
+    params.push('filter=' + filter);
+    params.push('n=' + 10);
+
+    this.dashboardAnalyticsService.getTreeMapOfTop(params).subscribe(data => {
       const myChart = echarts.init(document.getElementById('treeMap0'));
       myChart.clear();
       myChart.setOption({
@@ -78,22 +81,20 @@ export class AnalyticsComponent implements OnInit {
           text: 'Top 10 Products',
         },
         legend: {
+
           selectedMode: 'single',
           top: 55,
           itemGap: 5,
           borderRadius: 5
         },
-
-        tooltip: {},
-
         series: [{
           type: 'treemap',
           data: data
         }]
       });
-
     });
-    this.dashboardService.getTreeMapOfTopClient(params).subscribe(data => {
+
+    this.dashboardAnalyticsService.getTreeMapOfTop(params).subscribe(data => {
       const myChart = echarts.init(document.getElementById('treeMap1'));
       myChart.clear();
       myChart.setOption({
@@ -116,8 +117,33 @@ export class AnalyticsComponent implements OnInit {
           data: data
         }]
       });
-
     });
+
+    this.dashboardAnalyticsService.getTreeMapOfTop(params).subscribe(data => {
+      const myChart = echarts.init(document.getElementById('treeMap2'));
+      myChart.clear();
+      myChart.setOption({
+        title: {
+          top: 5,
+          left: 'center',
+          text: 'Top 10 Clients',
+        },
+        legend: {
+          selectedMode: 'single',
+          top: 55,
+          itemGap: 5,
+          borderRadius: 5
+        },
+
+        tooltip: {},
+
+        series: [{
+          type: 'treemap',
+          data: data
+        }]
+      });
+    });
+
   }
 
 
@@ -128,10 +154,9 @@ export class AnalyticsComponent implements OnInit {
       const date = formatDate(this.range.value[key], 'yyyy-MM-dd', 'en');
       params.push(key + '=' + date);
     }
-
-    console.log(params);
     params.push('period=' + period);
-    this.dashboardService.getPeriodicChartOf(params).subscribe(data => {
+
+    this.dashboardAnalyticsService.getPeriodicChartOf(params).subscribe(data => {
       const series = [];
       for (const d of data) {
         const s = [];
@@ -160,6 +185,18 @@ export class AnalyticsComponent implements OnInit {
             type: 'cross'
           }
         },
+        toolbox: {
+          show: true,
+          feature: {
+            dataZoom: {
+              yAxisIndex: 'none'
+            },
+            dataView: {readOnly: false},
+            magicType: {type: ['line', 'bar']},
+            restore: {},
+            saveAsImage: {}
+          }
+        },
         legend: {
           show: true,
           right: '10%',
@@ -176,11 +213,6 @@ export class AnalyticsComponent implements OnInit {
           right: '4%',
           bottom: '3%',
           containLabel: true
-        },
-        toolbox: {
-          feature: {
-            saveAsImage: {}
-          }
         },
         xAxis: {
           type: 'category',
@@ -205,7 +237,7 @@ export class AnalyticsComponent implements OnInit {
   rangeChange(): void {
     this.getStatistics();
     this.getChart();
-    this.getTreeMaps();
+    this.getTreeMaps('products');
   }
 
   appendStatToChart(kpi): void {

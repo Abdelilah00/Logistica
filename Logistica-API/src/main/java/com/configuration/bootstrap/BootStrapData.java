@@ -62,12 +62,26 @@ public class BootStrapData implements CommandLineRunner {
 
 
     @Override
-    public void run(String... args) {
+    public void run(String... args) throws InterruptedException {
 
         if (iInputRepository.findAll().size() == 0) {
-            //region organisation
+
+            //region actors roles
+            var responsible = new ActorRole();
+            responsible.setName("Responsible");
+            iActorRoleRepository.save(responsible);
+            var supplier = new ActorRole();
+            supplier.setName("Supplier");
+            iActorRoleRepository.save(supplier);
+            var client = new ActorRole();
+            client.setName("Client");
+            iActorRoleRepository.save(client);
+            //endregion
+
+            // region organisation
             var act = new Actor();
-            act.setName("jamal din lbarhouch");
+            act.setName("jamal alpha");
+            act.getActorHasRole().setActorRole(client);
             iActorRepository.save(act);
             var structureDepartament = new Structure();
             var structureBlock = new Structure();
@@ -146,22 +160,11 @@ public class BootStrapData implements CommandLineRunner {
             iProductRepository.save(prodC);
             //endregion
 
-            //region actors roles
-            var responsible = new ActorRole();
-            responsible.setName("Responsible");
-            iActorRoleRepository.save(responsible);
-            var supplier = new ActorRole();
-            supplier.setName("Supplier");
-            iActorRoleRepository.save(supplier);
-            var client = new ActorRole();
-            client.setName("Client");
-            iActorRoleRepository.save(client);
-            //endregion
 
             //region actor
             var actor1 = new Actor();
             actor1.setName("responsible name");
-            actor1.getActorHasRole().setActorType(responsible);
+            actor1.getActorHasRole().setActorRole(responsible);
             iActorRepository.save(actor1);
             //endregion
 
@@ -227,7 +230,7 @@ public class BootStrapData implements CommandLineRunner {
             contact.setPhone("0676958566");
             contact.setWebSite("360tech.com");
             actor2.setContact(contact);
-            actor2.getActorHasRole().setActorType(supplier);
+            actor2.getActorHasRole().setActorRole(supplier);
             iActorRepository.save(actor2);
             //endregion
 
@@ -250,7 +253,7 @@ public class BootStrapData implements CommandLineRunner {
             contact.setPhone("0676958566");
             contact.setWebSite("360tech.com");
             actor3.setContact(contact2);
-            actor3.getActorHasRole().setActorType(client);
+            actor3.getActorHasRole().setActorRole(client);
             iActorRepository.save(actor3);
             //endregion
 
@@ -321,6 +324,25 @@ public class BootStrapData implements CommandLineRunner {
         var products = new ArrayList<Product>();
         var inputs = new ArrayList<Input>();
         var outputs = new ArrayList<Output>();
+        var actors = new ArrayList<Actor>();
+
+        for (int i = 0; i < 50; i++) {
+            var actor = new Actor();
+            actor.setAdresse("db alla elfassi");
+            actor.setName("client " + i);
+            actor.setNRCommerce("sdf3256 5065655s4df");
+            actor.getActorHasRole().getActorRole().setId(3L);
+            actors.add(actor);
+        }
+        for (int i = 0; i < 20; i++) {
+            var actor = new Actor();
+            actor.setAdresse("db alla elfassi");
+            actor.setName("supplier " + i);
+            actor.setNRCommerce("sdf3256 5065655s4df");
+            actor.getActorHasRole().getActorRole().setId(2L);
+            actors.add(actor);
+        }
+        iActorRepository.saveAll(actors);
 
         for (int i = 1; i <= 5; i++) {
             var catA = new Category();
@@ -356,7 +378,8 @@ public class BootStrapData implements CommandLineRunner {
             input.setRef("Ref" + i);
             input.setDate(new Date());
             input.setDescription("input description");
-            input.getActor().setId(3L);
+            input.getActor().setId(random.nextInt(20) + 55);
+            input.setRetour(random.nextBoolean());
             var trans = new InputDetails();
             trans.getProduct().setId(pId);
             trans.setQte(qte);
@@ -388,7 +411,8 @@ public class BootStrapData implements CommandLineRunner {
             output.setRef("Ref" + i);
             output.setDate(new Date());
             output.setDescription("input u wanna details its just for test");
-            output.getActor().setId(4L);
+            output.getActor().setId(random.nextInt(50) + 4);
+            output.setIntern(random.nextBoolean());
             var trans = new OutputDetails();
             trans.getProduct().setId(pId);
             trans.setQte(qte);

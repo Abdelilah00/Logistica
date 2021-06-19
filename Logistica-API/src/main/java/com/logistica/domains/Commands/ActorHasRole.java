@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -21,5 +20,5 @@ public class ActorHasRole extends BaseEntity {
     @OneToOne
     private Actor actor;
     @OneToOne
-    private ActorRole actorType;
+    private ActorRole actorRole = new ActorRole();
 }
