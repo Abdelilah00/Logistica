@@ -202,7 +202,7 @@ public class DashboardAnalyticsService implements IDashboardAnalyticsService {
 
     //get top 10 profitable products
     public CompletableFuture<List<TreeMapItemDto>> getTreeMapOfTop(Map<String, String> params) throws UserFriendlyException {
-        var filters = Arrays.asList("products", "clients", "suppliers");
+        var filters = Arrays.asList("products", "clients", "suppliers", "services");
         int n = Integer.valueOf(params.get("n"));
         var filter = params.get("filter");
         if (!filters.contains(filter)) throw new UserFriendlyException("error in your filter");
@@ -239,7 +239,20 @@ public class DashboardAnalyticsService implements IDashboardAnalyticsService {
                         "order by profit desc " +
                         "limit :max").setParameter("max", n).setParameter("tenantId", TenantContext.getCurrentTenant()).list();
                 break;
-            case "supplier":
+            case "suppliers":
+                query = session.createSQLQuery("select a.name, SUM(od.qte * od.priceHT - od.qte * p.priceHT) as profit " +
+                        "from output o " +
+                        "         inner join outputdetails od on o.id = od.output_id " +
+                        "         inner join product p on od.product_id = p.id " +
+                        "         inner join inputdetails id on p.id = id.product_id " +
+                        "         inner join actor a on o.actor_id = a.id " +
+                        "where o.intern = FALSE " +
+                        "and a.tenantId = :tenantId and a.deletedAt is null " +
+                        "group by o.actor_id " +
+                        "having profit != 0 " +
+                        "order by profit desc " +
+                        "limit :max").setParameter("max", n).setParameter("tenantId", TenantContext.getCurrentTenant()).list();
+            case "services":
                 query = session.createSQLQuery("select a.name, SUM(od.qte * od.priceHT - od.qte * p.priceHT) as profit " +
                         "from output o " +
                         "         inner join outputdetails od on o.id = od.output_id " +

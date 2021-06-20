@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Statistic, Transaction} from '../../../core/models/dashboard.model';
-import {latLng, tileLayer} from 'leaflet';
+import {Statistic} from '../../../core/models/dashboard.model';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import * as echarts from 'echarts';
-import {EChartsOption} from 'echarts';
 import {formatDate} from '@angular/common';
 import {DashboardAnalyticsService} from '../../../core/services/Dashboards/dashboard-analytics.service';
 
@@ -21,21 +19,11 @@ export class AnalyticsComponent implements OnInit {
 
   ///
   statistics = new Array<Statistic>();
+  defaultTreeMap = 'products';
   ////
 
-  transactions: Transaction[];
   // bread crumb items
   breadCrumbItems: Array<{}>;
-
-  // Form submit
-  options = {
-    layers: [
-      tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: '...'})
-    ],
-    zoom: 6,
-    center: latLng(46.879966, -121.726909)
-  };
-  chartOption: EChartsOption;
 
   constructor(public formBuilder: FormBuilder,
               private dashboardAnalyticsService: DashboardAnalyticsService) {
@@ -45,7 +33,6 @@ export class AnalyticsComponent implements OnInit {
   ngOnInit(): void {
     this.breadCrumbItems = [{label: 'Logistica'}, {label: 'Dashboard', active: true}];
     this.getStatistics();
-    this.getChart();
     this.getTreeMaps('products');
   }
 
@@ -58,96 +45,14 @@ export class AnalyticsComponent implements OnInit {
     }
     this.dashboardAnalyticsService.getStatistics(params).subscribe(data => {
       this.statistics = data;
+      this.statistics.find(s => s.kpi === 'OUTPUT_CHIFFRE').appendToChart = true;
+      this.statistics.find(s => s.kpi === 'INPUT_CHIFFRE').appendToChart = true;
+      this.getChart();
     });
   }
-
-  getTreeMaps(filter: string): void {
-    const params = [];
-    // tslint:disable-next-line:forin
-    for (const key in this.range.value) {
-      const date = formatDate(this.range.value[key], 'yyyy-MM-dd', 'en');
-      params.push(key + '=' + date);
-    }
-    params.push('filter=' + filter);
-    params.push('n=' + 10);
-
-    this.dashboardAnalyticsService.getTreeMapOfTop(params).subscribe(data => {
-      const myChart = echarts.init(document.getElementById('treeMap0'));
-      myChart.clear();
-      myChart.setOption({
-        title: {
-          top: 5,
-          left: 'center',
-          text: 'Top 10 Products',
-        },
-        legend: {
-
-          selectedMode: 'single',
-          top: 55,
-          itemGap: 5,
-          borderRadius: 5
-        },
-        series: [{
-          type: 'treemap',
-          data: data
-        }]
-      });
-    });
-
-    this.dashboardAnalyticsService.getTreeMapOfTop(params).subscribe(data => {
-      const myChart = echarts.init(document.getElementById('treeMap1'));
-      myChart.clear();
-      myChart.setOption({
-        title: {
-          top: 5,
-          left: 'center',
-          text: 'Top 10 Clients',
-        },
-        legend: {
-          selectedMode: 'single',
-          top: 55,
-          itemGap: 5,
-          borderRadius: 5
-        },
-
-        tooltip: {},
-
-        series: [{
-          type: 'treemap',
-          data: data
-        }]
-      });
-    });
-
-    this.dashboardAnalyticsService.getTreeMapOfTop(params).subscribe(data => {
-      const myChart = echarts.init(document.getElementById('treeMap2'));
-      myChart.clear();
-      myChart.setOption({
-        title: {
-          top: 5,
-          left: 'center',
-          text: 'Top 10 Clients',
-        },
-        legend: {
-          selectedMode: 'single',
-          top: 55,
-          itemGap: 5,
-          borderRadius: 5
-        },
-
-        tooltip: {},
-
-        series: [{
-          type: 'treemap',
-          data: data
-        }]
-      });
-    });
-
-  }
-
 
   getChart(period: string = 'MONTH'): void {
+
     const params = this.statistics.filter(s => s.appendToChart === true).map(v => v.kpi);
     // tslint:disable-next-line:forin
     for (const key in this.range.value) {
@@ -228,9 +133,48 @@ export class AnalyticsComponent implements OnInit {
     });
   }
 
+  getTreeMaps(filter: string): void {
+    const params = [];
+    // tslint:disable-next-line:forin
+    for (const key in this.range.value) {
+      const date = formatDate(this.range.value[key], 'yyyy-MM-dd', 'en');
+      params.push(key + '=' + date);
+    }
+    params.push('filter=' + filter);
+    params.push('n=' + 10);
+
+    this.dashboardAnalyticsService.getTreeMapOfTop(params).subscribe(data => {
+      const myChart = echarts.init(document.getElementById('treeMap'));
+      myChart.clear();
+      myChart.setOption({
+        title: {
+          top: 5,
+          left: 'center',
+          text: 'Top 10 ' + filter,
+        },
+        legend: {
+          selectedMode: 'single',
+          top: 55,
+          itemGap: 5,
+          borderRadius: 5
+        },
+        tooltip: {},
+        series: [{
+          type: 'treemap',
+          data: data
+        }]
+      });
+    });
+  }
+
   hideStat(kpi): void {
     this.statistics.find(s => s.kpi === kpi).hidden = true;
     this.statistics.find(s => s.kpi === kpi).appendToChart = false;
+    this.getChart('MONTH');
+  }
+
+  appendStatToChart(kpi): void {
+    this.statistics.find(s => s.kpi === kpi).appendToChart = !this.statistics.find(s => s.kpi === kpi).appendToChart;
     this.getChart('MONTH');
   }
 
@@ -238,10 +182,5 @@ export class AnalyticsComponent implements OnInit {
     this.getStatistics();
     this.getChart();
     this.getTreeMaps('products');
-  }
-
-  appendStatToChart(kpi): void {
-    this.statistics.find(s => s.kpi === kpi).appendToChart = !this.statistics.find(s => s.kpi === kpi).appendToChart;
-    this.getChart('MONTH');
   }
 }

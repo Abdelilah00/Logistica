@@ -83,27 +83,24 @@
   </div>
 
   <div class="card">
+    <div class='card-header'>
+      <mat-form-field appearance="fill" class='float-right d-none d-md-inline-block'>
+        <mat-label>Select an option</mat-label>
+        <mat-select disableRipple (selectionChange)='getTreeMaps($event.value)' [(value)]='defaultTreeMap'>
+          <mat-option value="products">Products</mat-option>
+          <mat-option value="clients">Clients</mat-option>
+          <mat-option value="suppliers">Suppliers</mat-option>
+          <mat-option value="services">Services</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
     <div class="card-body">
       <div>
-        <div [options]="chartOption" class="chart" echarts id='treeMap0'></div>
+        <div class="chart" echarts id='treeMap'></div>
       </div>
     </div>
   </div>
 
-  <div class="card">
-    <div class="card-body">
-      <div>
-        <div [options]="chartOption" class="chart" echarts id='treeMap1'></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-body">
-      <div>
-        <div [options]="chartOption" class="chart" echarts id='treeMap2'></div>
-      </div>
-    </div>
-  </div>
   <!-- end row -->
 </div>

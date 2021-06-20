@@ -16,6 +16,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 @Service
 public class DashboardPredictionsService implements IDashboardPredictionsService {
@@ -33,11 +34,10 @@ public class DashboardPredictionsService implements IDashboardPredictionsService
     @Autowired
     private IProductRepository iProductRepository;
 
-    //get top 10 profitable products
+    //todo: should be optimized :)
     public CompletableFuture<ListOfPredSeries> getChart(Map<String, String> params) throws UserFriendlyException {
-        var filters = Arrays.asList("products", "clients", "suppliers");
-        var filter = params.get("filter");
-        if (!filters.contains(filter)) throw new UserFriendlyException("error in your filter");
+        var productId = params.get("productId");
+        if (productId == null) throw new UserFriendlyException("error in your filter");
 
         Session session = entityManager.unwrap(Session.class);
         ListOfPredSeries result = new ListOfPredSeries();
@@ -45,31 +45,41 @@ public class DashboardPredictionsService implements IDashboardPredictionsService
         List<Object[]> inputs = session.createSQLQuery("select DATE(i.createdAt) time, SUM(id.qte) qte " +
                 "from input i " +
                 "inner join inputdetails id on i.id = id.input_id " +
-                "where id.product_id = 1 and a.tenantId = :tenantId and a.deletedAt is null " +
+                "where id.product_id = :productId and i.tenantId = :tenantId and i.deletedAt is null " +
                 "group by time")
-                .setParameter("tenantId", TenantContext.getCurrentTenant()).list();
+                .setParameter("tenantId", TenantContext.getCurrentTenant()).setParameter("productId", productId).list();
         List<Object[]> outputs = session.createSQLQuery("select DATE(o.createdAt) time, SUM(id.qte) qte " +
                 "from output o " +
                 "inner join outputdetails id on o.id = id.output_id " +
-                "where id.product_id = 1 and a.tenantId = :tenantId and a.deletedAt is null " +
-                "group by timee")
-                .setParameter("tenantId", TenantContext.getCurrentTenant()).list();
+                "where id.product_id = :productId and o.tenantId = :tenantId and o.deletedAt is null " +
+                "group by time")
+                .setParameter("tenantId", TenantContext.getCurrentTenant()).setParameter("productId", productId).list();
 
         List<ItemOfPredSeries> rest = new ArrayList<>();
-        for (var input : inputs)
-            outputs.
-
-
-        //todo: optimize this one
-        double[] tmp = query.stream().mapToDouble(x -> ((Number) x[1]).doubleValue()).toArray();
-        Arrays.parallelPrefix(tmp, (x, y) -> x + y);
-        for (int i = 0; i < query.size(); i++) {
-            result.getItems().add(new ItemOfPredSeries(((Date) query.get(i)[0]), tmp[i]));
+        for (var input : inputs) {
+            var out = outputs.stream().filter(o -> o[0].toString().equals(input[0].toString())).collect(Collectors.toList());
+            if (out.size() > 0) {
+                var first = out.get(0);
+                rest.add(new ItemOfPredSeries(((Date) input[0]), ((Number) input[1]).doubleValue() - ((Number) first[1]).doubleValue()));
+            } else
+                rest.add(new ItemOfPredSeries(((Date) input[0]), ((Number) input[1]).doubleValue()));
         }
+        for (var output : outputs) {
+            var in = inputs.stream().filter(o -> o[0].toString().equals(output[0].toString())).collect(Collectors.toList());
+            if (in.size() == 0) {
+                rest.add(new ItemOfPredSeries(((Date) output[0]), ((Number) output[1]).doubleValue()));
+            }
+        }
+        rest = rest.stream().sorted((o1, o2) -> o1.getTime().compareTo(o2.getTime())).collect(Collectors.toList());
+        //todo: optimize this one
+        double[] tmp = rest.stream().mapToDouble(ItemOfPredSeries::getValue).toArray();
+        Arrays.parallelPrefix(tmp, (x, y) -> x + y);
 
-        result.setMax(((Number) (query.get(query.size() - 1)[2])).longValue());
-        result.setMed(((Number) (query.get(query.size() - 1)[3])).longValue());
-        result.setMin(((Number) (query.get(query.size() - 1)[4])).longValue());
+        var prod = iProductRepository.findById(1L).get();
+        result.setMax(Long.valueOf(prod.getStockMax()));
+        result.setMed(Long.valueOf(prod.getStockSecurity()));
+        result.setMin(Long.valueOf(prod.getStockMin()));
+        result.setItems(rest);
         return CompletableFuture.completedFuture(result);
     }
 

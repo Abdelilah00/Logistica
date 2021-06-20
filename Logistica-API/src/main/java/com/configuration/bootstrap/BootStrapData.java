@@ -18,6 +18,13 @@ import com.logistica.repositories.ITestRepository;
 import com.logistica.repositories.Organization.IStructureRepository;
 import com.logistica.repositories.Organization.IStructureUnitRepository;
 import com.logistica.repositories.Products.*;
+import org.apache.spark.ml.linalg.Vectors;
+import org.apache.spark.ml.regression.LinearRegression;
+import org.apache.spark.ml.regression.LinearRegressionModel;
+import org.apache.spark.ml.regression.LinearRegressionTrainingSummary;
+import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SparkSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +70,7 @@ public class BootStrapData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws InterruptedException {
-
+        spark();
         if (iInputRepository.findAll().size() == 0) {
 
             //region actors roles
@@ -133,27 +140,27 @@ public class BootStrapData implements CommandLineRunner {
 
             var prodA = new Product();
             prodA.setName("product A");
-            prodA.setStockMax(5000);
-            prodA.setStockMin(1000);
-            prodA.setStockSecurity(3000);
+            prodA.setStockMax(250);
+            prodA.setStockMin(50);
+            prodA.setStockSecurity(100);
             prodA.setPriceHT(1.5F);
             prodA.setTVA(10f);
             prodA.setCategory(catA);
             iProductRepository.save(prodA);
             var prodB = new Product();
             prodB.setName("product B");
-            prodA.setStockMax(5000);
-            prodA.setStockMin(1000);
-            prodA.setStockSecurity(3000);
+            prodB.setStockMax(250);
+            prodB.setStockMin(50);
+            prodB.setStockSecurity(100);
             prodB.setPriceHT(1.5F);
             prodB.setTVA(10f);
             prodB.setCategory(catB);
             iProductRepository.save(prodB);
             var prodC = new Product();
             prodC.setName("product C");
-            prodA.setStockMax(5000);
-            prodA.setStockMin(1000);
-            prodA.setStockSecurity(3000);
+            prodC.setStockMax(250);
+            prodC.setStockMin(50);
+            prodC.setStockSecurity(100);
             prodC.setPriceHT(1.5F);
             prodC.setTVA(10f);
             prodC.setCategory(catA);
@@ -315,7 +322,6 @@ public class BootStrapData implements CommandLineRunner {
 
             statStockData();
         }
-
     }
 
     private void statStockData() {
@@ -358,9 +364,9 @@ public class BootStrapData implements CommandLineRunner {
         for (int i = 1; i <= 17; i++) {
             var prodA = new Product();
             prodA.setName("product " + i);
-            prodA.setStockMax(5000);
-            prodA.setStockMin(1000);
-            prodA.setStockSecurity(3000);
+            prodA.setStockMax(250);
+            prodA.setStockMin(50);
+            prodA.setStockSecurity(100);
             prodA.setPriceHT(1.5F);
             prodA.setTVA(10f);
             prodA.getCategory().setId(random.nextInt(4) + 1);
@@ -431,4 +437,29 @@ public class BootStrapData implements CommandLineRunner {
         iOutputRepository.saveAll(outputs);
     }
 
+    private void spark() {
+        SparkSession spark = SparkSession.builder().appName("Java Spark SQL basic example").config("spark.master", "local").getOrCreate();
+
+        // Load training data.
+        Dataset<Row> training = spark.read().option("sep", ",").csv("D:\\DataSets\\houses.csv");
+
+        LinearRegression lr = new LinearRegression()
+                .setMaxIter(10)
+                .setRegParam(0.3)
+                .setElasticNetParam(0.8);
+
+        // Fit the model.
+        LinearRegressionModel lrModel = lr.fit(training);
+
+        // Print the coefficients and intercept for linear regression.
+        System.out.println("Coefficients: " + lrModel.coefficients() + " Intercept: " + lrModel.intercept());
+
+        // Summarize the model over the training set and print out some metrics.
+        LinearRegressionTrainingSummary trainingSummary = lrModel.summary();
+        System.out.println("numIterations: " + trainingSummary.totalIterations());
+        System.out.println("objectiveHistory: " + Vectors.dense(trainingSummary.objectiveHistory()));
+        trainingSummary.residuals().show();
+        System.out.println("RMSE: " + trainingSummary.rootMeanSquaredError());
+        System.out.println("r2: " + trainingSummary.r2());
+    }
 }

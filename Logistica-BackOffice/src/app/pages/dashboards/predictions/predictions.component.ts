@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {DashboardPredictionsService} from '../../../core/services/Dashboards/dashboard-predictions.service';
 import * as echarts from 'echarts';
+import {ProductsService} from '../../../core/services/Products/products.service';
+import {Product} from '../../../core/models/all.models';
 
 @Component({
   selector: 'app-predictions',
@@ -8,16 +10,20 @@ import * as echarts from 'echarts';
   styleUrls: ['./predictions.component.scss']
 })
 export class PredictionsComponent implements OnInit {
+  defaultProduct = 1;
+  products: Product[];
 
-  constructor(private dashboardPredictionsService: DashboardPredictionsService) {
+  constructor(private dashboardPredictionsService: DashboardPredictionsService, private productsService: ProductsService) {
   }
 
   ngOnInit(): void {
-    this.getChart(['filter=products']);
+    this.getChart();
+    this.productsService.getAll().subscribe(data => this.products = data);
   }
 
-  getChart(params: string[]): void {
-    this.dashboardPredictionsService.getChart(params).subscribe(data => {
+  getChart(): void {
+    const pId = ['productId=' + this.defaultProduct];
+    this.dashboardPredictionsService.getChart(pId).subscribe(data => {
       const myChart = echarts.init(document.getElementById('chart'));
       myChart.clear();
       const finalData = [[]];

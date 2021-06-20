@@ -18,6 +18,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatNativeDateModule} from '@angular/material/core';
 import {NgbDropdownModule} from '@ng-bootstrap/ng-bootstrap';
 import {NgxEchartsModule} from 'ngx-echarts';
+import {MatSelectModule} from '@angular/material/select';
 
 const routes: Routes = [
   {path: 'analytics', component: AnalyticsComponent},
@@ -30,27 +31,28 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [AlertsComponent, AnalyticsComponent, PredictionsComponent],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    Ng2SearchPipeModule,
-    FormsModule,
-    LeafletModule,
-    PerfectScrollbarModule,
-    WidgetModule,
-    NgApexchartsModule,
-    MatButtonToggleModule,
-    UiModule,
-    MatFormFieldModule,
-    MatDatepickerModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    MatNativeDateModule,
-    NgbDropdownModule,
-    NgxEchartsModule.forRoot({
-      echarts: () => import('echarts'),
-    }),
-  ],
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        Ng2SearchPipeModule,
+        FormsModule,
+        LeafletModule,
+        PerfectScrollbarModule,
+        WidgetModule,
+        NgApexchartsModule,
+        MatButtonToggleModule,
+        UiModule,
+        MatFormFieldModule,
+        MatDatepickerModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        MatNativeDateModule,
+        NgbDropdownModule,
+        NgxEchartsModule.forRoot({
+            echarts: () => import('echarts'),
+        }),
+        MatSelectModule,
+    ],
   providers: [
     MatDatepickerModule,
     MatNativeDateModule
