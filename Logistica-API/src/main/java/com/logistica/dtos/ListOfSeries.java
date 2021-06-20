@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-public class SeriesListDto {
+public class ListOfSeries {
     private String kpi;
     private List<ItemOfSeries> items;
 }

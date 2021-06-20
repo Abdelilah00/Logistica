@@ -8,5 +8,5 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public interface IDashboardPredictionsService {
-    CompletableFuture<List<ItemOfPredSeries>> getChart(Map<String, String> params) throws UserFriendlyException;
+    CompletableFuture<ListOfPredSeries> getChart(Map<String, String> params) throws UserFriendlyException;
 }

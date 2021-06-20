@@ -5,16 +5,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.awt.*;
+import java.util.List;
 import java.util.ArrayList;
-import java.util.Date;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ItemOfPredSeries {
-    private Date time;
-    private Double value;
+public class ListOfPredSeries {
+    private Long max;
+    private Long med;
+    private Long min;
+    private List<ItemOfPredSeries> items = new ArrayList<>();
 }
-

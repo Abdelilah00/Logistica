@@ -13,64 +13,6 @@ export class PredictionsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let base = +new Date(1988, 9, 3);
-    const oneDay = 24 * 3600 * 1000;
-    const data = [[base, Math.random() * 300]];
-
-    for (let i = 1; i < 20000; i++) {
-      const now = new Date(base += oneDay);
-      // @ts-ignore
-      data.push([[now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'),
-        Math.round((Math.random() - 0.5) * 20 + data[i - 1][1])
-      ]);
-    }
-    const myChart = echarts.init(document.getElementById('chart'));
-    myChart.clear();
-    console.log(data);
-    myChart.setOption({
-      tooltip: {
-        trigger: 'axis',
-        position: (pt) => [pt[0], '10%']
-      },
-      title: {
-        left: 'center',
-        text: 'Sells Qte',
-      },
-      toolbox: {
-        feature: {
-          dataZoom: {
-            yAxisIndex: 'none'
-          },
-          restore: {},
-          saveAsImage: {}
-        }
-      },
-      xAxis: {
-        type: 'time',
-        boundaryGap: false
-      },
-      yAxis: {
-        type: 'value',
-        boundaryGap: [0, '100%']
-      },
-      dataZoom: [{
-        type: 'inside',
-        start: 0,
-        end: 20
-      }, {
-        start: 0,
-        end: 20
-      }],
-      series: [
-        {
-          name: '模拟数据',
-          type: 'line',
-          smooth: true,
-          symbol: 'none',
-          data: data
-        }
-      ]
-    });
     this.getChart(['filter=products']);
   }
 
@@ -78,6 +20,9 @@ export class PredictionsComponent implements OnInit {
     this.dashboardPredictionsService.getChart(params).subscribe(data => {
       const myChart = echarts.init(document.getElementById('chart'));
       myChart.clear();
+      const finalData = [[]];
+      data.items.map(obj => finalData.push([obj.time, obj.value]));
+
       myChart.setOption({
         tooltip: {
           trigger: 'axis',
@@ -87,7 +32,7 @@ export class PredictionsComponent implements OnInit {
         },
         title: {
           left: 'center',
-          text: '大数据量面积图',
+          text: 'Sells Qte',
         },
         toolbox: {
           feature: {
@@ -118,12 +63,40 @@ export class PredictionsComponent implements OnInit {
           {
             name: '模拟数据',
             type: 'line',
-            smooth: true,
+            smooth: false,
             symbol: 'none',
-            areaStyle: {},
-            data: data
+            data: finalData,
+            markLine: {
+
+              silent: true,
+              data: [
+                {
+                  yAxis: data.max,
+                  lineStyle: {
+                    normal: {
+                      color: '#0af34c',
+                    }
+                  }
+                },
+                {
+                  yAxis: data.med,
+                  lineStyle: {
+                    normal: {
+                      color: '#0a7bf3',
+                    }
+                  }
+                },
+                {
+                  yAxis: data.min,
+                  lineStyle: {
+                    normal: {
+                      color: '#f30a12',
+                    }
+                  }
+                }]
+            }
           }
-        ]
+        ],
       });
     });
   }

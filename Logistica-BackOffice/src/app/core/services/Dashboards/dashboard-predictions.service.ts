@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
 import {Observable} from 'rxjs';
 import {retry} from 'rxjs/operators';
+import {SeriesItem, SeriesPredList} from '../../models/dashboard.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,10 +16,10 @@ export class DashboardPredictionsService {
     this.baseUrl = `${environment.apiBaseUrl}/dashboardPredictions`;
   }
 
-  getChart(params: string[]): Observable<any[]> {
+  getChart(params: string[]): Observable<SeriesPredList> {
     this.loading = true;
     const queryString = this.createQueryURL(params);
-    return this.httpClient.get<any[]>(`${this.baseUrl}/getChart${queryString}`).pipe(retry(1));
+    return this.httpClient.get<SeriesPredList>(`${this.baseUrl}/getChart${queryString}`).pipe(retry(1));
   }
 
   private createQueryURL(params: string[]): string {

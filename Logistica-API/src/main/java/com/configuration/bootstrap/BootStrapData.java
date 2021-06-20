@@ -133,27 +133,27 @@ public class BootStrapData implements CommandLineRunner {
 
             var prodA = new Product();
             prodA.setName("product A");
-            prodA.setStockMax(1000);
-            prodA.setStockMin(100);
-            prodA.setStockSecurity(300);
+            prodA.setStockMax(5000);
+            prodA.setStockMin(1000);
+            prodA.setStockSecurity(3000);
             prodA.setPriceHT(1.5F);
             prodA.setTVA(10f);
             prodA.setCategory(catA);
             iProductRepository.save(prodA);
             var prodB = new Product();
             prodB.setName("product B");
-            prodB.setStockMax(1500);
-            prodB.setStockMin(50);
-            prodB.setStockSecurity(500);
+            prodA.setStockMax(5000);
+            prodA.setStockMin(1000);
+            prodA.setStockSecurity(3000);
             prodB.setPriceHT(1.5F);
             prodB.setTVA(10f);
             prodB.setCategory(catB);
             iProductRepository.save(prodB);
             var prodC = new Product();
             prodC.setName("product C");
-            prodC.setStockMax(1000);
-            prodC.setStockMin(100);
-            prodC.setStockSecurity(300);
+            prodA.setStockMax(5000);
+            prodA.setStockMin(1000);
+            prodA.setStockSecurity(3000);
             prodC.setPriceHT(1.5F);
             prodC.setTVA(10f);
             prodC.setCategory(catA);
@@ -358,9 +358,9 @@ public class BootStrapData implements CommandLineRunner {
         for (int i = 1; i <= 17; i++) {
             var prodA = new Product();
             prodA.setName("product " + i);
-            prodA.setStockMax(1000);
-            prodA.setStockMin(100);
-            prodA.setStockSecurity(300);
+            prodA.setStockMax(5000);
+            prodA.setStockMin(1000);
+            prodA.setStockSecurity(3000);
             prodA.setPriceHT(1.5F);
             prodA.setTVA(10f);
             prodA.getCategory().setId(random.nextInt(4) + 1);
@@ -369,7 +369,7 @@ public class BootStrapData implements CommandLineRunner {
         }
         iProductRepository.saveAll(products);
 
-        for (int i = 0; i < 600; i++) {
+        for (int i = 0; i < 300; i++) {
             Long pId = (long) (random.nextInt(19) + 1);
             Long sId = (long) (random.nextInt(1) + 1);
             Integer qte = random.nextInt(100) + 50;
@@ -401,7 +401,7 @@ public class BootStrapData implements CommandLineRunner {
         }
         iInputRepository.saveAll(inputs);
 
-        for (int i = 0; i < 800; i++) {
+        for (int i = 0; i < 1000; i++) {
             Long pId = (random.nextInt(19) + 1L);
             Long sId = (random.nextInt(1) + 1L);
             Integer qte = random.nextInt(50) + 50;

@@ -1,7 +1,7 @@
 package com.logistica.controllers.Dashboard;
 
 import com.configuration.Exception.UserFriendlyException;
-import com.logistica.dtos.SeriesListDto;
+import com.logistica.dtos.ListOfSeries;
 import com.logistica.dtos.StatisticDto;
 import com.logistica.dtos.TreeMapItemDto;
 import com.logistica.services.Dashboard.IDashboardAnalyticsService;
@@ -28,7 +28,7 @@ public class DashboardAnalyticsController {
 
     //TODO: add start end date
     @GetMapping(path = "/getPeriodicChart")
-    protected List<SeriesListDto> getPeriodicChart(@RequestParam Map<String, String> params) throws UserFriendlyException, ExecutionException, InterruptedException {
+    protected List<ListOfSeries> getPeriodicChart(@RequestParam Map<String, String> params) throws UserFriendlyException, ExecutionException, InterruptedException {
         return iDashboardAnalyticsService.getPeriodicChart(params).get();
     }
 

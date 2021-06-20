@@ -3,7 +3,7 @@ package com.logistica.services.Dashboard;
 import com.configuration.Exception.UserFriendlyException;
 import com.configuration.TenantContext;
 import com.logistica.dtos.ItemOfSeries;
-import com.logistica.dtos.SeriesListDto;
+import com.logistica.dtos.ListOfSeries;
 import com.logistica.dtos.StatisticDto;
 import com.logistica.dtos.TreeMapItemDto;
 import com.logistica.repositories.Products.IInputRepository;
@@ -93,9 +93,9 @@ public class DashboardAnalyticsService implements IDashboardAnalyticsService {
     }
 
     @Override
-    public CompletableFuture<List<SeriesListDto>> getPeriodicChart(Map<String, String> params) throws UserFriendlyException {
+    public CompletableFuture<List<ListOfSeries>> getPeriodicChart(Map<String, String> params) throws UserFriendlyException {
         Session session = entityManager.unwrap(Session.class);
-        var list = new ArrayList<SeriesListDto>();
+        var list = new ArrayList<ListOfSeries>();
         List<String> periods = Arrays.asList("MONTH", "DAY", "HOUR");
         String period = params.get("period");
         if (!periods.contains(period))
@@ -108,7 +108,7 @@ public class DashboardAnalyticsService implements IDashboardAnalyticsService {
             for (var obj : aov) {
                 result.add(new ItemOfSeries(Long.parseLong(obj[0].toString()), Double.parseDouble(obj[1].toString())));
             }
-            list.add(new SeriesListDto("INPUT_COUNT", result));
+            list.add(new ListOfSeries("INPUT_COUNT", result));
         }
 
         if (params.get("OUTPUT_COUNT") != null) {
@@ -117,7 +117,7 @@ public class DashboardAnalyticsService implements IDashboardAnalyticsService {
             for (var obj : aov) {
                 result.add(new ItemOfSeries(Long.parseLong(obj[0].toString()), Double.parseDouble(obj[1].toString())));
             }
-            list.add(new SeriesListDto("OUTPUT_COUNT", result));
+            list.add(new ListOfSeries("OUTPUT_COUNT", result));
         }
 
         if (params.get("INPUT_CHIFFRE") != null) {
@@ -128,7 +128,7 @@ public class DashboardAnalyticsService implements IDashboardAnalyticsService {
             for (var obj : i) {
                 result.add(new ItemOfSeries(Long.parseLong(obj[0].toString()), Double.parseDouble(obj[1].toString())));
             }
-            list.add(new SeriesListDto("INPUT_CHIFFRE", result));
+            list.add(new ListOfSeries("INPUT_CHIFFRE", result));
         }
 
         if (params.get("OUTPUT_CHIFFRE") != null) {
@@ -138,7 +138,7 @@ public class DashboardAnalyticsService implements IDashboardAnalyticsService {
             for (var obj : o) {
                 result.add(new ItemOfSeries(Long.parseLong(obj[0].toString()), Double.parseDouble(obj[1].toString())));
             }
-            list.add(new SeriesListDto("OUTPUT_CHIFFRE", result));
+            list.add(new ListOfSeries("OUTPUT_CHIFFRE", result));
         }
 
         if (params.get("AOV_STATISTIC") != null) {
@@ -149,7 +149,7 @@ public class DashboardAnalyticsService implements IDashboardAnalyticsService {
             for (var obj : aov) {
                 result.add(new ItemOfSeries(Long.parseLong(obj[0].toString()), Double.parseDouble(obj[1].toString())));
             }
-            list.add(new SeriesListDto("AOV_STATISTIC", result));
+            list.add(new ListOfSeries("AOV_STATISTIC", result));
         }
 
         if (params.get("GP_STATISTIC") != null) {
@@ -160,7 +160,7 @@ public class DashboardAnalyticsService implements IDashboardAnalyticsService {
             for (var obj : aov) {
                 result.add(new ItemOfSeries(Long.parseLong(obj[0].toString()), Double.parseDouble(obj[1].toString())));
             }
-            list.add(new SeriesListDto("GP_STATISTIC", result));
+            list.add(new ListOfSeries("GP_STATISTIC", result));
         }
 
         if (params.get("STOCK_CHIFFRE") != null) {
@@ -171,7 +171,7 @@ public class DashboardAnalyticsService implements IDashboardAnalyticsService {
             for (var obj : aov) {
                 result.add(new ItemOfSeries(Long.parseLong(obj[0].toString()), Double.parseDouble(obj[1].toString())));
             }
-            list.add(new SeriesListDto("STOCK_CHIFFRE", result));
+            list.add(new ListOfSeries("STOCK_CHIFFRE", result));
         }
 
 
@@ -184,7 +184,7 @@ public class DashboardAnalyticsService implements IDashboardAnalyticsService {
                 Double tmp = Double.parseDouble(r.get(i)[1].toString()) / Double.parseDouble(o.get(i)[1].toString()) * 100;
                 rr.add(new ItemOfSeries(Long.parseLong(r.get(i)[0].toString()), Double.parseDouble(tmp.toString())));
             }
-            list.add(new SeriesListDto("RR_STATISTIC", rr));
+            list.add(new ListOfSeries("RR_STATISTIC", rr));
         }
 
         if (params.get("RPR_STATISTIC") != null) {
@@ -195,7 +195,7 @@ public class DashboardAnalyticsService implements IDashboardAnalyticsService {
                 Double tmp = Double.parseDouble(o.get(i)[1].toString()) / Double.parseDouble(c.get(i)[1].toString());
                 rpr.add(new ItemOfSeries(Long.parseLong(o.get(i)[0].toString()), tmp));
             }
-            list.add(new SeriesListDto("RPR_STATISTIC", rpr));
+            list.add(new ListOfSeries("RPR_STATISTIC", rpr));
         }
         return CompletableFuture.completedFuture(list);
     }

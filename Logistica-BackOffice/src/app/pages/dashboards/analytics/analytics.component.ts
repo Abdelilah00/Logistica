@@ -172,7 +172,6 @@ export class AnalyticsComponent implements OnInit {
           stack: d.kpi,
         });
       }
-
       const myChart = echarts.init(document.getElementById('chart'));
       myChart.clear();
       myChart.setOption({
@@ -223,7 +222,8 @@ export class AnalyticsComponent implements OnInit {
           type: 'value',
           scale: true
         },
-        series: series
+        series: series,
+
       });
     });
   }

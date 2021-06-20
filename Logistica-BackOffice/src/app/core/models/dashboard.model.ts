@@ -10,21 +10,6 @@ export interface ChartType {
   noData?: any;
 }
 
-export interface Stat {
-  title: string;
-  icon: string;
-  value: string;
-}
-
-export interface Chat {
-  id?: number;
-  name?: string;
-  message?: string;
-  image?: string;
-  time?: string;
-  align?: string;
-  text?: string;
-}
 
 export interface Transaction {
   orderid: string;
@@ -39,9 +24,16 @@ export class SeriesList {
   kpi: string;
 }
 
-class SeriesItem {
+export class SeriesItem {
   time: number;
   value: number;
+}
+
+export class SeriesPredList {
+  items: SeriesItem[];
+  min: number;
+  med: number;
+  max: number;
 }
 
 export class TreeMapItem {
