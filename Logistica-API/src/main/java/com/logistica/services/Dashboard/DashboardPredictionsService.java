@@ -3,18 +3,31 @@ package com.logistica.services.Dashboard;
 import com.configuration.Exception.UserFriendlyException;
 import com.configuration.TenantContext;
 import com.logistica.dtos.ItemOfPredSeries;
+import com.logistica.dtos.ItemOfSparkSeries;
 import com.logistica.dtos.ListOfPredSeries;
 import com.logistica.repositories.Products.IInputRepository;
 import com.logistica.repositories.Products.IOutputRepository;
 import com.logistica.repositories.Products.IProductRepository;
 import com.logistica.repositories.Products.ITransferRepository;
+import org.apache.spark.ml.feature.Normalizer;
+import org.apache.spark.ml.feature.RFormula;
+import org.apache.spark.ml.linalg.Vectors;
+import org.apache.spark.ml.regression.LinearRegression;
+import org.apache.spark.ml.regression.LinearRegressionModel;
+import org.apache.spark.ml.regression.LinearRegressionTrainingSummary;
+import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SparkSession;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -72,8 +85,8 @@ public class DashboardPredictionsService implements IDashboardPredictionsService
         }
         rest = rest.stream().sorted((o1, o2) -> o1.getTime().compareTo(o2.getTime())).collect(Collectors.toList());
         //todo: optimize this one
-        double[] tmp = rest.stream().mapToDouble(ItemOfPredSeries::getValue).toArray();
-        Arrays.parallelPrefix(tmp, (x, y) -> x + y);
+
+        spark(rest);
 
         var prod = iProductRepository.findById(1L).get();
         result.setMax(Long.valueOf(prod.getStockMax()));
@@ -83,4 +96,40 @@ public class DashboardPredictionsService implements IDashboardPredictionsService
         return CompletableFuture.completedFuture(result);
     }
 
+    private void spark(java.util.List<ItemOfPredSeries> data) {
+        SparkSession spark = SparkSession.builder().appName("Java Spark SQL basic example").config("spark.master", "local").getOrCreate();
+
+        List<ItemOfSparkSeries> df = new ArrayList<>();
+        data.forEach(d -> {
+            var tmp = new ItemOfSparkSeries();
+            tmp.setTime(d.getTime().getTime());
+            tmp.setValue(d.getValue());
+            df.add(tmp);
+        });
+
+        // Load training data.
+        Dataset<Row> training = spark.createDataFrame(df, ItemOfSparkSeries.class);
+
+        LinearRegression lr = new LinearRegression()
+                .setMaxIter(1000)
+                .setRegParam(0.01);
+
+        RFormula formula = new RFormula().setFormula("value ~ time");
+        // Fit the model.
+        Dataset<Row> tmp = formula.fit(training).transform(training);
+        LinearRegressionModel lrModel = lr.fit(tmp);
+
+        // Print the coefficients and intercept for linear regression.
+        System.out.println("Coefficients: " + lrModel.coefficients() + " Intercept: " + lrModel.intercept());
+
+        // Summarize the model over the training set and print out some metrics.
+        LinearRegressionTrainingSummary trainingSummary = lrModel.summary();
+        System.out.println("numIterations: " + trainingSummary.totalIterations());
+        //System.out.println("objectiveHistory: " + Vectors.dense(trainingSummary.objectiveHistory()));
+        trainingSummary.residuals().show();
+        System.out.println("RMSE: " + trainingSummary.rootMeanSquaredError());
+        System.out.println("r2: " + trainingSummary.r2());
+        System.out.println("pred: 59 => " + lrModel.predict(Vectors.dense(new double[]{970617600000d})));
+        System.out.println("pred: 112 => " + lrModel.predict(Vectors.dense(new double[]{1041379200000d})));
+    }
 }

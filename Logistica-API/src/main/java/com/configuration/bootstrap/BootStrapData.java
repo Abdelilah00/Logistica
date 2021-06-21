@@ -70,7 +70,6 @@ public class BootStrapData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws InterruptedException {
-        spark();
         if (iInputRepository.findAll().size() == 0) {
 
             //region actors roles
@@ -437,29 +436,4 @@ public class BootStrapData implements CommandLineRunner {
         iOutputRepository.saveAll(outputs);
     }
 
-    private void spark() {
-        SparkSession spark = SparkSession.builder().appName("Java Spark SQL basic example").config("spark.master", "local").getOrCreate();
-
-        // Load training data.
-        Dataset<Row> training = spark.read().option("sep", ",").csv("D:\\DataSets\\houses.csv");
-
-        LinearRegression lr = new LinearRegression()
-                .setMaxIter(10)
-                .setRegParam(0.3)
-                .setElasticNetParam(0.8);
-
-        // Fit the model.
-        LinearRegressionModel lrModel = lr.fit(training);
-
-        // Print the coefficients and intercept for linear regression.
-        System.out.println("Coefficients: " + lrModel.coefficients() + " Intercept: " + lrModel.intercept());
-
-        // Summarize the model over the training set and print out some metrics.
-        LinearRegressionTrainingSummary trainingSummary = lrModel.summary();
-        System.out.println("numIterations: " + trainingSummary.totalIterations());
-        System.out.println("objectiveHistory: " + Vectors.dense(trainingSummary.objectiveHistory()));
-        trainingSummary.residuals().show();
-        System.out.println("RMSE: " + trainingSummary.rootMeanSquaredError());
-        System.out.println("r2: " + trainingSummary.r2());
-    }
 }

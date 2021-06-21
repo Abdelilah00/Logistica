@@ -5,6 +5,18 @@
 
 package com;
 
+import org.apache.spark.ml.feature.RFormula;
+import org.apache.spark.ml.linalg.Vectors;
+import org.apache.spark.ml.regression.LinearRegression;
+import org.apache.spark.ml.regression.LinearRegressionModel;
+import org.apache.spark.ml.regression.LinearRegressionTrainingSummary;
+import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SparkSession;
+import org.apache.spark.sql.types.DataTypes;
+import org.apache.spark.sql.types.Metadata;
+import org.apache.spark.sql.types.StructField;
+import org.apache.spark.sql.types.StructType;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -16,8 +28,13 @@ import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecu
 import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.annotation.PostConstruct;
+import java.awt.*;
+import java.time.LocalDate;
 import java.util.TimeZone;
 import java.util.concurrent.Executor;
+
+import static org.apache.spark.sql.functions.col;
+import static org.apache.spark.sql.functions.to_timestamp;
 
 @SpringBootApplication
 @EnableJpaRepositories(basePackages = {"com.logistica.repositories", "com.configuration.security.repositories"})
@@ -49,10 +66,11 @@ public class LogisticaApplication {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
     }
 
- /*   @Bean
-    public Jackson2ObjectMapperBuilder objectMapperBuilder() {
-        Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
-        builder.serializationInclusion(JsonInclude.Include.NON_NULL);
-        return builder;
-    }*/
+    /*   @Bean
+       public Jackson2ObjectMapperBuilder objectMapperBuilder() {
+           Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
+           builder.serializationInclusion(JsonInclude.Include.NON_NULL);
+           return builder;
+       }*/
+
 }
