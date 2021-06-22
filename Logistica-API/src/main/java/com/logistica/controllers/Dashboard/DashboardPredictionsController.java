@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
@@ -19,7 +21,7 @@ public class DashboardPredictionsController {
     private IDashboardPredictionsService iDashboardPredictionsService;
 
     @GetMapping(path = "/getChart")
-    protected ListOfPredSeries getChart(@RequestParam Map<String, String> params) throws UserFriendlyException, ExecutionException, InterruptedException {
+    protected ListOfPredSeries getChart(@RequestParam Map<String, String> params) throws UserFriendlyException, ExecutionException, InterruptedException, IOException, ParseException {
         return iDashboardPredictionsService.getChart(params).get();
     }
 }

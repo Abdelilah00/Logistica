@@ -31,6 +31,7 @@ export class SeriesItem {
 
 export class SeriesPredList {
   items: SeriesItem[];
+  predItems: SeriesItem[];
   min: number;
   med: number;
   max: number;

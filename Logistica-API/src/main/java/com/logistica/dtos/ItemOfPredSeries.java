@@ -5,8 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.awt.*;
-import java.util.ArrayList;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -15,6 +15,6 @@ import java.util.Date;
 @NoArgsConstructor
 public class ItemOfPredSeries {
     private Date time;
-    private Double value;
+    private Double value = 0d;
 }
 

@@ -26,8 +26,10 @@ export class PredictionsComponent implements OnInit {
     this.dashboardPredictionsService.getChart(pId).subscribe(data => {
       const myChart = echarts.init(document.getElementById('chart'));
       myChart.clear();
-      const finalData = [[]];
-      data.items.map(obj => finalData.push([obj.time, obj.value]));
+      const finalRealData = [[]];
+      const finalPredData = [[]];
+      data.items.map(obj => finalRealData.push([obj.time, obj.value]));
+      data.predItems.map(obj => finalPredData.push([obj.time, obj.value]));
 
       myChart.setOption({
         tooltip: {
@@ -67,13 +69,12 @@ export class PredictionsComponent implements OnInit {
         }],
         series: [
           {
-            name: '模拟数据',
+            name: 'Real',
             type: 'line',
             smooth: false,
             symbol: 'none',
-            data: finalData,
+            data: finalRealData,
             markLine: {
-
               silent: true,
               data: [
                 {
@@ -101,6 +102,12 @@ export class PredictionsComponent implements OnInit {
                   }
                 }]
             }
+          }, {
+            name: 'Predicted',
+            type: 'line',
+            smooth: false,
+            symbol: 'none',
+            data: finalPredData
           }
         ],
       });

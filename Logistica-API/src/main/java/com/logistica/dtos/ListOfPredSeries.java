@@ -17,4 +17,5 @@ public class ListOfPredSeries {
     private Long med;
     private Long min;
     private List<ItemOfPredSeries> items = new ArrayList<>();
+    private List<ItemOfPredSeries> predItems = new ArrayList<>();
 }

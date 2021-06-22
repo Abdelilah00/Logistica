@@ -53,7 +53,7 @@ public abstract class BaseEntity extends IdEntity {
 
     public static Date between() {
         LocalDateTime endExclusive = LocalDateTime.now();
-        LocalDateTime startInclusive = endExclusive.minusYears(21);
+        LocalDateTime startInclusive = endExclusive.minusYears(5);
 
         long startMillis = startInclusive.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
         long endMillis = endExclusive.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();

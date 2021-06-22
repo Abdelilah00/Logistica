@@ -18,13 +18,6 @@ import com.logistica.repositories.ITestRepository;
 import com.logistica.repositories.Organization.IStructureRepository;
 import com.logistica.repositories.Organization.IStructureUnitRepository;
 import com.logistica.repositories.Products.*;
-import org.apache.spark.ml.linalg.Vectors;
-import org.apache.spark.ml.regression.LinearRegression;
-import org.apache.spark.ml.regression.LinearRegressionModel;
-import org.apache.spark.ml.regression.LinearRegressionTrainingSummary;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SparkSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -330,6 +323,7 @@ public class BootStrapData implements CommandLineRunner {
         var inputs = new ArrayList<Input>();
         var outputs = new ArrayList<Output>();
         var actors = new ArrayList<Actor>();
+        var stockProds = new ArrayList<StockProduct>();
 
         for (int i = 0; i < 50; i++) {
             var actor = new Actor();
@@ -370,11 +364,10 @@ public class BootStrapData implements CommandLineRunner {
             prodA.setTVA(10f);
             prodA.getCategory().setId(random.nextInt(4) + 1);
             products.add(prodA);
-
         }
         iProductRepository.saveAll(products);
 
-        for (int i = 0; i < 300; i++) {
+        for (int i = 0; i < 10000; i++) {
             Long pId = (long) (random.nextInt(19) + 1);
             Long sId = (long) (random.nextInt(1) + 1);
             Integer qte = random.nextInt(100) + 50;
@@ -398,19 +391,20 @@ public class BootStrapData implements CommandLineRunner {
                 stockProd.getProduct().setId(pId);
                 stockProd.getStock().setId(sId);
                 stockProd.setQte(qte);
+
             } else {
                 stockProd.setQte(stockProd.getQte() + qte);
             }
-            inputs.add(input);
             iStockProductRepository.save(stockProd);
+            inputs.add(input);
         }
         iInputRepository.saveAll(inputs);
 
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 20000; i++) {
             Long pId = (random.nextInt(19) + 1L);
             Long sId = (random.nextInt(1) + 1L);
-            Integer qte = random.nextInt(50) + 50;
-            Float price = (random.nextInt(2) + 1.5F);
+            Integer qte = random.nextInt(90) + 50;
+            Float price = (0.5f * random.nextFloat() + 1.5F);
 
             var output = new Output();
             output.setRef("Ref" + i);
@@ -429,9 +423,8 @@ public class BootStrapData implements CommandLineRunner {
             var stockProd = iStockProductRepository.findByProductIdAndStockId(pId, sId);
             if (stockProd.getQte() >= qte) {
                 stockProd.setQte(stockProd.getQte() - qte);
+                outputs.add(output);
             }
-            //stockProducts.add(stockProd);
-            outputs.add(output);
         }
         iOutputRepository.saveAll(outputs);
     }

@@ -2,32 +2,34 @@ package com.logistica.services.Dashboard;
 
 import com.configuration.Exception.UserFriendlyException;
 import com.configuration.TenantContext;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.logistica.dtos.ItemOfPredSeries;
-import com.logistica.dtos.ItemOfSparkSeries;
 import com.logistica.dtos.ListOfPredSeries;
 import com.logistica.repositories.Products.IInputRepository;
 import com.logistica.repositories.Products.IOutputRepository;
 import com.logistica.repositories.Products.IProductRepository;
 import com.logistica.repositories.Products.ITransferRepository;
-import org.apache.spark.ml.feature.Normalizer;
-import org.apache.spark.ml.feature.RFormula;
-import org.apache.spark.ml.linalg.Vectors;
-import org.apache.spark.ml.regression.LinearRegression;
-import org.apache.spark.ml.regression.LinearRegressionModel;
-import org.apache.spark.ml.regression.LinearRegressionTrainingSummary;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SparkSession;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -36,6 +38,10 @@ public class DashboardPredictionsService implements IDashboardPredictionsService
 
     @PersistenceContext
     EntityManager entityManager;
+
+    @Autowired
+    @Qualifier("getWebClientBuilder")
+    private WebClient.Builder webClient;
 
     @Autowired
     private IInputRepository iInputRepository;
@@ -48,7 +54,7 @@ public class DashboardPredictionsService implements IDashboardPredictionsService
     private IProductRepository iProductRepository;
 
     //todo: should be optimized :)
-    public CompletableFuture<ListOfPredSeries> getChart(Map<String, String> params) throws UserFriendlyException {
+    public CompletableFuture<ListOfPredSeries> getChart(Map<String, String> params) throws UserFriendlyException, IOException, ParseException {
         var productId = params.get("productId");
         if (productId == null) throw new UserFriendlyException("error in your filter");
 
@@ -69,67 +75,72 @@ public class DashboardPredictionsService implements IDashboardPredictionsService
                 .setParameter("tenantId", TenantContext.getCurrentTenant()).setParameter("productId", productId).list();
 
         List<ItemOfPredSeries> rest = new ArrayList<>();
-        for (var input : inputs) {
-            var out = outputs.stream().filter(o -> o[0].toString().equals(input[0].toString())).collect(Collectors.toList());
-            if (out.size() > 0) {
-                var first = out.get(0);
-                rest.add(new ItemOfPredSeries(((Date) input[0]), ((Number) input[1]).doubleValue() - ((Number) first[1]).doubleValue()));
-            } else
+        //we should reindex by date (create messing date with previous value as data)
+        Date minInput = inputs.stream().map(u -> (Date) u[0]).min(Date::compareTo).get();
+        Date minOutput = outputs.stream().map(u -> (Date) u[0]).min(Date::compareTo).get();
+        Date minDate = minInput.compareTo(minOutput) < 0 ? minInput : minOutput;
+        Date currDate = new Timestamp(new Date().getTime());
+        Date tmpDate = minDate;
+
+        while (tmpDate.compareTo(currDate) < 0) {
+            Date finalTmpDate = tmpDate;
+            Object[] input = inputs.stream().filter(carnet -> ((Date) carnet[0]).compareTo(finalTmpDate) == 0).findFirst().orElse(null);
+            Object[] output = outputs.stream().filter(carnet -> ((Date) carnet[0]).compareTo(finalTmpDate) == 0).findFirst().orElse(null);
+
+            if (input != null && output != null)
+                rest.add(new ItemOfPredSeries(((Date) input[0]), ((Number) input[1]).doubleValue() - ((Number) output[1]).doubleValue()));
+            else if (input != null && output == null)
                 rest.add(new ItemOfPredSeries(((Date) input[0]), ((Number) input[1]).doubleValue()));
-        }
-        for (var output : outputs) {
-            var in = inputs.stream().filter(o -> o[0].toString().equals(output[0].toString())).collect(Collectors.toList());
-            if (in.size() == 0) {
+            else if (output != null)
                 rest.add(new ItemOfPredSeries(((Date) output[0]), ((Number) output[1]).doubleValue()));
+            else if (input == null && output == null) {
+                //find by previous day
+                double x = rest.stream().filter(carnet -> carnet.getTime().compareTo(addDays(finalTmpDate, -1)) == 0).findFirst().orElse(new ItemOfPredSeries()).getValue();
+                rest.add(new ItemOfPredSeries(finalTmpDate, x));
             }
+            tmpDate = addDays(tmpDate, 1);
         }
+
         rest = rest.stream().sorted((o1, o2) -> o1.getTime().compareTo(o2.getTime())).collect(Collectors.toList());
-        //todo: optimize this one
 
-        spark(rest);
+        //var simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        String jsonReal = gson.toJson(rest);
+        /*        FileWriter myWriter = new FileWriter("D:\\Result.json", true);
+        myWriter.write(json);
+        myWriter.close();*/
 
-        var prod = iProductRepository.findById(1L).get();
+        var response = webClient.baseUrl("http://localhost:5000/").build()
+                .post().uri("predict")
+                .accept(MediaType.ALL).contentType(MediaType.APPLICATION_JSON)
+                .body(BodyInserters.fromFormData("series", jsonReal))
+                .retrieve().bodyToMono(String.class).block();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode nodes = objectMapper.readTree(response);
+        var dataNode = nodes.get("data").toString();
+
+        PredResult[] flaskResponse = objectMapper.readValue(dataNode, PredResult[].class);
+
+        var prod = iProductRepository.findById(Long.valueOf(productId)).get();
         result.setMax(Long.valueOf(prod.getStockMax()));
         result.setMed(Long.valueOf(prod.getStockSecurity()));
         result.setMin(Long.valueOf(prod.getStockMin()));
         result.setItems(rest);
+
+        for (int i = 0; i < flaskResponse.length; i++) {
+            result.getPredItems().add(new ItemOfPredSeries(flaskResponse[i].getIndex(), flaskResponse[i].getPredicted_mean()));
+        }
+
         return CompletableFuture.completedFuture(result);
     }
 
-    private void spark(java.util.List<ItemOfPredSeries> data) {
-        SparkSession spark = SparkSession.builder().appName("Java Spark SQL basic example").config("spark.master", "local").getOrCreate();
+    private static Date addDays(Date date, int days) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);// w ww.  j ava  2  s  .co m
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        return new Date(cal.getTime().getTime());
 
-        List<ItemOfSparkSeries> df = new ArrayList<>();
-        data.forEach(d -> {
-            var tmp = new ItemOfSparkSeries();
-            tmp.setTime(d.getTime().getTime());
-            tmp.setValue(d.getValue());
-            df.add(tmp);
-        });
-
-        // Load training data.
-        Dataset<Row> training = spark.createDataFrame(df, ItemOfSparkSeries.class);
-
-        LinearRegression lr = new LinearRegression()
-                .setMaxIter(1000)
-                .setRegParam(0.01);
-
-        RFormula formula = new RFormula().setFormula("value ~ time");
-        // Fit the model.
-        Dataset<Row> tmp = formula.fit(training).transform(training);
-        LinearRegressionModel lrModel = lr.fit(tmp);
-
-        // Print the coefficients and intercept for linear regression.
-        System.out.println("Coefficients: " + lrModel.coefficients() + " Intercept: " + lrModel.intercept());
-
-        // Summarize the model over the training set and print out some metrics.
-        LinearRegressionTrainingSummary trainingSummary = lrModel.summary();
-        System.out.println("numIterations: " + trainingSummary.totalIterations());
-        //System.out.println("objectiveHistory: " + Vectors.dense(trainingSummary.objectiveHistory()));
-        trainingSummary.residuals().show();
-        System.out.println("RMSE: " + trainingSummary.rootMeanSquaredError());
-        System.out.println("r2: " + trainingSummary.r2());
-        System.out.println("pred: 59 => " + lrModel.predict(Vectors.dense(new double[]{970617600000d})));
-        System.out.println("pred: 112 => " + lrModel.predict(Vectors.dense(new double[]{1041379200000d})));
     }
 }
+
