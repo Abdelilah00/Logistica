@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.logistica.dtos.Dashboard.Alerts.AlertsItem;
 import com.logistica.dtos.Dashboard.Predictions.ItemOfPredSeries;
 import com.logistica.dtos.Dashboard.Predictions.ListOfPredSeries;
 import com.logistica.repositories.Products.IInputRepository;
@@ -25,13 +26,12 @@ import javax.persistence.PersistenceContext;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 @Service
-public class DashboardPredictionsService implements IDashboardPredictionsService {
+public class DashboardAlertsService implements IDashboardAlertsService {
 
     @PersistenceContext
     EntityManager entityManager;
@@ -49,6 +49,13 @@ public class DashboardPredictionsService implements IDashboardPredictionsService
 
     @Autowired
     private IProductRepository iProductRepository;
+
+    private static Date addDays(Date date, int days) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);// w ww.  j ava  2  s  .co m
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        return new Date(cal.getTime().getTime());
+    }
 
     //todo: should be optimized :)
     public CompletableFuture<ListOfPredSeries> getChart(Map<String, String> params) throws UserFriendlyException, IOException, ParseException {
@@ -78,35 +85,23 @@ public class DashboardPredictionsService implements IDashboardPredictionsService
         Date minDate = minInput.compareTo(minOutput) < 0 ? minInput : minOutput;
         Date currDate = new Timestamp(new Date().getTime());
         Date tmpDate = minDate;
-        double qteCumule = 0d;
-
-        Map<Date, Double> inputMap = new HashMap<>();
-        for (var input : inputs)
-            inputMap.put(new SimpleDateFormat("yyyy-MM-dd").parse(input[0].toString()), ((Number) input[1]).doubleValue());
-
-        Map<Date, Double> outputMap = new HashMap<>();
-        for (var output : outputs)
-            outputMap.put(new SimpleDateFormat("yyyy-MM-dd").parse(output[0].toString()), ((Number) output[1]).doubleValue());
-
-        var d3 = new SimpleDateFormat("yyyy-MM-dd").parse("2018-11-22");
-        var d1 = new SimpleDateFormat("yyyy-MM-dd").parse("2018-01-25");
-        var d2 = new SimpleDateFormat("yyyy-MM-dd").parse("2019-03-03");
-        var g = inputMap.get(d1);
-        var gg = inputMap.get(d2);
-        var ggg = inputMap.get(d3);
-
-        var dd1 = new SimpleDateFormat("yyyy-MM-dd").parse("2018-04-07");
-        var dd2 = new SimpleDateFormat("yyyy-MM-dd").parse("2017-11-01");
-        var dg = outputMap.get(dd1);
-        var dgg = outputMap.get(dd2);
-
 
         while (tmpDate.compareTo(currDate) < 0) {
-            var input = inputMap.get(tmpDate) == null ? 0 : inputMap.get(tmpDate);
-            var output = outputMap.get(tmpDate) == null ? 0 : outputMap.get(tmpDate);
-            qteCumule = input - output + qteCumule;
+            Date finalTmpDate = tmpDate;
+            Object[] input = inputs.stream().filter(carnet -> ((Date) carnet[0]).compareTo(finalTmpDate) == 0).findFirst().orElse(null);
+            Object[] output = outputs.stream().filter(carnet -> ((Date) carnet[0]).compareTo(finalTmpDate) == 0).findFirst().orElse(null);
 
-            rest.add(new ItemOfPredSeries(tmpDate, qteCumule));
+            if (input != null && output != null)
+                rest.add(new ItemOfPredSeries(((Date) input[0]), ((Number) input[1]).doubleValue() - ((Number) output[1]).doubleValue()));
+            else if (input != null && output == null)
+                rest.add(new ItemOfPredSeries(((Date) input[0]), ((Number) input[1]).doubleValue()));
+            else if (output != null)
+                rest.add(new ItemOfPredSeries(((Date) output[0]), ((Number) output[1]).doubleValue()));
+            else if (input == null && output == null) {
+                //find by previous day
+                double x = rest.stream().filter(carnet -> carnet.getTime().compareTo(addDays(finalTmpDate, -1)) == 0).findFirst().orElse(new ItemOfPredSeries()).getValue();
+                rest.add(new ItemOfPredSeries(finalTmpDate, x));
+            }
             tmpDate = addDays(tmpDate, 1);
         }
 
@@ -144,12 +139,13 @@ public class DashboardPredictionsService implements IDashboardPredictionsService
         return CompletableFuture.completedFuture(result);
     }
 
-    private static Date addDays(Date date, int days) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);// w ww.  j ava  2  s  .co m
-        cal.add(Calendar.DATE, days); //minus number would decrement the days
-        return new Date(cal.getTime().getTime());
+    @Override
+    public CompletableFuture<List<AlertsItem>> getRealQte(Map<String, String> params) throws UserFriendlyException, IOException, ParseException {
+        return null;
+    }
 
+    @Override
+    public CompletableFuture<List<AlertsItem>> getPredQte(Map<String, String> params) throws UserFriendlyException, IOException, ParseException {
+        return null;
     }
 }
-

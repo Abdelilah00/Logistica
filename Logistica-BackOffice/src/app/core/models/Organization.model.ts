@@ -5,6 +5,8 @@ export class Structure extends BaseModel {
   range: number;
 }
 
+
+
 export class StructureUnit extends BaseModel {
   name: string;
   structureName: string;

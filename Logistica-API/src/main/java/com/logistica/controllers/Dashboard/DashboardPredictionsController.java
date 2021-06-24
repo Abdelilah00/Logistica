@@ -1,7 +1,7 @@
 package com.logistica.controllers.Dashboard;
 
 import com.configuration.Exception.UserFriendlyException;
-import com.logistica.dtos.ListOfPredSeries;
+import com.logistica.dtos.Dashboard.Predictions.ListOfPredSeries;
 import com.logistica.services.Dashboard.IDashboardPredictionsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,9 +1,9 @@
 package com.logistica.services.Dashboard;
 
 import com.configuration.Exception.UserFriendlyException;
-import com.logistica.dtos.ListOfSeries;
-import com.logistica.dtos.StatisticDto;
-import com.logistica.dtos.TreeMapItemDto;
+import com.logistica.dtos.Dashboard.Analytics.ListOfSeries;
+import com.logistica.dtos.Dashboard.Analytics.StatisticDto;
+import com.logistica.dtos.Dashboard.Analytics.TreeMapItemDto;
 
 import java.util.List;
 import java.util.Map;

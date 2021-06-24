@@ -174,21 +174,6 @@ public class BootStrapData implements CommandLineRunner {
             stock.setArea(1545d);
             stock.setDef(Boolean.TRUE);
             stock.setResponsible(actor1);
-            var sp = new StockProduct();
-            sp.setProduct(prodA);
-            sp.setQte(25);
-            sp.setStock(stock);
-            var sp2 = new StockProduct();
-            sp2.setProduct(prodB);
-            sp2.setQte(50);
-            sp2.setStock(stock);
-            var sp3 = new StockProduct();
-            sp3.setProduct(prodC);
-            sp3.setQte(50);
-            sp3.setStock(stock);
-            stock.getStockProducts().add(sp);
-            stock.getStockProducts().add(sp2);
-            stock.getStockProducts().add(sp3);
             iStockRepository.save(stock);
 
             var stock2 = new Stock();
@@ -197,16 +182,6 @@ public class BootStrapData implements CommandLineRunner {
             stock2.setArea(655d);
             //stock2.setDef(Boolean.FALSE);
             stock2.setResponsible(actor1);
-            var sp21 = new StockProduct();
-            sp21.setProduct(prodA);
-            sp21.setQte(25);
-            sp21.setStock(stock2);
-            var sp22 = new StockProduct();
-            sp22.setProduct(prodB);
-            sp22.setQte(50);
-            sp22.setStock(stock2);
-            stock2.getStockProducts().add(sp21);
-            stock2.getStockProducts().add(sp22);
             iStockRepository.save(stock2);
             //endregion
 
@@ -256,7 +231,7 @@ public class BootStrapData implements CommandLineRunner {
             iActorRepository.save(actor3);
             //endregion
 
-            /*            //region create input
+   /*         //region create input
             var input = new Input();
             input.setRef("Ref2145");
             input.setDate(new Date());
@@ -294,6 +269,7 @@ public class BootStrapData implements CommandLineRunner {
 
             //region create output
             var output = new Output();
+            output.setIntern(false);
             output.setRef("Ref2145");
             output.setDate(new Date());
             output.setDescription("output u wanna details its just for test");
@@ -312,7 +288,7 @@ public class BootStrapData implements CommandLineRunner {
             iOutputRepository.save(output);
             //endregion*/
 
-            statStockData();
+            //statStockData();
         }
     }
 
@@ -367,10 +343,10 @@ public class BootStrapData implements CommandLineRunner {
         }
         iProductRepository.saveAll(products);
 
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 5000; i++) {
             Long pId = (long) (random.nextInt(19) + 1);
             Long sId = (long) (random.nextInt(1) + 1);
-            Integer qte = random.nextInt(100) + 50;
+            Integer qte = 50;
 
             var input = new Input();
             input.setRef("Ref" + i);
@@ -400,10 +376,10 @@ public class BootStrapData implements CommandLineRunner {
         }
         iInputRepository.saveAll(inputs);
 
-        for (int i = 0; i < 20000; i++) {
+        for (int i = 0; i < 8000; i++) {
             Long pId = (random.nextInt(19) + 1L);
             Long sId = (random.nextInt(1) + 1L);
-            Integer qte = random.nextInt(90) + 50;
+            Integer qte = 50;
             Float price = (0.5f * random.nextFloat() + 1.5F);
 
             var output = new Output();
@@ -424,6 +400,7 @@ public class BootStrapData implements CommandLineRunner {
             if (stockProd.getQte() >= qte) {
                 stockProd.setQte(stockProd.getQte() - qte);
                 outputs.add(output);
+                iStockProductRepository.save(stockProd);
             }
         }
         iOutputRepository.saveAll(outputs);

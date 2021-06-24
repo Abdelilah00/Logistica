@@ -1,9 +1,9 @@
 package com.logistica.controllers.Dashboard;
 
 import com.configuration.Exception.UserFriendlyException;
-import com.logistica.dtos.ListOfSeries;
-import com.logistica.dtos.StatisticDto;
-import com.logistica.dtos.TreeMapItemDto;
+import com.logistica.dtos.Dashboard.Analytics.ListOfSeries;
+import com.logistica.dtos.Dashboard.Analytics.StatisticDto;
+import com.logistica.dtos.Dashboard.Analytics.TreeMapItemDto;
 import com.logistica.services.Dashboard.IDashboardAnalyticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

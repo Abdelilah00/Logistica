@@ -1,5 +1,6 @@
-package com.logistica.dtos;
+package com.logistica.dtos.Dashboard.Predictions;
 
+import com.logistica.dtos.Dashboard.Predictions.ItemOfPredSeries;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

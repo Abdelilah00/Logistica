@@ -1,9 +1,6 @@
-package com.logistica.dtos;
+package com.logistica.dtos.Dashboard.Predictions;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;

@@ -1,4 +1,4 @@
-package com.logistica.dtos;
+package com.logistica.dtos.Dashboard.Analytics;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

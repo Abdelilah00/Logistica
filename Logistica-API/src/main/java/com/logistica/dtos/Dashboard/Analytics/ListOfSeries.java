@@ -1,10 +1,9 @@
-package com.logistica.dtos;
+package com.logistica.dtos.Dashboard.Analytics;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter

@@ -67,7 +67,6 @@ public class InputService extends BaseCrudServiceImpl<Input, InputDto, InputCrea
                 //update old
                 stockProd.setQte(stockProd.getQte() + transactionDto.getQte());
             }
-
             stockProducts.add(stockProd);
             input.getInputDetails().get(i).setInput(input);
         }

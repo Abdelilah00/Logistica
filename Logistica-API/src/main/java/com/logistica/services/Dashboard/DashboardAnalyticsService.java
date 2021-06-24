@@ -2,10 +2,10 @@ package com.logistica.services.Dashboard;
 
 import com.configuration.Exception.UserFriendlyException;
 import com.configuration.TenantContext;
-import com.logistica.dtos.ItemOfSeries;
-import com.logistica.dtos.ListOfSeries;
-import com.logistica.dtos.StatisticDto;
-import com.logistica.dtos.TreeMapItemDto;
+import com.logistica.dtos.Dashboard.Analytics.ItemOfSeries;
+import com.logistica.dtos.Dashboard.Analytics.ListOfSeries;
+import com.logistica.dtos.Dashboard.Analytics.StatisticDto;
+import com.logistica.dtos.Dashboard.Analytics.TreeMapItemDto;
 import com.logistica.repositories.Products.IInputRepository;
 import com.logistica.repositories.Products.IOutputRepository;
 import com.logistica.repositories.Products.IProductRepository;

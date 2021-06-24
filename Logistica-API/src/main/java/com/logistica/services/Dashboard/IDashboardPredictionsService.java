@@ -1,11 +1,10 @@
 package com.logistica.services.Dashboard;
 
 import com.configuration.Exception.UserFriendlyException;
-import com.logistica.dtos.*;
+import com.logistica.dtos.Dashboard.Predictions.ListOfPredSeries;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
