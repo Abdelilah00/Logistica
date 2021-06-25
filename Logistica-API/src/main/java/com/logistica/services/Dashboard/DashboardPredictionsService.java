@@ -22,6 +22,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -52,7 +53,12 @@ public class DashboardPredictionsService implements IDashboardPredictionsService
 
     //todo: should be optimized :)
     public CompletableFuture<ListOfPredSeries> getChart(Map<String, String> params) throws UserFriendlyException, IOException, ParseException {
+        return forecast(params);
+    }
+
+    public CompletableFuture<ListOfPredSeries> forecast(Map<String, String> params) throws UserFriendlyException, IOException {
         var productId = params.get("productId");
+        var forecast = params.get("forecast") == null ? "365" : params.get("forecast");
         if (productId == null) throw new UserFriendlyException("error in your filter");
 
         Session session = entityManager.unwrap(Session.class);
@@ -80,31 +86,22 @@ public class DashboardPredictionsService implements IDashboardPredictionsService
         Date tmpDate = minDate;
         double qteCumule = 0d;
 
-        Map<Date, Double> inputMap = new HashMap<>();
+        Map<String, Double> inputMap = new HashMap<>();
         for (var input : inputs)
-            inputMap.put(new SimpleDateFormat("yyyy-MM-dd").parse(input[0].toString()), ((Number) input[1]).doubleValue());
+            inputMap.put(input[0].toString(), ((Number) input[1]).doubleValue());
 
-        Map<Date, Double> outputMap = new HashMap<>();
+        Map<String, Double> outputMap = new HashMap<>();
         for (var output : outputs)
-            outputMap.put(new SimpleDateFormat("yyyy-MM-dd").parse(output[0].toString()), ((Number) output[1]).doubleValue());
-
-        var d3 = new SimpleDateFormat("yyyy-MM-dd").parse("2018-11-22");
-        var d1 = new SimpleDateFormat("yyyy-MM-dd").parse("2018-01-25");
-        var d2 = new SimpleDateFormat("yyyy-MM-dd").parse("2019-03-03");
-        var g = inputMap.get(d1);
-        var gg = inputMap.get(d2);
-        var ggg = inputMap.get(d3);
-
-        var dd1 = new SimpleDateFormat("yyyy-MM-dd").parse("2018-04-07");
-        var dd2 = new SimpleDateFormat("yyyy-MM-dd").parse("2017-11-01");
-        var dg = outputMap.get(dd1);
-        var dgg = outputMap.get(dd2);
+            outputMap.put(output[0].toString(), ((Number) output[1]).doubleValue());
 
 
         while (tmpDate.compareTo(currDate) < 0) {
-            var input = inputMap.get(tmpDate) == null ? 0 : inputMap.get(tmpDate);
-            var output = outputMap.get(tmpDate) == null ? 0 : outputMap.get(tmpDate);
-            qteCumule = input - output + qteCumule;
+            String t = new SimpleDateFormat("yyyy-MM-dd").format(tmpDate);
+            var input = inputMap.get(t) == null ? 0 : inputMap.get(t);
+            var output = outputMap.get(t) == null ? 0 : outputMap.get(t);
+            var x = input - output;
+            if (x != 0)
+                qteCumule = x + qteCumule;
 
             rest.add(new ItemOfPredSeries(tmpDate, qteCumule));
             tmpDate = addDays(tmpDate, 1);
@@ -115,21 +112,24 @@ public class DashboardPredictionsService implements IDashboardPredictionsService
         //var simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
         String jsonReal = gson.toJson(rest);
-        /*        FileWriter myWriter = new FileWriter("D:\\Result.json", true);
-        myWriter.write(json);
-        myWriter.close();*/
+        FileWriter myWriter = new FileWriter("D:\\Result.json", true);
+        myWriter.write(jsonReal);
+        myWriter.close();
 
         var response = webClient.baseUrl("http://localhost:5000/").build()
                 .post().uri("predict")
                 .accept(MediaType.ALL).contentType(MediaType.APPLICATION_JSON)
-                .body(BodyInserters.fromFormData("series", jsonReal))
+                .body(BodyInserters.fromFormData("series", jsonReal).with("forecast", forecast))
                 .retrieve().bodyToMono(String.class).block();
 
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode nodes = objectMapper.readTree(response);
-        var dataNode = nodes.get("data").toString();
 
-        PredResult[] flaskResponse = objectMapper.readValue(dataNode, PredResult[].class);
+        PredResult[] flaskResponse = objectMapper.readValue(nodes.get("data").toString(), PredResult[].class);
+        for (int i = 0; i < flaskResponse.length; i++) {
+            result.getPredItems().add(new ItemOfPredSeries(flaskResponse[i].getIndex(), flaskResponse[i].getPredicted_mean()));
+        }
+
 
         var prod = iProductRepository.findById(Long.valueOf(productId)).get();
         result.setMax(Long.valueOf(prod.getStockMax()));
@@ -137,9 +137,6 @@ public class DashboardPredictionsService implements IDashboardPredictionsService
         result.setMin(Long.valueOf(prod.getStockMin()));
         result.setItems(rest);
 
-        for (int i = 0; i < flaskResponse.length; i++) {
-            result.getPredItems().add(new ItemOfPredSeries(flaskResponse[i].getIndex(), flaskResponse[i].getPredicted_mean()));
-        }
 
         return CompletableFuture.completedFuture(result);
     }

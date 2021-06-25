@@ -9,5 +9,4 @@ import java.util.List;
 @Repository
 public interface IProductRepository extends IBaseJpaRepository<Product> {
     List<Product> getByStockProductsStockId(Long id);
-
 }

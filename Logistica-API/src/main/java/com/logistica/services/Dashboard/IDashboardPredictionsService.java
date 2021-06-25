@@ -1,6 +1,7 @@
 package com.logistica.services.Dashboard;
 
 import com.configuration.Exception.UserFriendlyException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.logistica.dtos.Dashboard.Predictions.ListOfPredSeries;
 
 import java.io.IOException;
@@ -10,4 +11,7 @@ import java.util.concurrent.CompletableFuture;
 
 public interface IDashboardPredictionsService {
     CompletableFuture<ListOfPredSeries> getChart(Map<String, String> params) throws UserFriendlyException, IOException, ParseException;
+
+    CompletableFuture<ListOfPredSeries> forecast(Map<String, String> params) throws UserFriendlyException, IOException;
+
 }

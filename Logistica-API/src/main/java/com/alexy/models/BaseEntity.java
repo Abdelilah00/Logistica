@@ -42,7 +42,7 @@ public abstract class BaseEntity extends IdEntity {
 
     /*@CreationTimestamp
     private LocalDateTime createdAt;*/
-    private LocalDateTime createdAt = LocalDateTime.ofInstant(between().toInstant(), ZoneId.systemDefault());
+    private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt = null;
@@ -51,16 +51,6 @@ public abstract class BaseEntity extends IdEntity {
     private long updatedBy;
     private long deletedBy;
 
-    public static Date between() {
-        LocalDateTime endExclusive = LocalDateTime.now();
-        LocalDateTime startInclusive = endExclusive.minusYears(5);
 
-        long startMillis = startInclusive.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
-        long endMillis = endExclusive.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
-        long randomMillisSinceEpoch = ThreadLocalRandom
-                .current()
-                .nextLong(startMillis, endMillis);
-        return new Date(randomMillisSinceEpoch);
-    }
 }
 

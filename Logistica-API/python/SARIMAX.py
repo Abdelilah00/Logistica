@@ -1,9 +1,8 @@
 import itertools
-import warnings
-
 import pandas as pd
 import statsmodels.api as sm
-from flask import Flask, jsonify
+import warnings
+from flask import Flask
 from flask import request
 from statsmodels.tsa.stattools import adfuller
 
@@ -51,6 +50,7 @@ def best_params(timeseries):
 @app.route('/predict', methods={'POST'})
 def predict():
     series = request.form.get('series')
+    forecast = int(request.form.get('forecast'))
     ts_data = pd.read_json(series)
     # converting 'time' column to type 'datetime' so that indexing can happen later
     ts_data['time'] = pd.to_datetime(ts_data['time'])
@@ -68,8 +68,11 @@ def predict():
                                     enforce_stationarity=False,
                                     enforce_invertibility=False)
     results = mod.fit()
-    df = pd.DataFrame(results.forecast(365))
+    df1 = pd.DataFrame(results.predict())
+    df2 = pd.DataFrame(results.forecast(forecast))
+    df = pd.concat([df1, df2])
     response = df.to_json(date_format='iso', orient='table')
+
     # return more details
     return response, 200
 

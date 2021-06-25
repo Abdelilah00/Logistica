@@ -7,7 +7,7 @@ import lombok.Data;
 @Builder
 public class AlertsItem {
     private String name;
-    private Double max;
-    private Double acc;
-    private Double min;
+    private Long max;
+    private Long acc = 0L;
+    private Long min;
 }

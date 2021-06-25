@@ -9,9 +9,10 @@ import java.text.ParseException;
 import java.util.Map;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 public interface IDashboardAlertsService {
     CompletableFuture<List<AlertsItem>> getRealQte(Map<String, String> params) throws UserFriendlyException, IOException, ParseException;
 
-    CompletableFuture<List<AlertsItem>> getPredQte(Map<String, String> params) throws UserFriendlyException, IOException, ParseException;
+    CompletableFuture<List<AlertsItem>> getPredQte(Map<String, String> params) throws UserFriendlyException, IOException, ParseException, ExecutionException, InterruptedException;
 }

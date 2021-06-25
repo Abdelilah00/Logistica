@@ -1,3 +1,88 @@
-<p>alerts works!</p>
-<h1>alert stock min next month</h1>
-<h1>alert stock min next day</h1>
+<div class='row'>
+  <div class='col-lg-6'>
+    <div class="card ">
+      <div class="card-body">
+        <h4 class="card-title mb-4">Real Qte</h4>
+        <div class="table-responsive">
+          <table class="table table-centered">
+            <thead class="thead-light">
+            <tr>
+              <th>Product Name</th>
+              <th>Min</th>
+              <th>Acc</th>
+              <th>Max</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of realAlerts">
+              <ng-container *ngIf='item.acc >=item.max || item.acc <= item.min'>
+                <td>{{item.name}}</td>
+                <td>{{item.min}}</td>
+                <td>
+                  <div [ngClass]="{'badge-soft-danger': item.acc <=item.min,
+                      'badge-soft-warning': item.acc >= item.max}" class="badge font-size-12">
+                    {{item.acc}}
+                  </div>
+                </td>
+                <td>{{item.max}}</td>
+
+
+                <td>
+                  <a class="mr-3 text-primary" href="javascript:void(0);" ngbTooltip="Edit"><i
+                    class="mdi mdi-pencil font-size-18"></i></a>
+                  <a class="text-danger" href="javascript:void(0);" ngbTooltip="Delete"><i
+                    class="mdi mdi-trash-can font-size-18"></i></a>
+                </td>
+              </ng-container>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='col-lg-6 m-10'>
+    <div class="card ">
+      <div class="card-body">
+        <h4 class="card-title mb-4">Next Day Predected Qte</h4>
+        <div class="table-responsive">
+          <table class="table table-centered">
+            <thead class="thead-light">
+            <tr>
+              <th>Product Name</th>
+              <th>Min</th>
+              <th>Acc</th>
+              <th>Max</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of predAlerts">
+              <ng-container *ngIf='item.acc >=item.max || item.acc <= item.min'>
+                <td>{{item.name}}</td>
+                <td>{{item.min}}</td>
+                <td>
+                  <div [ngClass]="{'badge-soft-danger': item.acc <=item.min,
+                      'badge-soft-warning': item.acc >= item.max}" class="badge font-size-12">
+                    {{item.acc}}
+                  </div>
+                </td>
+                <td>{{item.max}}</td>
+
+
+                <td>
+                  <a class="mr-3 text-primary" href="javascript:void(0);" ngbTooltip="Edit"><i
+                    class="mdi mdi-pencil font-size-18"></i></a>
+                  <a class="text-danger" href="javascript:void(0);" ngbTooltip="Delete"><i
+                    class="mdi mdi-trash-can font-size-18"></i></a>
+                </td>
+              </ng-container>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

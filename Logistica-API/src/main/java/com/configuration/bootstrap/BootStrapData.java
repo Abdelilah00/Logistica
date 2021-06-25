@@ -24,10 +24,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 public class BootStrapData implements CommandLineRunner {
@@ -288,7 +291,7 @@ public class BootStrapData implements CommandLineRunner {
             iOutputRepository.save(output);
             //endregion*/
 
-            //statStockData();
+            statStockData();
         }
     }
 
@@ -330,12 +333,12 @@ public class BootStrapData implements CommandLineRunner {
         }
         iCategoryRepository.saveAll(categories);
 
-        for (int i = 1; i <= 17; i++) {
+        for (int i = 1; i <= 5; i++) {
             var prodA = new Product();
             prodA.setName("product " + i);
-            prodA.setStockMax(250);
-            prodA.setStockMin(50);
-            prodA.setStockSecurity(100);
+            prodA.setStockMax(5000);
+            prodA.setStockMin(500);
+            prodA.setStockSecurity(2500);
             prodA.setPriceHT(1.5F);
             prodA.setTVA(10f);
             prodA.getCategory().setId(random.nextInt(4) + 1);
@@ -343,12 +346,13 @@ public class BootStrapData implements CommandLineRunner {
         }
         iProductRepository.saveAll(products);
 
-        for (int i = 0; i < 5000; i++) {
-            Long pId = (long) (random.nextInt(19) + 1);
+        for (int i = 0; i < 2000; i++) {
+            Long pId = (long) (random.nextInt(8) + 1);
             Long sId = (long) (random.nextInt(1) + 1);
             Integer qte = 50;
 
             var input = new Input();
+            input.setCreatedAt(LocalDateTime.ofInstant(between(61).toInstant(), ZoneId.systemDefault()));
             input.setRef("Ref" + i);
             input.setDate(new Date());
             input.setDescription("input description");
@@ -376,13 +380,14 @@ public class BootStrapData implements CommandLineRunner {
         }
         iInputRepository.saveAll(inputs);
 
-        for (int i = 0; i < 8000; i++) {
-            Long pId = (random.nextInt(19) + 1L);
+        for (int i = 0; i < 2000; i++) {
+            Long pId = (random.nextInt(8) + 1L);
             Long sId = (random.nextInt(1) + 1L);
             Integer qte = 50;
             Float price = (0.5f * random.nextFloat() + 1.5F);
 
             var output = new Output();
+            output.setCreatedAt(LocalDateTime.ofInstant(between(60).toInstant(), ZoneId.systemDefault()));
             output.setRef("Ref" + i);
             output.setDate(new Date());
             output.setDescription("input u wanna details its just for test");
@@ -404,6 +409,17 @@ public class BootStrapData implements CommandLineRunner {
             }
         }
         iOutputRepository.saveAll(outputs);
+    }
+    public static Date between(int min) {
+        LocalDateTime endExclusive = LocalDateTime.now();
+        LocalDateTime startInclusive = endExclusive.minusMonths(min);
+
+        long startMillis = startInclusive.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        long endMillis = endExclusive.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        long randomMillisSinceEpoch = ThreadLocalRandom
+                .current()
+                .nextLong(startMillis, endMillis);
+        return new Date(randomMillisSinceEpoch);
     }
 
 }

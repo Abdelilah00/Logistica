@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.logistica.domains.Products.Product;
 import com.logistica.dtos.Dashboard.Alerts.AlertsItem;
 import com.logistica.dtos.Dashboard.Predictions.ItemOfPredSeries;
 import com.logistica.dtos.Dashboard.Predictions.ListOfPredSeries;
@@ -28,6 +29,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 @Service
@@ -49,6 +51,9 @@ public class DashboardAlertsService implements IDashboardAlertsService {
 
     @Autowired
     private IProductRepository iProductRepository;
+
+    @Autowired
+    private IDashboardPredictionsService iDashboardPredictionsService;
 
     private static Date addDays(Date date, int days) {
         Calendar cal = Calendar.getInstance();
@@ -141,11 +146,64 @@ public class DashboardAlertsService implements IDashboardAlertsService {
 
     @Override
     public CompletableFuture<List<AlertsItem>> getRealQte(Map<String, String> params) throws UserFriendlyException, IOException, ParseException {
-        return null;
+        Session session = entityManager.unwrap(Session.class);
+
+        List<Object[]> inputObjects = session.createSQLQuery("select p.name,p.stockMax,p.stockMin, SUM(id.qte) qte " +
+                "from input i " +
+                "inner join inputdetails id on i.id = id.input_id inner join product p on p.id=id.product_id " +
+                "where i.tenantId = :tenantId and i.deletedAt is null " +
+                "group by id.product_id")
+                .setParameter("tenantId", TenantContext.getCurrentTenant()).list();
+
+        List<Object[]> outputObjects = session.createSQLQuery("select p.name ,p.stockMax ,p.stockMin, SUM(od.qte) qte " +
+                "from output o " +
+                "inner join outputdetails od on o.id = od.output_id inner join product p on p.id=od.product_id " +
+                "where  o.tenantId = :tenantId and o.deletedAt is null " +
+                "group by p.id")
+                .setParameter("tenantId", TenantContext.getCurrentTenant()).list();
+
+        Map<String, AlertsItem> inputsMap = new HashMap<>();
+        for (Object[] o : inputObjects) {
+            inputsMap.put(o[0].toString(), AlertsItem.builder().name(o[0].toString()).max(((Number) o[1]).longValue()).min(((Number) o[2]).longValue()).acc(((Number) o[3]).longValue()).build());
+        }
+        Map<String, AlertsItem> outputsMap = new HashMap<>();
+        for (Object[] o : outputObjects) {
+            outputsMap.put(o[0].toString(), AlertsItem.builder().name(o[0].toString()).max(((Number) o[1]).longValue()).min(((Number) o[2]).longValue()).acc(((Number) o[3]).longValue()).build());
+        }
+
+        outputsMap.forEach(
+                (key, value) -> inputsMap.merge(key, value, (v1, v2) -> AlertsItem.builder().name(v1.getName()).max(v1.getMax()).min(v1.getMin()).acc(v1.getAcc() - v2.getAcc()).build())
+        );
+
+        List<AlertsItem> result = new ArrayList<>(inputsMap.values());
+        return CompletableFuture.completedFuture(result);
     }
 
     @Override
-    public CompletableFuture<List<AlertsItem>> getPredQte(Map<String, String> params) throws UserFriendlyException, IOException, ParseException {
-        return null;
+    public CompletableFuture<List<AlertsItem>> getPredQte(Map<String, String> params) throws UserFriendlyException, IOException, ExecutionException, InterruptedException {
+        Session session = entityManager.unwrap(Session.class);
+        List<Object[]> productObjects = session.createQuery("select distinct p.id,p.stockMax,p.stockMin,p.name from Product p inner join p.inputDetails").list();
+        var products = new ArrayList<Product>();
+
+        for (var o : productObjects) {
+            var prod = new Product();
+            prod.setId(((Number) o[0]).longValue());
+            prod.setStockMax(((Number) o[1]).intValue());
+            prod.setStockMin(((Number) o[2]).intValue());
+            prod.setName(o[3].toString());
+            products.add(prod);
+        }
+
+        List<AlertsItem> result = new ArrayList<>();
+
+        for (var product : products) {
+            Map<String, String> tmpParams = new HashMap<>();
+            tmpParams.put("forecast", "2");
+            tmpParams.put("productId", String.valueOf(product.getId()));
+            var predQteOfProduct = iDashboardPredictionsService.forecast(tmpParams).get().getPredItems().get(0).getValue();
+            result.add(AlertsItem.builder().acc(predQteOfProduct.longValue()).max(product.getStockMax().longValue()).min(product.getStockMin().longValue()).name(product.getName()).build());
+        }
+
+        return CompletableFuture.completedFuture(result);
     }
 }

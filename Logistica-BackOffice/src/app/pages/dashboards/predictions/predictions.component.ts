@@ -29,24 +29,24 @@ export class PredictionsComponent implements OnInit {
       const finalRealData = [[]];
       const finalPredData = [[]];
       data.items.map(obj => finalRealData.push([obj.time, obj.value]));
-      data.predItems.map(obj => finalPredData.push([obj.time, obj.value]));
+      data.predItems.map(obj => finalPredData.push([obj.time, Math.round(obj.value)]));
 
       myChart.setOption({
         tooltip: {
           trigger: 'axis',
-          position: function(pt) {
-            return [pt[0], '10%'];
-          }
         },
         title: {
           left: 'center',
           text: 'Sells Qte',
         },
         toolbox: {
+          show: true,
           feature: {
             dataZoom: {
               yAxisIndex: 'none'
             },
+            dataView: {readOnly: false},
+            magicType: {type: ['line', 'bar']},
             restore: {},
             saveAsImage: {}
           }
@@ -70,7 +70,7 @@ export class PredictionsComponent implements OnInit {
         series: [
           {
             name: 'Real',
-            type: 'line',
+            type: 'bar',
             smooth: false,
             symbol: 'none',
             data: finalRealData,
@@ -102,7 +102,8 @@ export class PredictionsComponent implements OnInit {
                   }
                 }]
             }
-          }, {
+          },
+          {
             name: 'Predicted',
             type: 'line',
             smooth: false,

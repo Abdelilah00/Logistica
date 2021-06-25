@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
 import {Observable} from 'rxjs';
 import {retry} from 'rxjs/operators';
-import {SeriesItem, SeriesPredList} from '../../models/dashboard.model';
+import {SeriesPredList} from '../../models/dashboard.model';
 
 @Injectable({
   providedIn: 'root'

@@ -50,3 +50,10 @@ export class Statistic {
   hidden = false;
   appendToChart = false;
 }
+
+export class AlertsItem {
+  name: string;
+  max: number;
+  acc: number;
+  min: number;
+}
