@@ -26,10 +26,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Component
@@ -133,7 +130,7 @@ public class BootStrapData implements CommandLineRunner {
             catB.getChildren().add(catB1);
             iCategoryRepository.save(catB);
 
-            var prodA = new Product();
+/*            var prodA = new Product();
             prodA.setName("product A");
             prodA.setStockMax(250);
             prodA.setStockMin(50);
@@ -159,7 +156,7 @@ public class BootStrapData implements CommandLineRunner {
             prodC.setPriceHT(1.5F);
             prodC.setTVA(10f);
             prodC.setCategory(catA);
-            iProductRepository.save(prodC);
+            iProductRepository.save(prodC);*/
             //endregion
 
 
@@ -304,25 +301,26 @@ public class BootStrapData implements CommandLineRunner {
         var actors = new ArrayList<Actor>();
         var stockProds = new ArrayList<StockProduct>();
 
-        for (int i = 0; i < 50; i++) {
+        List<String> actorLabels = Arrays.asList("fadel wahdbi", "zakaria nasli", "abdelilah elhafidi", "fadal hamdallah", "fatima najar", "amine twel", "wafae lkhourbi", "daniel boldy", "marwan hadmen", "amine lghafouli", "hayat laouni", "safsaqi lmwden", "kevin kenin", "alistar young", "hamid ahdad");
+        for (int i = 0; i < 15; i++) {
             var actor = new Actor();
             actor.setAdresse("db alla elfassi");
-            actor.setName("client " + i);
+            actor.setName(actorLabels.get(i));
             actor.setNRCommerce("sdf3256 5065655s4df");
             actor.getActorHasRole().getActorRole().setId(3L);
             actors.add(actor);
         }
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 15; i++) {
             var actor = new Actor();
             actor.setAdresse("db alla elfassi");
-            actor.setName("supplier " + i);
+            actor.setName(actorLabels.get(i));
             actor.setNRCommerce("sdf3256 5065655s4df");
             actor.getActorHasRole().getActorRole().setId(2L);
             actors.add(actor);
         }
         iActorRepository.saveAll(actors);
 
-        for (int i = 1; i <= 5; i++) {
+        for (int i = 0; i < 5; i++) {
             var catA = new Category();
             catA.setName("category " + i);
             catA.setDefaultTva(20.1f);
@@ -333,9 +331,10 @@ public class BootStrapData implements CommandLineRunner {
         }
         iCategoryRepository.saveAll(categories);
 
-        for (int i = 1; i <= 5; i++) {
+        List<String> prodLabels = Arrays.asList("Portable Blender", "Nail Polish", "Wireless Phone Chargers", "Face Shield", "Phone Lenses", "Shapewear", "Doormats", "Wifi Repeater", "Posture Corrector", "Inflatable Pet Collars");
+        for (int i = 0; i < 10; i++) {
             var prodA = new Product();
-            prodA.setName("product " + i);
+            prodA.setName(prodLabels.get(i));
             prodA.setStockMax(5000);
             prodA.setStockMin(500);
             prodA.setStockSecurity(2500);
@@ -346,8 +345,8 @@ public class BootStrapData implements CommandLineRunner {
         }
         iProductRepository.saveAll(products);
 
-        for (int i = 0; i < 2000; i++) {
-            Long pId = (long) (random.nextInt(8) + 1);
+        for (int i = 0; i < 2500; i++) {
+            Long pId = (long) (random.nextInt(10) + 1);
             Long sId = (long) (random.nextInt(1) + 1);
             Integer qte = 50;
 
@@ -355,8 +354,8 @@ public class BootStrapData implements CommandLineRunner {
             input.setCreatedAt(LocalDateTime.ofInstant(between(61).toInstant(), ZoneId.systemDefault()));
             input.setRef("Ref" + i);
             input.setDate(new Date());
-            input.setDescription("input description");
-            input.getActor().setId(random.nextInt(20) + 55);
+            input.setDescription("Description");
+            input.getActor().setId(random.nextInt(15) + 4);
             input.setRetour(random.nextBoolean());
             var trans = new InputDetails();
             trans.getProduct().setId(pId);
@@ -380,8 +379,8 @@ public class BootStrapData implements CommandLineRunner {
         }
         iInputRepository.saveAll(inputs);
 
-        for (int i = 0; i < 2000; i++) {
-            Long pId = (random.nextInt(8) + 1L);
+        for (int i = 0; i < 3000; i++) {
+            Long pId = (random.nextInt(10) + 1L);
             Long sId = (random.nextInt(1) + 1L);
             Integer qte = 50;
             Float price = (0.5f * random.nextFloat() + 1.5F);
@@ -390,8 +389,8 @@ public class BootStrapData implements CommandLineRunner {
             output.setCreatedAt(LocalDateTime.ofInstant(between(60).toInstant(), ZoneId.systemDefault()));
             output.setRef("Ref" + i);
             output.setDate(new Date());
-            output.setDescription("input u wanna details its just for test");
-            output.getActor().setId(random.nextInt(50) + 4);
+            output.setDescription("Description");
+            output.getActor().setId(random.nextInt(15) + 4);
             output.setIntern(random.nextBoolean());
             var trans = new OutputDetails();
             trans.getProduct().setId(pId);
@@ -410,6 +409,7 @@ public class BootStrapData implements CommandLineRunner {
         }
         iOutputRepository.saveAll(outputs);
     }
+
     public static Date between(int min) {
         LocalDateTime endExclusive = LocalDateTime.now();
         LocalDateTime startInclusive = endExclusive.minusMonths(min);

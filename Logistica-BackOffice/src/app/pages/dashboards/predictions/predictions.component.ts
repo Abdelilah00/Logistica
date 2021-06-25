@@ -70,7 +70,7 @@ export class PredictionsComponent implements OnInit {
         series: [
           {
             name: 'Real',
-            type: 'bar',
+            type: 'line',
             smooth: false,
             symbol: 'none',
             data: finalRealData,
@@ -106,7 +106,7 @@ export class PredictionsComponent implements OnInit {
           {
             name: 'Predicted',
             type: 'line',
-            smooth: false,
+            smooth: true,
             symbol: 'none',
             data: finalPredData
           }

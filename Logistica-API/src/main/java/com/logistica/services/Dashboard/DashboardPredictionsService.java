@@ -107,6 +107,7 @@ public class DashboardPredictionsService implements IDashboardPredictionsService
             tmpDate = addDays(tmpDate, 1);
         }
 
+
         rest = rest.stream().sorted((o1, o2) -> o1.getTime().compareTo(o2.getTime())).collect(Collectors.toList());
 
         //var simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
