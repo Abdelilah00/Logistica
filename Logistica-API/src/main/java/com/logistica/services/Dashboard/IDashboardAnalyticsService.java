@@ -8,9 +8,10 @@ import com.logistica.dtos.Dashboard.Analytics.TreeMapItemDto;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 public interface IDashboardAnalyticsService {
-    CompletableFuture<List<StatisticDto>> getStatistics();
+    CompletableFuture<List<StatisticDto>> getStatistics() throws ExecutionException, InterruptedException;
 
     CompletableFuture<List<ListOfSeries>> getPeriodicChart(Map<String, String> params) throws UserFriendlyException;
 

@@ -9,6 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.client.BufferingClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
@@ -22,6 +23,8 @@ import javax.annotation.PostConstruct;
 import java.util.Collections;
 import java.util.TimeZone;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static org.hibernate.bytecode.BytecodeLogger.LOGGER;
 
@@ -35,15 +38,16 @@ public class LogisticaApplication {
     }
 
     @Bean
-    public Executor taskExecutor() {
+    public TaskExecutor taskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(2);
         executor.setMaxPoolSize(10);
         executor.setQueueCapacity(10000);
-        executor.setThreadNamePrefix("AsyncMethodTest-");
+        executor.setThreadNamePrefix("Async-");
         executor.initialize();
         return new DelegatingSecurityContextAsyncTaskExecutor(executor);
     }
+
 
     @Bean
     public WebClient.Builder getWebClientBuilder() {

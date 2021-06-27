@@ -2,6 +2,7 @@ package com.logistica.repositories.Products;
 
 import com.alexy.repositories.IBaseJpaRepository;
 import com.logistica.domains.Products.Output;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Repository;
 
 @Repository
