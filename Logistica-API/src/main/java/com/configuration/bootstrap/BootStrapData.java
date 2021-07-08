@@ -345,7 +345,7 @@ public class BootStrapData implements CommandLineRunner {
         }
         iProductRepository.saveAll(products);
 
-        for (int i = 0; i < 490000; i++) {
+        for (int i = 0; i < 5000; i++) {
             Long pId = (long) (random.nextInt(10) + 1);
             Long sId = (long) (random.nextInt(1) + 1);
             Integer qte = 50;
@@ -379,7 +379,7 @@ public class BootStrapData implements CommandLineRunner {
         }
         iInputRepository.saveAll(inputs);
 
-        for (int i = 0; i < 500000; i++) {
+        for (int i = 0; i < 5000; i++) {
             Long pId = (random.nextInt(10) + 1L);
             Long sId = (random.nextInt(1) + 1L);
             Integer qte = 50;

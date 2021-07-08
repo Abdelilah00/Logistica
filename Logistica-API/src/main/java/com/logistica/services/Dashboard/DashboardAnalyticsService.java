@@ -6,6 +6,7 @@ import com.logistica.dtos.Dashboard.Analytics.ItemOfSeries;
 import com.logistica.dtos.Dashboard.Analytics.ListOfSeries;
 import com.logistica.dtos.Dashboard.Analytics.StatisticDto;
 import com.logistica.dtos.Dashboard.Analytics.TreeMapItemDto;
+import com.logistica.repositories.Commands.IActorRepository;
 import com.logistica.repositories.Products.IInputRepository;
 import com.logistica.repositories.Products.IOutputRepository;
 import com.logistica.repositories.Products.IProductRepository;
@@ -39,6 +40,8 @@ public class DashboardAnalyticsService implements IDashboardAnalyticsService {
     private ITransferRepository iTransferRepository;
     @Autowired
     private IProductRepository iProductRepository;
+    @Autowired
+    private IActorRepository iActorRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(DashboardAnalyticsService.class.getName());
     Session session;
@@ -47,10 +50,11 @@ public class DashboardAnalyticsService implements IDashboardAnalyticsService {
     //todo : params for the hidden stat
     public CompletableFuture<List<StatisticDto>> getStatistics() throws ExecutionException, InterruptedException {
         var statistics = new ArrayList<StatisticDto>();
+        session = entityManager.unwrap(Session.class);
 
         CompletableFuture<StatisticDto>[] completableFutures = new CompletableFuture[]{INPUT_CHIFFRE(), OUTPUT_CHIFFRE(),
                 RR_STATISTIC(), STOCK_CHIFFRE(), AOV_STATISTIC(), GP_STATISTIC(), RPR_STATISTIC(),
-                INPUT_COUNT(), OUTPUT_COUNT(), TRANSFER_COUNT(), PRODUCT_COUNT()};
+                INPUT_COUNT(), OUTPUT_COUNT(), TRANSFER_COUNT(), PRODUCT_COUNT(), CLIENT_COUNT()};
 
         CompletableFuture.allOf(completableFutures).thenAccept(it -> {
             for (int i = 0; i < completableFutures.length; i++) {
@@ -247,7 +251,6 @@ public class DashboardAnalyticsService implements IDashboardAnalyticsService {
 
     //region statistic
     private CompletableFuture<StatisticDto> INPUT_CHIFFRE() {
-        session = entityManager.unwrap(Session.class);
         return CompletableFuture.supplyAsync(() -> {
             var tmp = new StatisticDto("INPUT_CHIFFRE", (double) session.createQuery(
                     "select sum(id.qte * p.priceHT) as value " +
@@ -257,7 +260,6 @@ public class DashboardAnalyticsService implements IDashboardAnalyticsService {
     }
 
     private CompletableFuture<StatisticDto> OUTPUT_CHIFFRE() {
-        session = entityManager.unwrap(Session.class);
         return CompletableFuture.supplyAsync(() -> {
             var tmp = new StatisticDto("OUTPUT_CHIFFRE", (double) session.createQuery(
                     "select sum(od.qte * od.priceHT) as value " +
@@ -270,7 +272,6 @@ public class DashboardAnalyticsService implements IDashboardAnalyticsService {
     private CompletableFuture<StatisticDto> RR_STATISTIC() {
         return CompletableFuture.supplyAsync(() -> {
             //TODO: assert not null (retour exist)
-            session = entityManager.unwrap(Session.class);
             Long retour = (long) session.createQuery("select count(*) from Input i where i.retour = true").getSingleResult();
             Long output = iOutputRepository.count();
             Double rr = (double) retour / (double) output * 100;
@@ -281,7 +282,6 @@ public class DashboardAnalyticsService implements IDashboardAnalyticsService {
     //chiffre in stocks
     private CompletableFuture<StatisticDto> STOCK_CHIFFRE() {
         return CompletableFuture.supplyAsync(() -> {
-            session = entityManager.unwrap(Session.class);
             Double chiffreStock = CompletableFuture.completedFuture((double) session.createQuery("select sum((id.qte - COALESCE(od.qte,0)) * p.priceHT) " +
                     "from Input i inner join i.inputDetails id inner join id.product p " +
                     "left join p.outputDetails od where i.retour = FALSE").getSingleResult()).join();
@@ -292,7 +292,6 @@ public class DashboardAnalyticsService implements IDashboardAnalyticsService {
     //Average Order Value (AOV) = total revenue / number of order
     private CompletableFuture<StatisticDto> AOV_STATISTIC() {
         return CompletableFuture.supplyAsync(() -> {
-            session = entityManager.unwrap(Session.class);
             List<Double> tmp = session.createQuery("select SUM((od.priceHT * od.qte) - (p.priceHT * od.qte)) as s" +
                     "  from Input i  inner join i.inputDetails id inner join id.product p inner join p.outputDetails od inner join od.output o" +
                     "  where o.intern = FALSE" +
@@ -305,7 +304,6 @@ public class DashboardAnalyticsService implements IDashboardAnalyticsService {
     //Gross Profit (GP)= Total Cost of Goods Sold – Total Number of sales
     private CompletableFuture<StatisticDto> GP_STATISTIC() {
         return CompletableFuture.supplyAsync(() -> {
-            session = entityManager.unwrap(Session.class);
             Double gp = CompletableFuture.completedFuture(Double.valueOf(session.createQuery("select SUM((od.priceHT * od.qte) - (p.priceHT * od.qte))" +
                     "  from Input i inner join i.inputDetails id inner join id.product p inner join p.outputDetails od inner join od.output o" +
                     " where o.intern = FALSE").getSingleResult().toString())).join();
@@ -316,7 +314,6 @@ public class DashboardAnalyticsService implements IDashboardAnalyticsService {
     //Repeat Purchase Rate (RPR) = Purchases from Repeat Customers / Total Purchase
     private CompletableFuture<StatisticDto> RPR_STATISTIC() {
         return CompletableFuture.supplyAsync(() -> {
-            session = entityManager.unwrap(Session.class);
             Long o = (long) session.createQuery("select count(o.id) from Output o where intern=FALSE").getSingleResult();
             Long c = (long) session.createQuery("select count(distinct o.actor) from Output o where intern=FALSE").getSingleResult();
             Double rpr = (double) o / (double) c;
@@ -325,11 +322,11 @@ public class DashboardAnalyticsService implements IDashboardAnalyticsService {
     }
 
     private CompletableFuture<StatisticDto> INPUT_COUNT() {
-        return CompletableFuture.supplyAsync(() -> new StatisticDto("INPUT_COUNT", (double) iInputRepository.count(), 0D));
+        return CompletableFuture.supplyAsync(() -> new StatisticDto("INPUT_COUNT_COGS", (double) iInputRepository.count(), 0D));
     }
 
     private CompletableFuture<StatisticDto> OUTPUT_COUNT() {
-        return CompletableFuture.supplyAsync(() -> new StatisticDto("OUTPUT_COUNT", (double) iOutputRepository.count(), 0D));
+        return CompletableFuture.supplyAsync(() -> new StatisticDto("OUTPUT_COUNT_GP", (double) iOutputRepository.count(), 0D));
     }
 
     private CompletableFuture<StatisticDto> TRANSFER_COUNT() {
@@ -338,6 +335,10 @@ public class DashboardAnalyticsService implements IDashboardAnalyticsService {
 
     private CompletableFuture<StatisticDto> PRODUCT_COUNT() {
         return CompletableFuture.supplyAsync(() -> new StatisticDto("PRODUCT_COUNT", (double) iProductRepository.count(), 0D));
+    }
+
+    private CompletableFuture<StatisticDto> CLIENT_COUNT() {
+        return CompletableFuture.supplyAsync(() -> new StatisticDto("CLIENT_COUNT", (double) iActorRepository.count(), 0D));
     }
     //endregion
 }
