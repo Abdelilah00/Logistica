@@ -15,7 +15,7 @@ public class ProductDto extends BaseDto {
     private Integer stockMax;
     private Integer stockSecurity;
     private Float priceHT;
-    private Float tVA;
+    private Float tva;
 
     private Integer qteByStock;
     private Integer qteInStocks;

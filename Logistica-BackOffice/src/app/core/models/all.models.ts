@@ -83,7 +83,7 @@ export class Product extends BaseModel {
   stockMax: number;
   stockMin: number;
   stockSecurity: number;
-
+  categoryName: string;
   qteInStocks: number;
   qteByStock: number;
 }

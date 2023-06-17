@@ -8,10 +8,12 @@ import lombok.Setter;
 @Setter
 public class ProductUpdateDto extends BaseDto {
     private String name;
-    private String expDate;
-    private String priceHT;
-    private String tVA;
+    private Integer categoryId;
 
-    private String Category;
-    private String Parent;
+    private Integer stockMin;
+    private Integer stockMax;
+    private Integer stockSecurity;
+
+    private Float priceHT;
+    private Float tva;
 }

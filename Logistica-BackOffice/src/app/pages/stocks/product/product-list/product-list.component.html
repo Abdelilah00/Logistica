@@ -32,10 +32,10 @@
               <kendo-grid-column field="stockSecurity" title="stock Security">
               </kendo-grid-column>
 
-              <kendo-grid-command-column title="Options">
-                <ng-template kendoGridCellTemplate>
-                  <button [primary]="true" kendoGridEditCommand>Edit</button>
-                  <button kendoGridRemoveCommand>Delete</button>
+              <kendo-grid-command-column title="Options" >
+                <ng-template kendoGridCellTemplate  let-dataItem>
+                  <button class="btn btn-info" [routerLink]="['../edit/'+dataItem.id]">Edit</button>
+                  <button class="btn btn-danger" (click)="handleDeleteClick(dataItem.id)">Delete</button>
                 </ng-template>
               </kendo-grid-command-column>
 
