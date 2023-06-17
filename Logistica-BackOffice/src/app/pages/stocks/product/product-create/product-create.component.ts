@@ -49,7 +49,7 @@ export class ProductCreateComponent implements OnInit {
       stockMax: [1000, Validators.required],
       stockSecurity: [250, Validators.required],
       priceHT: [100.5, Validators.required],
-      tVA: [20, Validators.required],
+      tva: [20, Validators.required],
       categoryId: [1, Validators.required],
     });
   }

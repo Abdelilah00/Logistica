@@ -25,7 +25,7 @@ public class Product extends BaseEntity {
     private Integer stockSecurity;
 
     private Float priceHT;
-    private Float tVA;
+    private Float tva;
 
     //Many to One
     @ManyToOne(fetch = FetchType.LAZY)

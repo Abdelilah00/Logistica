@@ -66,7 +66,8 @@ public class BaseCrudServiceImpl<TEntity extends BaseEntity,
 
     @Override
     public CompletableFuture<TDto> update(TUpdateDto entity) {
-        return CompletableFuture.completedFuture(objectMapper.convertToDto(repository.save(objectMapper.convertToEntity(entity)), dtoClass));
+        var x = objectMapper.convertToEntity(entity);
+        return CompletableFuture.completedFuture(objectMapper.convertToDto(repository.save(x), dtoClass));
     }
 
     @Override

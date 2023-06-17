@@ -339,7 +339,7 @@ public class BootStrapData implements CommandLineRunner {
             prodA.setStockMin(500);
             prodA.setStockSecurity(2500);
             prodA.setPriceHT(1.5F);
-            prodA.setTVA(10f);
+            prodA.setTva(10f);
             prodA.getCategory().setId(random.nextInt(4) + 1);
             products.add(prodA);
         }

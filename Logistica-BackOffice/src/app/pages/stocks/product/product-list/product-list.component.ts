@@ -3,6 +3,7 @@ import {BreadCrumb} from '../../../../core/models/all.models';
 import {State} from '@progress/kendo-data-query';
 import {FormBuilder} from '@angular/forms';
 import {ProductsService} from '../../../../core/services/Products/products.service';
+import {finalize} from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-list',
@@ -37,5 +38,11 @@ export class ProductListComponent implements OnInit {
 
   public onStateChange(state: State): void {
     this.gridState = state;
+  }
+
+  public handleDeleteClick(id: number): void {
+    this.service.delete(id).subscribe(() => {
+      this.service.getAll().subscribe(data => this.gridData = data);
+    });
   }
 }
