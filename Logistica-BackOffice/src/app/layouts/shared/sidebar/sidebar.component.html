@@ -8,27 +8,6 @@
       <ul #sideMenu class="metismenu list-unstyled" id="side-menu">
 
         <ng-container *ngFor="let item of menuItems">
-          <li *ngIf="item.isTitle" class="menu-title">{{ item.label | translate }}</li>
-          <!-- Layouts menu -->
-          <li *ngIf="item.isLayout">
-            <a class="has-arrow" href="javascript: void(0);">
-              <i class="ri-layout-3-line"></i>
-              <span>Layouts</span>
-            </a>
-            <ul aria-expanded="false" class="sub-menu">
-              <li><a (click)="changeLayout('horizontal')"
-                     href="javascript: void(0);">{{ 'MENUITEMS.LAYOUTS.LIST.HORIZONTAL' | translate}}</a></li>
-              <li><a (click)="lightSidebar()"
-                     href="javascript: void(0);">{{ 'MENUITEMS.LAYOUTS.LIST.LIGHTSIDEBAR' | translate}}</a></li>
-              <li><a (click)="compactSidebar()"
-                     href="javascript: void(0);">{{ 'MENUITEMS.LAYOUTS.LIST.COMPACTSIDEBAR' | translate}}</a></li>
-              <li><a (click)="iconSidebar()"
-                     href="javascript: void(0);">{{ 'MENUITEMS.LAYOUTS.LIST.ICONSIDEBAR' | translate}}</a></li>
-              <li><a (click)="boxedLayout()"
-                     href="javascript: void(0);">{{ 'MENUITEMS.LAYOUTS.LIST.BOXED' | translate}}</a></li>
-            </ul>
-          </li>
-          <!-- end Layout menu -->
 
           <li *ngIf="!item.isTitle && !item.isLayout">
             <a *ngIf="hasItems(item)" [ngClass]="{'has-arrow': !item.badge, 'has-dropdown': item.badge}" class="is-parent"

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 
 
-import {LAYOUT_HORIZONTAL, LAYOUT_VERTICAL} from './layouts.model';
+import {LAYOUT_VERTICAL} from './layouts.model';
 
 @Component({
   selector: 'app-layout',
@@ -29,10 +29,4 @@ export class LayoutComponent implements OnInit {
     return this.layoutType === LAYOUT_VERTICAL;
   }
 
-  /**
-   * Check if the horizontal layout is requested
-   */
-  isHorizontalLayoutRequested() {
-    return this.layoutType === LAYOUT_HORIZONTAL;
-  }
 }
