@@ -10,6 +10,9 @@
   </div>
 
   <div class="card-body">
+    <div *ngIf="chartIsLoading">
+      <app-loading></app-loading>
+    </div>
     <div class="chart" echarts id='chart'></div>
   </div>
 </div>

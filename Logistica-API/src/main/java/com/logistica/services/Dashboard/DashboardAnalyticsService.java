@@ -101,7 +101,11 @@ public class DashboardAnalyticsService implements IDashboardAnalyticsService {
                     "where i.retour=FALSE group by time").list();
             List<ItemOfSeries> result = new ArrayList<>();
             for (var obj : i) {
-                result.add(new ItemOfSeries(Long.parseLong(obj[0].toString()), Double.parseDouble(obj[1].toString())));
+                try {
+                    result.add(new ItemOfSeries(Long.parseLong(obj[0].toString()), Double.parseDouble(obj[1].toString())));
+                } catch (Exception exception) {
+
+                }
             }
             list.add(new ListOfSeries("INPUT_CHIFFRE", result));
         }
@@ -111,7 +115,11 @@ public class DashboardAnalyticsService implements IDashboardAnalyticsService {
                     "from Output o inner join o.outputDetails od group by time").list();
             List<ItemOfSeries> result = new ArrayList<>();
             for (var obj : o) {
-                result.add(new ItemOfSeries(Long.parseLong(obj[0].toString()), Double.parseDouble(obj[1].toString())));
+                try {
+                    result.add(new ItemOfSeries(Long.parseLong(obj[0].toString()), Double.parseDouble(obj[1].toString())));
+                }catch (Exception e){
+
+                }
             }
             list.add(new ListOfSeries("OUTPUT_CHIFFRE", result));
         }

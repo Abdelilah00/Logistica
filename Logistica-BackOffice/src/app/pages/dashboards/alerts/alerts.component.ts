@@ -10,6 +10,8 @@ import {DashboardAlertsService} from '../../../core/services/Dashboards/dashboar
 export class AlertsComponent implements OnInit {
   realAlerts: AlertsItem[];
   predAlerts: AlertsItem[];
+  realAlertsIsLoading = true;
+  predAlertsIsLoading = true;
 
   constructor(private service: DashboardAlertsService) {
   }
@@ -18,10 +20,12 @@ export class AlertsComponent implements OnInit {
     this.service.getRealQte([]).subscribe(data => {
       data.sort((a, b) => (a.name > b.name ? 1 : -1));
       this.realAlerts = data;
+      this.realAlertsIsLoading = false;
     });
     this.service.getPredQte(['forecast=10']).subscribe(data => {
       data.sort((a, b) => (a.name > b.name ? 1 : -1));
       this.predAlerts = data;
+      this.predAlertsIsLoading = false;
     });
   }
 }

@@ -135,13 +135,13 @@ public class BootStrapData implements CommandLineRunner {
             catB.getChildren().add(catB1);
             iCategoryRepository.save(catB);
 
-/*            var prodA = new Product();
+            var prodA = new Product();
             prodA.setName("product A");
             prodA.setStockMax(250);
             prodA.setStockMin(50);
             prodA.setStockSecurity(100);
             prodA.setPriceHT(1.5F);
-            prodA.setTVA(10f);
+            prodA.setTva(10f);
             prodA.setCategory(catA);
             iProductRepository.save(prodA);
             var prodB = new Product();
@@ -150,7 +150,7 @@ public class BootStrapData implements CommandLineRunner {
             prodB.setStockMin(50);
             prodB.setStockSecurity(100);
             prodB.setPriceHT(1.5F);
-            prodB.setTVA(10f);
+            prodB.setTva(10f);
             prodB.setCategory(catB);
             iProductRepository.save(prodB);
             var prodC = new Product();
@@ -159,9 +159,9 @@ public class BootStrapData implements CommandLineRunner {
             prodC.setStockMin(50);
             prodC.setStockSecurity(100);
             prodC.setPriceHT(1.5F);
-            prodC.setTVA(10f);
+            prodC.setTva(10f);
             prodC.setCategory(catA);
-            iProductRepository.save(prodC);*/
+            iProductRepository.save(prodC);
             //endregion
 
 
@@ -236,7 +236,7 @@ public class BootStrapData implements CommandLineRunner {
             iActorRepository.save(actor3);
             //endregion
 
-   /*         //region create input
+           //region create input
             var input = new Input();
             input.setRef("Ref2145");
             input.setDate(new Date());

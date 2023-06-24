@@ -12,6 +12,7 @@ import {Product} from '../../../core/models/all.models';
 export class PredictionsComponent implements OnInit {
   defaultProduct = 1;
   products: Product[];
+  chartIsLoading = true;
 
   constructor(private dashboardPredictionsService: DashboardPredictionsService, private productsService: ProductsService) {
   }
@@ -112,6 +113,7 @@ export class PredictionsComponent implements OnInit {
           }
         ],
       });
+      this.chartIsLoading = false;
     });
   }
 }

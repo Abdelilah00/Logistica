@@ -19,6 +19,9 @@ export class AnalyticsComponent implements OnInit {
 
   ///
   statistics = new Array<Statistic>();
+  statisticsIsLoading = true;
+  chartsIsLoading = true;
+  treeMapIsLoading = true;
   defaultTreeMap = 'products';
   ////
 
@@ -32,7 +35,7 @@ export class AnalyticsComponent implements OnInit {
 
   ngOnInit(): void {
     this.breadCrumbItems = [{label: 'Logistica'}, {label: 'Dashboard', active: true}];
-    this.getStatistics();
+    //this.getStatistics();
     this.getTreeMaps('products');
   }
 
@@ -48,6 +51,7 @@ export class AnalyticsComponent implements OnInit {
       this.statistics.find(s => s.kpi === 'OUTPUT_CHIFFRE').appendToChart = true;
       this.statistics.find(s => s.kpi === 'INPUT_CHIFFRE').appendToChart = true;
       this.getChart();
+      this.statisticsIsLoading = false;
     });
   }
 
@@ -130,6 +134,8 @@ export class AnalyticsComponent implements OnInit {
         series: series,
 
       });
+
+      this.chartsIsLoading = false;
     });
   }
 
@@ -164,8 +170,10 @@ export class AnalyticsComponent implements OnInit {
           data: data
         }]
       });
+      this.treeMapIsLoading = false;
     });
   }
+
 
   hideStat(kpi): void {
     this.statistics.find(s => s.kpi === kpi).hidden = true;

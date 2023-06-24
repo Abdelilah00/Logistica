@@ -13,9 +13,13 @@
       <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
       <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
     </mat-form-field>
-  <button (click)='rangeChange()' class='btn btn-rounded btn-primary mybtn'>Filter By Date</button>
+    <button (click)='rangeChange()' class='btn btn-rounded btn-primary mybtn'>Filter By Date</button>
   </div>
-  <div class="row">
+  <div class="row" style="justify-content: center">
+    <div *ngIf="statisticsIsLoading" >
+      <app-loading></app-loading>
+    </div>
+
     <div *ngFor='let statistic of statistics' class="col-md-3">
       <app-stat (appendStatToChart)="appendStatToChart($event)" (hideStat)="hideStat($event)"
                 *ngIf='!statistic.hidden'
@@ -39,6 +43,9 @@
       </div>
     </div>
     <div class="card-body">
+      <div *ngIf="chartsIsLoading" >
+        <app-loading></app-loading>
+      </div>
       <div>
         <div class="chart" echarts id='chart'></div>
       </div>
@@ -88,13 +95,14 @@
         <mat-select disableRipple (selectionChange)='getTreeMaps($event.value)' [(value)]='defaultTreeMap'>
           <mat-option value="products">Products</mat-option>
           <mat-option value="clients">Clients</mat-option>
-          <mat-option value="suppliers">Suppliers</mat-option>
-          <mat-option value="services">Services</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
 
     <div class="card-body">
+      <div *ngIf="treeMapIsLoading">
+        <app-loading></app-loading>
+      </div>
       <div>
         <div class="chart" echarts id='treeMap'></div>
       </div>
