@@ -24,12 +24,12 @@
                       <ngb-alert *ngIf="error" [dismissible]="false" type="danger">{{ error }}</ngb-alert>
                       <div class="form-group auth-form-group-custom mb-4">
                         <i class="ri-user-2-line auti-custom-input-icon"></i>
-                        <label for="email">Email</label>
-                        <input [ngClass]="{ 'is-invalid': submitted && f.email.errors }" class="form-control" formControlName="email" id="email" placeholder="Email"
-                               type="email">
-                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                          <div *ngIf="f.email.errors.required">Email is required</div>
-                          <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+                        <label for="userName">userName</label>
+                        <input [ngClass]="{ 'is-invalid': submitted && f.userName.errors }" class="form-control" formControlName="userName" id="userName" placeholder="userName"
+                               type="text">
+                        <div *ngIf="submitted && f.userName.errors" class="invalid-feedback">
+                          <div *ngIf="f.userName.errors.required">userName is required</div>
+                          <div *ngIf="f.userName.errors.userName">userName must be a valid userName address</div>
                         </div>
                       </div>
 

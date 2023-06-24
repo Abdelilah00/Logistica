@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {first} from 'rxjs/operators';
 
 import {environment} from '../../../../environments/environment';
+import {AuthService} from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,11 @@ export class LoginComponent implements OnInit {
   year: number = new Date().getFullYear();
 
   // tslint:disable-next-line: max-line-length
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router) {
+  constructor(private formBuilder: FormBuilder,
+              private route: ActivatedRoute,
+              private router: Router,
+              private service: AuthService,
+              private authService: AuthService) {
   }
 
   // convenience getter for easy access to form fields
@@ -32,16 +37,17 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.logout();
+
     document.body.removeAttribute('data-layout');
     document.body.classList.add('auth-body-bg');
 
     this.loginForm = this.formBuilder.group({
-      email: ['admin@themesdesign.in', [Validators.required, Validators.email]],
-      password: ['123456', [Validators.required]],
+      userName: ['string', [Validators.required]],
+      password: ['string', [Validators.required]],
     });
 
     // reset login status
-    // this.authenticationService.logout();
     // get return url from route parameters or default to '/'
     // tslint:disable-next-line: no-string-literal
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
@@ -51,13 +57,15 @@ export class LoginComponent implements OnInit {
    * Form submit
    */
   onSubmit() {
-    this.submitted = true;
-
     // stop here if form is invalid
     if (this.loginForm.invalid) {
       return;
     } else {
-
+      this.service.signIn(this.loginForm.value).subscribe(resp => {
+        this.submitted = true;
+        this.authService.setToken(resp.token);
+        this.router.navigate(['/dashboards/analytics']);
+      });
     }
   }
 

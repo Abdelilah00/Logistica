@@ -6,10 +6,7 @@
 package com.configuration.security.domains;
 
 import com.alexy.models.IdEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -20,10 +17,12 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "Role")
+@Builder
 public class Role extends IdEntity {
 
     @Enumerated(EnumType.STRING)
     private RoleName name;
+
     @ManyToMany(mappedBy = "roles")
     private List<User> users;
 }

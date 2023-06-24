@@ -23,10 +23,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
@@ -60,7 +57,7 @@ public class AuthController {
         if (userRepository.existsByUserName(signUpRequest.getUserName())) {
             return new ResponseEntity<>(new ApiResponse(false, "Username is already taken!"), HttpStatus.BAD_REQUEST);
         }
-        User result = userRepository.save(new User(signUpRequest.getUserName(), passwordEncoder.encode(signUpRequest.getPassword()), "y@y.com", true, Collections.singletonList(new Role(RoleName.ROLE_USER, null))));
+        User result = userRepository.save(new User(signUpRequest.getUserName(), passwordEncoder.encode(signUpRequest.getPassword()), "y@y.com", true, Collections.singletonList(new Role(RoleName.ROLE_ADMIN, null))));
         URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/auth/signIn/{userName}").buildAndExpand(result.getUserName()).toUri();
         return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
     }

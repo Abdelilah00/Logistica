@@ -7,6 +7,9 @@ package com.configuration.bootstrap;
 
 
 import com.configuration.TenantContext;
+import com.configuration.security.domains.Role;
+import com.configuration.security.domains.RoleName;
+import com.configuration.security.domains.User;
 import com.configuration.security.repositories.IUserRepository;
 import com.logistica.domains.Commands.*;
 import com.logistica.domains.Organization.Structure;
@@ -64,6 +67,8 @@ public class BootStrapData implements CommandLineRunner {
     @Override
     public void run(String... args) throws InterruptedException {
         if (iInputRepository.findAll().size() == 0) {
+            //iUserRepository.save(new User("admin", "admin", "admin@gmail.com", true, Collections.singletonList(Role.builder().name(RoleName.ROLE_ADMIN).build())));
+            //iUserRepository.save(new User("user", "user", "user@gmail.com", true, Collections.singletonList(Role.builder().name(RoleName.ROLE_USER).build())));
 
             //region actors roles
             var responsible = new ActorRole();

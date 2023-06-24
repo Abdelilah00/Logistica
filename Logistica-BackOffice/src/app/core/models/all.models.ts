@@ -130,5 +130,8 @@ export class BreadCrumb {
   title: string;
   items: Array<{ label: string; path?: string; active?: boolean; }>;
 }
-
+export class Auth extends BaseModel {
+  userName: string;
+  password: string;
+}
 
