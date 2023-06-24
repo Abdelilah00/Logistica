@@ -29,7 +29,7 @@ import java.util.List;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private final String[] PUBLIC_ENDPOINTS = {"/api/auth/**"};
+    private final String[] IGNORED_ENDPOINTS = {"/api/auth/**"};
 
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
@@ -48,10 +48,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        http.authorizeRequests()
+        http.cors().and().authorizeRequests()
                 .antMatchers("/api/user/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 .antMatchers("/api/admin/**").hasAuthority("ROLE_ADMIN")
-                .anyRequest().authenticated();
+                .antMatchers("/api/**").authenticated();
         http.addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
@@ -63,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         config.addAllowedOrigin("*");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
-        source.registerCorsConfiguration("/**", config);
+        source.registerCorsConfiguration("/api/**", config);
         return new CorsFilter(source);
     }
 
@@ -75,8 +75,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/swagger-ui.html")//
                 .antMatchers("/configuration/**")//
                 .antMatchers("/webjars/**")//
-                .antMatchers("/api/auth/**")
-                .antMatchers("/public");
+                .antMatchers("/public")
+                .antMatchers(IGNORED_ENDPOINTS);
     }
 
     @Bean

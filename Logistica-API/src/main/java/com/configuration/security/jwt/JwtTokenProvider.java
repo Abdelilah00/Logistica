@@ -17,6 +17,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -69,10 +70,10 @@ public class JwtTokenProvider {
 
     public Authentication getAuthentication(String token) throws JsonProcessingException {
         //TODO : get auth from token
-        /*UserDetails userDetails1 = userDetails.loadUserByUsername(getUsername(token));
-        return new UsernamePasswordAuthenticationToken(userDetails1, "", userDetails1.getAuthorities());*/
-        var auth = String.valueOf(Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("auth"));
-        return new ObjectMapper().readValue(auth, Authentication.class);
+        UserDetails userDetails1 = userDetails.loadUserByUsername(getUsername(token));
+        return new UsernamePasswordAuthenticationToken(userDetails1, "", userDetails1.getAuthorities());
+/*        var auth = String.valueOf(Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("auth"));
+        return new ObjectMapper().readValue(auth, Authentication.class);*/
     }
 
     public String getUsername(String token) {
