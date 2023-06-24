@@ -65,23 +65,26 @@ public class DashboardPredictionsService implements IDashboardPredictionsService
         ListOfPredSeries result = new ListOfPredSeries();
 
         List<Object[]> inputs = session.createSQLQuery("select DATE(i.createdAt) time, SUM(id.qte) qte " +
-                "from input i " +
-                "inner join inputdetails id on i.id = id.input_id " +
-                "where id.product_id = :productId and i.tenantId = :tenantId and i.deletedAt is null " +
-                "group by time")
+                        "from input i " +
+                        "inner join inputdetails id on i.id = id.input_id " +
+                        "where id.product_id = :productId and i.tenantId = :tenantId and i.deletedAt is null " +
+                        "group by time")
                 .setParameter("tenantId", TenantContext.getCurrentTenant()).setParameter("productId", productId).list();
         List<Object[]> outputs = session.createSQLQuery("select DATE(o.createdAt) time, SUM(id.qte) qte " +
-                "from output o " +
-                "inner join outputdetails id on o.id = id.output_id " +
-                "where id.product_id = :productId and o.tenantId = :tenantId and o.deletedAt is null " +
-                "group by time")
+                        "from output o " +
+                        "inner join outputdetails id on o.id = id.output_id " +
+                        "where id.product_id = :productId and o.tenantId = :tenantId and o.deletedAt is null " +
+                        "group by time")
                 .setParameter("tenantId", TenantContext.getCurrentTenant()).setParameter("productId", productId).list();
+
+        inputs = inputs.stream().filter(item -> item.length == 2 && item[0] != null && item[1] != null).collect(Collectors.toList());
+        outputs = outputs.stream().filter(item -> item.length == 2 && item[0] != null && item[1] != null).collect(Collectors.toList());
 
         List<ItemOfPredSeries> rest = new ArrayList<>();
         //we should reindex by date (create messing date with previous value as data)
-        Date minInput = inputs.stream().map(u -> (Date) u[0]).min(Date::compareTo).get();
-        Date minOutput = outputs.stream().map(u -> (Date) u[0]).min(Date::compareTo).get();
-        Date minDate = minInput.compareTo(minOutput) < 0 ? minInput : minOutput;
+        Date minInput = inputs.stream().map(item -> (Date) item[0]).min(Date::compareTo).get();
+        Date minOutput = outputs.stream().map(item -> ((Date) item[0])).min(Date::compareTo).get();
+        Date minDate = (minInput.compareTo(minOutput) < 0 ? minInput : minOutput);
         Date currDate = new Timestamp(new Date().getTime());
         Date tmpDate = minDate;
         double qteCumule = 0d;

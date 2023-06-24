@@ -35,7 +35,7 @@ export class AnalyticsComponent implements OnInit {
 
   ngOnInit(): void {
     this.breadCrumbItems = [{label: 'Logistica'}, {label: 'Dashboard', active: true}];
-    //this.getStatistics();
+    this.getStatistics();
     this.getTreeMaps('products');
   }
 
